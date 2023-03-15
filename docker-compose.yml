@@ -57,6 +57,7 @@ services:
     #   - WEB_PORT=${WEB_PORT}
     restart: unless-stopped
     # command: ["/home/code/entrypoint.sh"]
+    command: ["sh"]
     volumes:
       - "code_path:/home/code"
     # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
