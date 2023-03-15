@@ -1,6 +1,6 @@
 #!/bin/sh
 echo "Entrypoint..."
-source .env.prod
+# source .env.prod
 echo "Setting up database..."
 sh -c "python manage.py migrate"
 sh -c "python manage.py createsuperuser --no-input"
