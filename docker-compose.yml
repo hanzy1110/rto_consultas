@@ -6,7 +6,7 @@ services:
       - rto_mysql_db
     build: ./docker_build
     
-    env_file: ./envfile/.env
+    env_file: ./envfiles/.env
     ports:
       - "${WEB_PORT}:8000"  #Web port 
     # enviroment:
