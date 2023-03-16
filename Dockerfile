@@ -33,7 +33,14 @@ COPY --from=builder-image /home/venv /home/venv
 # copy project files
 RUN mkdir /home/code
 WORKDIR /home/code
-COPY . .
+RUN mkdir ./rto_consultas
+COPY /home/ubuntu/git/rto_consultas/manage.py .
+COPY /home/ubuntu/git/rto_consultas/entrypoint.sh .
+COPY /home/ubuntu/git/rto_consultas/rto_consultas/* ./rto_consultas
+
+RUN echo "OK VERSION?"
+RUN ls ./rto_consultas/settings.py
+
 RUN chmod +x entrypoint.sh
 
 # Expose port
