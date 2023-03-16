@@ -6,7 +6,7 @@ services:
       - rto_mysql_db
     build: 
       context: .
-      dockerfile: ./docker_build/Dockerfile
+      dockerfile: Dockerfile
     
     env_file: ./envfiles/.env
     ports:
