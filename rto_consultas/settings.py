@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
-DB_HOST = os.environ["DB_HOST"]
-DB_NAME = os.environ["DB_NAME"]
-ROOT_PASSWORD = os.environ["ROOT_PASSWORD"]
-ROOT_USER = os.environ["ROOT_USER"]
+MYSQL_HOST = os.environ["MYSQL_HOST"]
+MYSQL_USER = os.environ["MYSQL_USER"]
+MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
+MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
+MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
+# ROOT_USER = os.environ["ROOT_USER"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,10 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'event_manager',
 ]
 
 MIDDLEWARE = [
@@ -83,11 +81,11 @@ WSGI_APPLICATION = 'rto_consultas.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql_client',
-        'NAME': DB_NAME,
-        'USER': ROOT_USER,
-        'PASSWORD': ROOT_PASSWORD,
-        'HOST': DB_HOST,
+        'ENGINE': 'django.db.backends.mysqlclient',
+        'NAME': MYSQL_DATABASE,
+        'USER': MYSQL_USER,
+        'PASSWORD': MYSQL_PASSWORD,
+        'HOST': MYSQL_HOST,
         'PORT': '3306',
     }
 }
@@ -135,20 +133,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+# }
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+# ]
