@@ -17,7 +17,7 @@ services:
     command: ["/home/code/entrypoint.sh"]
     # command: ["sh"]
     volumes:
-      - "code_path:/home/code"
+      - "${CODE_PATH}:/home/code"
     # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
 
   rto_mysql_db:
