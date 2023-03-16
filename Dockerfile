@@ -21,6 +21,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 FROM python:3.10 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
+ARG CACHEBUST=1
+
 RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* 
 
