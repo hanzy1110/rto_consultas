@@ -38,11 +38,11 @@ WORKDIR /home/code
 # COPY /home/ubuntu/git/rto_consultas/entrypoint.sh .
 # COPY /home/ubuntu/git/rto_consultas/rto_consultas/* ./rto_consultas
 
-COPY . .
-RUN echo "OK VERSION?"
-RUN ls ./rto_consultas/settings.py
+# COPY . .
+# RUN echo "OK VERSION?"
+# RUN ls ./rto_consultas/settings.py
 
-RUN chmod +x entrypoint.sh
+# RUN chmod +x entrypoint.sh
 
 # Expose port
 EXPOSE 8000
