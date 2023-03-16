@@ -5,10 +5,10 @@ services:
     depends_on:
       - rto_mysql_db
     build: 
-      - context: .
-      - dockerfile: ./docker_build/Dockerfile
+      - context: "."
+      - dockerfile: "./docker_build/Dockerfile"
       - no-cache: true
-      - progress: plain
+      - progress: "plain"
     env_file: ./envfile/.env
     ports:
       - "${WEB_PORT}:8000"  #Web port 
