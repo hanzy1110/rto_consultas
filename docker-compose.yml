@@ -6,7 +6,7 @@ services:
       - rto_mysql_db
     build: 
       context: .
-      build: ./docker_build
+      dockerfile: ./docker_build/Dockerfile
       progress: plain
       no-cache: true
     
