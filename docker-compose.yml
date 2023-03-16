@@ -49,8 +49,12 @@ services:
     container_name: rto_consultas
     depends_on:
       - rto_mysql_db
-    build: .
-    env_file: .env
+    build: 
+      - context: /home/ubuntu/git/rto_consultas
+      - dockerfile: Dockerfile
+      - no-cache: true
+      - progress: plain
+    env_file: /home/ubuntu/git/rto_consultas/.env
     ports:
       - "${WEB_PORT}:8000"  #Web port 
     # enviroment:

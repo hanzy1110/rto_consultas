@@ -4,7 +4,7 @@ echo "Working dir"
 echo $(pwd)
 
 sudo docker-compose --env-file .env down --remove-orphans
-sudo docker-compose --env-file .env build
+sudo docker-compose --env-file .env build --progress plain --progress tty
 
 echo MAKING AND APPLYING MIGRATIONS...
 sudo docker-compose --env-file .env run --rm rto_consultas python manage.py makemigrations && python manage.py migrate
