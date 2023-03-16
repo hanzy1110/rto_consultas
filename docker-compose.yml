@@ -4,7 +4,11 @@ services:
     container_name: rto_consultas
     depends_on:
       - rto_mysql_db
-    build: ./docker_build
+    build: 
+      context: .
+      build: ./docker_build
+      progress: plain
+      no-cache: true
     
     env_file: ./envfiles/.env
     ports:
