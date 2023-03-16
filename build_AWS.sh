@@ -1,7 +1,7 @@
 #!/bin/bash
 # rm ./event_manager/migrations/*
 docker-compose --env-file .env down --remove-orphans
-docker-compose --env-file .env build --no-cache
+docker-compose --env-file .env build
 
 echo MAKING AND APPLYING MIGRATIONS...
 docker-compose --env-file .env run --rm rto_consultas -c "python manage.py makemigrations && python manage.py migrate"
