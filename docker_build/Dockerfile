@@ -32,6 +32,7 @@ COPY --from=builder-image /home/venv /home/venv
 
 # copy project files
 RUN mkdir /home/code
+RUN mkdir /home/tmp
 WORKDIR /home/code
 # RUN mkdir ./rto_consultas
 # COPY /home/ubuntu/git/rto_consultas/manage.py .
