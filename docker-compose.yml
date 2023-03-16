@@ -65,8 +65,8 @@ services:
     restart: unless-stopped
 
 
-volumes:
+# volumes:
   # grafana-data:
   # prometheus-data:
-  code_path:
+  # code_path:
   # central_bkp:
