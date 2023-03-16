@@ -43,7 +43,7 @@ COPY . .
 RUN echo "OK VERSION?"
 RUN ls ./rto_consultas/settings.py
 
-# RUN chmod +x entrypoint.sh
+RUN chmod +x entrypoint.sh
 
 # Expose port
 EXPOSE 8000
