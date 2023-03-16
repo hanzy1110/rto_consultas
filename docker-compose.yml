@@ -7,7 +7,6 @@ services:
     build: 
       context: .
       dockerfile: ./docker_build/Dockerfile
-      progress: plain
     
     env_file: ./envfiles/.env
     ports:
