@@ -23,7 +23,7 @@ FROM python:3.10 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
 ARG CACHEBUST=1
 
-RUN apt-get install -y default-libmysqlclient-dev libpq-dev mysql-client && \
+RUN apt-get update && apt-get install -y default-libmysqlclient-dev libpq-dev mysql-client && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # RUN apt-get -y update && apt-get install -y libmysqlclient-dev libpq-dev 
