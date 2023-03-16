@@ -4,10 +4,10 @@ echo "Working dir"
 echo $(pwd)
 
 sudo docker-compose --env-file envfiles/.env down --remove-orphans 
-sudo docker-compose --env-file envfiles/.env build --no-cache --progress plain
+sudo docker-compose --env-file envfiles/.env build --progress plain
 
 echo MAKING AND APPLYING MIGRATIONS...
-sudo docker-compose --env-file envfiles/.env run --rm rto_consultas python manage.py makemigrations && python manage.py migrate
+sudo docker-compose --env-file envfiles/.env run --rm rto_consultas python manage.py makemigrations && python manage.py migrate --fake-initial
 # sudo docker-compose --env-file .env run --rm crm_api sh -c "python manage.py migrate"
 
 sudo docker-compose --env-file envfiles/.env up -d 
