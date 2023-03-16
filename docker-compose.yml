@@ -1,5 +1,25 @@
-version: "3.9"
 services:
+
+  rto_consultas:
+    container_name: rto_consultas
+    depends_on:
+      - rto_mysql_db
+    build: 
+      - context: .
+      - dockerfile: ./docker_build/Dockerfile
+      - no-cache: true
+      - progress: plain
+    env_file: ./envfile/.env
+    ports:
+      - "${WEB_PORT}:8000"  #Web port 
+    # enviroment:
+    #   - WEB_PORT=${WEB_PORT}
+    restart: unless-stopped
+    command: ["/home/code/entrypoint.sh"]
+    # command: ["sh"]
+    volumes:
+      - "code_path:/home/code"
+    # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
 
   rto_mysql_db:
     image: mysql/mysql-server:8.0
@@ -45,26 +65,6 @@ services:
       - GZIP_LEVEL=9
     restart: unless-stopped
 
-  rto_consultas:
-    container_name: rto_consultas
-    depends_on:
-      - rto_mysql_db
-    build: 
-      - context: /home/ubuntu/git/rto_consultas
-      - dockerfile: Dockerfile
-      - no-cache: true
-      - progress: plain
-    env_file: /home/ubuntu/git/rto_consultas/.env
-    ports:
-      - "${WEB_PORT}:8000"  #Web port 
-    # enviroment:
-    #   - WEB_PORT=${WEB_PORT}
-    restart: unless-stopped
-    command: ["/home/code/entrypoint.sh"]
-    # command: ["sh"]
-    volumes:
-      - "code_path:/home/code"
-    # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
 
 volumes:
   # grafana-data:
