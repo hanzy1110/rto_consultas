@@ -46,7 +46,8 @@ services:
     ports:
       - "${MYSQL_PORT_DJANGO}:3306"
     volumes:
-      - ${MYSQL_VOLUME_DJANGO}:/var/lib/mysql
+      # - ${MYSQL_VOLUME_DJANGO}:/var/lib/mysql
+      - django_auth:/var/lib/mysql
       # - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_DJANGO}
@@ -85,7 +86,8 @@ services:
     restart: unless-stopped
 
 
-# volumes:
+volumes:
+  django_auth:
   # grafana-data:
   # prometheus-data:
   # code_path:
