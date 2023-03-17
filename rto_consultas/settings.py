@@ -90,7 +90,7 @@ DATABASE_ROUTERS = 'rto_consultas.db_routers.RtoConsultasRouter'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgressql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': PQL_DATABASE_DJANGO,
         'USER': PQL_USER_DJANGO,
         'PASSWORD': PQL_PASSWORD_DJANGO,
