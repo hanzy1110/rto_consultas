@@ -46,8 +46,8 @@ services:
     ports:
       - "${MYSQL_PORT_DJANGO}:3306"
     volumes:
-      - ${MYSQL_VOLUME}:/var/lib/mysql
-      - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
+      - ${MYSQL_VOLUME_DJANGO}:/var/lib/mysql
+      # - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_DJANGO}
       - MYSQL_DATABASE=${MYSQL_DATABASE_DJANGO}

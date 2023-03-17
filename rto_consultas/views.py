@@ -3,5 +3,5 @@ from .models import Verificaciones
 
 class ListarVerificaciones(ListView):
 	model = Verificaciones
-	queryset = model.all().using('vehicularunc')
+	queryset = model.objects.all().using('vehicularunc')
 
