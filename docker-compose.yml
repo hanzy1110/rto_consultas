@@ -44,7 +44,7 @@ services:
     image: postgres:13
     container_name: django_db
     ports:
-      - "${DB_PORT}:5432"
+      - "${PQL_PORT}:5432"
     volumes:
       - django_auth:/var/lib/postgresql/data:rw
     environment:
