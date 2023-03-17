@@ -16,6 +16,7 @@ class Adjuntos(models.Model):
     fechacarga = models.DateField(db_column='FechaCarga')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntos'
         unique_together = (('idarchivo', 'idtaller'),)
@@ -29,6 +30,7 @@ class Adjuntosauditoria(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntosauditoria'
 
@@ -43,6 +45,7 @@ class Adjuntosexcepcion(models.Model):
     activo = models.IntegerField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntosexcepcion'
 
@@ -54,6 +57,7 @@ class Adjuntosmantenimientos(models.Model):
     fechacarga = models.DateField(db_column='FechaCarga')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntosmantenimientos'
 
@@ -68,6 +72,7 @@ class Adjuntospendientes(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntospendientes'
         unique_together = (('idarchivo', 'idtaller'),)
@@ -83,6 +88,7 @@ class Adjuntosprorroga(models.Model):
     activo = models.IntegerField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'adjuntosprorroga'
 
@@ -102,6 +108,7 @@ class Administrativos(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'administrativos'
         unique_together = (('idadministrativo', 'idtaller'),)
@@ -113,6 +120,7 @@ class Administrativosusuarios(models.Model):
     idadministrativo = models.IntegerField(db_column='idAdministrativo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'administrativosusuarios'
         unique_together = (('idtaller', 'idusuario', 'idadministrativo'),)
@@ -126,6 +134,7 @@ class Auditorias(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auditorias'
         unique_together = (('idauditoria', 'idtaller'),)
@@ -140,6 +149,7 @@ class Auditoriasequipos(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auditoriasequipos'
         unique_together = (('idauditoria', 'idtaller', 'idequipo'),)
@@ -149,6 +159,7 @@ class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_group'
 
@@ -159,6 +170,7 @@ class AuthGroupPermissions(models.Model):
     permission = models.ForeignKey('AuthPermission', on_delete=models.CASCADE)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_group_permissions'
         unique_together = (('group', 'permission'),)
@@ -170,6 +182,7 @@ class AuthPermission(models.Model):
     codename = models.CharField(max_length=100)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_permission'
         unique_together = (('content_type', 'codename'),)
@@ -188,6 +201,7 @@ class AuthUser(models.Model):
     date_joined = models.DateTimeField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_user'
 
@@ -198,6 +212,7 @@ class AuthUserGroups(models.Model):
     group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_user_groups'
         unique_together = (('user', 'group'),)
@@ -209,6 +224,7 @@ class AuthUserUserPermissions(models.Model):
     permission = models.ForeignKey(AuthPermission, on_delete=models.CASCADE)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'auth_user_user_permissions'
         unique_together = (('user', 'permission'),)
@@ -224,6 +240,7 @@ class Categorias(models.Model):
     activa = models.IntegerField(db_column='Activa')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'categorias'
 
@@ -235,6 +252,7 @@ class Categoriastalleres(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'categoriastalleres'
         unique_together = (('idcategoria', 'idtaller'),)
@@ -246,6 +264,7 @@ class CccfAdjuntoscertificados(models.Model):
     nombrearchivo = models.CharField(db_column='NombreArchivo', max_length=200)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_adjuntoscertificados'
 
@@ -260,6 +279,7 @@ class CccfCertificadoexcesos(models.Model):
     tiempovelocidadexceso = models.CharField(db_column='TiempoVelocidadExceso', max_length=50)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_certificadoexcesos'
 
@@ -308,6 +328,7 @@ class CccfCertificados(models.Model):
     cb = models.CharField(db_column='CB', max_length=50, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_certificados'
 
@@ -318,6 +339,7 @@ class CccfEmpresas(models.Model):
     razonsocial = models.CharField(db_column='RazonSocial', max_length=150)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_empresas'
 
@@ -327,6 +349,7 @@ class CccfEstados(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=50)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_estados'
 
@@ -338,6 +361,7 @@ class CccfNroscertificadosasignados(models.Model):
     disponible = models.IntegerField(db_column='Disponible')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_nroscertificadosasignados'
 
@@ -353,6 +377,7 @@ class CccfTalleres(models.Model):
     fechabaja = models.DateField(db_column='FechaBaja', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_talleres'
 
@@ -369,6 +394,7 @@ class CccfUsuarios(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'cccf_usuarios'
 
@@ -399,6 +425,7 @@ class Certificados(models.Model):
     intentosobtencionhab = models.IntegerField(db_column='IntentosObtencionHab', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'certificados'
         unique_together = (('idcertificado', 'idtaller'),)
@@ -412,6 +439,7 @@ class Certificadosasignadosportaller(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'certificadosasignadosportaller'
 
@@ -421,6 +449,7 @@ class Clasesservicios(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=200)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'clasesservicios'
 
@@ -436,6 +465,7 @@ class Convenios(models.Model):
     imagen = models.CharField(db_column='Imagen', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'convenios'
 
@@ -448,6 +478,7 @@ class Defectos(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'defectos'
 
@@ -469,6 +500,7 @@ class Direcotrestecnicos(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'direcotrestecnicos'
         unique_together = (('iddirector', 'idtaller'),)
@@ -484,6 +516,7 @@ class DjangoAdminLog(models.Model):
     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'django_admin_log'
 
@@ -493,6 +526,7 @@ class DjangoContentType(models.Model):
     model = models.CharField(max_length=100)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'django_content_type'
         unique_together = (('app_label', 'model'),)
@@ -505,6 +539,7 @@ class DjangoMigrations(models.Model):
     applied = models.DateTimeField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'django_migrations'
 
@@ -515,6 +550,7 @@ class DjangoSession(models.Model):
     expire_date = models.DateTimeField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'django_session'
 
@@ -535,6 +571,7 @@ class Equipos(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'equipos'
         unique_together = (('idequipo', 'idtaller'),)
@@ -545,6 +582,7 @@ class Estados(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=100)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'estados'
 
@@ -554,6 +592,7 @@ class Estadosequipo(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=50)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'estadosequipo'
 
@@ -614,6 +653,7 @@ class Excepcion(models.Model):
     notifyactive = models.IntegerField(db_column='notifyActive')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'excepcion'
         unique_together = (('idexcepcion', 'idtaller'),)
@@ -632,6 +672,7 @@ class Fotovalidacionpatente(models.Model):
     fechahorarep = models.DateTimeField(db_column='fechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'fotovalidacionPatente'
         unique_together = (('idfotovalidacion', 'idtaller'),)
@@ -668,6 +709,7 @@ class Habilitacion(models.Model):
     nrocertificadocccf = models.CharField(db_column='NroCertificadoCCCF', max_length=50, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'habilitacion'
 
@@ -690,6 +732,7 @@ class Habsfinales(models.Model):
     fechahoy = models.DateField(blank=True, null=True)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'habsfinales'
 
@@ -711,6 +754,7 @@ class Inspectores(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'inspectores'
         unique_together = (('idinspector', 'idtaller'),)
@@ -722,6 +766,7 @@ class Inspectoresusuarios(models.Model):
     idinspector = models.IntegerField(db_column='idInspector')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'inspectoresusuarios'
         unique_together = (('idtaller', 'idusuario', 'idinspector'),)
@@ -736,6 +781,7 @@ class Instalaciones(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'instalaciones'
         unique_together = (('idinstalacion', 'idtaller'),)
@@ -751,6 +797,7 @@ class Lineasequipos(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'lineasequipos'
         unique_together = (('idequipo', 'idtaller', 'nrolinea', 'fechadesde'),)
@@ -763,6 +810,7 @@ class Lineastaller(models.Model):
     replicado = models.IntegerField(db_column='Replicado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'lineastaller'
         unique_together = (('nrolinea', 'idtaller'),)
@@ -774,6 +822,7 @@ class Localidades(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=100)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'localidades'
 
@@ -787,6 +836,7 @@ class Mantenimientos(models.Model):
     fechahorarep = models.DateTimeField(db_column='FechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'mantenimientos'
         unique_together = (('idmantenimiento', 'idtaller'),)
@@ -797,6 +847,7 @@ class Marcasautos(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=100)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'marcasautos'
 
@@ -806,6 +857,7 @@ class Nivelesdefectos(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=10)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'nivelesdefectos'
 
@@ -820,6 +872,7 @@ class Noconformidades(models.Model):
     fechahorarep = models.DateTimeField(db_column='fechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'noConformidades'
         unique_together = (('idnc', 'idtaller'),)
@@ -832,6 +885,7 @@ class Parametros(models.Model):
     observaciones = models.TextField(db_collation='utf8mb3_general_ci')
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'parametros'
 
@@ -965,6 +1019,7 @@ class Pendientes(models.Model):
     status = models.CharField(db_column='Status', max_length=50, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'pendientes'
         unique_together = (('idpendiente', 'idtaller'),)
@@ -982,6 +1037,7 @@ class Pendientesdefectos(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'pendientesdefectos'
         unique_together = (('idpendiente', 'idtaller', 'iddefecto'),)
@@ -996,6 +1052,7 @@ class Pendientesservicios(models.Model):
     activo = models.IntegerField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'pendientesservicios'
         unique_together = (('idpendienteservicios', 'idtaller', 'idservicio'),)
@@ -1006,6 +1063,7 @@ class Perfiles(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=50)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'perfiles'
 
@@ -1027,6 +1085,7 @@ class Personas(models.Model):
     codigopj = models.CharField(db_column='CodigoPJ', max_length=30, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'personas'
         unique_together = (('tipodoc', 'nrodoc'),)
@@ -1052,6 +1111,7 @@ class Prorroga(models.Model):
     notifyactive = models.IntegerField(db_column='notifyActive')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'prorroga'
 
@@ -1062,6 +1122,7 @@ class Provincias(models.Model):
     abreviatura = models.CharField(db_column='Abreviatura', max_length=15, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'provincias'
 
@@ -1073,6 +1134,7 @@ class RepTablasparametricas(models.Model):
     usuario = models.CharField(db_column='Usuario', max_length=50)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'rep_tablasparametricas'
 
@@ -1086,6 +1148,7 @@ class Replicacionlogs(models.Model):
     exito = models.IntegerField(db_column='Exito')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'replicacionlogs'
 
@@ -1097,6 +1160,7 @@ class Rubrosdefectos(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'rubrosdefectos'
 
@@ -1107,6 +1171,7 @@ class Serviciohab(models.Model):
     idserviciostransportehab = models.ForeignKey('Serviciostransportehab', on_delete=models.CASCADE, db_column='idServiciosTransporteHab')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'serviciohab'
 
@@ -1119,6 +1184,7 @@ class Serviciostransporte(models.Model):
     municipal = models.IntegerField(db_column='Municipal')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'serviciostransporte'
 
@@ -1128,6 +1194,7 @@ class Serviciostransportehab(models.Model):
     descripcion = models.CharField(max_length=200)
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'serviciostransportehab'
 
@@ -1150,6 +1217,7 @@ class Talleres(models.Model):
     adjobligatorio = models.IntegerField(db_column='AdjObligatorio')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'talleres'
 
@@ -1161,6 +1229,7 @@ class Tipousovehiculo(models.Model):
     codigooblea = models.IntegerField(db_column='CodigoOblea')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'tipousovehiculo'
 
@@ -1173,6 +1242,7 @@ class Tipovehiculo(models.Model):
     activo = models.IntegerField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'tipovehiculo'
 
@@ -1188,6 +1258,7 @@ class Usuarios(models.Model):
     email = models.CharField(db_column='Email', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'usuarios'
 
@@ -1197,6 +1268,7 @@ class Usuariostaller(models.Model):
     idtaller = models.ForeignKey(Talleres, on_delete=models.CASCADE, db_column='idTaller')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'usuariostaller'
         unique_together = (('idusuario', 'idtaller'),)
@@ -1208,6 +1280,7 @@ class Valoresadm(models.Model):
     valor = models.FloatField()
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'valoresAdm'
 
@@ -1286,6 +1359,7 @@ class Vehiculos(models.Model):
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'vehiculos'
 
@@ -1417,6 +1491,7 @@ class Verificaciones(models.Model):
     nrofactura = models.CharField(db_column='nroFactura', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'verificaciones'
         unique_together = (('idverificacion', 'idtaller'),)
@@ -1434,6 +1509,7 @@ class Verificacionespdf(models.Model):
     enviado = models.IntegerField(db_column='Enviado')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'verificacionesPDF'
         unique_together = (('idpdf', 'idtaller'),)
@@ -1448,6 +1524,7 @@ class Verificacionesauditorias(models.Model):
     conforme = models.IntegerField(db_column='Conforme')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'verificacionesauditorias'
 
@@ -1464,6 +1541,7 @@ class Verificacionesdefectos(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=160)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'verificacionesdefectos'
         unique_together = (('idverificacion', 'idtaller', 'iddefecto'),)
@@ -1477,6 +1555,7 @@ class Verificacionesservicios(models.Model):
     fechahorarep = models.DateTimeField(db_column='fechaHoraRep', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'verificacionesservicios'
         unique_together = (('idverificacionesservicios', 'idtaller', 'idservicio'),)
@@ -1488,5 +1567,6 @@ class Vin(models.Model):
     aniovin = models.IntegerField(db_column='anioVin')  # Field name made lowercase.
 
     class Meta:
+        app_label = 'rto_consultas'
         
         db_table = 'vin'
