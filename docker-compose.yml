@@ -46,9 +46,9 @@ services:
     ports:
       - "${PQL_PORT}:5432"
     volumes:
-      - django_auth:/var/lib/postgresql/data:rw
+      - django_auth_db:/var/lib/postgresql/data:rw
     environment:
-      - POSTGRES_USER=${PQL_HOST_DJANGO}
+      - POSTGRES_USER=${PQL_USER_DJANGO}
       - POSTGRES_PASSWORD=${PQL_PASSWORD_DJANGO}
       - POSTGRES_DB=${PQL_DATABASE_DJANGO}
     restart: unless-stopped
@@ -86,7 +86,7 @@ services:
 
 
 volumes:
-  django_auth:
+  django_auth_db:
   # grafana-data:
   # prometheus-data:
   # code_path:
