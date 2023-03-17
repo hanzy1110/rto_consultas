@@ -41,25 +41,24 @@ services:
       retries: 5
 
   django_db:
-    image: mysql/mysql-server:8.0
+    image: postgres:13
     container_name: django_db
     ports:
-      - "${MYSQL_PORT_DJANGO}:3306"
+      - "${DB_PORT}:5432"
     volumes:
-      # - ${MYSQL_VOLUME_DJANGO}:/var/lib/mysql
-      - django_auth:/var/lib/mysql
-      # - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
+      - django_auth:/var/lib/postgresql/data:rw
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD_DJANGO}
-      - MYSQL_DATABASE=${MYSQL_DATABASE_DJANGO}
-      - MYSQL_USER=${MYSQL_USER_DJANGO}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD_DJANGO}
+      - POSTGRES_USER=${PQL_HOST_DJANGO}
+      - POSTGRES_PASSWORD=${PQL_PASSWORD_DJANGO}
+      - POSTGRES_DB=${PQL_DATABASE_DJANGO}
     restart: unless-stopped
+
     healthcheck:
-      test: mysqladmin -p${MYSQL_ROOT_PASSWORD_DJANGO} ping -h localhost
-      interval: 20s
-      timeout: 10s
+      test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 60s
       retries: 5
+      start_period: 10s  
 
   rto_cron_mysql_bkp:
     image: fradelg/mysql-cron-backup

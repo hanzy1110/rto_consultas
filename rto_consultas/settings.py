@@ -20,11 +20,11 @@ MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
 # AUTH DB
-MYSQL_HOST_DJANGO = os.environ["MYSQL_HOST_DJANGO"]
-MYSQL_USER_DJANGO = os.environ["MYSQL_USER_DJANGO"]
-MYSQL_DATABASE_DJANGO = os.environ["MYSQL_DATABASE_DJANGO"]
-MYSQL_PASSWORD_DJANGO = os.environ["MYSQL_PASSWORD_DJANGO"]
-MYSQL_ROOT_PASSWORD_DJANGO = os.environ["MYSQL_ROOT_PASSWORD_DJANGO"]
+PQL_HOST_DJANGO = os.environ["PQL_HOST_DJANGO"]
+PQL_USER_DJANGO = os.environ["PQL_USER_DJANGO"]
+PQL_DATABASE_DJANGO = os.environ["PQL_DATABASE_DJANGO"]
+PQL_PASSWORD_DJANGO = os.environ["PQL_PASSWORD_DJANGO"]
+PQL_ROOT_PASSWORD_DJANGO = os.environ["PQL_ROOT_PASSWORD_DJANGO"]
 # ROOT_USER = os.environ["ROOT_USER"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -90,12 +90,12 @@ DATABASE_ROUTERS = 'rto_consultas.db_routers.RtoConsultasRouter'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': MYSQL_DATABASE_DJANGO,
-        'USER': MYSQL_USER_DJANGO,
-        'PASSWORD': MYSQL_PASSWORD_DJANGO,
-        'HOST': MYSQL_HOST_DJANGO,
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgressql_psycopg2',
+        'NAME': PQL_DATABASE_DJANGO,
+        'USER': PQL_USER_DJANGO,
+        'PASSWORD': PQL_PASSWORD_DJANGO,
+        'HOST': PQL_HOST_DJANGO,
+        'PORT': '5432',
     },
     'vehicularunc': {
         'ENGINE': 'django.db.backends.mysql',
