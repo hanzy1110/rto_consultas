@@ -83,6 +83,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'rto_consultas.wsgi.application'
+DATABASE_ROUTERS = 'rto_consultas.routers.RtoConsultasRouter'
 
 
 # Database
