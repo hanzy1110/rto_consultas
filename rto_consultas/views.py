@@ -1,6 +1,7 @@
 from django.views.generic import ListView
-from rto_consultas.models import Verificaciones
+from .models import Verificaciones
 
 class ListarVerificaciones(ListView):
 	model = Verificaciones
+	queryset = model.all().using('vehicularunc')
 

@@ -12,11 +12,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+# VEHICULAR_UNC
 MYSQL_HOST = os.environ["MYSQL_HOST"]
 MYSQL_USER = os.environ["MYSQL_USER"]
 MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
 MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
+
+# AUTH DB
+MYSQL_HOST_DJANGO = os.environ["MYSQL_HOST_DJANGO"]
+MYSQL_USER_DJANGO = os.environ["MYSQL_USER_DJANGO"]
+MYSQL_DATABASE_DJANGO = os.environ["MYSQL_DATABASE_DJANGO"]
+MYSQL_PASSWORD_DJANGO = os.environ["MYSQL_PASSWORD_DJANGO"]
+MYSQL_ROOT_PASSWORD_DJANGO = os.environ["MYSQL_ROOT_PASSWORD_DJANGO"]
 # ROOT_USER = os.environ["ROOT_USER"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,6 +90,14 @@ WSGI_APPLICATION = 'rto_consultas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'NAME': MYSQL_DATABASE_DJANGO,
+        'USER': MYSQL_USER_DJANGO,
+        'PASSWORD': MYSQL_PASSWORD_DJANGO,
+        'HOST': MYSQL_HOST_DJANGO,
+        'PORT': '3306',
+    },
+    'vehicularunc': {
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': MYSQL_DATABASE,
         'USER': MYSQL_USER,
         'PASSWORD': MYSQL_PASSWORD,
@@ -89,7 +105,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-ROLE_GROUPS = ["admin", "employee"]
+# ROLE_GROUPS = ["admin", "employee"]
 
 
 # Password validation
