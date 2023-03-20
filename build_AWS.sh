@@ -16,7 +16,7 @@ echo "----------------------<>-----------------------"
 echo Waiting for containers...
 sleep 10
 sudo docker ps -a 
-sudo docker logs -t rto_mysql_db
+sudo docker logs -tf rto_mysql_db
 
 echo "----------------------<>-----------------------"
 sudo docker logs -t --follow rto_consultas
