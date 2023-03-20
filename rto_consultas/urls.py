@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import ListarVerificaciones
+from .views import ListVerificacionesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('verificaciones/', ListarVerificaciones.as_view())
+    path('verificaciones/', ListVerificacionesView.as_view())
 ]
