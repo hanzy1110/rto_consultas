@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rto_consultas'
+    # 'rto_consultas'
 ]
 
 MIDDLEWARE = [
@@ -83,21 +83,21 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'rto_consultas.wsgi.application'
-DATABASE_ROUTERS = 'rto_consultas.db_routers.RtoConsultasRouter'
+# DATABASE_ROUTERS = 'rto_consultas.db_routers.RtoConsultasRouter'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': PQL_DATABASE_DJANGO,
+    #     'USER': PQL_USER_DJANGO,
+    #     'PASSWORD': PQL_PASSWORD_DJANGO,
+    #     'HOST': PQL_HOST_DJANGO,
+    #     'PORT': '5432',
+    # },
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': PQL_DATABASE_DJANGO,
-        'USER': PQL_USER_DJANGO,
-        'PASSWORD': PQL_PASSWORD_DJANGO,
-        'HOST': PQL_HOST_DJANGO,
-        'PORT': '5432',
-    },
-    'vehicularunc': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': MYSQL_DATABASE,
         'USER': MYSQL_USER,

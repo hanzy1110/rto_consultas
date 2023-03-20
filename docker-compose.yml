@@ -1,5 +1,4 @@
 services:
-
   rto_consultas:
     container_name: rto_consultas
     depends_on:
@@ -40,25 +39,25 @@ services:
       timeout: 10s
       retries: 5
 
-  django_db:
-    image: postgres:13
-    container_name: django_db
-    ports:
-      - "${PQL_PORT}:5432"
-    volumes:
-      - django_auth_db:/var/lib/postgresql/data:rw
-    environment:
-      - POSTGRES_USER=${PQL_USER_DJANGO}
-      - POSTGRES_PASSWORD=${PQL_PASSWORD_DJANGO}
-      - POSTGRES_DB=${PQL_DATABASE_DJANGO}
-    restart: unless-stopped
+  # django_db:
+  #   image: postgres:13
+  #   container_name: django_db
+  #   ports:
+  #     - "${PQL_PORT}:5432"
+  #   volumes:
+  #     - django_auth_db:/var/lib/postgresql/data:rw
+  #   environment:
+  #     - POSTGRES_USER=${PQL_USER_DJANGO}
+  #     - POSTGRES_PASSWORD=${PQL_PASSWORD_DJANGO}
+  #     - POSTGRES_DB=${PQL_DATABASE_DJANGO}
+  #   restart: unless-stopped
 
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
-      interval: 10s
-      timeout: 60s
-      retries: 5
-      start_period: 10s  
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready", "-U", "postgres"]
+  #     interval: 10s
+  #     timeout: 60s
+  #     retries: 5
+  #     start_period: 10s  
 
   rto_cron_mysql_bkp:
     image: fradelg/mysql-cron-backup
@@ -85,8 +84,8 @@ services:
     restart: unless-stopped
 
 
-volumes:
-  django_auth_db:
+# volumes:
+  # django_auth_db:
   # grafana-data:
   # prometheus-data:
   # code_path:

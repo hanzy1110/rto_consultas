@@ -506,53 +506,53 @@ class Direcotrestecnicos(models.Model):
         unique_together = (('iddirector', 'idtaller'),)
 
 
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.PositiveSmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+# class DjangoAdminLog(models.Model):
+#     action_time = models.DateTimeField()
+#     object_id = models.TextField(blank=True, null=True)
+#     object_repr = models.CharField(max_length=200)
+#     action_flag = models.PositiveSmallIntegerField()
+#     change_message = models.TextField()
+#     content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE, blank=True, null=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'django_admin_log'
+#         db_table = 'django_admin_log'
 
 
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
+# class DjangoContentType(models.Model):
+#     app_label = models.CharField(max_length=100)
+#     model = models.CharField(max_length=100)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
+#         db_table = 'django_content_type'
+#         unique_together = (('app_label', 'model'),)
 
 
-class DjangoMigrations(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
+# class DjangoMigrations(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     app = models.CharField(max_length=255)
+#     name = models.CharField(max_length=255)
+#     applied = models.DateTimeField()
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'django_migrations'
+#         db_table = 'django_migrations'
 
 
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
+# class DjangoSession(models.Model):
+#     session_key = models.CharField(primary_key=True, max_length=40)
+#     session_data = models.TextField()
+#     expire_date = models.DateTimeField()
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'django_session'
+#         db_table = 'django_session'
 
 
 class Equipos(models.Model):

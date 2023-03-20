@@ -12,6 +12,7 @@ sudo docker-compose --env-file envfiles/.env run --rm rto_consultas python manag
 
 sudo docker-compose --env-file envfiles/.env up -d 
 
+echo "----------------------<>-----------------------"
 echo Waiting for containers...
 sleep 10
 sudo docker ps -a 
