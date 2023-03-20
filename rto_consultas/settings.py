@@ -97,8 +97,7 @@ DATABASES = {
     #     'HOST': PQL_HOST_DJANGO,
     #     'PORT': '5432',
     # },
-    'default':{},
-    'vehicularunc': {
+    'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': MYSQL_DATABASE,
         'USER': MYSQL_USER,
