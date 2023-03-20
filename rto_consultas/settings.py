@@ -45,12 +45,12 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    # 'django.contrib.admin',
-    # 'django.contrib.auth',
-    # 'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
-    # 'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
     'rto_consultas'
 ]
 
@@ -97,7 +97,8 @@ DATABASES = {
     #     'HOST': PQL_HOST_DJANGO,
     #     'PORT': '5432',
     # },
-    'default': {
+    'default':{},
+    'vehicularunc': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': MYSQL_DATABASE,
         'USER': MYSQL_USER,
