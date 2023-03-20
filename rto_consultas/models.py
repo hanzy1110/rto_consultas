@@ -155,79 +155,79 @@ class Auditoriasequipos(models.Model):
         unique_together = (('idauditoria', 'idtaller', 'idequipo'),)
 
 
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
+# class AuthGroup(models.Model):
+#     name = models.CharField(unique=True, max_length=150)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_group'
+#         db_table = 'auth_group'
 
 
-class AuthGroupPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
-    permission = models.ForeignKey('AuthPermission', on_delete=models.CASCADE)
+# class AuthGroupPermissions(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
+#     permission = models.ForeignKey('AuthPermission', on_delete=models.CASCADE)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
+#         db_table = 'auth_group_permissions'
+#         unique_together = (('group', 'permission'),)
 
 
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE)
-    codename = models.CharField(max_length=100)
+# class AuthPermission(models.Model):
+#     name = models.CharField(max_length=255)
+#     content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE)
+#     codename = models.CharField(max_length=100)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
+#         db_table = 'auth_permission'
+#         unique_together = (('content_type', 'codename'),)
 
 
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
+# class AuthUser(models.Model):
+#     password = models.CharField(max_length=128)
+#     last_login = models.DateTimeField(blank=True, null=True)
+#     is_superuser = models.IntegerField()
+#     username = models.CharField(unique=True, max_length=150)
+#     first_name = models.CharField(max_length=150)
+#     last_name = models.CharField(max_length=150)
+#     email = models.CharField(max_length=254)
+#     is_staff = models.IntegerField()
+#     is_active = models.IntegerField()
+#     date_joined = models.DateTimeField()
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_user'
+#         db_table = 'auth_user'
 
 
-class AuthUserGroups(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
-    group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
+# class AuthUserGroups(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+#     group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
+#         db_table = 'auth_user_groups'
+#         unique_together = (('user', 'group'),)
 
 
-class AuthUserUserPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
-    permission = models.ForeignKey(AuthPermission, on_delete=models.CASCADE)
+# class AuthUserUserPermissions(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+#     permission = models.ForeignKey(AuthPermission, on_delete=models.CASCADE)
 
-    class Meta:
-        app_label = 'rto_consultas'
+#     class Meta:
+#         app_label = 'rto_consultas'
         
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
+#         db_table = 'auth_user_user_permissions'
+#         unique_together = (('user', 'permission'),)
 
 
 class Categorias(models.Model):
