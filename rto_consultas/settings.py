@@ -19,14 +19,6 @@ MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
 MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
-# AUTH DB
-PQL_HOST_DJANGO = os.environ["PQL_HOST_DJANGO"]
-PQL_USER_DJANGO = os.environ["PQL_USER_DJANGO"]
-PQL_DATABASE_DJANGO = os.environ["PQL_DATABASE_DJANGO"]
-PQL_PASSWORD_DJANGO = os.environ["PQL_PASSWORD_DJANGO"]
-PQL_ROOT_PASSWORD_DJANGO = os.environ["PQL_ROOT_PASSWORD_DJANGO"]
-# ROOT_USER = os.environ["ROOT_USER"]
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -69,7 +61,7 @@ ROOT_URLCONF = 'rto_consultas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,14 +81,6 @@ WSGI_APPLICATION = 'rto_consultas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': PQL_DATABASE_DJANGO,
-    #     'USER': PQL_USER_DJANGO,
-    #     'PASSWORD': PQL_PASSWORD_DJANGO,
-    #     'HOST': PQL_HOST_DJANGO,
-    #     'PORT': '5432',
-    # },
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': MYSQL_DATABASE,
