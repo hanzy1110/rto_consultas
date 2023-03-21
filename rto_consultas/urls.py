@@ -19,5 +19,6 @@ from .views import ListVerificacionesView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("/", include("django.contrib.auth.urls")),  
     path('verificaciones/', ListVerificacionesView.as_view())
 ]

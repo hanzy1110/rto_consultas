@@ -59,6 +59,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'rto_consultas.urls'
 
+LOGIN_REDIRECT_URL = "/"
+
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
