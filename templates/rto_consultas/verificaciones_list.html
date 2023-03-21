@@ -1,5 +1,9 @@
-<h1> Verificaciones </h1>
+{% extends base.html %}
+
+{% block title %}<h1> Verificaciones </h1>{% endblock %}
+
 {% block content %}
+{% if user.is_authenticated %}
 <h2>Listar verificaciones</h2>
 <ul>
   {% for verificacion in object_list %}
@@ -7,4 +11,8 @@
   <li>{{ verificacion }}</li>
   {% endfor %}
 </ul>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
+
 {% endblock %}
