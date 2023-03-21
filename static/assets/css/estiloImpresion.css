@@ -1,0 +1,118 @@
+@page { 
+	size:  A4; 
+	margin-top: 4.2cm;
+	margin-left: 2cm;
+	margin-bottom: 0cm;
+}
+
+body {
+	background-color: #fff;
+	font-family: Arial, Geneva, sans-serif;
+	font-size: 8pt;
+	margin: 0px;
+	padding: 0px;
+}
+
+.tblForm
+{	
+	text-align: left;
+	margin:  0px;
+	padding: 0px;
+	width: 17.0cm;
+}
+
+.tblForm .MasGR
+{	
+	font-family: Arial, Geneva, sans-serif;
+	font-size: 10pt;
+}
+
+.tblForm td
+{	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:8pt;
+	margin: 0px;
+	padding: 0px;
+}
+
+.conBor td{
+	border: 1px solid;
+}
+
+.sinBor td{
+	border: 0px none;
+}
+ 
+#datosComp{
+	height: 16cm;
+	width: 17.0cm;
+	margin: 0px;
+	padding: 0px;
+	border: 0px none;
+}
+
+#datosEnt{	
+	width: 8.5cm;
+	margin: 3.2cm 0cm 0cm 0cm;
+	padding: 0px;
+	display: block;
+}
+#datosEnt table td{
+font-family: Arial, Geneva, sans-serif;
+font-size: 7pt;
+}
+
+#datosEnt table tr.esp td{
+font-family: Arial, Geneva, sans-serif;
+font-size: 8pt;
+}
+
+#templatemo_header{
+display: none;
+}
+
+#templatemo_menu{
+	display: none;
+}
+
+#templatemo_footer_wrapper{
+	display: none;
+}
+
+#templatemo_wrapper{
+	margin: 0px;
+	width: 100%;
+	padding: 0px;
+}
+
+#templatemo_main{
+padding: 0px;
+margin: 0px;
+width: 100%;
+}
+
+.col_w900 { width: 100%; padding: 0px; margin-bottom: 0px; }
+.col_w900_last {padding: 0px; margin: 0px;}
+
+#btnImprimir{
+display: none;
+}
+
+.etiqB{
+font-weight: bold;
+}
+
+input[type="button"]{
+display: none;
+}
+
+#divBusqXCat
+{
+	display: none;
+}
+
+div.saltopagina{
+display:block;
+page-break-before:always;
+}
+
