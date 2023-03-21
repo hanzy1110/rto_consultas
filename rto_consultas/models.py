@@ -1489,6 +1489,9 @@ class Verificaciones(models.Model):
     firma = models.CharField(db_column='Firma', max_length=100, blank=True, null=True)  # Field name made lowercase.
     nrofactura = models.CharField(db_column='nroFactura', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"Verificacion: {self.idverificacion}, para el vehiculo: {self.dominiovehiculo}"
+
     class Meta:
         app_label = 'rto_consultas'
         

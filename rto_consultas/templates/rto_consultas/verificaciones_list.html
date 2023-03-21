@@ -4,8 +4,7 @@
     <ul>
         {% for verificacion in object_list %}
             Verificacion:
-            <li>Dominio: {{ verificacion.dominiovehiculo }}</li>
-            <li>ID: {{ verificacion.idverificacion }}</li>
+            <li>{{ verificacion.__str__() }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
