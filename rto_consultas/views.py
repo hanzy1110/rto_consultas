@@ -6,5 +6,5 @@ class ListVerificacionesView(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['Certificados'] = self.model.objects.all()[:5]
+		context['Certificados'] = self.model.objects.all().prefectch_related()[:5]
 		return context
