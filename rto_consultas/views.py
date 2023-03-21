@@ -4,8 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Verificaciones, Certificadosasignadosportaller
 
 class ListVerificacionesView(ListView, LoginRequiredMixin):
-    authentication_classes = [authentication.TokenAuthentication]
-
+	# authentication_classes = [authentication.TokenAuthentication]
 	model = Verificaciones
 	paginate_by = 10
 
