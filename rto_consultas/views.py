@@ -6,7 +6,8 @@ class ListVerificacionesView(ListView):
 	paginate_by = 10
 
 	def get_queryset(self):
-		return self.model.objects.all().prefectch_related()[:5]
+		# return self.model.objects.prefectch_related().all()[:5]
+		return self.model.objects.all()[:5]
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)

@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class Adjuntos(models.Model):
     idarchivo = models.IntegerField(db_column='idArchivo', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=200)  # Field name made lowercase.
