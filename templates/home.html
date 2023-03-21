@@ -9,4 +9,5 @@ Hi {{ user.username }}!
 <p>You are not logged in</p>
 <a href="{% url 'login' %}">Log In</a>
 {% endif %}
+<p><a href="{% url 'logout' %}">Log Out</a></p>
 {% endblock %}
