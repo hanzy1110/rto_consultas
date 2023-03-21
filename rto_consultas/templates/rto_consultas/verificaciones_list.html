@@ -3,7 +3,9 @@
     <h2>Listar verificaciones</h2>
     <ul>
         {% for verificacion in object_list %}
-            <li>{{ verificacion }}</li>
+            Verificacion:
+            <li>Dominio: {{ verificacion.dominiovehiculo }}</li>
+            <li>ID: {{ verificacion.idverificacion }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
