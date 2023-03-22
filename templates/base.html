@@ -1,106 +1,146 @@
-<!-- templates/base.html -->
+{% load static %}
+
+{% block html %}
 <!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+<html dir="ltr" lang="en">
+{% block head %}
+   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
+                <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/animation.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/asColorPicker.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/fullcalendar.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/calendar.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/responsive.bootstrap4.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/fontawesome-all.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/jquery.gritter.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/jquery.minicolors.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/jquery.steps.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/materialdesignicons.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/multicheck.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/perfect-scrollbar.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/quill.core.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/quill.snow.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/select2.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/steps.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/themify-icons.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/weather-icons.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/weather-icons.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/float-chart.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/style.min.css' %}" rel="stylesheet"/>
+            <link href="{% static 'css/custom.css' %}" rel="stylesheet"/>
+    <!-- HTML5 Shim and Respond.js' %} IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js' %} doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js' %}"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js' %}/1.4.2/respond.min.js' %}"></script>
+<![endif]-->
+   {% block extra_style %}{% endblock extra_style %}
 </head>
-
-<body>
-  {% block header %}
-  <!--Preloader-->
-  <div class="preloader-wrapper">
+{% endblock head %}
+   
+   {% block body %}
+   
+       <body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css' %} -->
+    <!-- ============================================================== -->
     <div class="preloader">
-      {% load static %}
-      <img src='{% static "images/loader.gif" %}'>
-    </div>
-  </div>
-  <!--Header-->
-  <div class="header py-4">
-    <div class="container">
-      <div class="d-flex">
-        <a class="header-brand" href="{% url 'login' %}">
-          {% load static %}
-          <img src='{% static "images/banner_taller_nqn_1.png" %}' id="bannerRN1" class="h-8" alt="RTO Neuquén Logo">
-          {% load static %}
-          <img src='{% static "images/banner_taller_nqn_2.png" %}' id="bannerRN2" class="h-8" alt="RTO Neuquén Logo">
-        </a>
-        <div class="d-flex order-lg-2 ml-auto">
-          <div class="dropdown">
-            <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-              <span class="avatar" style="background-image: url(./static/images/blank.png)"></span>
-              <span class="ml-2 d-none d-lg-block">
-                <span class="text-default">
-                  {{ user.username }}
-                </span>
-                <small class="text-muted d-block mt-1">
-                  AQUI IRIA ID TALLER
-                </small>
-              </span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-              <a class="dropdown-item" href="{% url 'logout' %}">
-                <i class="dropdown-icon fe fe-log-out"></i> Salir
-              </a>
-            </div>
-          </div>
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
-        <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse"
-          data-target="#headerMenuCollapse">
-          <span class="header-toggler-icon"></span><span id="notiToogle" style="display:none;"><i class='fa fa-circle'
-              style='font-size:7px;color:#bd0d0d;'></i></span>
-        </a>
-      </div>
     </div>
-  </div>
-  <!-- INICIA EL MENU -->
-
-  <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg order-lg-first">
-          <!-- CONTENIDO DEL MENU DE CENTRAL -->
-          <div id='cssmenu'>
-            <ul>
-              {% if user.is_authenticated %}
-              <ul>
-                <li><a href='CargarHabilitacion.php'><span>Cargar orden inspección</span></a></li>
-                <li><a href='ListadoHabilitaciones.php'><span>Listar órdenes inspección</span></a></li>
-              </ul>
-
-              <ul>
-                <li><a href='ListadoVerificaciones.php'><span>Listar Revisiones</span></a></li>
-              </ul>
-              <li class='has-sub '><a href='#'><span>Veh&iacute;culos</span></a>
-                <ul>
-                  <li><a href='ListadoVehiculos.php'><span>Listar Veh&iacute;culos</span></a></li>
-                </ul>
-              </li>
-
-              <li><a href='Talleres.php'><span>Listar Plantas</span></a></li>
-              </li>
-
-              <!--<li><a href='http://200.58.100.32/cccf/listadoCertificados.php' target='_blank'><span>CCCF</span></a></li>-->
-
-            </ul>
-          </div>
-        </div>
-      </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+         {% include 'dashboard/includes/header.html' %}
+         {% include 'dashboard/includes/sidebar.html' %}
+          <div class="page-wrapper">
+           {% block content %}{% endblock content %}
+           {% include 'dashboard/includes/footer.html' %}
+         </div>
     </div>
-    <!--Back-to-top button-->
-    <span id="toTheTop" onclick="topFunction()" title="Volver arriba"><i class="fe fe-chevron-up"></i></span>
 
-    <!-- TERMINA CONTENIDO DEL MENU -->
-    {% endblock %}
+    {% block script %}
+    
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-    <main>
-      {% block content %}
-      {% endblock %}
-    </main>
-    {% block footer %}
+        <script src="{% static 'js/perfect-scrollbar.jquery.min.js' %}"></script>
+        <script src="{% static 'js/sparkline.js' %}"></script>
+        <script src="{% static 'js/waves.js' %}"></script>
+        <script src="{% static 'js/sidebarmenu.js' %}"></script>
+        <script src="{% static 'js/custom.min.js' %}"></script>
 
-    {% endblock %}
-</body>
+        <script src="{% static 'js/excanvas.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.pie.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.time.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.time.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.stack.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.crosshair.js' %}"></script>
+        <script src="{% static 'js/jquery.flot.tooltip.min.js' %}"></script>
+        <script src="{% static 'js/moment.min.js' %}"></script>
+        <script src="{% static 'js/chart-page-init.js' %}"></script>
+        <script src="{% static 'js/app-style-switcher.js' %}"></script>
+        <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'js/datatable-checkbox-init.js' %}"></script>
+        <script src="{% static 'js/datatables.min.js' %}"></script>
+        <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'js/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'js/responsive.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'js/jquery.charts-sparkline.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/jquery-asColor.min.js' %}"></script>
+        <script src="{% static 'js/jquery-asGradient.js' %}"></script>
+        <script src="{% static 'js/jquery-asColorPicker.min.js' %}"></script>
+        <script src="{% static 'js/jquery.minicolors.min.js' %}"></script>
+        <script src="{% static 'js/jquery.multicheck.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'js/toastr.min.js' %}"></script>
+        <script src="{% static 'js/select2.full.min.js' %}"></script>
+        <script src="{% static 'js/select2.min.js' %}"></script>
+        <script src="{% static 'js/jquery.inputmask.bundle.min.js' %}"></script>
+        <script src="{% static 'js/quill.min.js' %}"></script>
+        <script src="{% static 'js/mask.init.js' %}"></script>
+        <script src="{% static 'js/meg.init.js' %}"></script>
+        <script src="{% static 'js/cal-init.js' %}"></script>
+        <script src="{% static 'constant/strings.js' %}"></script>
+        <script src="{% static 'constant/validator.js' %}"></script>
 
-</html>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#zero_config').DataTable();
+            });
+        </script>
+
+    {% block extra_script %}{% endblock extra_script %}
+
+    
+    {% endblock script %}
+
+    </body>
+   {% endblock body %}
+
+
+{% endblock html %}
