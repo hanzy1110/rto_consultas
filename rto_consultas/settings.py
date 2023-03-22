@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rto_consultas',
-    'dashboard'
+    'rto_consultas'
 ]
 
 MIDDLEWARE = [
