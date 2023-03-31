@@ -1,24 +1,4 @@
 services:
-  rto_consultas:
-    container_name: rto_consultas
-    depends_on:
-      - ${MYSQL_HOST}
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    
-    env_file: ./envfiles/.env
-    ports:
-      - "${WEB_PORT}:8000"  #Web port 
-    # enviroment:
-    #   - WEB_PORT=${WEB_PORT}
-    restart: unless-stopped
-    command: ["/home/code/entrypoint.sh"]
-    # command: ["sh"]
-    # volumes:
-    #   - "${CODE_PATH}:/home/tmp"
-    # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
-
   rto_mysql_db:
     image: mysql/mysql-server:8.0
     container_name: ${MYSQL_HOST}
@@ -62,6 +42,26 @@ services:
       # Make it small
       - GZIP_LEVEL=9
     restart: unless-stopped
+
+  rto_consultas:
+    container_name: rto_consultas
+    depends_on:
+      - ${MYSQL_HOST}
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    
+    env_file: ./envfiles/.env
+    ports:
+      - "${WEB_PORT}:8000"  #Web port 
+    # enviroment:
+    #   - WEB_PORT=${WEB_PORT}
+    restart: unless-stopped
+    command: ["/home/code/entrypoint.sh"]
+    # command: ["sh"]
+    # volumes:
+    #   - "${CODE_PATH}:/home/tmp"
+    # command: sh -c "python manage.py runserver 0.0.0.0:${WEB_PORT}"
 
 
 # volumes:
