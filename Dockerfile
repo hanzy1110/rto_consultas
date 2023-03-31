@@ -11,6 +11,7 @@ RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 # create and activate virtual environment
 # using final folder name to avoid path issues with packages
 
+RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
 RUN python -m venv /home/venv
 ENV PATH="/home/venv/bin:$PATH"
 
