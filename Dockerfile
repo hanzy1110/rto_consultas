@@ -5,17 +5,17 @@ FROM python:3.10 AS builder-image
 # ARG DEBIAN_FRONTEND=noninteractive
 
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3.10-dev python3.10-venv python3-pip python3-wheel build-essential && \
-RUN apt-get install -y default-libmysqlclient-dev libpq-dev python3-pip && \
+RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # create and activate virtual environment
 # using final folder name to avoid path issues with packages
+RUN pip3 install --upgrade pip
 RUN python -m venv /home/venv
 ENV PATH="/home/venv/bin:$PATH"
 
 # install requirements
 COPY requirements.txt .
-RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir wheel
 RUN pip3 install --no-cache-dir -r requirements.txt
 
