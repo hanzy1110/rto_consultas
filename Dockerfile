@@ -1,5 +1,5 @@
 # using ubuntu LTS version
-FROM python:3.9 AS builder-image
+FROM python:3.10.10-slim AS builder-image
 
 # avoid stuck build due to user prompt
 # ARG DEBIAN_FRONTEND=noninteractive
@@ -11,8 +11,8 @@ RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 # create and activate virtual environment
 # using final folder name to avoid path issues with packages
 
-RUN curl https://www.python.org/ftp/python/3.9/get-pip.py -o get-pip.py
-RUN python get-pip.py
+# RUN curl https://www.python.org/ftp/python/3.9/get-pip.py -o get-pip.py
+# RUN python get-pip.py
 # RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
 RUN python -m venv /home/venv
 ENV PATH="/home/venv/bin:$PATH"
@@ -23,7 +23,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir wheel
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-FROM python:3.9 AS runner-image
+FROM python:3.10.10-slim  AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
 ARG CACHEBUST=1
 
