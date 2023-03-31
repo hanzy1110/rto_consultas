@@ -1,5 +1,5 @@
 # using ubuntu LTS version
-FROM python:3.10 AS builder-image
+FROM python:3.9 AS builder-image
 
 # avoid stuck build due to user prompt
 # ARG DEBIAN_FRONTEND=noninteractive
@@ -22,7 +22,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir wheel
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-FROM python:3.10 AS runner-image
+FROM python:3.9 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
 ARG CACHEBUST=1
 
