@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv('envfiles/.env')
+
 # VEHICULAR_UNC
 MYSQL_HOST = os.environ["MYSQL_HOST"]
 MYSQL_USER = os.environ["MYSQL_USER"]
