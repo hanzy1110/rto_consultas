@@ -19,9 +19,9 @@ from .views import ListVerificacionesView
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     # path("accounts/", include("django.contrib.auth.urls")),  
     # path('verificaciones/', ListVerificacionesView.as_view()),
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('', include('admin_soft.urls')), 
+    path('', include('admin_soft.urls'), name=admin), 
 ]
