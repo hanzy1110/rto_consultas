@@ -1,7 +1,6 @@
 #!/bin/bash
 # rm ./event_manager/migrations/*
 echo "Working dir"
-echo $(pwd)
 
 sudo docker-compose --env-file envfiles/.env down --remove-orphans 
 sudo docker-compose --env-file envfiles/.env build --progress plain
@@ -22,4 +21,3 @@ echo "----------------------<>-----------------------"
 sudo docker logs -t --follow rto_consultas
 
 # sudo docker exec -it crm_api bash 
-
