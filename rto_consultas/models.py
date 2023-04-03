@@ -1497,6 +1497,11 @@ class Verificaciones(models.Model):
         
         db_table = 'verificaciones'
         unique_together = (('idverificacion', 'idtaller'),)
+        indexes = [
+            models.Index(fields=('idverificacion', 'idtaller')),
+            models.Index(fields=('idtipouso')),
+            models.Index(fields=('idhabilitacion')),
+        ]
 
 
 class Verificacionespdf(models.Model):
