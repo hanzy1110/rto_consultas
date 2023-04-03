@@ -1,0 +1,45 @@
+services:
+  rto_mysql_db:
+    image: mysql/mysql-server:8.0
+    container_name: rto_mysql_db
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ${MYSQL_VOLUME}:/var/lib/mysql
+      - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: mysqladmin -p${MYSQL_ROOT_PASSWORD} ping -h localhost
+      interval: 20s
+      timeout: 10s
+      retries: 5
+
+  rto_cron_mysql_bkp:
+    image: fradelg/mysql-cron-backup
+    # build: .
+    container_name: rto_cron_mysql_bkp
+    # command: "/restore.sh /backup/latest.${MYSQL_DATABASE}.sql.gz"
+    depends_on:
+      - rto_mysql_db
+    volumes:
+      - "${BACKUP_PATH}:/backup"
+    environment:
+      - MYSQL_HOST=rto_mysql_db
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MAX_BACKUPS=5
+      - INIT_BACKUP=0
+      # Every day at 03:00
+      - CRON_TIME=0 23 * * *
+      # - CRON_TIME=* * * * *
+      # Make it small
+      - GZIP_LEVEL=9
+    restart: unless-stopped
+
