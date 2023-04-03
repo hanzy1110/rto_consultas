@@ -2,14 +2,14 @@
 # rm ./event_manager/migrations/*
 echo "Working dir"
 
-sudo docker-compose -f docker-compose.db.yml --env-file envfiles/db/.env down --remove-orphans 
-sudo docker-compose -f docker-compose.db.yml --env-file envfiles/db/.env build --progress plain
+sudo docker-compose --env-file .env down --remove-orphans 
+sudo docker-compose --env-file .env build --progress plain
 
 echo MAKING AND APPLYING MIGRATIONS...
-# sudo docker-compose --env-file envfiles/.env run --rm rto_consultas bash -c "python manage.py makemigrations && python manage.py migrate --fake-initial"
+# sudo docker-compose --env-file v run --rm rto_consultas bash -c "python manage.py makemigrations && python manage.py migrate --fake-initial"
 # sudo docker-compose --env-file .env run --rm crm_api sh -c "python manage.py migrate"
 
-sudo docker-compose --env-file envfiles/.env up -d 
+sudo docker-compose --env-file .env up -d 
 
 echo "----------------------<>-----------------------"
 echo Waiting for containers...
