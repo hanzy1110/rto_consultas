@@ -3,7 +3,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('rto_consultas', __file__),
+        ('rto_consultas', '0001_add_idx_verificaciones.py'),
     ]
 
     operations = [
