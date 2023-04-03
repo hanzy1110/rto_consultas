@@ -14,6 +14,8 @@ RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 # RUN curl https://www.python.org/ftp/python/3.9/get-pip.py -o get-pip.py
 # RUN python get-pip.py
 # RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
+COPY get-pip.py .
+RUN python ./get-pip.py
 RUN python -m venv /home/venv
 ENV PATH="/home/venv/bin:$PATH"
 
