@@ -1,4 +1,3 @@
-# using ubuntu LTS version
 FROM continuumio/miniconda3 AS builder-image
 
 # avoid stuck build due to user prompt
@@ -12,22 +11,8 @@ RUN apt-get install -y default-libmysqlclient-dev libpq-dev build-essential mysq
 # create and activate virtual environment
 # using final folder name to avoid path issues with packages
 
-# RUN curl https://www.python.org/ftp/python/3.9/get-pip.py -o get-pip.py
-# RUN python get-pip.py
-# RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
-# RUN python -m venv /home/venv
-# ENV PATH="/home/venv/bin:$PATH"
-
 # install requirements
 
-# ENV PIP_VERBOSE=1
-# RUN mkdir /home/venv
-# ENV PIP_TARGET=/home/venv
-
-# COPY get-pip.py .
-# RUN python ./get-pip.py
-
-# RUN conda create -n venv python=3.10 -y && conda init bash && conda activate venv
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install wheel
