@@ -1,11 +1,12 @@
 # using ubuntu LTS version
-FROM python:3.10.10-bullseye AS builder-image
+FROM continuumio/miniconda3 AS builder-image
 
 # avoid stuck build due to user prompt
-# ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
+RUN apt-get update && apt-get upgrade -y
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3.10-dev python3.10-venv python3-pip python3-wheel build-essential && \
-RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
+RUN apt-get install -y default-libmysqlclient-dev libpq-dev build-essential && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # create and activate virtual environment
@@ -14,41 +15,39 @@ RUN apt-get install -y default-libmysqlclient-dev libpq-dev && \
 # RUN curl https://www.python.org/ftp/python/3.9/get-pip.py -o get-pip.py
 # RUN python get-pip.py
 # RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python
-COPY get-pip.py .
-RUN python ./get-pip.py
-RUN python -m venv /home/venv
-ENV PATH="/home/venv/bin:$PATH"
+# RUN python -m venv /home/venv
+# ENV PATH="/home/venv/bin:$PATH"
 
 # install requirements
-COPY requirements.txt .
-RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir wheel
-RUN pip3 install --no-cache-dir -r requirements.txt
 
-FROM python:3.10.10-bullseye AS runner-image
+# ENV PIP_VERBOSE=1
+# RUN mkdir /home/venv
+# ENV PIP_TARGET=/home/venv
+
+# COPY get-pip.py .
+# RUN python ./get-pip.py
+
+# RUN conda create -n venv python=3.10 -y && conda init bash && conda activate venv
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install wheel
+RUN pip install -r requirements.txt
+
+# FROM continuumio/miniconda3 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
-ARG CACHEBUST=1
 
 RUN apt-get update && apt-get install -y default-libmysqlclient-dev libpq-dev && \
 	apt-get clean && rm -rf /var/lib/apt/lists/* 
 
 # RUN apt-get -y update && apt-get install -y libmysqlclient-dev libpq-dev 
 
-COPY --from=builder-image /home/venv /home/venv
+# COPY --from=builder-image /home/venv /home/venv
 
-# copy project files
 RUN mkdir /home/code
 RUN mkdir /home/tmp
 WORKDIR /home/code
-# RUN mkdir ./rto_consultas
-# COPY /home/ubuntu/git/rto_consultas/manage.py .
-# COPY /home/ubuntu/git/rto_consultas/entrypoint.sh .
-# COPY /home/ubuntu/git/rto_consultas/rto_consultas/* ./rto_consultas
 
 COPY . .
-RUN echo "OK VERSION?"
-RUN ls ./rto_consultas/settings.py
-
 RUN chmod +x entrypoint.sh
 
 # Expose port
@@ -58,6 +57,7 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1
 
 # activate virtual environment
+
 ENV VIRTUAL_ENV=/home/venv
 ENV PATH="/home/venv/bin:$PATH"
 # CMD ["python manage.py runserver", "-D", "FOREGROUND"]
