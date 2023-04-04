@@ -15,6 +15,7 @@ from pathlib import Path
 # VEHICULAR_UNC
 MYSQL_HOST = os.environ["MYSQL_HOST"]
 MYSQL_USER = os.environ["MYSQL_USER"]
+MYSQL_PORT = os.environ["MYSQL_PORT"]
 MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
 MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
@@ -100,7 +101,7 @@ DATABASES = {
         'USER': MYSQL_USER,
         'PASSWORD': MYSQL_PASSWORD,
         'HOST': MYSQL_HOST,
-        'PORT': '3306',
+        'PORT': MYSQL_PORT,
     }
 }
 # ROLE_GROUPS = ["admin", "employee"]
