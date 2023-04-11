@@ -22,8 +22,8 @@ class ListVerificacionesView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields()
-        context["query_fields"] = self.model._meta.fields()
+        context["fields"] = self.model._meta.fields
+        context["query_fields"] = self.model._meta.fields
         return context
 
 
@@ -45,8 +45,8 @@ class ListCertificadosAssignView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields()
-        context["query_fields"] = self.model._meta.fields()
+        context["fields"] = self.model._meta.fields
+        context["query_fields"] = self.model._meta.fields
         return context
 
 
@@ -68,8 +68,8 @@ class ListVehiculosView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields()
-        context["query_fields"] = self.model._meta.fields()
+        context["fields"] = self.model._meta.fields
+        context["query_fields"] = self.model._meta.fields
         return context
 
 
@@ -91,6 +91,6 @@ class ListCertificadosView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields()
-        context["query_fields"] = self.model._meta.fields()
+        context["fields"] = self.model._meta.fields
+        context["query_fields"] = self.model._meta.fields
         return context
