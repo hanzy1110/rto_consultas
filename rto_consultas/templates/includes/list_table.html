@@ -11,27 +11,5 @@
   {% endfor %}
   <button type="submit">Search</button>
 </form>
-<table>
-  <thead>
-    <tr>
-      {% for field in fields %}
-      <td>{{ field.name }}</td>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for object in object_list %}
-    <tr>
-      {% for field in fields %}
-      {% load getattr %}
-      <td>{% get_model_attr object field.name %}</td>
-      {% endfor %}
-    </tr>
-    {% empty %}
-    <tr>
-      <td colspan="4">No se encontraron objetos</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+{% render_table table %}
 {% endblock %}
