@@ -22,7 +22,7 @@
     <tr>
       {% for field in fields %}
       {% load getattr %}
-      <td>{% get_by_name object field.name %}</td>
+      <td>{% get_model_attr object field.name %}</td>
       {% endfor %}
     </tr>
     {% empty %}

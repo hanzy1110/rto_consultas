@@ -19,6 +19,9 @@ def get_attr(object, arg):
     else:
         return object
 
+@register.simple_tag(takes_context=True)
+def get_model_attr(context, instance, name):
+    return get_attr(instance, name)
 
 @register.simple_tag(takes_context=True)
 def get_by_name(context, name):
