@@ -21,7 +21,8 @@
     {% for object in object_list %}
     <tr>
       {% for field in fields %}
-      <td>{% getattr(model, field.name) %}</td>
+      {% load getattr %}
+      <td>{{ model|getattr: field.name }}</td>
       {% endfor %}
     </tr>
     {% empty %}
