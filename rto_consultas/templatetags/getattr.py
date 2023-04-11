@@ -12,8 +12,13 @@ def get_attr(object, arg):
         if type(getattr(object, str(arg))) == types.MethodType:
             return attr()
         return attr
-    elif hasattr(object, 'has_key') and object.has_key(arg):
-        return object[arg]
+    elif hasattr(object, 'has_key'):
+        try:
+            if object.has_key(arg)
+                return object[arg]
+        except Exception as e:
+            print(e)
+
     elif numeric_test.match(str(arg)) and len(object) > int(arg):
         return object[int(arg)]
     else:

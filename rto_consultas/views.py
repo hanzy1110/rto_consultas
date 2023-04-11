@@ -1,5 +1,6 @@
-from django.views.generic import SingleTableView
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+# import django_tables2 as tables
 from django_tables2 import SingleTableView
 
 from .models import Verificaciones, Certificadosasignadosportaller, Vehiculos, Certificados
