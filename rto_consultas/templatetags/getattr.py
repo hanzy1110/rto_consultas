@@ -14,10 +14,11 @@ def get_attr(object, arg):
         return attr
     elif hasattr(object, 'has_key'):
         try:
-            if object.has_key(arg)
+            if object.has_key(arg):
                 return object[arg]
         except Exception as e:
             print(e)
+            return object.filter(**{f"{arg}":arg})
 
     elif numeric_test.match(str(arg)) and len(object) > int(arg):
         return object[int(arg)]
