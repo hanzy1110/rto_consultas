@@ -1,15 +1,21 @@
-from django.views.generic import ListView
+from django.views.generic import SingleTableView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django_tables2 import SingleTableView
 
 from .models import Verificaciones, Certificadosasignadosportaller, Vehiculos, Certificados
 
 
-class ListVerificacionesView(ListView, LoginRequiredMixin):
+class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
     paginate_by = 10
     template_name = "includes/list_table.html"
     context_object_name = "Verificaciones"
+    query_fields = {
+        "dominiovehiculo",
+        "idestado",
+        "idtipouso"
+    }
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
@@ -22,17 +28,23 @@ class ListVerificacionesView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields
-        context["query_fields"] = self.model._meta.fields
+        fields = self.model._meta.fields
+        context["fields"] = fields
+        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
         return context
 
 
-class ListCertificadosAssignView(ListView, LoginRequiredMixin):
+class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
     paginate_by = 10
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
+    query_fields = {
+        "nrocertificado",
+        "disponible",
+        "replicado"
+    }
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
@@ -45,17 +57,23 @@ class ListCertificadosAssignView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields
-        context["query_fields"] = self.model._meta.fields
+        fields = self.model._meta.fields
+        context["fields"] = fields
+        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
         return context
 
 
-class ListVehiculosView(ListView, LoginRequiredMixin):
+class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Vehiculos
     template_name = "includes/list_table.html"
     paginate_by = 10
     context_object_name = "Vehiculos"
+    query_fields = {
+        "dominio",
+        "idtipouso",
+        "marca"
+    }
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
@@ -68,17 +86,24 @@ class ListVehiculosView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields
-        context["query_fields"] = self.model._meta.fields
+        fields = self.model._meta.fields
+        context["fields"] = fields
+        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
         return context
 
 
-class ListCertificadosView(ListView, LoginRequiredMixin):
+class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
     template_name = "includes/list_table.html"
     paginate_by = 10
     context_object_name = "Certificados"
+    query_fields = {
+        "nrocertificado",
+        "idtaller",
+        "fecha",
+        "anulado"
+        }
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
@@ -91,6 +116,7 @@ class ListCertificadosView(ListView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["fields"] = self.model._meta.fields
-        context["query_fields"] = self.model._meta.fields
+        fields = self.model._meta.fields
+        context["fields"] = fields
+        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
         return context
