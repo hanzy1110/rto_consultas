@@ -15,13 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import ListVerificacionesView
+import views
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("accounts/", include("django.contrib.auth.urls")),  
-    # path('verificaciones/', ListVerificacionesView.as_view()),
+    # path("accounts/", include("django.contrib.auth.urls")),
+    path('verificaciones/', views.ListVerificacionesView.as_view(),
+         name="verificaciones"),
+    path('certs_assignados/', views.ListCertificadosAssignView.as_view(),
+         name="verificaciones"),
+    path('certificados/', views.ListCertificadosView.as_view(),
+         name="verificaciones"),
+    path('vehiculos/', views.ListVehiculosView.as_view(),
+         name="verificaciones"),
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('', include('admin_soft.urls'), name=admin), 
+    path('', include('admin_soft.urls'), name=admin),
 ]
