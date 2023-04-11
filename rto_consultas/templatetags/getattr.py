@@ -5,6 +5,7 @@ from django import template
 numeric_test = re.compile("^\d+$")
 register = template.Library()
 
+@register.filter(name="getattr")
 def get_attr(object, arg):
     if hasattr(object, str(arg)):
         attr = getattr(object, arg)
