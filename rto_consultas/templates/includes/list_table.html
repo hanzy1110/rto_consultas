@@ -6,6 +6,7 @@
 <h1>{{ context_object_name }}</h1>
 <form method="GET">
   {% for field in query_fields %}
+  <h3>{{ field.name }}</h3>
   <input type="text" name="{{ field.name }}" placeholder="Search...">
   {% endfor %}
   <button type="submit">Search</button>
