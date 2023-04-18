@@ -7,6 +7,13 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+tipo_uso_dict = {
+    1:"Particular",
+    2:"Transporte Pasajeros",
+    3:"Transporte Carga",
+    4:"Municipal",
+}
+
 class Adjuntos(models.Model):
     idarchivo = models.IntegerField(db_column='idArchivo', primary_key=True)  # Field name made lowercase.
     nombre = models.CharField(db_column='Nombre', max_length=200)  # Field name made lowercase.
@@ -423,6 +430,8 @@ class Certificados(models.Model):
     idhabf2 = models.IntegerField(db_column='idHabF2', blank=True, null=True)  # Field name made lowercase.
     intentosobtencionhab = models.IntegerField(db_column='IntentosObtencionHab', blank=True, null=True)  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"Cert:{self.nrocertificado}"
     class Meta:
         app_label = 'rto_consultas'
         
@@ -1215,6 +1224,9 @@ class Talleres(models.Model):
     codigorechazado = models.IntegerField(db_column='CodigoRechazado')  # Field name made lowercase.
     adjobligatorio = models.IntegerField(db_column='AdjObligatorio')  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"Taller: {self.idtaller}"
+
     class Meta:
         app_label = 'rto_consultas'
         
@@ -1226,6 +1238,9 @@ class Tipousovehiculo(models.Model):
     descripcion = models.CharField(db_column='Descripcion', max_length=50)  # Field name made lowercase.
     mesesvigencia = models.IntegerField(db_column='MesesVigencia', blank=True, null=True)  # Field name made lowercase.
     codigooblea = models.IntegerField(db_column='CodigoOblea')  # Field name made lowercase.
+
+    def __str__(self) -> str:
+        return f"{self.idtipouso}: {tipo_uso_dict[self.idtipouso]}"
 
     class Meta:
         app_label = 'rto_consultas'
@@ -1357,6 +1372,8 @@ class Vehiculos(models.Model):
     nrofactura = models.CharField(db_column='nroFactura', max_length=100, blank=True, null=True)  # Field name made lowercase.
     activo = models.IntegerField(db_column='Activo')  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"Vehiculo: {self.dominio}"
     class Meta:
         app_label = 'rto_consultas'
         
@@ -1490,7 +1507,7 @@ class Verificaciones(models.Model):
     nrofactura = models.CharField(db_column='nroFactura', max_length=100, blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"Verificacion: {self.idverificacion}, para el vehiculo: {self.dominiovehiculo}"
+        return f"Verif: {self.idverificacion}:{self.dominiovehiculo}"
 
     class Meta:
         app_label = 'rto_consultas'
