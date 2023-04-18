@@ -7,9 +7,13 @@
 <form method="GET">
   {% for field in query_fields %}
   <h3>{{ field.name }}</h3>
-  <input type="text" name="{{ field.name }}" placeholder="Search...">
+  <input type="text" name="{{ field.name }}" placeholder="Buscar...">
   {% endfor %}
-  <button type="submit">Search</button>
+  <button type="submit">Buscar</button>
 </form>
-{% render_table table %}
+<div class="card-body px-0 pt-0 pb-2">
+  <div class="table-responsive p-0">
+    {% render_table table %}
+  </div>
+</div>
 {% endblock %}
