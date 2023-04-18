@@ -23,7 +23,7 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET.copy()
-        sort = query.pop("sort", None)[0][0]
+        sort = query.pop("sort", None)[0]
         queryset = self.model.objects.all()
 
         if query:
@@ -57,7 +57,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET.copy()
-        sort = query.pop("sort", None)[0][0]
+        sort = query.pop("sort", None)[0]
         queryset = self.model.objects.all()
 
         if query:
@@ -92,7 +92,7 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET.copy()
-        sort = query.pop("sort", None)[0][0]
+        sort = query.pop("sort", None)[0]
         queryset = self.model.objects.all()
 
         if query:
@@ -127,7 +127,7 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET.copy()
-        sort = query.pop("sort", None)[0][0]
+        sort = query.pop("sort", None)[0]
         queryset = self.model.objects.all()
 
         if query:
