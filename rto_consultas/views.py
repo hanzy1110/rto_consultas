@@ -23,11 +23,15 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET
+        sort = query.pop("sort", None)
+        queryset = self.model.objects.all()
+
         if query:
             for field,value in query.items():
-                return self.model.objects.filter(**{f"{field}__icontains":value})
-        else:
-            return self.model.objects.all()
+                queryset = queryset.filter(**{f"{field}__icontains":value}) 
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,11 +57,16 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET
+        sort = query.pop("sort", None)
+        queryset = self.model.objects.all()
+
         if query:
             for field,value in query.items():
-                return self.model.objects.filter(**{f"{field}__icontains":value})
-        else:
-            return self.model.objects.all()
+                queryset = queryset.filter(**{f"{field}__icontains":value}) 
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,11 +92,15 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET
+        sort = query.pop("sort", None)
+        queryset = self.model.objects.all()
+
         if query:
             for field,value in query.items():
-                return self.model.objects.filter(**{f"{field}__icontains":value})
-        else:
-            return self.model.objects.all()
+                queryset = queryset.filter(**{f"{field}__icontains":value}) 
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -114,11 +127,15 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
         query = self.request.GET
+        sort = query.pop("sort", None)
+        queryset = self.model.objects.all()
+
         if query:
             for field,value in query.items():
-                return self.model.objects.filter(**{f"{field}__icontains":value})
-        else:
-            return self.model.objects.all()
+                queryset = queryset.filter(**{f"{field}__icontains":value}) 
+        if sort:
+            queryset = queryset.order_by(sort)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
