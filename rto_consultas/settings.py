@@ -152,7 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJANGO_TABLES2_TABLE_ATTRS = {
     'class': "table align-items-center mb-0",
-    'th': "text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" 
+    # 'th': "text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" 
     # 'thead': {
     #     'class': 'table-light',
     # },
