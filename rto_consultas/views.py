@@ -22,7 +22,7 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
-        query = self.request.GET
+        query = self.request.GET.copy()
         sort = query.pop("sort", None)
         queryset = self.model.objects.all()
 
@@ -56,7 +56,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
-        query = self.request.GET
+        query = self.request.GET.copy()
         sort = query.pop("sort", None)
         queryset = self.model.objects.all()
 
@@ -91,7 +91,7 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
-        query = self.request.GET
+        query = self.request.GET.copy()
         sort = query.pop("sort", None)
         queryset = self.model.objects.all()
 
@@ -126,7 +126,7 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
 
     def get_queryset(self):
         # return self.model.objects.prefectch_related().all()[:5]
-        query = self.request.GET
+        query = self.request.GET.copy()
         sort = query.pop("sort", None)
         queryset = self.model.objects.all()
 
