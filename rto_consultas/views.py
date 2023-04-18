@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView
 
 from .models import Verificaciones, Certificadosasignadosportaller, Vehiculos, Certificados
+from .tables import VerificacionesTable, VehiculosTable, CertificadosTable, CertificadosAssignTable
 
 
 class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
@@ -12,6 +13,7 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     paginate_by = 10
     template_name = "includes/list_table.html"
     context_object_name = "Verificaciones"
+    table_class = VerificacionesTable
     query_fields = {
         "dominiovehiculo",
         "idestado",
@@ -41,6 +43,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     paginate_by = 10
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
+    table_class = CertificadosAssignTable
     query_fields = {
         "nrocertificado",
         "disponible",
@@ -70,6 +73,7 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     template_name = "includes/list_table.html"
     paginate_by = 10
     context_object_name = "Vehiculos"
+    table_class = VehiculosTable
     query_fields = {
         "dominio",
         "idtipouso",
@@ -99,6 +103,7 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     template_name = "includes/list_table.html"
     paginate_by = 10
     context_object_name = "Certificados"
+    table_class = CertificadosTable
     query_fields = {
         "nrocertificado",
         "idtaller",
