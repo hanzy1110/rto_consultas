@@ -48,7 +48,7 @@ def handle_context(context, view):
     context["form_fields"] = handle_form(view.form_fields, view.model) 
     fields = view.model._meta.fields
     context["fields"] = fields
-    context["query_fields"] = list(set(filter(lambda x: x.name in view.query_fields, fields)).difference(set(view.form_fields)))
+    context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and not in view.form_fields, fields))
     return context
     
 class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
