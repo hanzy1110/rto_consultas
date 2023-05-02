@@ -30,6 +30,22 @@
     <link id="pagestyle" href="{% static 'css/soft-ui-dashboard.css' %}" rel="stylesheet" />
     <link id="pagestyle_dark" href="{% static 'css/dark-theme-core.css' %}" rel="stylesheet" />
 
+    <style>
+      .navbar-main .card {
+        width: auto;
+      }
+
+      @media (min-width: 768px) {
+        .navbar-main .card {
+          margin-top:auto;
+          margin-bottom:auto;
+          text-align:center;
+          width: auto;
+          align-items:center;
+          display:flex;
+        }
+      }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
