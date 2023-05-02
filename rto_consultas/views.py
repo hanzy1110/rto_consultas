@@ -21,7 +21,9 @@ def handle_args(query_params, queryset):
             query = Q(**{f"{key}__icontains":arg})
         else:
             return queryset
-        return queryset.filter(query)
+        queryset = queryset.filter(query)
+
+    return queryset
 
 def handle_query(request, model):
     query = request.GET.copy()
