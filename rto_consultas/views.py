@@ -16,6 +16,8 @@ def handle_args(query_params, queryset):
             return queryset.filter(**{f"{key}":int(arg)})
         elif arg:
             return queryset.filter(**{f"{key}__icontains":arg})
+        else:
+            return queryset
 
 def handle_query(request, model):
     query = request.GET.copy()
