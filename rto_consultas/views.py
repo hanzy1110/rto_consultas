@@ -11,10 +11,11 @@ from .tables import VerificacionesTables, VehiculosTable, CertificadosTable, Cer
 
 def handle_args(query_params, queryset):
     numeric_test = re.compile(r"^\d+$")
-    for key, arg in query_params.items():
+    cleaned_query = {k:v for k,v in query_params.items() if v}
+    for key, arg in cleaned_query.items():
         if numeric_test.match(str(arg)):
             query = Q(**{f"{key}__exact":int(arg)})
-        elif "dominio" in key:
+        elif "dominio" in key: 
             query = Q(**{f"{key}__iexact":arg}) 
         elif isinstance(arg, str):
             query = Q(**{f"{key}__icontains":arg})
