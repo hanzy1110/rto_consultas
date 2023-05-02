@@ -14,7 +14,7 @@ def handle_args(query_params, queryset):
         print(key, arg)
         if numeric_test.match(str(arg)):
             return queryset.filter(**{f"{key}":int(arg)})
-        else:
+        elif arg:
             return queryset.filter(**{f"{key}__icontains":arg})
 
 def handle_query(request, model):
