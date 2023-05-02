@@ -10,8 +10,8 @@ from .tables import VerificacionesTables, VehiculosTable, CertificadosTable, Cer
 
 def handle_args(query_params, queryset):
     numeric_test = re.compile(r"^\d+$")
+    print(query_params)
     for key, arg in query_params.items():
-        print(key, arg)
         if numeric_test.match(str(arg)):
             return queryset.filter(**{f"{key}":int(arg)})
         elif arg:
