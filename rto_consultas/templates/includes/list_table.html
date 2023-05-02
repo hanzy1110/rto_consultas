@@ -7,8 +7,18 @@
 <div class="card-body px-0 pt-0 pb-2">
 <form method="GET">
   {% for field in query_fields %}
-  <h5>{{ field.name }}</h5>
-  <input type="text" name="{{ field.name }}" placeholder="Buscar...">
+    <h5>{{ field.name }}</h5>
+    <input type="text" name="{{ field.name }}" placeholder="Buscar...">
+  {% endfor %}
+
+  {% for field, vals in form_fields %}
+   <label for={{ field }}>{{ field }}</label>
+    <select name="make" id="make">
+      <option value="">All</option>
+      {% for val in vals %}
+        <option value="{{ val }}">{{ field }}</option>
+      {% endfor %}
+    </select>
   {% endfor %}
   <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
 </form>

@@ -21,6 +21,7 @@ def handle_args(query_params, queryset):
             query = Q(**{f"{key}__icontains":arg})
         else:
             return queryset
+
         queryset = queryset.filter(query)
 
     return queryset
@@ -35,6 +36,21 @@ def handle_query(request, model):
         queryset = queryset.order_by(sort[0])
     return queryset
 
+def handle_form(form_fields, model):
+    values = {}
+    for field in form_fields:
+        val = model.objects.values_list(field, flat=True).distinct() 
+        values[field] = val
+    return values
+
+
+def handle_context(context, view):
+    context["form_fields"] = handle_form(view.form_fields, view.model) 
+    fields = view.model._meta.fields
+    context["fields"] = fields
+    context["query_fields"] = list(set(filter(lambda x: x.name in view.query_fields, fields)).difference(set(view.form_fields)))
+    return context
+    
 class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
@@ -47,15 +63,17 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
         "idestado",
         "idtipouso"
     }
+    form_fields = {
+        "idestado",
+        "idtipouso"
+    }
 
     def get_queryset(self):
         return handle_query(self.request, self.model)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fields = self.model._meta.fields
-        context["fields"] = fields
-        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
+        context = handle_context(context, self)
         return context
 
 
@@ -71,15 +89,17 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
         "disponible",
         "replicado"
     }
+    form_fields = {
+        "disponible",
+        "replicado"
+    }
 
     def get_queryset(self):
         return handle_query(self.request, self.model)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fields = self.model._meta.fields
-        context["fields"] = fields
-        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
+        context = handle_context(context, self)
         return context
 
 
@@ -95,6 +115,9 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
         "idtipouso",
         "marca"
     }
+    form_fields = {
+        "idtipouso",
+    }
 
     def get_queryset(self):
         return handle_query(self.request, self.model)
@@ -102,12 +125,10 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fields = self.model._meta.fields
-        context["fields"] = fields
-        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
+        context = handle_context(context, self)
         return context
 
-
+    
 class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
@@ -121,14 +142,14 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
         "fecha",
         "anulado"
         }
+    form_fields = {
+        "idtaller",
+        }
 
     def get_queryset(self):
         return handle_query(self.request, self.model)
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        fields = self.model._meta.fields
-        context["fields"] = fields
-        context["query_fields"] = list(filter(lambda x: x.name in self.query_fields, fields))
+        context = handle_context(context, self)
         return context
