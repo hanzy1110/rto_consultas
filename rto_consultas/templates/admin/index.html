@@ -6,14 +6,14 @@
   <nav class="navbar navbar-main navbar-text px-2 mx-4">
     <div class="col col-sm-6 col-md-3 mb-3">
       <div class="card">
-        <div class="card-body p-3 align-content">
+        <div class="card-body px-3">
           <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
         </div>
       </div>
     </div>
     <div class="col col-sm-6 col-md-3 mb-3">
       <div class="card">
-        <div class="card-body p-3 align-content">
+        <div class="card-body px-3">
           <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
         </div>
       </div>
@@ -22,14 +22,14 @@
   <nav class="navbar navbar-main navbar-text px-2 mx-4">
     <div class="col col-sm-6 col-md-3 mb-3">
       <div class="card">
-        <div class="card-body p-3 align-content">
+        <div class="card-body px-3">
           <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
         </div>
       </div>
     </div>
     <div class="col col-sm-6 col-md-3 mb-3">
       <div class="card">
-        <div class="card-body p-3 align-content">
+        <div class="card-body px-3 align-content">
           <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
         </div>
       </div>
@@ -42,19 +42,3 @@
 {% block scripts %}
 {% endblock scripts %}
 
-<style>
-  .navbar-main .card {
-    width: auto;
-  }
-
-  @media (min-width: 768px) {
-    .navbar-main .card {
-      margin-top:auto;
-      margin-bottom:auto;
-      text-align:center;
-      width: auto;
-      align-items:center;
-      display:flex;
-    }
-  }
-</style>
