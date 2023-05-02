@@ -15,8 +15,8 @@ def handle_args(query_params, queryset):
     for key, arg in cleaned_query.items():
         if numeric_test.match(str(arg)):
             query = Q(**{f"{key}__exact":int(arg)})
-        # elif "dominio" in key: 
-        #     query = Q(**{f"{key}__icontains":arg}) 
+        elif "dominio" in key: 
+            query = Q(**{f"{key}__exact":arg}) 
         elif isinstance(arg, str):
             query = Q(**{f"{key}__icontains":arg})
         else:
