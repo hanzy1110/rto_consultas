@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # import django_tables2 as tables
@@ -10,14 +11,16 @@ from .tables import VerificacionesTables, VehiculosTable, CertificadosTable, Cer
 
 def handle_args(query_params, queryset):
     numeric_test = re.compile(r"^\d+$")
-    print(query_params)
     for key, arg in query_params.items():
         if numeric_test.match(str(arg)):
-            return queryset.filter(**{f"{key}":int(arg)})
-        elif arg:
-            return queryset.filter(**{f"{key}__icontains":arg})
+            query = Q(**{f"{key}__exact":int(arg)})
+        elif "dominio" in key:
+            query = Q(**{f"{key}__iexact":arg}) 
+        elif isinstance(arg, str):
+            query = Q(**{f"{key}__icontains":arg})
         else:
             return queryset
+        return queryset.filter(query)
 
 def handle_query(request, model):
     query = request.GET.copy()
