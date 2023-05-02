@@ -3,15 +3,15 @@
 
 {% block content %}
 <div class="container-fluid py-4">
-  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl">
-    <div class="col-sm-3">
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 border-radius-xl">
+    <div class="col-sm-6 col-md-3 mb-3">
       <div class="card">
         <div class="card-body p-3">
           <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-6 col-md-3 mb-3">
       <div class="card">
         <div class="card-body p-3">
           <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
@@ -19,15 +19,15 @@
       </div>
     </nav>
   </div>
-  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl">
-    <div class="col-sm-3">
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 border-radius-xl">
+    <div class="col-sm-6 col-md-3 mb-3">
       <div class="card">
         <div class="card-body p-3">
           <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-6 col-md-3 mb-3">
       <div class="card">
         <div class="card-body p-3">
           <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
@@ -41,3 +41,15 @@
 <!-- Specific JS goes HERE -->
 {% block scripts %}
 {% endblock scripts %}
+
+<style>
+  .navbar-main .card {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .navbar-main .card {
+      width: auto;
+    }
+  }
+</style>
