@@ -594,6 +594,9 @@ class Estados(models.Model):
         
         db_table = 'estados'
 
+    def __str__(self) -> str:
+        return f"{self.descripcion}"
+
 
 class Estadosequipo(models.Model):
     idestado = models.AutoField(db_column='idEstado', primary_key=True)  # Field name made lowercase.
