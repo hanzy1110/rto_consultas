@@ -13,10 +13,9 @@
 
   {% for ffield, vals in form_fields.items %}
    <label for={{ ffield }}>{{ ffield }}</label>
-    <select name="{{ field }}" id="{{ field }}">
-      <option value="">All</option>
+    <select name="{{ ffield }}" id="{{ ffield }}">
       {% for val in vals %}
-        <option value="{{ val }}">{{ field }}</option>
+        <option value="{{ val }}">{{ val }}</option>
       {% endfor %}
     </select>
   {% endfor %}
