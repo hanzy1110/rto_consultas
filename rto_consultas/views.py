@@ -71,7 +71,7 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        page = self.request.data.copy().pop("page", None)
+        page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model)
 
         if page:
@@ -105,7 +105,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        page = self.request.data.copy().pop("page", None)
+        page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model)
 
         if page:
@@ -138,7 +138,7 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        page = self.request.data.copy().pop("page", None)
+        page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model)
 
         if page:
@@ -173,7 +173,7 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
         }
 
     def get_queryset(self):
-        page = self.request.data.copy().pop("page", None)
+        page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model)
 
         if page:
