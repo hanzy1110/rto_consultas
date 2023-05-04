@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # import django_tables2 as tables
 from django_tables2 import SingleTableView
+from django_tables2.config import RequestConfig
 import re
 
 from .models import Verificaciones, Certificadosasignadosportaller, Vehiculos, Certificados
@@ -29,6 +30,7 @@ def handle_args(query_params, queryset):
 def handle_query(request, model):
     query = request.GET.copy()
     sort = query.pop("sort", None)
+    page = query.pop("page", None)
     queryset = model.objects.all()
     if query:
         queryset = handle_args(query, queryset)
@@ -69,14 +71,22 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        return handle_query(self.request, self.model)
+        page = self.request.data.copy().pop("page", None)
+        queryset = handle_query(self.request, self.model)
+
+        if page:
+            #Handle pagination...
+            self.table_data = queryset
+            table = self.get_table()
+            
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
 
-
+    
 class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -95,7 +105,15 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        return handle_query(self.request, self.model)
+        page = self.request.data.copy().pop("page", None)
+        queryset = handle_query(self.request, self.model)
+
+        if page:
+            #Handle pagination...
+            self.table_data = queryset
+            table = self.get_table()
+            
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -120,7 +138,15 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     }
 
     def get_queryset(self):
-        return handle_query(self.request, self.model)
+        page = self.request.data.copy().pop("page", None)
+        queryset = handle_query(self.request, self.model)
+
+        if page:
+            #Handle pagination...
+            self.table_data = queryset
+            table = self.get_table()
+            
+        return queryset
 
 
     def get_context_data(self, **kwargs):
@@ -147,7 +173,15 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
         }
 
     def get_queryset(self):
-        return handle_query(self.request, self.model)
+        page = self.request.data.copy().pop("page", None)
+        queryset = handle_query(self.request, self.model)
+
+        if page:
+            #Handle pagination...
+            self.table_data = queryset
+            table = self.get_table()
+            
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
