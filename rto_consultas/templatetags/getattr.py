@@ -39,7 +39,7 @@ def query_dict(context, instance, name):
 @register.simple_tag(takes_context=True)
 def query_descriptions(context, descriptions, field, value):
     try:
-        return descriptions[field][value]
+        return descriptions[1][field][value]
     except KeyError as e:
         print(e)
         return "Desconocido"
