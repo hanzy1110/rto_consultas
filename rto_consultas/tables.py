@@ -47,7 +47,7 @@ class VerificacionesTables(tables.Table):
 
 		try:
 			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtipouso"][value]
+			return descriptions["idtipouso"][value.idtipouso]
 			# return value.descripcion
 
 		except Exception as e:
@@ -84,7 +84,7 @@ class VehiculosTable(tables.Table):
 	def render_idtipouso(self, value):
 		try:
 			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtipouso"][value]
+			return descriptions["idtipouso"][value.idtipouso]
 
 		except Exception as e:
 			print(e)
