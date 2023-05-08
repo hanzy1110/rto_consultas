@@ -47,7 +47,7 @@ class VerificacionesTables(tables.Table):
 
 		try:
 			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtipouso"][value.idtipouso]
+			return descriptions["idtipouso"][value]
 			# return value.descripcion
 
 		except Exception as e:
