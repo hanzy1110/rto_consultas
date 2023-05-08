@@ -125,6 +125,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
         "disponible",
         "replicado"
     }
+    description_fields = {}
 
     def get_queryset(self):
         page = self.request.GET.copy().pop("page", None)
