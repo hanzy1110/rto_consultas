@@ -8,12 +8,12 @@
 <div class="card-body px-0 pt-0 pb-2">
 <form method="GET">
   {% for field in query_fields %}
-    <h5>{% getattr parsed_fields field.name %}</h5>
+    <h5>{% get_model_attr parsed_fields field.name %}</h5>
     <input type="text" name="{{ field.name }}" placeholder="Buscar...">
   {% endfor %}
 
   {% for ffield, vals in form_fields.items %}
-   <label for={{ ffield }}>{% getattr parsed_fields field.name %}</label>
+   <label for={{ ffield }}>{% get_model_attr parsed_fields field.name %}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
       <option value=""></option>
       {% for val in vals %}
