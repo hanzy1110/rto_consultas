@@ -15,6 +15,7 @@
   {% for ffield, vals in form_fields.items %}
    <label for={{ ffield }}>{{ ffield }}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
+      <option value=""></option>
       {% for val in vals %}
         <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
       {% endfor %}
