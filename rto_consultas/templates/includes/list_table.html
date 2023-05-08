@@ -12,11 +12,11 @@
     <input type="text" name="{{ field }}" placeholder="Buscar...">
   {% endfor %}
 
-  {% for ffield, name, vals in form_fields.items %}
-   <label for={{ ffield }}>{{ name }}</label>
+  {% for ffield, vals in form_fields.items %}
+   <label for={{ ffield }}>{% query_dict vals 0 %}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
       <option value=""></option>
-      {% for val in vals %}
+      {% for val in query_dict vals 1 %}
         <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
       {% endfor %}
     </select>
