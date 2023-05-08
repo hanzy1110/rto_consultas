@@ -35,21 +35,21 @@ class VerificacionesTables(tables.Table):
 
 	def render_idestado(self, value):
 
-		try:
+		# try:
 			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
 			return descriptions["idestado"][value]
-		except Exception as e:
-			print(e)
-			return "Unknown!"
+		# except Exception as e:
+		# 	print(e)
+		# 	return "Unknown!"
 
 	def render_idtipouso(self, value):
 
-		try:
+		# try:
 			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
 			return descriptions["idtipouso"][value]
-		except Exception as e:
-			print(e)
-			return "Unknown!"
+		# except Exception as e:
+		# 	print(e)
+		# 	return "Unknown!"
 
 	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
 
