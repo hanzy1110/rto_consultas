@@ -41,19 +41,17 @@ def handle_query(request, model):
 
 def handle_form(form_fields, model):
     values = {}
-    for field in form_fields:
+    for field in form_fields.keys():
         val = model.objects.values_list(field, flat=True).distinct() 
         values[field] = val
     return values
-
-
 
 def map_fields(form_fields, description_fields, model):
     values = {}
     if not description_fields:
         return {k:{0:"Falso", 1:"Verdadero"} for k in form_fields}
 
-    for field, (dfield, dmodel) in zip(form_fields, description_fields):
+    for field, (dfield, dmodel) in zip(form_fields.keys(), description_fields):
         val = model.objects.values_list(field, flat=True).distinct() 
         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
         values[field] = {v:d for v,d in zip(val, descriptions)}
@@ -62,7 +60,9 @@ def map_fields(form_fields, description_fields, model):
 
 
 def handle_context(context, view):
-    context["form_fields"] = handle_form(view.form_fields, view.model) 
+    val_dict = handle_form(view.form_fields, view.model) 
+    context["form_fields"] = {k:(name, vals) for (k, name), vals in zip(view.form_fields.items(),
+                                                                         val_dict.values())}
     context["descriptions"] = map_fields(view.form_fields, 
                                         view.description_fields, 
                                         view.model)
@@ -70,7 +70,8 @@ def handle_context(context, view):
     context["parsed_fields"] = view.parsed_fields
     fields = view.model._meta.fields
     context["fields"] = fields
-    context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
+    # context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
+    context["query_fields"] = view.query_fields 
     return context
     
 class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
@@ -81,21 +82,19 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
 
-    query_fields = {
-        "dominiovehiculo",
-        "idestado",
-        "idtipouso"
-    }
+    # query_fields = {
+    #     "dominiovehiculo",
+    #     "idestado",
+    #     "idtipouso"
+    # }
 
-    parsed_fields = {
+    query_fields = {
         "dominiovehiculo":"Dominio",
-        "idestado": "Estado Certificado",
-        "idtipouso":"Tipo de Uso"
     }
 
     form_fields = {
-        "idestado",
-        "idtipouso"
+        "idestado": "Estado Certificado",
+        "idtipouso":"Tipo de Uso"
     }
     description_fields = {
         ("descripcion", Estados),
@@ -126,15 +125,13 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
+    # query_fields = {
+    #     "nrocertificado",
+    #     "disponible",
+    #     "replicado"
+    # }
     query_fields = {
-        "nrocertificado",
-        "disponible",
-        "replicado"
-    }
-    parsed_fields = {
         "nrocertificado":"Nro. Certificado",
-        "disponible":"Disponible",
-        "replicado":"Replicado"
     }
     form_fields = {
         "disponible",
@@ -166,18 +163,17 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     paginate_by = 10
     context_object_name = "Vehiculos"
     table_class = VehiculosTable
+    # query_fields = {
+    #     "dominio",
+    #     "idtipouso",
+    #     "marca"
+    # }
     query_fields = {
-        "dominio",
-        "idtipouso",
-        "marca"
-    }
-    parsed_fields = {
         "dominio":"Dominio",
-        "idtipouso":"Tipo de Uso",
         "marca":"Marca"
     }
     form_fields = {
-        "idtipouso",
+        "idtipouso":"Tipo de Uso",
     }
 
     description_fields = {
@@ -209,20 +205,19 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     paginate_by = 10
     context_object_name = "Certificados"
     table_class = CertificadosTable
+    # query_fields = {
+    #     "nrocertificado",
+    #     "idtaller",
+    #     "fecha",
+    #     "anulado"
+    #     }
     query_fields = {
-        "nrocertificado",
-        "idtaller",
-        "fecha",
-        "anulado"
-        }
-    parsed_fields = {
         "nrocertificado":"Nro. Certificado",
-        "idtaller":"Taller",
         "fecha":"Fecha",
         "anulado":"Anulado"
         }
     form_fields = {
-        "idtaller",
+        "idtaller":"Taller",
         }
 
     description_fields = {

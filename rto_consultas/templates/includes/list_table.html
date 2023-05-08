@@ -7,14 +7,14 @@
 <h1>{{ context_object_name }}</h1>
 <div class="card-body px-0 pt-0 pb-2">
 <form method="GET">
-  {% for field, name in parsed_fields.items %}
+  {% for field, name in query_fields.items %}
     <!-- <h5>{% query_dict parsed_fields field.name %}</h5> -->
     <h5>{{ name }}</h5>
     <input type="text" name="{{ field }}" placeholder="Buscar...">
   {% endfor %}
 
-  {% for ffield, vals in form_fields.items %}
-   <label for={{ ffield }}>{% query_dict parsed_fields field.name %}</label>
+  {% for ffield, name, vals in form_fields.items %}
+   <label for={{ ffield }}>{{ name }}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
       <option value=""></option>
       {% for val in vals %}

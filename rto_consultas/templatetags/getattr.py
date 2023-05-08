@@ -32,9 +32,6 @@ def get_model_attr(context, instance, name):
 @register.simple_tag(takes_context=True)
 def query_dict(context, instance, name):
     try:
-        print("--x--")
-        print(name)
-        print("--x--")
         return instance[name]
     except KeyError:
         return "Unknown!!"
