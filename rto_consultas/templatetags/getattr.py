@@ -32,8 +32,12 @@ def get_model_attr(context, instance, name):
 
 @register.simple_tag(takes_context=True)
 def query_descriptions(context, descriptions, field, value):
-    return descriptions[field][value]
-
+    try:
+        return descriptions[field][value]
+    except KeyError as e:
+        print(e)
+        return "Desconocido"
+        
 
 @register.simple_tag(takes_context=True)
 def get_by_name(context, name):
