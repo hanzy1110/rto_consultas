@@ -215,7 +215,7 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
         "fecha",
         "anulado"
         }
-    query_fields = {
+    parsed_fields = {
         "nrocertificado":"Nro. Certificado",
         "idtaller":"Taller",
         "fecha":"Fecha",
