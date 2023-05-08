@@ -8,7 +8,7 @@
 <div class="card-body px-0 pt-0 pb-2">
 <form method="GET">
   {% for field in query_fields %}
-    <h5>{% query_dict parsed_fields field.name %}</h5>
+    <h5>{% query_dict parsed_fields field %}</h5>
     <input type="text" name="{{ field.name }}" placeholder="Buscar...">
   {% endfor %}
 
