@@ -20,10 +20,10 @@ class VerificacionesTables(tables.Table):
 					"idestado",
 					"idtipouso"
 					}
-	description_fields = {
+	description_fields = [
 			("descripcion", Estados),
 			("descripcion", Tipousovehiculo)
-						}
+						]
 
 	class Meta:
 		model = Verificaciones
