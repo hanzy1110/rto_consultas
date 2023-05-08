@@ -67,7 +67,7 @@ def handle_context(context, view):
                                         view.description_fields, 
                                         view.model)
 
-    context["parsed_fields"] = view.parsed_fields
+    # context["parsed_fields"] = view.parsed_fields
     fields = view.model._meta.fields
     context["fields"] = fields
     # context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
