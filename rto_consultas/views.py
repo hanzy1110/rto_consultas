@@ -61,7 +61,7 @@ def map_fields(form_fields, description_fields, model):
 
 def handle_context(context, view):
     val_dict = handle_form(view.form_fields, view.model) 
-    context["form_fields"] = {k:(name, vals) for (k, name), vals in zip(view.form_fields.items(),
+    context["form_fields"] = {k:{name:vals} for (k, name), vals in zip(view.form_fields.items(),
                                                                          val_dict.values())}
     context["descriptions"] = map_fields(view.form_fields, 
                                         view.description_fields, 
