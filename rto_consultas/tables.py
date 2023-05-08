@@ -35,21 +35,24 @@ class VerificacionesTables(tables.Table):
 
 	def render_idestado(self, value):
 
-		# try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idestado"][value]
-		# except Exception as e:
-		# 	print(e)
-		# 	return "Unknown!"
+		try:
+			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			# return descriptions["idestado"][value.idestado]
+			return value.descripcion
+		except Exception as e:
+			print(e)
+			return "Unknown!"
 
 	def render_idtipouso(self, value):
 
-		# try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtipouso"][value]
-		# except Exception as e:
-		# 	print(e)
-		# 	return "Unknown!"
+		try:
+			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			# return descriptions["idtipouso"][value]
+			return value.descripcion
+
+		except Exception as e:
+			print(e)
+			return "Unknown!"
 
 	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
 
@@ -80,8 +83,10 @@ class VehiculosTable(tables.Table):
 
 	def render_idtipouso(self, value):
 		try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtipouso"][value]
+			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			# return descriptions["idtipouso"][value]
+			return value.descripcion
+
 		except Exception as e:
 			print(e)
 			return "Unknown!"
@@ -116,30 +121,14 @@ class CertificadosTable(tables.Table):
 
 	def render_idtaller(self, value):
 		try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			return descriptions["idtaller"][value]
+			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			# return descriptions["idtaller"][value.idtaller]
+			return value.nombre
 		except Exception as e:
 			print(e)
 			return "Unknown!"
 
 	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
-		"""
-			Paginates the table using a paginator and creates a ``page`` property
-			containing information for the current page.
-
-			Arguments:
-			paginator_class (`~django.core.paginator.Paginator`): A paginator class to
-			    paginate the results.
-
-			per_page (int): Number of records to display on each page.
-			page (int): Page to display.
-
-			Extra arguments are passed to the paginator.
-
-			Pagination exceptions (`~django.core.paginator.EmptyPage` and
-			`~django.core.paginator.PageNotAnInteger`) may be raised from this
-			method and should be handled by the caller.
-		"""
 
 		per_page = per_page or self._meta.per_page
 		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
@@ -158,23 +147,6 @@ class CertificadosAssignTable(tables.Table):
 			}
 
 	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
-		"""
-			Paginates the table using a paginator and creates a ``page`` property
-			containing information for the current page.
-
-			Arguments:
-			paginator_class (`~django.core.paginator.Paginator`): A paginator class to
-			    paginate the results.
-
-			per_page (int): Number of records to display on each page.
-			page (int): Page to display.
-
-			Extra arguments are passed to the paginator.
-
-			Pagination exceptions (`~django.core.paginator.EmptyPage` and
-			`~django.core.paginator.PageNotAnInteger`) may be raised from this
-			method and should be handled by the caller.
-		"""
 
 		per_page = per_page or self._meta.per_page
 		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
