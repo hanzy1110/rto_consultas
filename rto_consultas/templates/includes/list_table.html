@@ -16,7 +16,7 @@
    <label for={{ ffield }}>{{ ffield }}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
       {% for val in vals %}
-        <option value="{{ val }}">{% get_model_attr descriptions val %}</option>
+        <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
       {% endfor %}
     </select>
   {% endfor %}
