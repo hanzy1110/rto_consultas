@@ -7,6 +7,7 @@ from django_tables2.config import RequestConfig
 import re
 
 from .models import Verificaciones, Certificadosasignadosportaller, Vehiculos, Certificados
+from .models import Estados, Tipousovehiculo, Talleres
 from .tables import VerificacionesTables, VehiculosTable, CertificadosTable, CertificadosAssignTable
 
 
@@ -46,8 +47,25 @@ def handle_form(form_fields, model):
     return values
 
 
+
+def map_fields(form_fields, description_fields, model):
+    values = {}
+    for field, (dfield, dmodel) in zip(form_fields, description_fields):
+        val = model.objects.values_list(field, flat=True).distinct() 
+        descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
+        values[field] = {v:d for v,d in zip(val, descriptions)}
+
+    return values
+
+
 def handle_context(context, view):
     context["form_fields"] = handle_form(view.form_fields, view.model) 
+    if view.description_fields:
+        context["descriptions"] = map_fields(view.form_fields, 
+                                        view.description_fields, 
+                                        view.model)
+    else: context["descriptions"] = {}
+
     fields = view.model._meta.fields
     context["fields"] = fields
     context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
@@ -68,6 +86,10 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     form_fields = {
         "idestado",
         "idtipouso"
+    }
+    description_fields = {
+        ("descripcion", Estados),
+        ("descripcion", Tipousovehiculo)
     }
 
     def get_queryset(self):
@@ -137,6 +159,10 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
         "idtipouso",
     }
 
+    description_fields = {
+        ("descripcion", Tipousovehiculo)
+    }
+
     def get_queryset(self):
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model)
@@ -171,6 +197,10 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
     form_fields = {
         "idtaller",
         }
+
+    description_fields = {
+        ("nombre", Talleres)
+    }
 
     def get_queryset(self):
         page = self.request.GET.copy().pop("page", None)

@@ -3,6 +3,7 @@
 
 {% block content %}
 {% load render_table from django_tables2 %}
+{% load getattr %}
 <h1>{{ context_object_name }}</h1>
 <div class="card-body px-0 pt-0 pb-2">
 <form method="GET">
@@ -15,7 +16,7 @@
    <label for={{ ffield }}>{{ ffield }}</label>
     <select name="{{ ffield }}" id="{{ ffield }}">
       {% for val in vals %}
-        <option value="{{ val }}">{{ val }}</option>
+        <option value="{{ val }}">{% get_model_attr descriptions val %}</option>
       {% endfor %}
     </select>
   {% endfor %}
