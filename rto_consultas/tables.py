@@ -36,9 +36,9 @@ class VerificacionesTables(tables.Table):
 	def render_idestado(self, value):
 
 		try:
-			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			# return descriptions["idestado"][value.idestado]
-			return value.descripcion
+			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			return descriptions["idestado"][value.idestado]
+			# return value.descripcion
 		except Exception as e:
 			print(e)
 			return "Unknown!"
@@ -46,9 +46,9 @@ class VerificacionesTables(tables.Table):
 	def render_idtipouso(self, value):
 
 		try:
-			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			# return descriptions["idtipouso"][value]
-			return value.descripcion
+			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			return descriptions["idtipouso"][value]
+			# return value.descripcion
 
 		except Exception as e:
 			print(e)
@@ -83,9 +83,8 @@ class VehiculosTable(tables.Table):
 
 	def render_idtipouso(self, value):
 		try:
-			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			# return descriptions["idtipouso"][value]
-			return value.descripcion
+			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			return descriptions["idtipouso"][value]
 
 		except Exception as e:
 			print(e)
