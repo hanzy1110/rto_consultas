@@ -50,6 +50,9 @@ def handle_form(form_fields, model):
 
 def map_fields(form_fields, description_fields, model):
     values = {}
+    if not description_fields:
+        return {k:{0:"Falso", 1:"Verdadero"} for k in form_fields}
+
     for field, (dfield, dmodel) in zip(form_fields, description_fields):
         val = model.objects.values_list(field, flat=True).distinct() 
         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
@@ -60,11 +63,9 @@ def map_fields(form_fields, description_fields, model):
 
 def handle_context(context, view):
     context["form_fields"] = handle_form(view.form_fields, view.model) 
-    if view.description_fields:
-        context["descriptions"] = map_fields(view.form_fields, 
+    context["descriptions"] = map_fields(view.form_fields, 
                                         view.description_fields, 
                                         view.model)
-    else: context["descriptions"] = {}
 
     fields = view.model._meta.fields
     context["fields"] = fields
