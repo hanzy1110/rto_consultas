@@ -67,6 +67,7 @@ def handle_context(context, view):
                                         view.description_fields, 
                                         view.model)
 
+    context["parsed_names"] = view.parsed_names
     fields = view.model._meta.fields
     context["fields"] = fields
     context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
@@ -79,11 +80,17 @@ class ListVerificacionesView(SingleTableView, LoginRequiredMixin):
     template_name = "includes/list_table.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
+
     query_fields = {
         "dominiovehiculo",
-        "idestado",
-        "idtipouso"
     }
+
+    parsed_fields = {
+        "dominiovehiculo":"Dominio",
+        "idestado": "Estado Certificado",
+        "idtipouso":"Tipo de Uso"
+    }
+
     form_fields = {
         "idestado",
         "idtipouso"
@@ -122,6 +129,11 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
         "disponible",
         "replicado"
     }
+    parsed_fields = {
+        "nrocertificado":"Nro. Certificado",
+        "disponible":"Disponible",
+        "replicado":"Replicado"
+    }
     form_fields = {
         "disponible",
         "replicado"
@@ -156,6 +168,11 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
         "dominio",
         "idtipouso",
         "marca"
+    }
+    parsed_fields = {
+        "dominio":"Dominio",
+        "idtipouso":"Tipo de Uso",
+        "marca":"Marca"
     }
     form_fields = {
         "idtipouso",
@@ -195,6 +212,12 @@ class ListCertificadosView(SingleTableView, LoginRequiredMixin):
         "idtaller",
         "fecha",
         "anulado"
+        }
+    query_fields = {
+        "nrocertificado":"Nro. Certificado",
+        "idtaller":"Taller",
+        "fecha":"Fecha",
+        "anulado":"Anulado"
         }
     form_fields = {
         "idtaller",
