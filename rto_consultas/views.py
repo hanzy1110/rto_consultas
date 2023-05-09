@@ -55,10 +55,10 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     table_class = CertificadosAssignTable
 
     aux_data = AuxData(query_fields=["nrocertificado",],
-                        form_fields={"idtaller":("nombre", Talleres),
+                        form_fields= {
+                                    "idtaller":("nombre", Talleres),
                                     "disponible":(None,None),
                                     "replicado":(None,None),
-            
                                     },
                         parsed_names={"nrocertificado": "Nro. Certificado",
                                         "disponible":"Disponible",

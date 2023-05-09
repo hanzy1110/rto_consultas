@@ -55,7 +55,7 @@ def map_fields(data:AuxData, model:Model):
     for field, vals in data.form_fields.items():
         dfield, dmodel = vals
         print(dfield, dmodel)
-        if bool(dfield) and bool(dmodel):
+        if bool(dfield):
             dfield = vals[0]
             dmodel:Model = vals[1]
 
