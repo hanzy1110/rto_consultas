@@ -1228,7 +1228,7 @@ class Talleres(models.Model):
     adjobligatorio = models.IntegerField(db_column='AdjObligatorio')  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"Taller: {self.idtaller}"
+        return f"{self.nombre}"
 
     class Meta:
         app_label = 'rto_consultas'

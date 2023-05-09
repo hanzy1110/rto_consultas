@@ -132,6 +132,12 @@ class CertificadosTable(tables.Table):
 
 
 class CertificadosAssignTable(tables.Table):
+	# aux_data = AuxData(
+	# 	query_fields=[],
+	# 	form_fields={ "idtaller":("nombre", Talleres) },
+	# 	parsed_names={"name":"name"}
+	# )
+
 	class Meta:
 		model = Certificadosasignadosportaller
 		query_fields = {
