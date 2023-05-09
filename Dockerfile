@@ -34,7 +34,6 @@ WORKDIR /home/code
 
 COPY . .
 RUN chmod +x entrypoint.sh
-RUN ls -la .
 
 # Expose port
 EXPOSE 8000

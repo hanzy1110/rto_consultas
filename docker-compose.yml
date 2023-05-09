@@ -7,7 +7,8 @@ services:
     env_file: ./envfiles/.env
     ports:
       - "${WEB_PORT}:8000"  #Web port 
-    volumes: [.:/home/code]
+    volumes: 
+      - .:/home/code
     restart: unless-stopped
     command: ["/home/code/entrypoint.sh"]
 

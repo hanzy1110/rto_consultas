@@ -11,7 +11,7 @@ echo "Starting Server..."
 
 #  python manage.py collectstatic
 # Start the Django development server with watchdog
-watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- \
-    python manage.py runserver 0.0.0.0:8000
+# watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- \
+#     python manage.py runserver 0.0.0.0:8000
 
-# python manage.py runserver 0.0.0.0:${WEB_PORT}
+python manage.py runserver 0.0.0.0:${WEB_PORT}
