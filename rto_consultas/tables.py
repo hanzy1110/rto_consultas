@@ -2,28 +2,28 @@ import django_tables2 as tables
 from django.core.paginator import Paginator
 from .models import Verificaciones, Vehiculos, Certificados, Certificadosasignadosportaller
 from .models import Estados, Tipousovehiculo, Talleres
+from .helpers import AuxData, map_fields
 
 
-def map_fields(form_fields, description_fields, model):
-    values = {}
-    for field, (dfield, dmodel) in zip(form_fields, description_fields):
-        val = model.objects.values_list(field, flat=True).distinct() 
-        descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
-        values[field] = {v:d for v,d in zip(val, descriptions)}
+# def map_fields(form_fields, description_fields, model):
+#     values = {}
+#     for field, (dfield, dmodel) in zip(form_fields, description_fields):
+#         val = model.objects.values_list(field, flat=True).distinct() 
+#         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
+#         values[field] = {v:d for v,d in zip(val, descriptions)}
 
-    return values
+#     return values
 
 
 class VerificacionesTables(tables.Table):
 
-	form_fields = {
-					"idestado",
-					"idtipouso"
-					}
-	description_fields = [
-			("descripcion", Estados),
-			("descripcion", Tipousovehiculo)
-						]
+	aux_data = AuxData(
+		query_fields=[],
+		form_fields={"idestado":("descripcion", Estados),
+					"idtipouso":("descripcion", Tipousovehiculo)
+					},
+		parsed_names={}
+	)
 
 	class Meta:
 		model = Verificaciones
@@ -34,9 +34,8 @@ class VerificacionesTables(tables.Table):
 			}
 
 	def render_idestado(self, value):
-
 		try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			descriptions = map_fields(self.aux_data, self.Meta.model)
 			return descriptions["idestado"][value.idestado]
 			# return value.descripcion
 		except Exception as e:
@@ -46,7 +45,7 @@ class VerificacionesTables(tables.Table):
 	def render_idtipouso(self, value):
 
 		try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			descriptions = map_fields(self.aux_data, self.Meta.model)
 			return descriptions["idtipouso"][value]
 			# return value.descripcion
 
@@ -65,13 +64,11 @@ class VerificacionesTables(tables.Table):
 
 class VehiculosTable(tables.Table):
 
-	form_fields = {
-					"idtipouso",
-					}
-
-	description_fields = {
-						("descripcion", Tipousovehiculo)
-						}
+	aux_data = AuxData(
+		query_fields=[],
+		form_fields={ "idtipouso":("descripcion", Tipousovehiculo) },
+		parsed_names={}
+	)
 
 	class Meta:
 		model = Vehiculos
@@ -83,7 +80,7 @@ class VehiculosTable(tables.Table):
 
 	def render_idtipouso(self, value):
 		try:
-			descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+			descriptions = map_fields(self.aux_data, self.Meta.model)
 			return descriptions["idtipouso"][value.idtipouso]
 
 		except Exception as e:
@@ -101,13 +98,11 @@ class VehiculosTable(tables.Table):
 
 class CertificadosTable(tables.Table):
 
-	form_fields = {
-					"idtaller",
-					}
-
-	description_fields = {
-						("nombre", Talleres)
-						}
+	aux_data = AuxData(
+		query_fields=[],
+		form_fields={ "idtaller":("nombre", Talleres) },
+		parsed_names={}
+	)
 
 	class Meta:
 		model = Certificados
