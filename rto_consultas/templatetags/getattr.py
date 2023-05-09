@@ -38,12 +38,12 @@ def query_dict(context, instance, name):
 
 @register.simple_tag(takes_context=True)
 def query_descriptions(context, descriptions, field, value):
-    try:
-        return descriptions[field][value]
-    except KeyError as e:
-        print(e)
-        raise KeyError
-        # return "Desconocido"
+    # try:
+    return descriptions[field][value]
+    # except KeyError as e:
+    #     print(e)
+    #     raise KeyError
+    #     # return "Desconocido"
         
 
 @register.simple_tag(takes_context=True)
