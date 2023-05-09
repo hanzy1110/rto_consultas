@@ -22,7 +22,7 @@ class VerificacionesTables(tables.Table):
 		form_fields={"idestado":("descripcion", Estados),
 					"idtipouso":("descripcion", Tipousovehiculo)
 					},
-		parsed_names={}
+		parsed_names={"name":"name"}
 	)
 
 	class Meta:
@@ -67,7 +67,7 @@ class VehiculosTable(tables.Table):
 	aux_data = AuxData(
 		query_fields=[],
 		form_fields={ "idtipouso":("descripcion", Tipousovehiculo) },
-		parsed_names={}
+		parsed_names={"name":"name"}
 	)
 
 	class Meta:
@@ -101,7 +101,7 @@ class CertificadosTable(tables.Table):
 	aux_data = AuxData(
 		query_fields=[],
 		form_fields={ "idtaller":("nombre", Talleres) },
-		parsed_names={}
+		parsed_names={"name":"name"}
 	)
 
 	class Meta:
