@@ -55,7 +55,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
     table_class = CertificadosAssignTable
 
     aux_data = AuxData(query_fields=["nrocertificado",],
-                        form_fields={},
+                        form_fields={"idtaller":("nombre", Talleres)},
                         parsed_names={"nrocertificado": "Nro. Certificado",
                                         "disponible":"Disponible",
                                         "replicado":"Replicado"} 
@@ -85,15 +85,11 @@ class ListVehiculosView(SingleTableView, LoginRequiredMixin):
     paginate_by = 10
     context_object_name = "Vehiculos"
     table_class = VehiculosTable
-    # query_fields = {
-    #     "dominio",
-    #     "idtipouso",
-    #     "marca"
-    # }
 
     aux_data = AuxData(query_fields=["dominio", "marca"],
                         form_fields={"idtipouso":("descripcion", Tipousovehiculo) },
                         parsed_names={"dominio": "Dominio Vehiculo",
+                                    "marca":"Marca Vehiculo",
                                     "idtipouso":"Tipo Uso Vehiculo"} 
                         )
 
