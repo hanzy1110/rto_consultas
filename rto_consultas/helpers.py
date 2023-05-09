@@ -54,6 +54,8 @@ def map_fields(data:AuxData, model:Model):
 
     for field, vals in data.form_fields.items():
         match vals:
+            case None, None:
+                return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
             case dfield, dmodel:
                 dfield = vals[0]
                 dmodel:Model = vals[1]
@@ -61,8 +63,6 @@ def map_fields(data:AuxData, model:Model):
                 val = model.objects.values_list(field, flat=True).distinct() 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
                 values[field] = {v:d for v,d in zip(val, descriptions)}
-            case None, None:
-                return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
                 
 
     return values
