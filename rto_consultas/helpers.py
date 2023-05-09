@@ -54,6 +54,7 @@ def map_fields(data:AuxData, model:Model):
 
     for field, vals in data.form_fields.items():
         dfield, dmodel = vals
+        print(dfield, dmodel)
         if isinstance(dfield, str) and isinstance(dmodel, Model):
             dfield = vals[0]
             dmodel:Model = vals[1]
@@ -62,7 +63,8 @@ def map_fields(data:AuxData, model:Model):
             descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
             values[field] = {v:d for v,d in zip(val, descriptions)}
 
-        else: return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
+        elif bool(dfield) and bool(dmodel): 
+            return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
                 
 
     return values
