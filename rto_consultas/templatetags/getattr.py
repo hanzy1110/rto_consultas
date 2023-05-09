@@ -42,7 +42,8 @@ def query_descriptions(context, descriptions, field, value):
         return descriptions[field][value]
     except KeyError as e:
         print(e)
-        return "Desconocido"
+        raise KeyError
+        # return "Desconocido"
         
 
 @register.simple_tag(takes_context=True)
