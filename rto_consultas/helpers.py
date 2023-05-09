@@ -2,13 +2,13 @@ from django.db.models import Q
 from django.db.models import Model
 
 import re
-from typing import Dict, List, Tuple, Set
+from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass
 
 @dataclass
 class AuxData:
     query_fields:List[str]
-    form_fields:Dict[str,Tuple[str, Model]]
+    form_fields:Dict[str,Tuple[Union[str, None], Union[Model, None]]]
     parsed_names:Dict[str, str]
 
 
@@ -49,15 +49,21 @@ def handle_form(data:AuxData, model:Model):
 
 def map_fields(data:AuxData, model:Model):
     values = {}
-    if not data.parsed_names:
-        return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
+    # if not data.parsed_names:
+    #     return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
 
     for field, vals in data.form_fields.items():
-        dmodel = vals[1]
-        dfield = vals[0]
-        val = model.objects.values_list(field, flat=True).distinct() 
-        descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
-        values[field] = {v:d for v,d in zip(val, descriptions)}
+        match vals:
+            case dfield, dmodel:
+                dfield = vals[0]
+                dmodel:Model = vals[1]
+
+                val = model.objects.values_list(field, flat=True).distinct() 
+                descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
+                values[field] = {v:d for v,d in zip(val, descriptions)}
+            case None, None:
+                return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
+                
 
     return values
 
