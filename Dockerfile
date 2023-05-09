@@ -33,7 +33,8 @@ RUN mkdir /home/tmp
 WORKDIR /home/code
 
 COPY . .
-RUN chmod +x entrypoint.sh
+RUN chmod +ax entrypoint.sh
+RUN ls -la .
 
 # Expose port
 EXPOSE 8000
