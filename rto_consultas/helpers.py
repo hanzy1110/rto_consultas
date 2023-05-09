@@ -52,6 +52,8 @@ def map_fields(data:AuxData, model:Model):
     # if not data.parsed_names:
     #     return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
 
+    print("DATA:")
+    print(data)
     for field, vals in data.form_fields.items():
         dfield, dmodel = vals
         if bool(dfield):
