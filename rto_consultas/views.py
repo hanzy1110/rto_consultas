@@ -58,6 +58,7 @@ class ListCertificadosAssignView(SingleTableView, LoginRequiredMixin):
                         form_fields={"idtaller":("nombre", Talleres)},
                         parsed_names={"nrocertificado": "Nro. Certificado",
                                         "disponible":"Disponible",
+                                        "idtaller":"Nombre Taller"
                                         "replicado":"Replicado"} 
                         )
 
