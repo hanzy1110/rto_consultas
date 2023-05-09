@@ -62,7 +62,7 @@ def map_fields(data:AuxData, model:Model):
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
                 values[field] = {v:d for v,d in zip(val, descriptions)}
 
-            case _:
+            case (None, None):
                 return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
                 
 
