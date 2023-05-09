@@ -43,17 +43,16 @@ def handle_query(request, model):
 def handle_form(data:AuxData, model:Model):
     values = {}
     for field in data.form_fields.keys():
-        val = model.objects.values_list(field, flat=True).distinct() 
-        values[field] = val
+        if data.form_fields[field][0]:
+            val = model.objects.values_list(field, flat=True).distinct() 
+            values[field] = val
+        else:
+            values[field] = [0,1]
     return values
 
 def map_fields(data:AuxData, model:Model):
     values = {}
-    # if not data.parsed_names:
-    #     return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
 
-    print("DATA:")
-    print(data)
     for field, vals in data.form_fields.items():
         dfield, dmodel = vals
         if bool(dfield):
@@ -64,9 +63,6 @@ def map_fields(data:AuxData, model:Model):
             descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
             values[field] = {v:d for v,d in zip(val, descriptions)}
         else:
-            # print("--//--"*30)
-            # print(dfield, dmodel)
-            # print("Wrong TURN")
             values[field] = {0:"Falso", 1:"Verdadero"}
 
     return values
