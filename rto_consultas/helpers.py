@@ -54,9 +54,9 @@ def map_fields(data:AuxData, model:Model):
 
     for field, vals in data.form_fields.items():
         match vals:
-            case None, None:
+            case (None, None):
                 return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
-            case dfield, dmodel:
+            case (dfield, dmodel):
                 dfield = vals[0]
                 dmodel:Model = vals[1]
 
