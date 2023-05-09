@@ -64,10 +64,10 @@ def map_fields(data:AuxData, model:Model):
             descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
             values[field] = {v:d for v,d in zip(val, descriptions)}
         else:
-            print("--//--"*30)
-            print(dfield, dmodel)
-            print("Wrong TURN")
-            return {k:{0:"Falso", 1:"Verdadero"} for k in data.form_fields}
+            # print("--//--"*30)
+            # print(dfield, dmodel)
+            # print("Wrong TURN")
+            values[field] = {0:"Falso", 1:"Verdadero"}
 
     return values
 
