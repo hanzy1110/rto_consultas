@@ -1,4 +1,4 @@
-Django==4.1.7
-mysqlclient==2.1.1
+Django
+mysqlclient
 django-admin-soft-dashboard==1.0.12
 django-tables2
