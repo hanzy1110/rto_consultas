@@ -3,7 +3,7 @@ FROM continuumio/miniconda3 AS builder-image
 # avoid stuck build due to user prompt
 # ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y default-libmysqlclient-dev libpq-dev build-essential && \
+RUN apt-get install -y pkg-config default-libmysqlclient-dev libpq-dev build-essential && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # install requirements
