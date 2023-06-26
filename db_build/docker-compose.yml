@@ -1,6 +1,6 @@
 services:
   rto_mysql_db:
-    image: mysql/community-server:latest
+    image: mysql/mysql-server:latest
     container_name: rto_mysql_db
     ports:
       - ${MYSQL_PORT}:3306
