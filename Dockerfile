@@ -1,18 +1,12 @@
 FROM continuumio/miniconda3 AS builder-image
 
 # avoid stuck build due to user prompt
-ARG DEBIAN_FRONTEND=noninteractive
-
+# ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y
-# RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3.10-dev python3.10-venv python3-pip python3-wheel build-essential && \
 RUN apt-get install -y default-libmysqlclient-dev libpq-dev build-essential && \
 	apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# create and activate virtual environment
-# using final folder name to avoid path issues with packages
-
 # install requirements
-
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install wheel
@@ -20,12 +14,9 @@ RUN pip install -r requirements.txt
 
 # FROM continuumio/miniconda3 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
-
-RUN apt-get update && apt-get install -y default-libmysqlclient-dev libpq-dev && \
-	apt-get clean && rm -rf /var/lib/apt/lists/* 
-
-# RUN apt-get -y update && apt-get install -y libmysqlclient-dev libpq-dev 
-
+# RUN apt-get update && apt-get install -y default-libmysqlclient-dev libpq-dev && \
+# 	apt-get clean && rm -rf /var/lib/apt/lists/*
+# RUN apt-get -y update && apt-get install -y libmysqlclient-dev libpq-dev
 # COPY --from=builder-image /home/venv /home/venv
 
 RUN mkdir /home/code
