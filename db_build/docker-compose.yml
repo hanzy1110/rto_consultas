@@ -1,9 +1,9 @@
 services:
   rto_mysql_db:
-    image: mysql/mysql-server:8.0
+    image: mysql/community-server:latest
     container_name: rto_mysql_db
     ports:
-      - "${MYSQL_PORT}:3306"
+      - ${MYSQL_PORT}:3306
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
       - ${INIT_DB_PATH}:/docker-entrypoint-initdb.d
