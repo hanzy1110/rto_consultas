@@ -30,7 +30,6 @@ services:
       - "${BACKUP_PATH}:/backup"
     environment:
       - MYSQL_HOST=rto_mysql_db
-      - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
