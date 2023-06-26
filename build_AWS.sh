@@ -3,7 +3,7 @@
 echo "Working dir"
 
 sudo docker-compose --env-file envfiles/.env down --remove-orphans
-sudo docker-compose --env-file envfiles/.env build --progress plain --no-cache
+sudo docker-compose --env-file envfiles/.env build --progress plain
 
 echo MAKING AND APPLYING MIGRATIONS...
 # sudo docker-compose --env-file envfiles/.env run --rm rto_consultas bash -c "python manage.py makemigrations && python manage.py migrate --fake-initial"
