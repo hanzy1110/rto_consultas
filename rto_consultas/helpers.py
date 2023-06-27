@@ -41,8 +41,8 @@ def handle_args(query_params, queryset):
 
 
 def handle_date_range(date_from, date_to):
-    date_from = parse_date(date_from)
-    date_to = parse_date(date_to)
+    # date_from = parse_date(date_from)
+    # date_to = parse_date(date_to)
     return Q(fecha__range=(date_from, date_to))
 
 
