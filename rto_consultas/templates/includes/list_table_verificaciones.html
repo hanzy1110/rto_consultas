@@ -9,12 +9,13 @@
   <table width="78%" style="margin-left: 10px;">
     {% comment %} Render the "Nueva Revisión" button {% endcomment %}
 
+    <tr>
+      <td><b>Buscar</b></td>
+    </tr>
     {% for field in query_fields %}
       <tr>
         <td>
-        {% query_dict parsed_fields field %}
-        </td>
-        <td>
+        <label for={{ ffield }}>{% query_dict parsed_fields field %}</label>
         <input type="text" name="{{ field }}" placeholder="Buscar...">
         </td>
       </tr>
@@ -38,9 +39,6 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td><b>Buscar</b></td>
-    </tr>
-    <tr>
       <td id="tagFD">Fecha Desde:</td>
       <td>
         <input type="text" name="fecha_desde" style="width: 120px" alt="date" class="txt"/>
@@ -48,12 +46,6 @@
       <td id="tagFH">Fecha Hasta:</td>
       <td>
         <input type="text" name="fecha_hasta" style="width: 120px" alt="date" class="txt"/>
-      </td>
-    </tr>
-    <tr>
-      <td>A vencer en:</td>
-      <td>
-        <input type="text" name="dias_vencimiento" style="width: 120px" alt="date" class="txt" /> d&iacute;as
       </td>
     </tr>
     <tr>
