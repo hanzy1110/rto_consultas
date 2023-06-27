@@ -54,6 +54,9 @@ class ListVerificacionesView(CustomRTOView):
     aux_data = AuxData(
         query_fields=[
             "dominiovehiculo",
+            "nrocertificado",
+            "fecha_desde",
+            "fecha_hasta",
         ],
         form_fields={
             "idestado": ("descripcion", Estados),
@@ -63,6 +66,9 @@ class ListVerificacionesView(CustomRTOView):
             "dominiovehiculo": "Dominio Vehiculo",
             "idestado": "Estado Certificado",
             "idtipouso": "Tipo Uso Vehiculo",
+            "nrocertificado": "Nro. Certificado",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
         },
     )
 
