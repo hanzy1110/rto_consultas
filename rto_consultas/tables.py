@@ -51,6 +51,10 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    def render_nrocertificado(self, value):
+        id_verif = value.idverificacion
+        return Certificados.objects.get(idverificacion=id_verif).nrocertificado
+
     def render_idtaller(self, value):
         return value.nombre
 
