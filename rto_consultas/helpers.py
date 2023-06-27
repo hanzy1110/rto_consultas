@@ -51,6 +51,7 @@ def clean_args(query_params):
 
 def parse_date(value):
     # Remove any non-digit characters from the input value
+    value = value[0]
     digits_only = re.sub(r"\D", "", value)
 
     # Format the date as dd/mm/yyyy
@@ -68,6 +69,7 @@ def parse_date(value):
 
 def parse_license_plate(value):
     # Remove any non-alphanumeric characters from the input value
+    value = value[0]
     alphanumeric_only = re.sub(r"\W", "", value)
 
     # Format the license plate
