@@ -15,7 +15,7 @@
     {% for field in query_fields %}
         <td>
         <label for={{ ffield }}>{% query_dict parsed_fields field %}</label>
-        <input id="{% query_dict ids field %}" type="text" name="{{ field }}" placeholder="Buscar...">
+        <input id="{% query_dict ids field %}" type="{% query_dict types field %}" name="{{ field }}" placeholder="Buscar...">
         </td>
     {% endfor %}
     </tr>
