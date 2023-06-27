@@ -17,12 +17,18 @@ class AuxData:
 
 def handle_args(query_params, queryset):
     numeric_test = re.compile(r"^\d+$")
-    cleaned_query = {k: v for k, v in query_params.items() if v}
+    cleaned_query = clean_args(query_params)
+
+    date_from = query_params.pop("fecha_desde", None)
+    date_to = query_params.pop("fecha_hasta", None)
+    if date_from or date_to:
+        queryset = queryset.filter(handle_date_range(date_from, date_to))
+
     for key, arg in cleaned_query.items():
         if numeric_test.match(str(arg)):
             query = Q(**{f"{key}__exact": int(arg)})
         elif "dominio" in key:
-            query = Q(**{f"{key}__exact": arg})
+            query = Q(**{f"{key}__exact": parse_license_plate(arg)})
         elif isinstance(arg, str):
             query = Q(**{f"{key}__icontains": arg})
         else:
@@ -31,6 +37,50 @@ def handle_args(query_params, queryset):
         queryset = queryset.filter(query)
 
     return queryset
+
+
+def handle_date_range(date_from, date_to):
+    date_from = parse_date(date_from)
+    date_to = parse_date(date_to)
+    return Q(fecha__range=(date_from, date_to))
+
+
+def clean_args(query_params):
+    return {k: v for k, v in query_params.items() if v}
+
+
+def parse_date(value):
+    # Remove any non-digit characters from the input value
+    digits_only = re.sub(r"\D", "", value)
+
+    # Format the date as dd/mm/yyyy
+    if len(digits_only) >= 8:
+        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d{4})$", r"\1/\2/\3", digits_only)
+    elif len(digits_only) >= 4:
+        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d+)$", r"\1/\2/\3", digits_only)
+    elif len(digits_only) >= 2:
+        formatted_value = re.sub(r"^(\d{2})(\d+)$", r"\1/\2", digits_only)
+    else:
+        formatted_value = digits_only
+
+    return formatted_value
+
+
+def parse_license_plate(value):
+    # Remove any non-alphanumeric characters from the input value
+    alphanumeric_only = re.sub(r"\W", "", value)
+
+    # Format the license plate
+    if len(alphanumeric_only) >= 7:
+        formatted_value = re.sub(
+            r"^(\w{2})(\d{3})(\w{2})$", r"\1-\2-\3", alphanumeric_only
+        )
+    elif len(alphanumeric_only) >= 6:
+        formatted_value = re.sub(r"^(\w{3})(\d{3})$", r"\1-\2", alphanumeric_only)
+    else:
+        formatted_value = alphanumeric_only
+
+    return formatted_value
 
 
 def handle_query(request, model):
