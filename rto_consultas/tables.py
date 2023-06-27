@@ -1,6 +1,11 @@
 import django_tables2 as tables
 from django.core.paginator import Paginator
-from .models import Verificaciones, Vehiculos, Certificados, Certificadosasignadosportaller
+from .models import (
+    Verificaciones,
+    Vehiculos,
+    Certificados,
+    Certificadosasignadosportaller,
+)
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
@@ -8,148 +13,132 @@ from .helpers import AuxData, map_fields
 # def map_fields(form_fields, description_fields, model):
 #     values = {}
 #     for field, (dfield, dmodel) in zip(form_fields, description_fields):
-#         val = model.objects.values_list(field, flat=True).distinct() 
-#         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct() 
+#         val = model.objects.values_list(field, flat=True).distinct()
+#         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
 #         values[field] = {v:d for v,d in zip(val, descriptions)}
 
 #     return values
 
 
 class VerificacionesTables(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+        },
+        parsed_names={"name": "name"},
+    )
 
-	aux_data = AuxData(
-		query_fields=[],
-		form_fields={"idestado":("descripcion", Estados),
-					"idtipouso":("descripcion", Tipousovehiculo)
-					},
-		parsed_names={"name":"name"}
-	)
+    class Meta:
+        model = Verificaciones
+        fields = {"dominiovehiculo", "idestado", "idtipouso"}
 
-	class Meta:
-		model = Verificaciones
-		fields = {
-			"dominiovehiculo",
-			"idestado",
-			"idtipouso"
-			}
+    def render_idestado(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idestado"][value.idestado]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
-	def render_idestado(self, value):
-		try:
-			descriptions = map_fields(self.aux_data, self.Meta.model)
-			return descriptions["idestado"][value.idestado]
-			# return value.descripcion
-		except Exception as e:
-			print(e)
-			return "Unknown!"
+    def render_idtipouso(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipouso"][value]
+            # return value.descripcion
 
-	def render_idtipouso(self, value):
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
-		try:
-			descriptions = map_fields(self.aux_data, self.Meta.model)
-			return descriptions["idtipouso"][value]
-			# return value.descripcion
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
 
-		except Exception as e:
-			print(e)
-			return "Unknown!"
-
-	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
-
-		per_page = per_page or self._meta.per_page
-		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-		self.page = self.paginator.page(page)
-
-		return self
+        return self
 
 
 class VehiculosTable(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={"idtipouso": ("descripcion", Tipousovehiculo)},
+        parsed_names={"name": "name"},
+    )
 
-	aux_data = AuxData(
-		query_fields=[],
-		form_fields={ "idtipouso":("descripcion", Tipousovehiculo) },
-		parsed_names={"name":"name"}
-	)
+    class Meta:
+        model = Vehiculos
+        fields = {"dominio", "idtipouso", "marca"}
 
-	class Meta:
-		model = Vehiculos
-		fields = {
-					"dominio",
-					"idtipouso",
-					"marca" 
-				}
+    def render_idtipouso(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipouso"][value.idtipouso]
 
-	def render_idtipouso(self, value):
-		try:
-			descriptions = map_fields(self.aux_data, self.Meta.model)
-			return descriptions["idtipouso"][value.idtipouso]
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
-		except Exception as e:
-			print(e)
-			return "Unknown!"
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
 
-	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
-
-		per_page = per_page or self._meta.per_page
-		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-		self.page = self.paginator.page(page)
-
-		return self
+        return self
 
 
 class CertificadosTable(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={"idtaller": ("nombre", Talleres)},
+        parsed_names={"name": "name"},
+    )
 
-	aux_data = AuxData(
-		query_fields=[],
-		form_fields={ "idtaller":("nombre", Talleres) },
-		parsed_names={"name":"name"}
-	)
+    class Meta:
+        model = Certificados
+        fields = {"nrocertificado", "idtaller", "fecha", "anulado"}
 
-	class Meta:
-		model = Certificados
-		fields = {
-		"nrocertificado",
-		"idtaller",
-		"fecha",
-		"anulado"
-		}
+    def render_idtaller(self, value):
+        try:
+            # descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
+            # return descriptions["idtaller"][value.idtaller]
+            return value.nombre
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
-	def render_idtaller(self, value):
-		try:
-			# descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-			# return descriptions["idtaller"][value.idtaller]
-			return value.nombre
-		except Exception as e:
-			print(e)
-			return "Unknown!"
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
 
-	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
-
-		per_page = per_page or self._meta.per_page
-		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-		self.page = self.paginator.page(page)
-
-		return self
+        return self
 
 
 class CertificadosAssignTable(tables.Table):
-	# aux_data = AuxData(
-	# 	query_fields=[],
-	# 	form_fields={ "idtaller":("nombre", Talleres) },
-	# 	parsed_names={"name":"name"}
-	# )
+    # aux_data = AuxData(
+    # 	query_fields=[],
+    # 	form_fields={ "idtaller":("nombre", Talleres) },
+    # 	parsed_names={"name":"name"}
+    # )
 
-	class Meta:
-		model = Certificadosasignadosportaller
-		query_fields = {
-			"nrocertificado",
-			"disponible",
-			"replicado"
-			}
+    class Meta:
+        model = Certificadosasignadosportaller
+        query_fields = {"nrocertificado", "disponible", "replicado"}
 
-	def paginate(self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs):
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
 
-		per_page = per_page or self._meta.per_page
-		self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-		self.page = self.paginator.page(page)
-
-		return self
+        return self
