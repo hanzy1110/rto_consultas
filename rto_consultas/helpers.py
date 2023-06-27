@@ -12,7 +12,7 @@ class AuxData:
     query_fields: List[str]
     form_fields: Dict[str, Tuple[Union[str, None], Union[Model, None]]]
     parsed_names: Dict[str, str]
-    ids: Dict[str, str]
+    ids: Dict[str, str] = {}
 
 
 def handle_args(query_params, queryset):
