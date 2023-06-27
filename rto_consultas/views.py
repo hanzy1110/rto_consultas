@@ -75,6 +75,12 @@ class ListVerificacionesView(CustomRTOView):
             "categorias": "Categorias",
             "idtaller": "Nombre Taller",
         },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+            "nrocertificado": "Nro. Certificado",
+        },
     )
 
 
@@ -101,6 +107,11 @@ class ListCertificadosAssignView(CustomRTOView):
             "idtaller": "Nombre Taller",
             "replicado": "Replicado",
         },
+        ids={
+            "nrocertificado": "#txtNroCertificado",
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+        },
     )
 
 
@@ -120,6 +131,7 @@ class ListVehiculosView(CustomRTOView):
             "marca": "Marca Vehiculo",
             "idtipouso": "Tipo Uso Vehiculo",
         },
+        ids={"dominiovehiculo": "#txtDominio", "marca": "#txtMarca"},
     )
 
 
@@ -139,5 +151,9 @@ class ListCertificadosView(CustomRTOView):
             "anulado": "Anulado",
             "fecha": "Fecha",
             "idtaller": "Nombre Taller",
+        },
+        ids={
+            "nrocertificado": "#txtNroCertificado",
+            "fecha": "#txtFechaD",
         },
     )

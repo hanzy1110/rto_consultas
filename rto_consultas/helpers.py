@@ -12,6 +12,7 @@ class AuxData:
     query_fields: List[str]
     form_fields: Dict[str, Tuple[Union[str, None], Union[Model, None]]]
     parsed_names: Dict[str, str]
+    ids: Dict[str, str]
 
 
 def handle_args(query_params, queryset):
@@ -98,4 +99,5 @@ def handle_context(context, view):
     context["fields"] = fields
     # context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
     context["query_fields"] = view.aux_data.query_fields
+    context["ids"] = view.aux_data.ids
     return context
