@@ -23,7 +23,14 @@ class VerificacionesTables(tables.Table):
 
     class Meta:
         model = Verificaciones
-        fields = {"idtaller", "dominiovehiculo", "idestado", "idtipouso", "fecha"}
+        fields = {
+            "idtaller",
+            "nrocertificado",
+            "dominiovehiculo",
+            "idestado",
+            "idtipouso",
+            "fecha",
+        }
 
     def render_idestado(self, value):
         try:
