@@ -8,7 +8,6 @@
 <form method="GET">
   <table width="90%" style="margin-left: 10px;">
     {% comment %} Render the "Nueva Revisión" button {% endcomment %}
-
     <tr>
       <td><b>Buscar</b></td>
     </tr>
@@ -20,7 +19,6 @@
         </td>
     {% endfor %}
     </tr>
-
     <tr>
     {% for ffield, vals in form_fields.items %}
       <td>
@@ -33,10 +31,6 @@
       </select>
       </td>
     {% endfor %}
-    </tr>
-
-    <tr>
-      <td>&nbsp;</td>
     </tr>
     <tr>
       <td>Propietario:</td>
@@ -52,24 +46,6 @@
       </td>
       <td>
       <input type="text" name="numero_documento" style="width: 100px" maxlength="11" class="txt" />
-      </td>
-    </tr>
-    <tr>
-      <td>Categor&iacute;a:</td>
-      <td>
-        <div id="divCat">
-          <select name="categoria" class="combo" style="width: 250px;">
-            <option value="-1">Seleccione...</option>
-          </select>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">Mostrar Solo Certificados Vencidos
-        <input type="checkbox" name="mostrar_vencidos" />
-      </td>
-      <td colspan="2">Mostrar Solo Revisiones Reverificadas
-        <input type="checkbox" name="mostrar_reverificadas" />
       </td>
     </tr>
     <tr>
