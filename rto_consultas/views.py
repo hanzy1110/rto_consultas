@@ -63,6 +63,7 @@ class ListVerificacionesView(CustomRTOView):
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
             "categorias": ("descripcion", Categorias),
+            "idtaller": ("nombre", Talleres),
         },
         parsed_names={
             "dominiovehiculo": "Dominio Vehiculo",
@@ -72,6 +73,7 @@ class ListVerificacionesView(CustomRTOView):
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
             "categorias": "Categorias",
+            "idtaller": "Nombre Taller",
         },
     )
 
