@@ -1,0 +1,120 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+{% load getattr %}
+<h1>{{ context_object_name }}</h1>
+<div class="card-body px-0 pt-0 pb-2">
+<form method="GET">
+  <table width="78%" style="margin-left: 10px;">
+    {% comment %} Render the "Nueva Revisión" button {% endcomment %}
+
+    {% for Field in query_fields %}
+      <tr>
+        <td>
+        {% query_dict parsed_fields field %}
+        </td>
+        <td>
+        <input type="text" name="{{ field }}" placeholder="Buscar...">
+        </td>
+      </tr>
+    {% endfor %}
+
+    {% for ffield, vals in form_fields.items %}
+      <tr>
+      <td>
+      <label for={{ ffield }}>{% query_dict parsed_fields ffield %}</label>
+      <select name="{{ ffield }}" id="{{ ffield }}">
+        <option value=""></option>
+      {% for val in vals %}
+        <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
+      {% endfor %}
+      </select>
+      </td>
+      </tr>
+    {% endfor %}
+
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><b>Buscar</b></td>
+    </tr>
+    <tr>
+      <td id="tagFD">Fecha Desde:</td>
+      <td>
+        <input type="text" name="fecha_desde" style="width: 120px" alt="date" class="txt"/>
+      </td>
+      <td id="tagFH">Fecha Hasta:</td>
+      <td>
+        <input type="text" name="fecha_hasta" style="width: 120px" alt="date" class="txt"/>
+      </td>
+    </tr>
+    <tr>
+      <td>A vencer en:</td>
+      <td>
+        <input type="text" name="dias_vencimiento" style="width: 120px" alt="date" class="txt" /> d&iacute;as
+      </td>
+    </tr>
+    <tr>
+      <td>Propietario:</td>
+      <td>
+        <select name="tipo_documento" class="combo" style="width: 100px;">
+          <option value="-1">Seleccione...</option>
+          <option value="DNI">DNI</option>
+          <option value="LC">LI</option>
+          <option value="LE">LE</option>
+          <option value="PAS">PAS</option>
+          <option value="CUIT">CUIT</option>
+        </select>
+        <input type="text" name="numero_documento" style="width: 100px" maxlength="11" class="txt" />
+      </td>
+    </tr>
+    <tr>
+      <td>Categor&iacute;a:</td>
+      <td>
+        <div id="divCat">
+          <select name="categoria" class="combo" style="width: 250px;">
+            <option value="-1">Seleccione...</option>
+          </select>
+        </div>
+      </td>
+      <td>Nro Certificado:</td>
+      <td>
+        <input type="text" name="numero_certificado" style="width: 100px" maxlength="11" class="txt" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">Mostrar Solo Certificados Vencidos
+        <input type="checkbox" name="mostrar_vencidos" />
+      </td>
+      <td colspan="2">Mostrar Solo Revisiones Reverificadas
+        <input type="checkbox" name="mostrar_reverificadas" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+    </tr>
+    <tr>
+      <td colspan="4" align="right">
+        <input type="submit" value="Buscar" class="btn" />
+      </td>
+    </tr>
+    <tr>
+      <td align="center" colspan="4">
+        <span id="Respuesta" style="color:#ff0000;"></span>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
+</form>
+</div>
+<div class="card-body px-0 pt-0 pb-2">
+  <div class="table-responsive p-0">
+    {% render_table table %}
+  </div>
+</div>
+{% endblock %}

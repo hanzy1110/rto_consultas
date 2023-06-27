@@ -47,7 +47,7 @@ class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
     paginate_by = 10
-    template_name = "includes/list_table.html"
+    template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
 

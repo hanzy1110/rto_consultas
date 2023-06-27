@@ -41,4 +41,3 @@ services:
       # Make it small
       - GZIP_LEVEL=9
     restart: unless-stopped
-
