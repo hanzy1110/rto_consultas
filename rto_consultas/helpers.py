@@ -55,7 +55,7 @@ def handle_form(data: AuxData, model: Model):
                 # Maybe the model is not a foreign key
                 val = (
                     data.form_fields[field][1]
-                    .values_list("descripcion", flat=True)
+                    .objects.values_list("descripcion", flat=True)
                     .distinct()
                 )
                 values[field] = val
