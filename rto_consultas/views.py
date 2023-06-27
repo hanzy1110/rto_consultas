@@ -81,6 +81,12 @@ class ListVerificacionesView(CustomRTOView):
             "fecha_hasta": "#txtFechaH",
             "nrocertificado": "Nro. Certificado",
         },
+        types={
+            "dominiovehiculo": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
     )
 
 
@@ -112,6 +118,11 @@ class ListCertificadosAssignView(CustomRTOView):
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
         },
+        types={
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
     )
 
 
@@ -132,6 +143,10 @@ class ListVehiculosView(CustomRTOView):
             "idtipouso": "Tipo Uso Vehiculo",
         },
         ids={"dominiovehiculo": "#txtDominio", "marca": "#txtMarca"},
+        types={
+            "marca": "text",
+            "dominio": "text",
+        },
     )
 
 
@@ -155,5 +170,10 @@ class ListCertificadosView(CustomRTOView):
         ids={
             "nrocertificado": "#txtNroCertificado",
             "fecha": "#txtFechaD",
+        },
+        types={
+            "nrocertificado": "text",
+            "fecha": "date",
+            "anulado": "text",
         },
     )
