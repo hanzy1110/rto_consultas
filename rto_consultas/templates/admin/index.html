@@ -4,40 +4,53 @@
 {% block content %}
 <div class="container-fluid py-4">
   <!-- <nav class="navbar navbar-main navbar-text px-2 mx-4"> -->
-  <div class="container-fluid py-4">
-    <div class="col col-sm-6 col-md-3 mb-3">
-      <div class="card">
-        <div class="card-body p-3 align-content">
-          <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
+  <table width="78%" class="table-responsive p-0">
+    <tr>
+      <td>
+      <div class="container-fluid py-4">
+        <div class="col col-sm-6 col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body p-3 align-content">
+              <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
+            </div>
+          </div>
         </div>
+        </td>
+        <td>
+        <div class="col col-sm-6 col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body p-3 align-content">
+              <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
+            </div>
+          </div>
+        </nav>
       </div>
+      <!-- <nav class="navbar navbar-main navbar-text px-2 mx-4"> -->
+      </td>
+      </tr>
+      <td>
+      <div class="container-fluid py-4">
+        <div class="col col-sm-6 col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body p-3 align-content">
+              <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="col col-sm-6 col-md-3 mb-3">
+          <div class="card">
+            <div class="card-body p-3 align-content">
+              <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
-    <div class="col col-sm-6 col-md-3 mb-3">
-      <div class="card">
-        <div class="card-body p-3 align-content">
-          <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <!-- <nav class="navbar navbar-main navbar-text px-2 mx-4"> -->
-  <div class="container-fluid py-4">
-    <div class="col col-sm-6 col-md-3 mb-3">
-      <div class="card">
-        <div class="card-body p-3 align-content">
-          <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
-        </div>
-      </div>
-    </div>
-    <div class="col col-sm-6 col-md-3 mb-3">
-      <div class="card">
-        <div class="card-body p-3 align-content">
-          <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-</div>
+    </td>
+  </tr>
+  </table>
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->
