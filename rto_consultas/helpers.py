@@ -47,8 +47,19 @@ def handle_form(data: AuxData, model: Model):
     values = {}
     for field in data.form_fields.keys():
         if data.form_fields[field][0]:
-            val = model.objects.values_list(field, flat=True).distinct()
-            values[field] = val
+            try:
+                val = model.objects.values_list(field, flat=True).distinct()
+                values[field] = val
+            except Exception as e:
+                print(e)
+                # Maybe the model is not a foreign key
+                val = (
+                    data.form_fields[field][1]
+                    .values_list("descripcion", flat=True)
+                    .distinct()
+                )
+                values[field] = val
+
         else:
             values[field] = [0, 1]
     return values
