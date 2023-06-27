@@ -4,7 +4,7 @@ from django.db.models import Model
 
 import re
 from typing import Dict, List, Tuple, Set, Union
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -12,7 +12,7 @@ class AuxData:
     query_fields: List[str]
     form_fields: Dict[str, Tuple[Union[str, None], Union[Model, None]]]
     parsed_names: Dict[str, str]
-    ids: Dict[str, str] = {}
+    ids: Dict[str, str] = field(default_factory=dict)
 
 
 def handle_args(query_params, queryset):
