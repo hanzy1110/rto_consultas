@@ -53,7 +53,9 @@ class VerificacionesTables(tables.Table):
 
     def render_nrocertificado(self, value):
         id_verif = value.idverificacion
-        return Certificados.objects.get(idverificacion=id_verif).nrocertificado
+        query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
+        print(query)
+        return query
 
     def render_idtaller(self, value):
         return value.nombre
