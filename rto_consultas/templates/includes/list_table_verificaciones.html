@@ -20,8 +20,8 @@
       </tr>
     {% endfor %}
 
+    <tr>
     {% for ffield, vals in form_fields.items %}
-      <tr>
       <td>
       <label for={{ ffield }}>{% query_dict parsed_fields ffield %}</label>
       <select name="{{ ffield }}" id="{{ ffield }}">
@@ -31,8 +31,8 @@
       {% endfor %}
       </select>
       </td>
-      </tr>
     {% endfor %}
+    </tr>
 
     <tr>
       <td>&nbsp;</td>
