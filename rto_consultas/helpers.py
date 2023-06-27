@@ -56,11 +56,11 @@ def parse_date(value):
 
     # Format the date as dd/mm/yyyy
     if len(digits_only) >= 8:
-        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d{4})$", r"\3/\2/\1", digits_only)
+        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d{4})$", r"\3-\2-\1", digits_only)
     elif len(digits_only) >= 4:
-        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d+)$", r"\3/\2/\1", digits_only)
+        formatted_value = re.sub(r"^(\d{2})(\d{2})(\d+)$", r"\3-\2-\1", digits_only)
     elif len(digits_only) >= 2:
-        formatted_value = re.sub(r"^(\d{2})(\d+)$", r"\2/\1", digits_only)
+        formatted_value = re.sub(r"^(\d{2})(\d+)$", r"\2-\1", digits_only)
     else:
         formatted_value = digits_only
 
