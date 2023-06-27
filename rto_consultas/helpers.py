@@ -19,8 +19,8 @@ def handle_args(query_params, queryset):
     numeric_test = re.compile(r"^\d+$")
     cleaned_query = clean_args(query_params)
 
-    date_from = query_params.pop("fecha_desde", None)
-    date_to = query_params.pop("fecha_hasta", None)
+    date_from = cleaned_query.pop("fecha_desde", None)
+    date_to = cleaned_query.pop("fecha_hasta", None)
     if date_from or date_to:
         queryset = queryset.filter(handle_date_range(date_from, date_to))
 

@@ -10,29 +10,20 @@ from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
 
-# def map_fields(form_fields, description_fields, model):
-#     values = {}
-#     for field, (dfield, dmodel) in zip(form_fields, description_fields):
-#         val = model.objects.values_list(field, flat=True).distinct()
-#         descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-#         values[field] = {v:d for v,d in zip(val, descriptions)}
-
-#     return values
-
-
 class VerificacionesTables(tables.Table):
     aux_data = AuxData(
         query_fields=[],
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtaller": ("nombre", Talleres),
         },
         parsed_names={"name": "name"},
     )
 
     class Meta:
         model = Verificaciones
-        fields = {"dominiovehiculo", "idestado", "idtipouso"}
+        fields = {"dominiovehiculo", "idestado", "idtipouso", "fecha"}
 
     def render_idestado(self, value):
         try:
@@ -52,6 +43,9 @@ class VerificacionesTables(tables.Table):
         except Exception as e:
             print(e)
             return "Unknown!"
+
+    def render_idtaller(self, value):
+        return value.nombre
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
@@ -105,13 +99,7 @@ class CertificadosTable(tables.Table):
         fields = {"nrocertificado", "idtaller", "fecha", "anulado"}
 
     def render_idtaller(self, value):
-        try:
-            # descriptions = map_fields(self.form_fields, self.description_fields, self.Meta.model)
-            # return descriptions["idtaller"][value.idtaller]
-            return value.nombre
-        except Exception as e:
-            print(e)
-            return "Unknown!"
+        return value.nombre
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
@@ -132,7 +120,7 @@ class CertificadosAssignTable(tables.Table):
 
     class Meta:
         model = Certificadosasignadosportaller
-        query_fields = {"nrocertificado", "disponible", "replicado"}
+        query_fields = {"nrocertificado", "idtaller", "disponible", "replicado"}
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
