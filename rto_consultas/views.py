@@ -7,6 +7,7 @@ from .models import (
     Certificadosasignadosportaller,
     Vehiculos,
     Certificados,
+    Categorias,
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
@@ -61,6 +62,7 @@ class ListVerificacionesView(CustomRTOView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
+            "categorias": ("descripcion", Categorias),
         },
         parsed_names={
             "dominiovehiculo": "Dominio Vehiculo",
@@ -69,6 +71,7 @@ class ListVerificacionesView(CustomRTOView):
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
+            "categorias": "Categorias",
         },
     )
 
