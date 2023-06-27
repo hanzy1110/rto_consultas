@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.db.models import Model
 
+
 import re
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass
@@ -74,7 +75,12 @@ def map_fields(data: AuxData, model: Model):
             dfield = vals[0]
             dmodel: Model = vals[1]
 
-            val = model.objects.values_list(field, flat=True).distinct()
+            try:
+                val = model.objects.values_list(field, flat=True).distinct()
+            except Exception as e:
+                print(e)
+                val = dmodel.objects.values_list("descripcion", flat=True).distinct()
+
             descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
             values[field] = {v: d for v, d in zip(val, descriptions)}
         else:
