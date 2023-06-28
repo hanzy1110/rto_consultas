@@ -64,7 +64,7 @@ class ListVWVerificacionesView(CustomRTOView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
-            "categorias": ("descripcion", Categorias),
+            "categoria": ("descripcion", Categorias),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={
@@ -74,7 +74,7 @@ class ListVWVerificacionesView(CustomRTOView):
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
-            "categorias": "Categorias",
+            "categoria": "Categoria",
             "idtaller": "Nombre Taller",
         },
         ids={
@@ -110,7 +110,7 @@ class ListVerificacionesView(CustomRTOView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
-            "categorias": ("descripcion", Categorias),
+            "categoria": ("descripcion", Categorias),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={
@@ -120,7 +120,7 @@ class ListVerificacionesView(CustomRTOView):
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
-            "categorias": "Categorias",
+            "categoria": "Categorias",
             "idtaller": "Nombre Taller",
         },
         ids={
