@@ -10,7 +10,6 @@ from .models import (
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
-
 class VerificacionesTables(tables.Table):
     aux_data = AuxData(
         query_fields=[],

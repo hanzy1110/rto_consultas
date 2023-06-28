@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 
 from .models import (
+    VWVerificaciones,
     Verificaciones,
     Certificadosasignadosportaller,
     Vehiculos,
@@ -11,6 +12,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    VWVerificacionesTables,
     VerificacionesTables,
     VehiculosTable,
     CertificadosTable,
@@ -42,6 +44,52 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
+
+
+class ListVWVerificacionesView(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = VWVerificaciones
+    paginate_by = 10
+    template_name = "includes/list_table_verificaciones.html"
+    context_object_name = "Verificaciones"
+    table_class = VWVerificacionesTables
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominiovehiculo",
+            "nrocertificado",
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "categorias": ("descripcion", Categorias),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "dominiovehiculo": "Dominio Vehiculo",
+            "idestado": "Estado Certificado",
+            "idtipouso": "Tipo Uso Vehiculo",
+            "nrocertificado": "Nro. Certificado",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+            "categorias": "Categorias",
+            "idtaller": "Nombre Taller",
+        },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+            "nrocertificado": "Nro. Certificado",
+        },
+        types={
+            "dominiovehiculo": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
+    )
 
 
 class ListVerificacionesView(CustomRTOView):
