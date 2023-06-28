@@ -3120,7 +3120,7 @@ class Vin(models.Model):
 
 
 class VWVerificaciones(models.Model):
-    idverificacion = models.IntegerField(db_column="idVerificacion")
+    idverificacion = models.IntegerField(db_column="idVerificacion", primary_key=True)
     fecha = models.DateField(db_column="Fecha")
     hora = models.TimeField(db_column="Hora")
     horafinal = models.TimeField(db_column="HoraFinal", blank=True, null=True)
