@@ -3432,7 +3432,7 @@ class VWVerificaciones(models.Model):
     ptipopersona = models.CharField(
         db_column="PTipoPersona", max_length=1, blank=True, null=True
     )
-    fechahorarep = models.DateTimeField(db_column="FechaHoraRep", blank=True, null=True)
+    # fechahorarep = models.DateTimeField(db_column="FechaHoraRep", blank=True, null=True)
     tipocarga = models.CharField(
         db_column="TipoCarga", max_length=50, blank=True, null=True
     )
