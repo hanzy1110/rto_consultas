@@ -3120,7 +3120,7 @@ class Vin(models.Model):
 
 
 class VWVerificaciones(models.Model):
-    idverificacion = models.IntegerField(db_column="idVerificacion", primary_key=True)
+    idverificacion = models.IntegerField(db_column="idVerificacion")
     fecha = models.DateField(db_column="Fecha")
     hora = models.TimeField(db_column="Hora")
     horafinal = models.TimeField(db_column="HoraFinal", blank=True, null=True)
@@ -3447,7 +3447,9 @@ class VWVerificaciones(models.Model):
         db_column="nroFactura", max_length=100, blank=True, null=True
     )
 
-    idcertificado = models.AutoField(db_column="idCertificado", primary_key=True)
+    idcertificado = models.AutoField(
+        db_column="idCertificado",
+    )
     nrocertificado = models.BigIntegerField(db_column="NroCertificado", unique=True)
     vigenciahasta = models.DateField(db_column="VigenciaHasta")
     serie = models.CharField(db_column="Serie", max_length=1)
