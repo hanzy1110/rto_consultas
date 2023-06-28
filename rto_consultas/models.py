@@ -2576,7 +2576,7 @@ class Vehiculos(models.Model):
     activo = models.IntegerField(db_column="Activo")  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"{self.dominio}"
+        return f"Vehiculo: {self.dominio}"
 
     class Meta:
         app_label = "rto_consultas"
@@ -3117,3 +3117,385 @@ class Vin(models.Model):
         app_label = "rto_consultas"
 
         db_table = "vin"
+
+
+class VWVerificaciones(models.Model):
+    idverificacion = models.IntegerField(db_column="idVerificacion", primary_key=True)
+    fecha = models.DateField(db_column="Fecha")
+    hora = models.TimeField(db_column="Hora")
+    horafinal = models.TimeField(db_column="HoraFinal", blank=True, null=True)
+    idtaller = models.ForeignKey(
+        Talleres, on_delete=models.CASCADE, db_column="idTaller"
+    )
+    idfotovalidacion = models.IntegerField(
+        db_column="idFotovalidacion", blank=True, null=True
+    )
+    dominiovehiculo = models.ForeignKey(
+        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo"
+    )
+    idhabilitacion = models.IntegerField(
+        db_column="idHabilitacion", blank=True, null=True
+    )
+    codigohabilitacion = models.CharField(
+        db_column="codigoHabilitacion", max_length=255, blank=True, null=True
+    )
+    chasisnro = models.CharField(db_column="ChasisNro", max_length=50)
+    motoranio = models.IntegerField(db_column="MotorAnio")
+    motormarca = models.CharField(db_column="MotorMarca", max_length=50)
+    motornumero = models.CharField(db_column="MotorNumero", max_length=50)
+    idlocalidadvehiculo = models.IntegerField(db_column="idLocalidadVehiculo")
+    tipodocconductor = models.CharField(db_column="TipoDocConductor", max_length=10)
+    nrodocconductor = models.IntegerField(db_column="NroDocConductor")
+    nombreconductor = models.CharField(db_column="NombreConductor", max_length=50)
+    apellidoconductor = models.CharField(db_column="ApellidoConductor", max_length=50)
+    reverificacion = models.IntegerField(
+        db_column="Reverificacion", blank=True, null=True
+    )
+    idverificacionoriginal = models.IntegerField(
+        db_column="idVerificacionOriginal", blank=True, null=True
+    )
+    inspector = models.CharField(
+        db_column="Inspector", max_length=100, blank=True, null=True
+    )
+    directortecnico = models.CharField(
+        db_column="DirectorTecnico", max_length=100, blank=True, null=True
+    )
+    idestado = models.ForeignKey(
+        Estados, on_delete=models.CASCADE, db_column="idEstado"
+    )
+    eje1_tara = models.DecimalField(
+        db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje2_tara = models.DecimalField(
+        db_column="Eje2_Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje3_tara = models.DecimalField(
+        db_column="Eje3_Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje4_tara = models.DecimalField(
+        db_column="Eje4_Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje1_fzaizq = models.DecimalField(
+        db_column="Eje1_FzaIzq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje2_fzaizq = models.DecimalField(
+        db_column="Eje2_FzaIzq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje3_fzaizq = models.DecimalField(
+        db_column="Eje3_FzaIzq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje4_fzaizq = models.DecimalField(
+        db_column="Eje4_FzaIzq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje1_fzader = models.DecimalField(
+        db_column="Eje1_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje2_fzader = models.DecimalField(
+        db_column="Eje2_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje3_fzader = models.DecimalField(
+        db_column="Eje3_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje4_fzader = models.DecimalField(
+        db_column="Eje4_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje1_dif = models.DecimalField(
+        db_column="Eje1_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje2_dif = models.DecimalField(
+        db_column="Eje2_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje3_dif = models.DecimalField(
+        db_column="Eje3_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje4_dif = models.DecimalField(
+        db_column="Eje4_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje1_eficiencia = models.DecimalField(
+        db_column="Eje1_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    eje2_eficiencia = models.DecimalField(
+        db_column="Eje2_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    eje3_eficiencia = models.DecimalField(
+        db_column="Eje3_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    eje4_eficiencia = models.DecimalField(
+        db_column="Eje4_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    eje5_tara = models.DecimalField(
+        db_column="Eje5_Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje5_fzaizq = models.DecimalField(
+        db_column="Eje5_FzaIzq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje5_fzader = models.DecimalField(
+        db_column="Eje5_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje5_dif = models.DecimalField(
+        db_column="Eje5_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    eje5_eficiencia = models.DecimalField(
+        db_column="Eje5_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    alineacion = models.CharField(
+        db_column="Alineacion", max_length=50, blank=True, null=True
+    )
+    nivelsonoro = models.CharField(
+        db_column="NivelSonoro", max_length=50, blank=True, null=True
+    )
+    interior = models.IntegerField(db_column="Interior", blank=True, null=True)
+    escape = models.IntegerField(db_column="Escape", blank=True, null=True)
+    bach = models.DecimalField(
+        db_column="Bach", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    porcentajeco = models.DecimalField(
+        db_column="PorcentajeCo", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    opac = models.DecimalField(
+        db_column="Opac", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    ppmhc = models.DecimalField(
+        db_column="ppmHC", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    freno_fzaisq = models.DecimalField(
+        db_column="Freno_FzaIsq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    freno_fzader = models.DecimalField(
+        db_column="Freno_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    freno_dif = models.DecimalField(
+        db_column="Freno_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    freno_eficiencia = models.DecimalField(
+        db_column="Freno_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    cccf = models.CharField(db_column="CCCF", max_length=50, blank=True, null=True)
+    marcatac = models.CharField(
+        db_column="MarcaTac", max_length=50, blank=True, null=True
+    )
+    nrotac = models.CharField(db_column="NroTac", max_length=50, blank=True, null=True)
+    rodadotac_eje1 = models.CharField(
+        db_column="RodadoTac_Eje1", max_length=50, blank=True, null=True
+    )
+    rodadotac_eje2 = models.CharField(
+        db_column="RodadoTac_Eje2", max_length=50, blank=True, null=True
+    )
+    rodadotac_eje3 = models.CharField(
+        db_column="RodadoTac_Eje3", max_length=50, blank=True, null=True
+    )
+    rodadotac_eje4 = models.CharField(
+        db_column="RodadoTac_Eje4", max_length=50, blank=True, null=True
+    )
+    rodadotac_eje5 = models.CharField(
+        db_column="RodadoTac_Eje5", max_length=50, blank=True, null=True
+    )
+    nrointerno = models.CharField(
+        db_column="NroInterno", max_length=50, blank=True, null=True
+    )
+    codigotitular = models.ForeignKey(
+        Personas, on_delete=models.CASCADE, db_column="CodigoTitular"
+    )
+    descripciontitular = models.CharField(
+        db_column="DescripcionTitular", max_length=150
+    )
+    susp_fzaisq = models.DecimalField(
+        db_column="Susp_FzaIsq", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    susp_fzader = models.DecimalField(
+        db_column="Susp_FzaDer", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    susp_dif = models.DecimalField(
+        db_column="Susp_Dif", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    susp_eficiencia = models.DecimalField(
+        db_column="Susp_Eficiencia",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    observaciones = models.TextField(db_column="Observaciones")
+    companiaseguro = models.CharField(
+        db_column="CompaniaSeguro", max_length=50, blank=True, null=True
+    )
+    nropoliza = models.CharField(
+        db_column="NroPoliza", max_length=50, blank=True, null=True
+    )
+    ultimorecpatente = models.CharField(
+        db_column="UltimoRecPatente", max_length=50, blank=True, null=True
+    )
+    idtipouso = models.IntegerField(db_column="idTipoUso")
+    usuariocarga = models.CharField(
+        db_column="usuarioCarga", max_length=50, blank=True, null=True
+    )
+    idtipovehiculo = models.IntegerField(
+        db_column="idTipoVehiculo", blank=True, null=True
+    )
+    vmarca = models.CharField(db_column="VMarca", max_length=100, blank=True, null=True)
+    vmodelo = models.CharField(
+        db_column="VModelo", max_length=100, blank=True, null=True
+    )
+    vanio = models.IntegerField(db_column="VAnio", blank=True, null=True)
+    chasismarca = models.CharField(
+        db_column="ChasisMarca", max_length=100, blank=True, null=True
+    )
+    chasisanio = models.IntegerField(db_column="ChasisAnio", blank=True, null=True)
+    tipocombustible = models.CharField(
+        db_column="TipoCombustible", max_length=50, blank=True, null=True
+    )
+    vpotencia = models.CharField(
+        db_column="VPotencia", max_length=20, blank=True, null=True
+    )
+    nroejes = models.IntegerField(db_column="NroEjes", blank=True, null=True)
+    vcaja = models.CharField(db_column="VCaja", max_length=50, blank=True, null=True)
+    pocisionmotor = models.CharField(
+        db_column="PocisionMotor", max_length=50, blank=True, null=True
+    )
+    aniofabricacion = models.IntegerField(db_column="AnioFabricacion")
+    carroceria = models.CharField(
+        db_column="Carroceria", max_length=50, blank=True, null=True
+    )
+    expediente = models.CharField(
+        db_column="Expediente", max_length=50, blank=True, null=True
+    )
+    aireaco = models.IntegerField(db_column="AireAco", blank=True, null=True)
+    bar = models.IntegerField(db_column="Bar", blank=True, null=True)
+    banio = models.IntegerField(db_column="Banio", blank=True, null=True)
+    calefaccion = models.IntegerField(db_column="Calefaccion", blank=True, null=True)
+    suspencion = models.CharField(
+        db_column="Suspencion", max_length=50, blank=True, null=True
+    )
+    tara = models.DecimalField(
+        db_column="Tara", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    pesomax = models.DecimalField(
+        db_column="PesoMax", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    cargautil = models.DecimalField(
+        db_column="CargaUtil", max_digits=10, decimal_places=2, blank=True, null=True
+    )
+    asientos = models.IntegerField(db_column="Asientos", blank=True, null=True)
+    idloctmserv = models.IntegerField(db_column="idLocTMServ", blank=True, null=True)
+    tiposervtm = models.CharField(
+        db_column="TipoServTM", max_length=100, blank=True, null=True
+    )
+    idtiposervicio = models.IntegerField(
+        db_column="idTipoServicio", blank=True, null=True
+    )
+    idclaseservicio = models.IntegerField(
+        db_column="idClaseServicio", blank=True, null=True
+    )
+    prestadorserv = models.CharField(
+        db_column="prestadorServ", max_length=100, blank=True, null=True
+    )
+    cuitprestserv = models.CharField(
+        db_column="CuitPrestServ", max_length=15, blank=True, null=True
+    )
+    ptipodoc = models.CharField(
+        db_column="PTipoDoc", max_length=10, blank=True, null=True
+    )
+    pnrodoc = models.IntegerField(db_column="PNroDoc", blank=True, null=True)
+    pcuit = models.CharField(db_column="PCuit", max_length=15, blank=True, null=True)
+    pdomicilio = models.CharField(
+        db_column="PDomicilio", max_length=200, blank=True, null=True
+    )
+    ptelefono = models.CharField(
+        db_column="PTelefono", max_length=50, blank=True, null=True
+    )
+    pemail = models.CharField(db_column="PEmail", max_length=200, blank=True, null=True)
+    pidlocalidad = models.IntegerField(db_column="PidLocalidad", blank=True, null=True)
+    ptipopersona = models.CharField(
+        db_column="PTipoPersona", max_length=1, blank=True, null=True
+    )
+    fechahorarep = models.DateTimeField(db_column="FechaHoraRep", blank=True, null=True)
+    tipocarga = models.CharField(
+        db_column="TipoCarga", max_length=50, blank=True, null=True
+    )
+    pcodigopj = models.CharField(
+        db_column="PCodigoPJ", max_length=30, blank=True, null=True
+    )
+    certificadodiscapacidad = models.CharField(
+        db_column="CertificadoDiscapacidad", max_length=250, blank=True, null=True
+    )
+    firma = models.CharField(db_column="Firma", max_length=100, blank=True, null=True)
+    nrofactura = models.CharField(
+        db_column="nroFactura", max_length=100, blank=True, null=True
+    )
+
+    idcertificado = models.AutoField(db_column="idCertificado", primary_key=True)
+    nrocertificado = models.BigIntegerField(db_column="NroCertificado", unique=True)
+    vigenciahasta = models.DateField(db_column="VigenciaHasta")
+    serie = models.CharField(db_column="Serie", max_length=1)
+    certanulado = models.IntegerField(db_column="certAnulado")
+    observaciones = models.TextField(
+        db_column="ObservacionesCert", blank=True, null=True
+    )
+    idcategoria = models.IntegerField(db_column="idCategoria", blank=True, null=True)
+    porcentajecategoria = models.DecimalField(
+        db_column="porcentajeCategoria",
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+    )
+    vencido = models.IntegerField(db_column="certVencido")
+    reverificado = models.IntegerField(db_column="certReverificado")
+    categoria = models.CharField(db_column="Categoria", max_length=100)
+    nombre = models.CharField(
+        db_column="Taller", max_length=100, db_collation="utf8mb3_general_ci"
+    )
+    nrotaller = models.IntegerField(db_column="Nrotaller")
+    estado = models.CharField(db_column="Estado", max_length=100)
+    tipoUso = models.CharField(db_column="tipoUso", max_length=50)
+    tipoVehiculo = models.CharField(db_column="tipoVehiculo", max_length=100)
+    vidprovincia = models.ForeignKey(
+        "VidProvincia", on_delete=models.CASCADE, db_column="idProvincia"
+    )
+    localidadvehiculo = models.CharField(db_column="LocalidadVehiculo", max_length=100)
+    pidprovincia = models.ForeignKey(
+        "PidProvincia", on_delete=models.CASCADE, db_column="idProvincia"
+    )
+    localidadtitular = models.CharField(db_column="LocalidadTitular", max_length=100)
+    locta = models.ForeignKey(
+        "LocTa", on_delete=models.CASCADE, db_column="idProvincia"
+    )
+    tidprovincia = models.CharField(db_column="TidProvincia", max_length=100)
+    localidadtaller = models.CharField(db_column="LocalidadTaller", max_length=100)
+    tmidprovincia = models.CharField(db_column="TMidProvincia", max_length=100)
+    localidadtranspmuni = models.CharField(
+        db_column="LocalidadTranspMuni", max_length=100
+    )
+    tiposervpas = models.CharField(db_column="tipoServPas", max_length=200)
+    claseservpas = models.CharField(
+        db_column="claseServPas", max_length=200
+    )  # Field name made lowercase.
+
+    class Meta:
+        app_label = "rto_consultas"
+        db_table = "vw_verificaciones"
+        managed = False
