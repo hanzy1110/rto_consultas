@@ -3495,3 +3495,9 @@ class VWVerificaciones(models.Model):
         app_label = "rto_consultas"
         db_table = "vw_verificaciones"
         managed = False
+        unique_together = (("idverificacion", "idtaller"),)
+        indexes = [
+            models.Index(fields=("idverificacion", "idtaller")),
+            models.Index(fields=("idtipouso",)),
+            models.Index(fields=("idhabilitacion",)),
+        ]
