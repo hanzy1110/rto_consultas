@@ -3447,7 +3447,7 @@ class VWVerificaciones(models.Model):
         db_column="nroFactura", max_length=100, blank=True, null=True
     )
 
-    idcertificado = models.AutoField(
+    idcertificado = models.IntegerField(
         db_column="idCertificado",
     )
     nrocertificado = models.BigIntegerField(db_column="NroCertificado", unique=True)
