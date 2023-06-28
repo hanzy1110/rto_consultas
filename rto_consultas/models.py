@@ -3476,16 +3476,14 @@ class VWVerificaciones(models.Model):
     tipoUso = models.CharField(db_column="tipoUso", max_length=50)
     tipoVehiculo = models.CharField(db_column="tipoVehiculo", max_length=100)
     vidprovincia = models.ForeignKey(
-        "VidProvincia", on_delete=models.CASCADE, db_column="idProvincia"
+        "VidProvincia", on_delete=models.CASCADE, db_column="VidProvincia"
     )
     localidadvehiculo = models.CharField(db_column="LocalidadVehiculo", max_length=100)
     pidprovincia = models.ForeignKey(
-        "PidProvincia", on_delete=models.CASCADE, db_column="idProvincia"
+        "PidProvincia", on_delete=models.CASCADE, db_column="PidProvincia"
     )
     localidadtitular = models.CharField(db_column="LocalidadTitular", max_length=100)
-    locta = models.ForeignKey(
-        "LocTa", on_delete=models.CASCADE, db_column="idProvincia"
-    )
+    locta = models.ForeignKey("LocTa", on_delete=models.CASCADE, db_column="LocTa")
     tidprovincia = models.CharField(db_column="TidProvincia", max_length=100)
     localidadtaller = models.CharField(db_column="LocalidadTaller", max_length=100)
     tmidprovincia = models.CharField(db_column="TMidProvincia", max_length=100)
