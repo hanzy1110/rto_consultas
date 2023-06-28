@@ -3494,7 +3494,7 @@ class VWVerificaciones(models.Model):
     class Meta:
         app_label = "rto_consultas"
         db_table = "vw_verificaciones"
-        managed = False
+        # managed = False
         unique_together = (("idverificacion", "idtaller"),)
         indexes = [
             models.Index(fields=("idverificacion", "idtaller")),
