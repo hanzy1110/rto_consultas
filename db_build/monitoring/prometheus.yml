@@ -19,8 +19,8 @@ scrape_configs:
     - targets:
       - "cadvisor:8080"
 
-  - job_name: central_mysql_exporter
+  - job_name: rto_mysql_exporter
     scrape_interval: 1s
     static_configs:
     - targets:
-      - "central_mysql_exporter:9104"
+      - "rto_mysql_exporter:9104"
