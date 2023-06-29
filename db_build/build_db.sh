@@ -11,5 +11,5 @@ sudo docker-compose --env-file .env up -d
 echo "----------------------<>-----------------------"
 echo Waiting for containers...
 sleep 10
-sudo docker ps -a
-sudo docker logs -tf rto_mysql_db
+# sudo docker ps -a
+# sudo docker logs -tf rto_mysql_db
