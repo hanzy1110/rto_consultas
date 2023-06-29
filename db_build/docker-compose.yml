@@ -70,13 +70,15 @@ services:
       - rto_mysql_db
     ports:
       - 9104:9104
+    volumes:
+      - db_build/exporter/.my.cnf:~/.my.cnf
     environment:
       - MYSQL_HOST=rto_mysql_db
       - MYSQL_PORT=3306
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - DATA_SOURCE_NAME=$MYSQL_USER:$MYSQL_PASSWORD@(rto_mysql_db:3306)/
+      - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@(rto_mysql_db:3306)/"
 
   grafana:
     image: grafana/grafana:latest
