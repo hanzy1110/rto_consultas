@@ -71,7 +71,7 @@ services:
     ports:
       - 9104:9104
     volumes:
-      - db_build/exporter/.my.cnf:~/.my.cnf
+      - exporter/.my.cnf:~/.my.cnf
     environment:
       - MYSQL_HOST=rto_mysql_db
       - MYSQL_PORT=3306
