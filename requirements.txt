@@ -1,3 +1,4 @@
+python-dotenv
 Django
 mysqlclient
 django-admin-soft-dashboard==1.0.12

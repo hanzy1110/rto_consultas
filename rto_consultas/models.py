@@ -718,6 +718,11 @@ class Certificados(models.Model):
         db_table = "certificados"
         unique_together = (("idcertificado", "idtaller"),)
 
+        indexes = [
+            models.Index(fields=("idcertificado", "idtaller")),
+            models.Index(fields=("idverificacion",)),
+            models.Index(fields=("idtaller",)),
+        ]
 
 class Certificadosasignadosportaller(models.Model):
     nrocertificado = models.BigIntegerField(
@@ -3487,14 +3492,12 @@ class VWVerificaciones(models.Model):
         db_column="LocalidadTranspMuni", max_length=100
     )
     tiposervpas = models.CharField(db_column="tipoServPas", max_length=200)
-    claseservpas = models.CharField(
-        db_column="claseServPas", max_length=200
-    )  # Field name made lowercase.
+    claseservpas = models.CharField(db_column="claseServPas", max_length=200)
 
     class Meta:
         app_label = "rto_consultas"
         db_table = "vw_verificaciones"
-        # managed = False
+        managed = True
         unique_together = (("idverificacion", "idtaller"),)
         indexes = [
             models.Index(fields=("idverificacion", "idtaller")),
