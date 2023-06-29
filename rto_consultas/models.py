@@ -963,6 +963,9 @@ class Estados(models.Model):
         app_label = "rto_consultas"
 
         db_table = "estados"
+        indexes = [
+            models.Index(fields=("idestado",)),
+        ]
 
     def __str__(self) -> str:
         return f"{self.descripcion}"
@@ -1414,7 +1417,9 @@ class Localidades(models.Model):
         app_label = "rto_consultas"
 
         db_table = "localidades"
-
+        indexes = [
+            models.Index(fields=("idlocalidad",)),
+        ]
 
 class Mantenimientos(models.Model):
     idmantenimiento = models.IntegerField(
@@ -2258,6 +2263,9 @@ class Talleres(models.Model):
 
         db_table = "talleres"
 
+        indexes = [
+            models.Index(fields=("idtaller",)),
+        ]
 
 class Tipousovehiculo(models.Model):
     idtipouso = models.AutoField(
@@ -2280,6 +2288,9 @@ class Tipousovehiculo(models.Model):
         app_label = "rto_consultas"
 
         db_table = "tipousovehiculo"
+        indexes = [
+            models.Index(fields=("idtipouso",)),
+        ]
 
 
 class Tipovehiculo(models.Model):
@@ -2301,6 +2312,9 @@ class Tipovehiculo(models.Model):
         app_label = "rto_consultas"
 
         db_table = "tipovehiculo"
+        indexes = [
+            models.Index(fields=("idtipovehiculo",)),
+        ]
 
 
 class Usuarios(models.Model):
