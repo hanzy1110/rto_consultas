@@ -51,7 +51,7 @@ services:
       - '--path.rootfs=/host'
     restart: unless-stopped
     volumes:
-      - '/:/host:ro,rslave'
+      - '.:/host:ro,rslave'
 
   prometheus:
     image: prom/prometheus:latest
