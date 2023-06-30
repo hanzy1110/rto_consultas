@@ -72,7 +72,7 @@ services:
       - 9104:9104
     # volumes:
     #   - ./exporter/.my.cnf:/home/exporter/.my.cnf
-    # environment:
+    environment:
       - MYSQL_HOST=rto_mysql_db
       - MYSQL_PORT=3306
       - MYSQL_USER=exporter
