@@ -64,7 +64,7 @@ services:
       - prometheus-data:/prometheus
 
   rto_mysql_exporter:
-    image: bitnami/mysqld-exporter
+    image: prom/mysqld-exporter
     container_name: rto_mysql_exporter
     depends_on:
       - rto_mysql_db
@@ -78,6 +78,7 @@ services:
       - MYSQL_USER=exporter
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
       - DATA_SOURCE_NAME="exporter:${MYSQL_PASSWORD}@(${MYSQL_HOST}:3306)/${MYSQL_DATABASE}"
 
   grafana:
