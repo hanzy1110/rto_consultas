@@ -75,10 +75,10 @@ services:
     environment:
       - MYSQL_HOST=rto_mysql_db
       - MYSQL_PORT=3306
-      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_USER=exporter
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@(rto_mysql_db:3306)/"
+      - DATA_SOURCE_NAME="exporter:${MYSQL_PASSWORD}@(${MYSQL_HOST}:3306)/${MYSQL_DATABASE}"
 
   grafana:
     image: grafana/grafana:latest
