@@ -64,15 +64,15 @@ services:
       - prometheus-data:/prometheus
 
   rto_mysql_exporter:
-    image: prom/mysqld-exporter
+    image: bitnami/mysqld-exporter
     container_name: rto_mysql_exporter
     depends_on:
       - rto_mysql_db
     ports:
       - 9104:9104
-    volumes:
-      - ./exporter/.my.cnf:/home/exporter/.my.cnf
-    environment:
+    # volumes:
+    #   - ./exporter/.my.cnf:/home/exporter/.my.cnf
+    # environment:
       - MYSQL_HOST=rto_mysql_db
       - MYSQL_PORT=3306
       - MYSQL_USER=exporter
