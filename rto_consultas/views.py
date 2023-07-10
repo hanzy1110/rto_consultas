@@ -4,7 +4,6 @@ from django_tables2 import SingleTableView, Table
 
 
 from .models import (
-    # VWVerificaciones,
     Verificaciones,
     Certificadosasignadosportaller,
     Vehiculos,
@@ -13,7 +12,6 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
-    # VWVerificacionesTables,
     VerificacionesTables,
     VehiculosTable,
     CertificadosTable,
@@ -45,52 +43,6 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
-
-
-# class ListVWVerificacionesView(CustomRTOView):
-#     # authentication_classes = [authentication.TokenAuthentication]
-#     model = VWVerificaciones
-#     paginate_by = 10
-#     template_name = "includes/list_table_verificaciones.html"
-#     context_object_name = "Verificaciones"
-#     table_class = VWVerificacionesTables
-
-#     aux_data = AuxData(
-#         query_fields=[
-#             "dominiovehiculo",
-#             "nrocertificado",
-#             "fecha_desde",
-#             "fecha_hasta",
-#         ],
-#         form_fields={
-#             "idestado": ("descripcion", Estados),
-#             "idtipouso": ("descripcion", Tipousovehiculo),
-#             "categoria": ("descripcion", Categorias),
-#             "idtaller": ("nombre", Talleres),
-#         },
-#         parsed_names={
-#             "dominiovehiculo": "Dominio Vehiculo",
-#             "idestado": "Estado Certificado",
-#             "idtipouso": "Tipo Uso Vehiculo",
-#             "nrocertificado": "Nro. Certificado",
-#             "fecha_desde": "Fecha Desde",
-#             "fecha_hasta": "Fecha Hasta",
-#             "categoria": "Categoria",
-#             "idtaller": "Nombre Taller",
-#         },
-#         ids={
-#             "dominiovehiculo": "#txtDominio",
-#             "fecha_desde": "#txtFechaD",
-#             "fecha_hasta": "#txtFechaH",
-#             "nrocertificado": "Nro. Certificado",
-#         },
-#         types={
-#             "dominiovehiculo": "text",
-#             "fecha_desde": "date",
-#             "fecha_hasta": "date",
-#             "nrocertificado": "text",
-#         },
-#     )
 
 
 class ListVerificacionesView(CustomRTOView):
@@ -139,6 +91,7 @@ class ListVerificacionesView(CustomRTOView):
     )
 
 
+
 class ListCertificadosAssignView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -150,6 +103,8 @@ class ListCertificadosAssignView(CustomRTOView):
     aux_data = AuxData(
         query_fields=[
             "nrocertificado",
+            "fecha_desde",
+            "fecha_hasta",
         ],
         form_fields={
             "idtaller": ("nombre", Talleres),
@@ -161,6 +116,8 @@ class ListCertificadosAssignView(CustomRTOView):
             "disponible": "Disponible",
             "idtaller": "Nombre Taller",
             "replicado": "Replicado",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
         },
         ids={
             "nrocertificado": "#txtNroCertificado",
