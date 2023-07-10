@@ -9,7 +9,7 @@
 <form method="GET">
   {% for field in query_fields %}
     <h5>{% query_dict parsed_fields field %}</h5>
-    <input type="text" name="{{ field }}" placeholder="Buscar...">
+    <input type="text" name="{{ field }}" type="{% query_dict types field %}" placeholder="Buscar...">
   {% endfor %}
 
   {% for ffield, vals in form_fields.items %}
