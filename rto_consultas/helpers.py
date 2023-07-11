@@ -96,16 +96,17 @@ def handle_query(request, model, fecha_field="fecha"):
     queryset = model.objects.all()
     nrocertificado = query.pop("nrocertificado", None)
 
-    if nrocertificado[0]:
-        nrocertificado = int(nrocertificado[0])
-        idverifs = (model.objects
-                        .prefetch_related('certificados')
-                        .filter(certificados__nrocertificado__exact=nrocertificado)
-                        # .values_list('certificados__nrocertificado')
-                        )
-
-        # print(idverifs)
-        return idverifs
+    match nrocertificado:
+        case ['']:
+            pass
+        case _:
+            nrocertificado = int(nrocertificado[0])
+            idverifs = (model.objects
+                            .prefetch_related('certificados')
+                            .filter(certificados__nrocertificado__exact=nrocertificado)
+                            )
+            print(idverifs)
+            return idverifs
 
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
