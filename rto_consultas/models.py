@@ -3003,8 +3003,9 @@ class Verificaciones(models.Model):
     def __str__(self) -> str:
         return f"Verif: {self.idverificacion}:{self.dominiovehiculo}"
 
-    def get_nro_certificado(self, record):
-        certificado = (record.certificados
+    @staticmethod
+    def get_nro_certificado(record):
+        return (record.certificados
                        # .all()
                        .get(
                            idverificacion=record.idverificacion,
