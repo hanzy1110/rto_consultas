@@ -3003,6 +3003,15 @@ class Verificaciones(models.Model):
     def __str__(self) -> str:
         return f"Verif: {self.idverificacion}:{self.dominiovehiculo}"
 
+    def get_nro_certificado(self, record):
+        certificado = (record.certificados
+                       # .all()
+                       .get(
+                           idverificacion=record.idverificacion,
+                           idtaller=record.idtaller
+                            )
+                       )
+
     class Meta:
         app_label = "rto_consultas"
 
