@@ -97,7 +97,8 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
 
     if nrocertificado[0]:
-        certificado = Certificados.objects.get(nrocertificado=int(nrocertificado[0]))
+        certificado = Certificados.objects.filter(nrocertificado=int(nrocertificado[0]))
+        print(certificado)
         queryset = queryset.filter(idverificacion=certificado.idverificacion,
                                 idtaller=certificado.idtaller)
         return queryset
