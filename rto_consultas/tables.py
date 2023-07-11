@@ -54,16 +54,13 @@ class VerificacionesTables(tables.Table):
     def render_nrocertificado(self, value):
         # id_verif = value.idverificacion
         # query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
-        certificado = value.certificados.all()
+        # certificado = value.certificados.all()
         print("-x-"*30)
         print("QUERY CERTIFICADO ==>")
-        print(certificado)
-        return certificado.nrocertificado
+        print(value)
+        return 1
 
     def render_idtaller(self, value):
-        print("-x-"*30)
-        print("QUERY TALLER ==>")
-        print(value)
         return value.nombre
 
     def paginate(
