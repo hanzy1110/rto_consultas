@@ -103,7 +103,10 @@ def handle_query(request, model, fecha_field="fecha"):
             pass
         case _:
             nrocertificado = int(nrocertificado[0])
-            cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
+            cert = (Certificados.objects
+                    .prefetch_related('idverificacion')
+                    .filter(nrocertificado__exact=nrocertificado)
+                    )
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
                 print([(c.idverificacion, c.nrocertificado) for c in cert])
