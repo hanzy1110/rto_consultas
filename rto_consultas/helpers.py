@@ -110,6 +110,8 @@ def handle_query(request, model, fecha_field="fecha"):
                             .filter(certificados__nrocertificado=nrocertificado)
                             .values_list("certificados__nrocertificado")
                             )
+            print("len QUERYSET===> ")
+            print(len(queryset))
             print(queryset)
 
     if query:
