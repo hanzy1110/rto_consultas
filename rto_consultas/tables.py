@@ -55,7 +55,10 @@ class VerificacionesTables(tables.Table):
     def render_certificado(self, record):
         certificado = (record.certificados
                        # .all()
-                       .get(idverificacion=record.idverificacion)
+                       .get(
+                           idverificacion=record.idverificacion,
+                           idtaller=record.idtaller
+                            )
                        )
         print(certificado)
         return 1
