@@ -1,4 +1,5 @@
 from django.db.models import Model
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 
@@ -184,3 +185,25 @@ class ListCertificadosView(CustomRTOView):
             "anulado": "text",
         },
     )
+
+
+class VerVerificacion(DetailView,LoginRequiredMixin):
+    model: Verificaciones
+    template_name = "includes/ver_verificaciones.html"
+    context_object_name: str
+    aux_data: AuxData
+
+    def get_queryset(self):
+        query_params = self.request.GET.copy()
+        id_taller = query_params.pop("id_taller", None)
+        id_verificacion = query_params.pop("id_verificacion", None)
+        verificacion = (self.model.objects
+                        .get(idverificacion=id_verificacion, idtaller=id_taller)
+                        .select_related("dominiovehiculo", "idestado", "codigotitular",))
+        # certificado = verificacion.certificados.all
+        return verificacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context = handle_context(context, self)
+        return context

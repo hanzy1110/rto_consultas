@@ -1,0 +1,746 @@
+
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+{% load getattr %}
+
+<div id="templatemo_main">
+<div class="col_w900 col_w900_last">
+<h2><a href="#">Verificaci&oacute;n</a></h2>
+<table class="tblForm" width="100%">
+	<tr>
+		<td>
+            <?php echo $button; ?>
+		</td>
+	</tr>
+<?php if($CertAnulado == "1") { ?>
+	<tr class="borTop">
+		<td colspan="4"><b>Certificado ANULADO</b></td>
+	</tr>
+	<tr class="borBot">
+		<td colspan="4">Observaciones en la anulaci&oacute;n:
+		<?php echo $ObservacionesCert; ?></td>
+	</tr>
+<?php }?>
+	<tr>
+		<td id="tagCt">Nro Certificado:</td>
+		<td><input type="text" id="txtNroCert" style="width: 120px"
+			class="txt" value="<?php echo formatNroCert($nroCert); ?>" /></td>
+		<td id="tagFcVal">Vigencia:</td>
+		<td><input type="text" id="txtFechaVal" style="width: 120px"
+			alt="date" class="txt" value="<?php echo $fechaVig; ?>" /></td>
+	</tr>
+	<tr>
+		<td id="tagRes">Resultado:</td>
+		<td colspan="3">
+		<input type="text" id="txtREsult" style="width: 250px" class="txt"
+			value="<?php echo $MResultado;?>" />
+		</td>
+	</tr>
+	<tr>
+		<td id="tagNT">Planta:</td>
+		<td colspan="3"><input type="text" id="txtNroTaller"
+			style="width: 690px" class="txt" value="<?php echo $nroTaller; ?>" />
+		</td>
+	</tr>
+	<tr>
+		<td id="tagFc">Fecha:</td>
+		<td><input type="text" id="txtFecha" style="width: 120px" alt="date"
+			class="txt" value="<?php echo $fecha; ?>" /></td>
+		<td id="tagHora">Hora:</td>
+		<td><input type="text" id="txtHora" alt="time" style="width: 120px"
+			class="txt" value="<?php echo $hora; ?>" /></td>
+	</tr>
+	<tr>
+		<td>Provincia:</td>
+		<td>
+		<div id="divProv"><select id="cmbProv" class="combo" name="cmbProv"
+			style="width: 250px" disabled="disabled">
+			<option value="-1">Seleccione...</option>
+		</select></div>
+		</td>
+		<td id="tagLoc">Localidad:</td>
+		<td>
+		<div id="divLoc"><select id="cmbLoc" class="combo" name="cmbLoc"
+			style="width: 250px" disabled="disabled">
+			<option value="-1">Seleccione...</option>
+		</select></div>
+		</td>
+	</tr>
+	<tr>
+		<td>Director T&eacute;cnico:</td>
+		<td><input type="text" id="txtDT" style="width: 250px" class="txt"
+			value="<?php echo $dt;?>" /></td>
+		<td>Inspector:</td>
+		<td><input type="text" id="txtInsp" style="width: 250px" class="txt"
+			value="<?php echo $inspector;?>" /></td>
+	</tr>
+	<tr>
+		<td>Categor&iacute;a:</td>
+		<td><input type="text" id="txtDT" style="width: 250px" class="txt"
+			value="<?php echo $categoria;?>" /></td>
+	</tr>
+	<tr>
+		<td>Adjuntos:</td>
+		<td colspan="3">
+			<?php echo $adjuntos; ?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="4" align="center"><span id="Respuesta"
+			style="color: #ff0000;"></span></td>
+	</tr>
+	<tr>
+		<td colspan="4">
+		<div id="formDatosV">
+		<table style="width: 100%;">
+			<tr>
+				<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+				del Titular</b></td>
+			</tr>
+			<tr>
+				<td colspan="4" align="center" id="tagTPers"><?php 	if($tipoPer == "F"){ ?>
+				Persona F&iacute;sica <input type="radio" name="rdPersona" value="F" checked="checked" /> Persona
+				Jur&iacute;dica <input type="radio" name="rdPersona" value="J" /> <?php	}
+					else{
+						if($tipoPer == "J"){
+							?> Persona F&iacute;sica <input type="radio" name="rdPersona" value="F"  /> Persona
+				Jur&iacute;dica <input type="radio" name="rdPersona" value="J"
+					checked="checked" /> <?php }
+					else{ ?> Persona F&iacute;sica <input type="radio" name="rdPersona"
+					value="F"  /> Persona
+				Jur&iacute;dica <input type="radio" name="rdPersona" value="J" /> <?php 	} }?></td>
+			</tr>
+			<tr id="mostrarFis" <?php echo $mostrarFi; ?>>
+						<td id="tagApe">Titular:</td>
+						<td><input type="text" id="txtAp" style="width: 250px"
+							maxlength="50" class="txt" value="<?php echo $DescTitular; ?>" /></td>
+
+						<td id="tagDoc">Documento:</td>
+						<td colspan="3"><select id="cbTipoDoc" name="cbTipoDoc"
+							class="combo" style="width: 100px;">
+							<option value="-1">Seleccione...</option>
+							<?php
+							if($tipoDoc == "DNI")
+							echo '<option value="DNI" selected="selected">DNI</option>';
+							else
+							echo '<option value="DNI">DNI</option>';
+
+							if($tipoDoc == "LC")
+							echo '<option value="LC" selected="selected">LI</option>';
+							else
+							echo '<option value="LC">LI</option>';
+
+							if($tipoDoc == "LE")
+							echo '<option value="LE" selected="selected">LE</option>';
+							else
+							echo '<option value="LE">LE</option>';
+
+							if($tipoDoc == "PAS")
+							echo '<option value="PAS" selected="selected">PAS</option>';
+							else
+							echo '<option value="PAS">PAS</option>';
+							?>
+						</select> <input type="text" id="txtNroDoc" style="width: 100px"
+							maxlength="8" class="txt" value="<?php echo $nroDoc; ?>" /></td>
+			</tr>
+			<tr id="mostrarJur" <?php echo $mostrarJu; ?>>
+			<td colspan="4">
+				<table style="width:100%;">
+				<tr>
+					<td style="width:130px;" id="tagRS">Raz&oacute;n Social:</td>
+					<td style="width:330px;">
+						<input type="text" id="txtRazonSocial" style="width: 250px" class="txt" value="<?php echo $DescTitular; ?>" />
+					</td>
+					<td style="width:130px;" id="tagCuit">CUIT:</td>
+					<td>
+						<input type="text" id="txtCuit" style="width: 120px" maxlength="11" onkeypress="return acceptInt(event)" class="txt" value="<?php echo $cuit; ?>" />
+					</td>
+				</tr>
+				<tr>
+					<td id="tagCPJ">Codigo PJ:</td>
+					<td colspan="3">
+						<input type="text" id="txtCodigoPJ" style="width: 120px" class="txt" value="<?php echo $CodigoPJ; ?>" />
+					</td>
+				</tr>
+				</table>
+			</td>
+			</tr>
+			<tr>
+				<td>Provincia:</td>
+				<td>
+				<div id="divProvT"><select id="cmbProvT" class="combo"
+					name="cmbProvT" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+				<td>Localidad:</td>
+				<td>
+				<div id="divLocT"><select id="cmbLocT" class="combo" name="cmbLocT"
+					style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+			</tr>
+			<tr>
+				<td>Domicilio:</td>
+				<td><input type="text" id="txtDomicilio" style="width: 250px"
+					class="txt" value="<?php echo $domicilio; ?>" /></td>
+				<td>Tel&eacute;fono:</td>
+				<td><input type="text" id="txtTelefono" style="width: 250px"
+					class="txt" value="<?php echo $telefono; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Email:</td>
+				<td colspan="3"><input type="text" id="txtEmailT"
+					style="width: 250px" class="txt" value="<?php echo $email; ?>" /></td>
+			</tr>
+			<tr>
+				<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+				del Conductor</b></td>
+			</tr>
+			<tr>
+				<td id="tagApeC">Apellido:</td>
+				<td><input type="text" id="txtApC" style="width: 250px"
+					maxlength="50" class="txt" value="<?php echo $nombreC; ?>" /></td>
+				<td id="tagNomC">Nombre:</td>
+				<td><input type="text" id="txtNomC" style="width: 250px"
+					maxlength="50" class="txt" value="<?php echo $apellidoC; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Documento:</td>
+				<td colspan="3"><select id="cbTipoDocC" class="combo"
+					name="cbTipoDocC" style="width: 100px;">
+					<option value="-1">Seleccione...</option>
+					<?php
+					if($tipoDocC == "DNI")
+					echo '<option value="DNI" selected="selected">DNI</option>';
+					else
+					echo '<option value="DNI">DNI</option>';
+
+					if($tipoDocC == "LC")
+					echo '<option value="LC" selected="selected">LI</option>';
+					else
+					echo '<option value="LC">LI</option>';
+
+					if($tipoDocC == "LE")
+					echo '<option value="LE" selected="selected">LE</option>';
+					else
+					echo '<option value="LE">LE</option>';
+
+					if($tipoDocC == "PAS")
+					echo '<option value="PAS" selected="selected">PAS</option>';
+					else
+					echo '<option value="PAS">PAS</option>';
+
+					?>
+				</select> <input type="text" id="txtNroDocC" style="width: 100px"
+					class="txt" value="<?php echo $nroDocC; ?>" /></td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+				del Veh&iacute;culo</b></td>
+			</tr>
+			<tr>
+				<td>Dominio:</td>
+				<td><input type="text" id="txtDominio" style="width: 150px"
+					readonly="readonly" class="txt" value="<?php echo $dominio; ?>" />
+				</td>
+				<td>A&ntilde;o:</td>
+				<td><input type="text" id="txtAnio" style="width: 100px" class="txt"
+					value="<?php echo $anio; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Marca:</td>
+				<td><input type="text" id="txtMarca" style="width: 250px"
+					class="txt" value="<?php echo $marca; ?>" /></td>
+				<td>Modelo:</td>
+				<td><input type="text" id="txtModelo" style="width: 250px"
+					class="txt" value="<?php echo $modelo; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Provincia:</td>
+				<td>
+				<div id="divProvR"><select id="cmbProvR" class="combo"
+					name="cmbProvR" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+				<td>Localidad:</td>
+				<td>
+				<div id="divLocR"><select id="cmbLocR" class="combo" name="cmbLocR"
+					style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+			</tr>
+			<tr>
+				<td>Motor marca:</td>
+				<td><input type="text" id="txtMotorMarca" style="width: 250px"
+					class="txt" value="<?php echo $motorMarca; ?>" /></td>
+				<td>Motor nro:</td>
+				<td><input type="text" id="txtMotorNro" style="width: 250px"
+					class="txt" value="<?php echo $MotorNro; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Motor a&ntilde;o:</td>
+				<td><input type="text" id="txtMotorAnio" style="width: 250px"
+					class="txt" value="<?php echo $MotorAnio; ?>" /></td>
+				<td>Tipo Combustible:</td>
+				<td><input type="text" id="txtTipoComb" style="width: 250px"
+					class="txt" value="<?php echo $TipoCombustible; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Chasis marca:</td>
+				<td><input type="text" id="txtChasisMarca" style="width: 250px"
+					class="txt" value="<?php echo $ChasisMarca; ?>" /></td>
+				<td>Chasis nro:</td>
+				<td><input type="text" id="txtChasisNro" style="width: 250px"
+					class="txt" value="<?php echo $ChasisNro; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Chasis a&ntilde;o:</td>
+				<td><input type="text" id="txtChasisAnio" style="width: 250px"
+					class="txt" value="<?php echo $ChasisAnio; ?>" /></td>
+				<td>Pot:</td>
+				<td><input type="text" id="txtPot" style="width: 250px" class="txt"
+					value="<?php echo $Pot; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Nro Ejes:</td>
+				<td><input type="text" id="txtNroEjes" style="width: 250px"
+					class="txt" value="<?php echo $NroEjes; ?>" /></td>
+				<td>Nro. Rec. Patente:</td>
+			<td>
+				<input type="text" id="txtNroRecPat" style="width: 250px" class="txt" maxlength="20" value="<?php echo $NroRecPat; ?>" />
+			</td>
+			</tr>
+			<tr>
+				<td>Compa&ntilde;ia Seguro:</td>
+				<td>
+					<input type="text" id="txtCompSeguro" style="width: 250px" class="txt" value="<?php echo $CompaniaSeg; ?>" />
+				</td>
+				<td>Nro. Poliza:</td>
+				<td>
+					<input type="text" id="txtPoliza" style="width: 250px" class="txt" maxlength="20" value="<?php echo $NroPoliza; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td>Tac&oacute;grafo marca:</td>
+				<td><input type="text" id="txtTacMarca" style="width: 250px"
+					class="txt" value="<?php echo $TacografoMarca; ?>" /></td>
+				<td>Tac&oacute;grafo nro:</td>
+				<td><input type="text" id="txtTacNro" style="width: 250px"
+					class="txt" value="<?php echo $TacografoNro; ?>" /></td>
+
+			</tr>
+			<tr>
+			<td>CCCF Nro:</td>
+			<td><input type="text" id="txtCCCF" style="width: 250px" class="txt"
+				value="<?php echo $cccf; ?>" /></td>
+			<td>Nro de Interno:</td>
+				<td>
+					<input type="text" id="txtNroIntPas" style="width: 100px" class="txt" maxlength="10" onkeypress="return acceptInt(event)" value="<?php echo $NroInternoP; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td>Tipo Vehiculo:</td>
+				<td>
+				<div id="divVe"><select id="cmbTipoVe" class="combo"
+					name="cmbTipoVe" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+				<td>Tipo Uso:</td>
+				<td>
+				<div id="divUso"><select id="cmbTipoUso" class="combo"
+					name="cmbTipoUso" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+				</select></div>
+				</td>
+			</tr>
+			<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+				<td>Posici&oacute;n Motor:</td>
+				<td><input type="text" id="txtPosM" style="width: 250px" class="txt"
+					value="<?php echo $PosMotor; ?>" /></td>
+				<td>Tara:</td>
+				<td><input type="text" id="txtTara" style="width: 250px" class="txt"
+					value="<?php echo $Tara; ?>" /></td>
+			</tr>
+			<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+				<td>Peso Max.:</td>
+				<td><input type="text" id="txtPesoM" style="width: 250px"
+					class="txt" value="<?php echo $PesoMax; ?>" /></td>
+				<td>Carga Util:</td>
+				<td><input type="text" id="txtCajaU" style="width: 250px"
+					class="txt" value="<?php echo $CargaUtil; ?>" /></td>
+			</tr>
+			<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+				<td>Expediente:</td>
+				<td><input type="text" id="txtExp" style="width: 250px" class="txt"
+					value="<?php echo $Expediente; ?>" /></td>
+				<td>Asientos:</td>
+				<td><input type="text" id="txtAsientos" style="width: 250px"
+					class="txt" value="<?php echo $Asientos; ?>" /></td>
+			</tr>
+			<tr class="mostrar3 taxi" <?php echo $mostrarPa; ?>>
+				<td>Carrocer&iacute;a:</td>
+				<td><input type="text" id="txtCarroc" style="width: 250px"
+					class="txt" value="<?php echo $Carroceria; ?>" /></td>
+				<td>Suspensi&oacute;n:</td>
+				<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
+					value="<?php echo $Suspencion; ?>" /></td>
+			</tr>
+			<tr class="mostrar3 taxi" <?php echo $mostrarPa; ?>>
+				<td colspan="4">
+				Aire Acondicionado
+				<?php if($AireAco == "0"){ ?>
+					<input type="checkbox" id="chAAco" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				<?php } else { ?>
+					<input type="checkbox" id="chAAco" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				<?php } ?>	Bar
+				<?php if($Bar == "0") { ?>
+				 <input type="checkbox" id="chBar" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				 <?php } else { ?>
+				  <input type="checkbox" id="chBar" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				  <?php } ?>
+				 Ba&ntilde;os
+				 <?php if($Banio == "0") { ?>
+				 	<input type="checkbox" id="chBanio" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				 <?php } else { ?>
+				 	<input type="checkbox" id="chBanio" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+				 	 <?php } ?>
+				 Calefacci&oacute;n
+				 <?php if($Calefaccion == "0") { ?>
+					<input type="checkbox" id="chCalef" />
+				<?php } else { ?>
+					<input type="checkbox" id="chCalef" checked="checked" />
+					<?php } ?>
+			</td>
+			</tr>
+			<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+			<?php if($idHabilitacion==0 && $codigoHabilitacion==""){?>
+			<td>Tipo Servicio:</td>
+			<td>
+				<div id="divTipoServP" style="display: inline;">
+					<select id="cmbTipoServP" class="combo" name="cmbTipoServP" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+					</select>
+				</div>
+			</td>
+			<?php }else{ ?>
+
+
+                        <td>Tipo Servicio:</td>
+		                <td colspan="3" id="listaServicioHab"></td>
+
+                <?php } ?>
+			</tr>
+			<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+			<td>Cat. Servicio:</td>
+			<td colspan="3">
+				<div id="divClaseServP" style="display: inline;">
+					<select id="cmbClaseServP" class="combo" name="cmbClaseServP" style="width: 250px" disabled="disabled">
+					<option value="-1">Seleccione...</option>
+					</select>
+				</div>
+			</td>
+			</tr>
+			<tr id="veCarga" class="mostrar2" <?php echo $mostrarCa; ?>>
+				<td>Caja:</td>
+				<td><input type="text" id="txtCaja" style="width: 250px"
+					class="txt" value="<?php echo $caja; ?>" /></td>
+				<td id="tagTCarga" class="mostrar5" <?php echo $mostrarTCa; ?>>Tipo Carga:</td>
+				<td class="mostrar5" <?php echo $mostrarTCa; ?>>
+					<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
+						<option value="-1">Seleccione...</option>
+						 <?php if($TipoCarga == "Carga Peligrosa") { ?>
+						<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
+						<?php } else{ ?>
+						<option value="Carga Peligrosa" >Carga Peligrosa</option>
+						<?php } if($TipoCarga == "Carga General") { ?>
+						<option value="Carga General" selected="selected">Carga General</option>
+						<?php } else{ ?>
+						<option value="Carga General">Carga General</option>
+						<?php } ?>
+					</select>
+				</td>
+			</tr>
+			<tr class="mostrar4" <?php echo $mostrarTM; ?> >
+			<td>Servicios en prov.:</td>
+			<td>
+				<span id="divProvTM">
+					<select id="cmbProvTM" class="combo" name="cmbProvTM" style="width: 250px" disabled="disabled">
+						<option value="-1">Provincia...</option>
+					</select></span>
+			</td>
+			<td id="TagServLoc">Servicios en loc.:</td>
+			<td>
+				<span id="divLocTM">
+					<select id="cmbLocTM" class="combo" name="cmbLocTM" style="width: 250px" disabled="disabled">
+					<option value="-1">Localidad...</option>
+					</select>
+				</span>
+			</td>
+		</tr>
+		<tr class="mostrar4" <?php echo $mostrarTM; ?> >
+			<td id="tagTServ">Tipo Servicios:</td>
+			<td colspan="3">
+				<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt" value="<?php echo $tipoServTM; ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">Tarjeta Verde: <?php echo $archTV; ?></td>
+		</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+		</table>
+		</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" id="formDatosVerif">
+		<table width="95%" cellspacing="0">
+			<tr>
+				<td colspan="8"
+					style="border-bottom: 2px solid #0D3A5B; text-align: left;"><b>Valores
+				Medidos</b></td>
+			</tr>
+			<tr>
+				<td rowspan="2">&nbsp;</td>
+				<td align="center"><b>Control de Peso</b></td>
+				<td colspan="4" align="center"><b>Control de Frenos de servicios</b></td>
+			</tr>
+			<tr>
+				<td align="center">Tara Kg</td>
+				<td align="center">Fza Izq</td>
+				<td align="center">Fza Der</td>
+				<td align="center">Dif.</td>
+				<td align="center">Efic.</td>
+			</tr>
+			<tr>
+				<td>Eje 1:</td>
+				<td align="center"><input type="text" id="txtE1Tara"
+					style="width: 80px" onkeypress="return acceptDec(event)"
+					class="txtNum" value="<?php echo $ME1Tara; ?>" /></td>
+				<td align="center"><input type="text" id="txtE1FzaI"
+					style="width: 80px" onkeypress="return acceptDec(event)"
+					class="txtNum" value="<?php echo $ME1FzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtE1FzaD"
+					style="width: 80px" onkeypress="return acceptDec(event)"
+					class="txtNum" value="<?php echo $ME1FzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtE1Dif"
+					style="width: 80px" onkeypress="return acceptDec(event)"
+					class="txtNum" value="<?php echo $ME1Dif; ?>" /></td>
+				<td align="center"><input type="text" id="txtE1Efic"
+					style="width: 80px" onkeypress="return acceptDec(event)"
+					class="txtNum" value="<?php echo $ME1Efic; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Eje 2:</td>
+				<td align="center"><input type="text" id="txtE2Tara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME2Tara; ?>" /></td>
+				<td align="center"><input type="text" id="txtE2FzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME2FzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtE2FzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME2FzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtE2Dif"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME2Dif; ?>" /></td>
+				<td align="center"><input type="text" id="txtE2Efic"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME2Efic; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Eje 3:</td>
+				<td align="center"><input type="text" id="txtE3Tara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME3Tara; ?>" /></td>
+				<td align="center"><input type="text" id="txtE3FzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME3FzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtE3FzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME3FzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtE3Dif"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME3Dif; ?>" /></td>
+				<td align="center"><input type="text" id="txtE3Efic"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME3Efic; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Eje 4:</td>
+				<td align="center"><input type="text" id="txtE4Tara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME4Tara; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4FzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME4FzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4FzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME4FzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4Dif"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME4Dif; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4Efic"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME4Efic; ?>" /></td>
+			</tr>
+			<tr>
+				<td>Eje 5:</td>
+				<td align="center"><input type="text" id="txtE4Tara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME5Tara; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4FzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME5FzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4FzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $ME5FzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4Dif"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME5Dif; ?>" /></td>
+				<td align="center"><input type="text" id="txtE4Efic"
+					onkeypress="return acceptDec(event)"
+					style="width: 80px" class="txt" value="<?php echo $ME5Efic; ?>" /></td>
+			</tr>
+			<tr>
+				<td><b>Totales:</b></td>
+				<td align="center"><input type="text" id="txtFrTara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo ($MToTara); ?>" /></td>
+				<td align="center"><input type="text" id="txtFrFzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MToFI; ?>" /></td>
+				<td align="center"><input type="text" id="txtFrFzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MToFD; ?>" /></td>
+				<td align="center">&nbsp;</td>
+				<td align="center"><input type="text" id="txtFrEfic"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MToEf; ?>" /></td>
+			</tr>
+			<tr>
+				<td><b>Freno Estacionamiento:</b></td>
+				<td align="center"><input type="text" id="txtFrTara"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo ($ME1Tara + $ME2Tara); ?>" /></td>
+				<td align="center"><input type="text" id="txtFrFzaI"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MFrFzaI; ?>" /></td>
+				<td align="center"><input type="text" id="txtFrFzaD"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MFrFzaD; ?>" /></td>
+				<td align="center"><input type="text" id="txtFrDif"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MFrDif; ?>" /></td>
+				<td align="center"><input type="text" id="txtFrEfic"
+					onkeypress="return acceptDec(event)" style="width: 80px"
+					class="txt" value="<?php echo $MFrEfic; ?>" /></td>
+			</tr>
+			<tr class="borTop">
+				<td rowspan="2"><b>Gases de
+				escape</b></td>
+				<td align="center">Bach:</td>
+				<td align="center">% CO:</td>
+				<td align="center">Opac.:</td>
+				<td align="center">ppmHC:</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="center"><input type="text" id="txtBach"
+					style="width: 80px" class="txt" value="<?php echo $MBach; ?>" /></td>
+				<td align="center"><input type="text" id="txtCO" style="width: 80px"
+					class="txt" value="<?php echo $MCO; ?>" /></td>
+				<td align="center"><input type="text" id="txtOpac"
+					style="width: 80px" class="txt" value="<?php echo $MOpac; ?>" /></td>
+				<td align="center"><input type="text" id="txtppmHC"
+					style="width: 80px" class="txt" value="<?php echo $MppmHC; ?>" /></td>
+					<td>&nbsp;</td>
+			</tr>
+			<tr class="borTop">
+				<td rowspan="2" style="border-bottom: 1px solid #cccccc;"><b>Otros Valores:</b></td>
+				<td align="center">Alineaci&oacute;n:</td>
+				<td align="center">Nivel Son.:</td>
+				<td align="center">Interior:</td>
+				<td align="center">Escape:</td>
+				<td align="center">&nbsp;</td>
+			</tr>
+			<tr class="borBot">
+				<td align="center">
+					<input type="text" id="txtAlin" style="width: 80px" class="txt" value="<?php echo $MAlin; ?>" />
+				</td>
+				<td align="center"><input type="text" id="txtNSon" style="width: 80px" class="txt" value="<?php echo $MNSon; ?>" />
+				</td>
+				<td align="center">
+					<input type="text" id="txtInter" style="width: 80px" class="txt" value="<?php echo $MInter; ?>" />
+				</td>
+				<td align="center">
+				<input type="text" id="txtEscape" style="width: 80px" class="txt" value="<?php echo $MEscape; ?>" /></td>
+				<td>&nbsp;</td>
+			</tr>
+
+      <tr>
+        <td colspan="6">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td colspan="6" style="border-bottom: 2px solid #0D3A5B;text-align: left;"><b>Observaciones</b></td>
+      </tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td colspan="5">
+					<textarea id="txtObs" class="txt" rows="3" style="width: 600px;margin-top: 3px;margin-left: 5px;"><?php echo $MObser; ?></textarea>
+				</td>
+			</tr>
+
+      <tr>
+        <td colspan="6">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td colspan="6" style="border-bottom: 2px solid #0D3A5B;text-align: left;"><b>Defectos</b></td>
+      </tr>
+      <tr>
+         <td>&nbsp;</td>
+          <td colspan="5"><?php echo $listaDefectos; ?></td>
+      </tr>
+
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="6">
+				<table id="files"></table>
+				<span id="resultado"></span></td>
+			</tr>
+
+			<tr>
+				<td colspan="6">&nbsp;</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+
+<div class="cleaner"></div>
+</div>
+<div id="ModificarTitular" style="display: none;"></div>
+<div id="ModificarVehiculo" style="display: none;"></div>
+
+
+<div class="cleaner"></div>
+</div>
+{% endblock %}

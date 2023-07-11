@@ -657,7 +657,7 @@ class Certificados(models.Model):
         db_column="VigenciaHasta"
     )  # Field name made lowercase.
     idverificacion = models.ForeignKey(
-        "Verificaciones", on_delete=models.CASCADE, db_column="idVerificacion"
+        "Verificaciones", on_delete=models.CASCADE, db_column="idVerificacion",related_name="certificados"
     )  # Field name made lowercase.
     idconvenio = models.ForeignKey(
         "Convenios",

@@ -52,10 +52,13 @@ class VerificacionesTables(tables.Table):
             return "Unknown!"
 
     def render_nrocertificado(self, value):
-        id_verif = value.idverificacion
-        query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
-        print(query)
-        return query
+        # id_verif = value.idverificacion
+        # query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
+        certificado = value.certificados.all()
+        print("-x-"*30)
+        print("QUERY CERTIFICADO ==>")
+        print(certificado)
+        return certificado.nrocertificado
 
     def render_idtaller(self, value):
         return value.nombre
@@ -68,66 +71,6 @@ class VerificacionesTables(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
-
-
-# class VWVerificacionesTables(tables.Table):
-#     aux_data = AuxData(
-#         query_fields=[],
-#         form_fields={
-#             "idestado": ("descripcion", Estados),
-#             "idtipouso": ("descripcion", Tipousovehiculo),
-#             "idtaller": ("nombre", Talleres),
-#         },
-#         parsed_names={"name": "name"},
-#     )
-
-#     class Meta:
-#         model = VWVerificaciones
-#         fields = {
-#             "idtaller",
-#             "nrocertificado",
-#             "dominiovehiculo",
-#             "idestado",
-#             "idtipouso",
-#             "fecha",
-#         }
-
-#     def render_idestado(self, value):
-#         try:
-#             descriptions = map_fields(self.aux_data, self.Meta.model)
-#             return descriptions["idestado"][value.idestado]
-#             # return value.descripcion
-#         except Exception as e:
-#             print(e)
-#             return "Unknown!"
-
-#     def render_idtipouso(self, value):
-#         try:
-#             descriptions = map_fields(self.aux_data, self.Meta.model)
-#             return descriptions["idtipouso"][value]
-#             # return value.descripcion
-
-#         except Exception as e:
-#             print(e)
-#             return "Unknown!"
-
-#     # def render_nrocertificado(self, value):
-#     #     id_verif = value.idverificacion
-#     #     query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
-#     #     print(query)
-#     #     return query
-
-#     def render_idtaller(self, value):
-#         return value.nombre
-
-#     def paginate(
-#         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
-#     ):
-#         per_page = per_page or self._meta.per_page
-#         self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-#         self.page = self.paginator.page(page)
-
-#         return self
 
 
 class VehiculosTable(tables.Table):
