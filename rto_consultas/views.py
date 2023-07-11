@@ -129,6 +129,7 @@ class ListCertificadosAssignView(CustomRTOView):
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
+        fecha_field="fechacarga"
     )
 
 

@@ -14,16 +14,17 @@ class AuxData:
     parsed_names: Dict[str, str]
     ids: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
+    fecha_field:str = "fecha"
 
 
-def handle_args(query_params, queryset):
+def handle_args(query_params, queryset, fecha_field="fecha"):
     numeric_test = re.compile(r"^\d+$")
     cleaned_query = clean_args(query_params)
 
     date_from = cleaned_query.pop("fecha_desde", None)
     date_to = cleaned_query.pop("fecha_hasta", None)
     if date_from or date_to:
-        queryset = queryset.filter(handle_date_range(date_from, date_to))
+        queryset = queryset.filter(handle_date_range(date_from, date_to, fecha_field))
 
     for key, arg in cleaned_query.items():
         if numeric_test.match(str(arg)):
@@ -40,10 +41,10 @@ def handle_args(query_params, queryset):
     return queryset
 
 
-def handle_date_range(date_from, date_to):
+def handle_date_range(date_from, date_to, fecha_field="fecha"):
     # date_from = parse_date(date_from)
     # date_to = parse_date(date_to)
-    return Q(fecha__range=(date_from, date_to))
+    return Q(**{f"{fecha_field}__range":(date_from, date_to)})
 
 
 def clean_args(query_params):
