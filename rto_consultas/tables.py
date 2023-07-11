@@ -60,8 +60,7 @@ class VerificacionesTables(tables.Table):
                            idtaller=record.idtaller
                             )
                        )
-        print(certificado)
-        return 1
+        return certificado.nrocertificado
 
     def render_idtaller(self, value):
         return value.nombre
