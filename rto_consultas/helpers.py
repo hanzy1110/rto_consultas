@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.db.models import Model
 
 
@@ -103,17 +103,11 @@ def handle_query(request, model, fecha_field="fecha"):
             pass
         case _:
             nrocertificado = int(nrocertificado[0])
-            print("NRO CERTIFICADO ===> ")
-            print(nrocertificado)
-            queryset = (model.objects
-                            .prefetch_related('certificados')
-                            .filter(certificados__nrocertificado__exact=nrocertificado)
-                            # .values_list("certificados__idverificacion")
-                            )
-            print("len QUERYSET===> ")
-            print(len(queryset))
-            print(queryset)
-
+            cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
+            if isinstance(cert, QuerySet):
+                queryset = queryset.filter(idverificacion__in=cert.values_list("idverificacion"))
+            else:
+                queryset = queryset.get(idverificacion=cert[0].idverificacion)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
