@@ -112,7 +112,7 @@ def handle_query(request, model, fecha_field="fecha"):
                 print([(c.idverificacion, c.nrocertificado) for c in cert])
                 queryset = cert
             else:
-                queryset = cert.idverificacion
+                queryset = queryset.get(idverificacion=cert[0].idverificacion)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
