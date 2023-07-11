@@ -92,6 +92,13 @@ def handle_query(request, model, fecha_field="fecha"):
     sort = query.pop("sort", None)
     page = query.pop("page", None)
     queryset = model.objects.all()
+    nrocertificado = query.pop("nrocertificado", None)
+
+    if nrocertificado:
+        queryset = model.objects.certificados.get(nrocertificado=nrocertificado)
+        print(queryset)
+        return queryset
+
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
