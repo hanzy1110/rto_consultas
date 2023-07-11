@@ -110,7 +110,7 @@ def handle_query(request, model, fecha_field="fecha"):
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
                 print([(c.idverificacion, c.nrocertificado) for c in cert])
-                queryset = cert
+                queryset = [c.idverificacion for c in cert]
             else:
                 queryset = queryset.get(idverificacion=cert[0].idverificacion)
     if query:
