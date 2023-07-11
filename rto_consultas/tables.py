@@ -11,6 +11,7 @@ from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
 class VerificacionesTables(tables.Table):
+    nrocertificado = tables.Column()
     aux_data = AuxData(
         query_fields=[],
         form_fields={
