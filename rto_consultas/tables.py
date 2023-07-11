@@ -53,7 +53,9 @@ class VerificacionesTables(tables.Table):
             return "Unknown!"
 
     def render_certificado(self, record):
-        certificado = record.certificados.all()
+        certificado = (record.certificados.all()
+                       # .get(idverificacion=record.idverificacion)
+                       )
         print(certificado)
         return 1
 
