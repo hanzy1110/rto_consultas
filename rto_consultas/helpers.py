@@ -103,9 +103,11 @@ def handle_query(request, model, fecha_field="fecha"):
             pass
         case _:
             nrocertificado = int(nrocertificado[0])
+            print("NRO CERTIFICADO ===> ")
+            print(nrocertificado)
             idverifs = (model.objects
                             .prefetch_related('certificados')
-                            .filter(certificados__nrocertificado__exact=nrocertificado)
+                            .filter(certificados__nrocertificado=nrocertificado)
                             )
             print(idverifs)
             return idverifs
