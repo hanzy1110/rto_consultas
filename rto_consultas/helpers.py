@@ -72,7 +72,9 @@ def parse_date(value):
 def parse_license_plate(value):
     # Remove any non-alphanumeric characters from the input value
     value = value[0]
+    print(f"value=> {value}")
     alphanumeric_only = re.sub(r"\W", "", value)
+    print(f"alphanumeric => {alphanumeric_only}")
 
     # Format the license plate
     if len(alphanumeric_only) >= 7:
