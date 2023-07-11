@@ -103,6 +103,8 @@ def handle_query(request, model, fecha_field="fecha"):
                         .all()
                         # .filter(nrocertificado=nrocertificado)
                         )
+        print(dir(queryset))
+        print(queryset)
         return queryset
 
     if query:
