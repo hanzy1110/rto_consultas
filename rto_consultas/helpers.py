@@ -101,11 +101,11 @@ def handle_query(request, model, fecha_field="fecha"):
         idverifs = (model.objects
                         .prefetch_related('certificados')
                         .filter(certificados__nrocertificado=nrocertificado)
-                        .values_list('certificados__nrocertificado')
+                        # .values_list('certificados__nrocertificado')
                         )
 
-        print(idverifs)
-        return queryset
+        # print(idverifs)
+        return idverifs
 
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
