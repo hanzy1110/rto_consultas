@@ -26,15 +26,12 @@ class VerificacionesTables(tables.Table):
         model = Verificaciones
         fields = (
             "idtaller",
-            "nrocertificado",
             "dominiovehiculo",
             "idestado",
             "idtipouso",
             "fecha",
         )
-        exclude=(
-            "categoria",
-        )
+        extra_columns = ("certificado",)
 
     def render_idestado(self, value):
         try:
