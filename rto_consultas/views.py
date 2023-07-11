@@ -64,7 +64,7 @@ class ListVerificacionesView(CustomRTOView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
-            "categoria": ("descripcion", Categorias),
+            "idcategoria": ("descripcion", Categorias),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={

@@ -31,6 +31,9 @@ class VerificacionesTables(tables.Table):
             "idtipouso",
             "fecha",
         }
+        exclude=(
+            "categoria",
+        )
 
     def render_idestado(self, value):
         try:
