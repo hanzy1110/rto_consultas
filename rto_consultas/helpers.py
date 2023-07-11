@@ -99,6 +99,8 @@ def handle_query(request, model, fecha_field="fecha"):
     match nrocertificado:
         case ['']:
             pass
+        case None:
+            pass
         case _:
             nrocertificado = int(nrocertificado[0])
             idverifs = (model.objects
