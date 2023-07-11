@@ -45,9 +45,7 @@ class VerificacionesTables(tables.Table):
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
-            # return descriptions["idtipouso"][value]
-            return 1
-            # return value.descripcion
+            return descriptions["idtipouso"][value]
 
         except Exception as e:
             print(e)
