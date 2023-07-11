@@ -11,7 +11,7 @@ from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
 class VerificacionesTables(tables.Table):
-    nrocertificado = tables.Column()
+    certificado = tables.Column(orderable=False)
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -24,14 +24,14 @@ class VerificacionesTables(tables.Table):
 
     class Meta:
         model = Verificaciones
-        fields = {
+        fields = (
             "idtaller",
-            # "nrocertificado",
+            "nrocertificado",
             "dominiovehiculo",
             "idestado",
             "idtipouso",
             "fecha",
-        }
+        )
         exclude=(
             "categoria",
         )
@@ -55,7 +55,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-    def render_nrocertificado(self, value):
+    def render_certificado(self, value):
         # id_verif = value.idverificacion
         # query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
         # certificado = value.certificados.all()
