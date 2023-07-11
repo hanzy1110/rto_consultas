@@ -105,6 +105,8 @@ def handle_query(request, model, fecha_field="fecha"):
             nrocertificado = int(nrocertificado[0])
             cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
             if isinstance(cert, QuerySet):
+                print("DATOS CERTIFICADOS ===>")
+                print([(c.idverificacion, c.nrocertificado) for c in cert])
                 queryset = queryset.filter(idverificacion__in=cert.values_list("idverificacion"))
             else:
                 queryset = queryset.get(idverificacion=cert[0].idverificacion)
