@@ -64,7 +64,7 @@ class ListVerificacionesView(CustomRTOView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
-            "idcategoria": ("descripcion", Categorias),
+            # "idcategoria": ("descripcion", Categorias),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={
@@ -74,7 +74,7 @@ class ListVerificacionesView(CustomRTOView):
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
-            "categoria": "Categorias",
+            # "categoria": "Categorias",
             "idtaller": "Nombre Taller",
         },
         ids={
