@@ -107,7 +107,7 @@ def handle_query(request, model, fecha_field="fecha"):
             print(nrocertificado)
             queryset = (model.objects
                             .prefetch_related('certificados')
-                            .filter(certificados__nrocertificado=nrocertificado)
+                            .filter(certificados__nrocertificado__iexact=nrocertificado)
                             .values_list("certificados__nrocertificado")
                             )
             print("len QUERYSET===> ")
