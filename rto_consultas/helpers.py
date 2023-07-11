@@ -100,9 +100,11 @@ def handle_query(request, model, fecha_field="fecha"):
         nrocertificado = int(nrocertificado[0])
         idverifs = (model.objects
                         .prefetch_related('certificados')
+                        .filter(certificados__nrocertificado=nrocertificado)
                         .values_list('certificados__nrocertificado')
                         )
-        print(queryset[0])
+
+        print(idverifs)
         return queryset
 
     if query:
