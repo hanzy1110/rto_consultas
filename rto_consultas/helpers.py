@@ -87,13 +87,13 @@ def parse_license_plate(value):
     return formatted_value
 
 
-def handle_query(request, model):
+def handle_query(request, model, fecha_field):
     query = request.GET.copy()
     sort = query.pop("sort", None)
     page = query.pop("page", None)
     queryset = model.objects.all()
     if query:
-        queryset = handle_args(query, queryset)
+        queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
     return queryset
