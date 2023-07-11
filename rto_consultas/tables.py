@@ -52,13 +52,13 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-    def render_certificado(self, value):
+    def render_certificado(self, record):
         # id_verif = value.idverificacion
         # query = Certificados.objects.get(idverificacion=id_verif).nrocertificado
         # certificado = value.certificados.all()
         print("-x-"*30)
         print("QUERY CERTIFICADO ==>")
-        print(value)
+        print(record)
         return 1
 
     def render_idtaller(self, value):
