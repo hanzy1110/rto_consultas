@@ -84,6 +84,8 @@ def parse_license_plate(value):
     else:
         formatted_value = alphanumeric_only
 
+    print("-x-"*30)
+    print(formatted_value)
     return formatted_value
 
 
