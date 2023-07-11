@@ -30,7 +30,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
 
     def get_queryset(self):
         page = self.request.GET.copy().pop("page", None)
-        queryset = handle_query(self.request, self.model)
+        queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
         if page:
             # Handle pagination...
