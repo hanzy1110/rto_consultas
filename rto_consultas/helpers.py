@@ -102,8 +102,7 @@ def handle_query(request, model, fecha_field="fecha"):
                         .prefetch_related('certificados')
                         .values_list('certificados__nrocertificado')
                         )
-        print(dir(queryset))
-        print(queryset)
+        print(queryset[0])
         return queryset
 
     if query:
