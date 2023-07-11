@@ -61,6 +61,9 @@ class VerificacionesTables(tables.Table):
         return certificado.nrocertificado
 
     def render_idtaller(self, value):
+        print("-x-"*30)
+        print("QUERY TALLER ==>")
+        print(value)
         return value.nombre
 
     def paginate(
