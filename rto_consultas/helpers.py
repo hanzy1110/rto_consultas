@@ -96,7 +96,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
     if nrocertificado[0]:
         queryset = queryset.certificados.get(nrocertificado=nrocertificado)
-        return queryset
+        return {}
 
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
