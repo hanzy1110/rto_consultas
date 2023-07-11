@@ -25,7 +25,7 @@ class VerificacionesTables(tables.Table):
         model = Verificaciones
         fields = {
             "idtaller",
-            "nrocertificado",
+            # "nrocertificado",
             "dominiovehiculo",
             "idestado",
             "idtipouso",
