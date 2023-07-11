@@ -97,7 +97,8 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
 
     if nrocertificado[0]:
-        print(dir(model.certificados))
+        print(dir(queryset))
+        # print(dir(model.certificados))
         return queryset
 
     if query:
