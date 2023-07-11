@@ -6,6 +6,8 @@ import re
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
+from rto_consultas.models import Certificados
+
 
 @dataclass
 class AuxData:
@@ -95,8 +97,12 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
 
     if nrocertificado[0]:
-        # queryset = queryset.certificados.get(nrocertificado=nrocertificado)
-        return {}
+        certificado = Certificados.objects.get(nrocertificado=nrocertificado)
+
+        queryset = queryset.get(idverificacion=certificado.idverificacion,
+                                idtaller=certificado.idtaller)
+
+        return queryset
 
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
