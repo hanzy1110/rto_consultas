@@ -3005,6 +3005,9 @@ class Verificaciones(models.Model):
 
     @staticmethod
     def get_nro_certificado(record):
+        print("TABLE RECORDS")
+        print(record.idtaller)
+        print(record.idverificacion)
         return (record.certificados
                        # .all()
                        .get(
