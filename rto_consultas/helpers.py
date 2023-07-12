@@ -177,7 +177,7 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             cert = (Certificados.objects
                     .prefetch_related('idverificacion')
-                    .get(nrocertificado=nrocertificado)
+                    .filter(nrocertificado=nrocertificado)
                     )
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
