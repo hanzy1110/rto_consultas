@@ -186,7 +186,7 @@ def handle_nrocertificado(nrocertificado, model):
                 print("DATOS CERTIFICADOS ===>")
                 queryset = (Verificaciones.objects
                             .filter(idverificacion=cert["idverificacion_id"]
-                                    ,taller=cert["idtaller_id"]
+                                    ,idtaller=cert["idtaller_id"]
                                 )
                             )
                 print(queryset)
