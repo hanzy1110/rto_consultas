@@ -176,7 +176,7 @@ def handle_nrocertificado(nrocertificado, model):
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
             cert = Certificados.objects \
-                            .filter(nrocertificado__exact=nrocertificado).values()
+                            .get(nrocertificado__exact=nrocertificado).values()
             print("CERTIFICADOS QUERYSET ===>")
             print(cert)
 
