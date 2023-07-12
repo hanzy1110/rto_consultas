@@ -710,7 +710,7 @@ class Certificados(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"{self.nrocertificado}"
+        return f"CERT {self.nrocertificado} - {self.idcertificado} - {self.idverificacion}"
 
     class Meta:
         app_label = "rto_consultas"
