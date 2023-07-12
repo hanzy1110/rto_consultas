@@ -56,8 +56,10 @@ class VerificacionesTables(tables.Table):
         print("TABLE RECORDS ==>")
         print(record.idtaller)
         print(record.idverificacion)
-        query = self.Meta.model.get_nro_certificado(record).nrocertificado
-        return query
+        query = self.Meta.model.get_nro_certificado(record)
+        print(query)
+        print(query.nrocertificado)
+        return query.nrocertificado
 
     def render_idtaller(self, value):
         return value.nombre
