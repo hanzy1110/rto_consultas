@@ -657,7 +657,10 @@ class Certificados(models.Model):
         db_column="VigenciaHasta"
     )  # Field name made lowercase.
     idverificacion = models.ForeignKey(
-        "Verificaciones", on_delete=models.CASCADE, db_column="idVerificacion",related_name="certificados"
+        "rto_consultas.Verificaciones",
+        on_delete=models.CASCADE,
+        db_column="idVerificacion",
+        related_name="certificados"
     )  # Field name made lowercase.
     idconvenio = models.ForeignKey(
         "Convenios",
@@ -710,7 +713,7 @@ class Certificados(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"CERT {self.nrocertificado} - {self.idcertificado} -"
+        return f"CERT {self.nrocertificado} - {self.idcertificado} - {self.idtaller}"
 
     class Meta:
         app_label = "rto_consultas"
