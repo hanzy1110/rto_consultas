@@ -3005,16 +3005,21 @@ class Verificaciones(models.Model):
 
     @staticmethod
     def get_nro_certificado(record):
-        print("TABLE RECORDS")
-        print(record.idtaller)
-        print(record.idverificacion)
-        return (record.certificados
-                       # .all()
-                       .get(
-                           idverificacion=record.idverificacion,
-                           idtaller=record.idtaller
-                            )
-                       )
+
+        cert = (Certificados
+                        .prefetch_related("idverificacion")
+                        .get(idverificacion__exact=record.idverificacion)
+                    )
+
+        print(cert)
+        return cert.nrocertificado
+        # return (record.certificados
+        #                # .all()
+        #                .get(
+        #                    idverificacion=record.idverificacion,
+        #                    idtaller=record.idtaller
+        #                     )
+        #                )
 
     class Meta:
         app_label = "rto_consultas"
