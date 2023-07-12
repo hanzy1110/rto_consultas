@@ -177,7 +177,7 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             cert = (Certificados.objects
                     # .prefetch_related('idverificacion')
-                    # .select_related('idverificacion')
+                    .select_related('idverificacion')
                     .filter(nrocertificado__exact=nrocertificado)
                     # .values_list('idverificacion__idverificacion', 'idverificacion__idtaller')
                     )
