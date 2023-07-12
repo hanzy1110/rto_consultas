@@ -178,11 +178,11 @@ def handle_nrocertificado(nrocertificado, model):
             cert = (Certificados.objects
                     .prefetch_related('idverificacion')
                     .get(nrocertificado=nrocertificado)
-                    .values_list('idverificacion__idverificacion', 'idverificacion__idtaller')
+                    # .values_list('idverificacion__idverificacion', 'idverificacion__idtaller')
                     )
 
             print(cert)
-            queryset = queryset.filter(idverificacion=cert[0], idtaller=cert[1])
+            queryset = queryset.filter(idverificacion=cert.idverificacion, idtaller=cert.idtaller)
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
                 # print([(c.idverificacion, c.nrocertificado) for c in cert])
@@ -192,6 +192,6 @@ def handle_nrocertificado(nrocertificado, model):
             else:
                 print("DATOS CERTIFICADOS ===>")
                 print(cert)
-                queryset = (cert.idverificacion,)
+                # queryset = (cert.idverificacion,)
                 print(queryset)
             return queryset
