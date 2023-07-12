@@ -3009,7 +3009,8 @@ class Verificaciones(models.Model):
         cert = (Certificados
                         .objects
                         .prefetch_related("idverificacion")
-                        .filter(idverificacion__exact=record.idverificacion)
+                        .filter(idverificacion__exact=record.idverificacion,
+                                idtaller__exact=record.idtaller)
                     )
 
         print(cert)
