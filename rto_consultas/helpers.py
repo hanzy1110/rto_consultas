@@ -177,7 +177,8 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
             print("CERTIFICADOS QUERYSET ===>")
-            print(cert)
+            print(cert.first().idverificacion)
+            print(cert.first().taller)
 
             queryset = model.objects.none()  # Initialize an empty queryset
             if cert.exists():
