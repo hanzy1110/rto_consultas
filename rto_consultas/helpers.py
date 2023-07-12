@@ -180,7 +180,8 @@ def handle_nrocertificado(queryset, nrocertificado):
                     )
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
-                print([(c.idverificacion, c.nrocertificado) for c in cert])
+                # print([(c.idverificacion, c.nrocertificado) for c in cert])
+                print(cert)
                 queryset = [c.idverificacion for c in cert]
                 print(queryset)
             else:

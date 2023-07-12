@@ -3005,8 +3005,6 @@ class Verificaciones(models.Model):
 
     @staticmethod
     def get_nro_certificado(record):
-
-        print(record)
         cert = (Certificados
                         .objects
                         .prefetch_related("idverificacion")
@@ -3014,7 +3012,6 @@ class Verificaciones(models.Model):
                                 idtaller__exact=record.idtaller)
                     )
 
-        print(cert)
         return cert.nrocertificado
         # return (record.certificados
         #                # .all()
