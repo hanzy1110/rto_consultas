@@ -175,23 +175,19 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
-            cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
+            cert = Certificados.objects \
+                            .filter(nrocertificado__exact=nrocertificado).values()
             print("CERTIFICADOS QUERYSET ===>")
-            # print(cert.first().idverificacion)
-            # print(cert.first().taller)
+            print(cert)
 
             queryset = Verificaciones.objects.none()  # Initialize an empty queryset
-            if cert.exists():
+            if cert:
                 print("DATOS CERTIFICADOS ===>")
-                for c in cert:
-                    print(c.idverificacion)
-                    print(c.taller)
-
-                idverificacion = cert.first().idverificacion
-                idtaller = cert.first().taller
                 queryset = (Verificaciones.objects
-                            .filter(idverificacion=idverificacion
-                                    ,taller=idtaller))
+                            .filter(idverificacion=cert["idverificacion"]
+                                    ,taller=cert["idtaller"]
+                                )
+                            )
                 print(queryset)
 
             return queryset
