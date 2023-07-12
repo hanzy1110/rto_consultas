@@ -96,27 +96,7 @@ def handle_query(request, model, fecha_field="fecha"):
     queryset = model.objects.all()
     nrocertificado = query.pop("nrocertificado", None)
 
-    match nrocertificado:
-        case ['']:
-            pass
-        case None:
-            pass
-        case _:
-
-            print(nrocertificado)
-            nrocertificado = int(nrocertificado[0])
-            print(nrocertificado)
-            cert = (Certificados.objects
-                    .prefetch_related('idverificacion')
-                    .filter(nrocertificado=nrocertificado)
-                    )
-            if isinstance(cert, QuerySet):
-                print("DATOS CERTIFICADOS ===>")
-                print([(c.idverificacion, c.nrocertificado) for c in cert])
-                queryset = [c.idverificacion for c in cert]
-                print(queryset)
-            else:
-                queryset = queryset.get(idverificacion=cert[0].idverificacion)
+    queryset = handle_nrocertificado(queryset, nrocertificado)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
@@ -181,3 +161,27 @@ def handle_context(context, view):
     context["ids"] = view.aux_data.ids
     context["types"] = view.aux_data.types
     return context
+
+def handle_nrocertificado(queryset, nrocertificado):
+
+    match nrocertificado:
+        case ['']:
+            return queryset
+        case None:
+            return queryset
+        case _:
+            print(nrocertificado)
+            nrocertificado = int(nrocertificado[0])
+            print(nrocertificado)
+            cert = (Certificados.objects
+                    .prefetch_related('idverificacion')
+                    .filter(nrocertificado__exact=nrocertificado)
+                    )
+            if isinstance(cert, QuerySet):
+                print("DATOS CERTIFICADOS ===>")
+                print([(c.idverificacion, c.nrocertificado) for c in cert])
+                queryset = [c.idverificacion for c in cert]
+                print(queryset)
+            else:
+                queryset = queryset.get(idverificacion=cert[0].idverificacion)
+            return queryset

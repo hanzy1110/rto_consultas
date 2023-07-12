@@ -3001,11 +3001,12 @@ class Verificaciones(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"Verif: {self.idverificacion}:{self.dominiovehiculo}"
+        return f"Verif: {self.idverificacion}:{self.dominiovehiculo} - {self.idtaller}"
 
     @staticmethod
     def get_nro_certificado(record):
 
+        print(record)
         cert = (Certificados
                         .objects
                         .prefetch_related("idverificacion")
