@@ -3007,6 +3007,7 @@ class Verificaciones(models.Model):
     def get_nro_certificado(record):
 
         cert = (Certificados
+                        .objects
                         .prefetch_related("idverificacion")
                         .get(idverificacion__exact=record.idverificacion)
                     )
