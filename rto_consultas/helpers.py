@@ -176,7 +176,7 @@ def handle_nrocertificado(nrocertificado, model):
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
             cert = (Certificados.objects
-                    .prefetch_related('idverificacion')
+                    # .prefetch_related('idverificacion')
                     .get(nrocertificado=nrocertificado)
                     # .values_list('idverificacion__idverificacion', 'idverificacion__idtaller')
                     )
