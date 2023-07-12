@@ -6,7 +6,7 @@ import re
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
-from rto_consultas.models import Certificados
+from rto_consultas.models import Certificados, Verificaciones
 
 
 @dataclass
@@ -177,17 +177,21 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             cert = Certificados.objects.filter(nrocertificado__exact=nrocertificado)
             print("CERTIFICADOS QUERYSET ===>")
-            print(cert.first().idverificacion)
-            print(cert.first().taller)
+            # print(cert.first().idverificacion)
+            # print(cert.first().taller)
 
-            queryset = model.objects.none()  # Initialize an empty queryset
+            queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert.exists():
                 print("DATOS CERTIFICADOS ===>")
-                print(cert)
-                queryset = model.objects.filter(
-                    idverificacion=cert.first().idverificacion,
-                    idtaller=cert.first().idtaller
-                )
+                for c in cert:
+                    print(c.idverificacion)
+                    print(c.taller)
+
+                idverificacion = cert.first().idverificacion
+                idtaller = cert.first().taller
+                queryset = (Verificaciones.objects
+                            .filter(idverificacion=idverificacion
+                                    ,taller=idtaller))
                 print(queryset)
 
             return queryset
