@@ -108,7 +108,7 @@ def handle_query(request, model, fecha_field="fecha"):
             print(nrocertificado)
             cert = (Certificados.objects
                     .prefetch_related('idverificacion')
-                    .filter(nrocertificado__iexact=nrocertificado)
+                    .filter(nrocertificado=nrocertificado)
                     )
             if isinstance(cert, QuerySet):
                 print("DATOS CERTIFICADOS ===>")
