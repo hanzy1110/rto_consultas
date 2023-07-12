@@ -94,10 +94,9 @@ def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
     sort = query.pop("sort", None)
     page = query.pop("page", None)
-    queryset = model.objects.all()
     nrocertificado = query.pop("nrocertificado", None)
 
-    queryset = handle_nrocertificado(queryset, nrocertificado)
+    queryset = handle_nrocertificado(nrocertificado, model)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
@@ -163,7 +162,9 @@ def handle_context(context, view):
     context["types"] = view.aux_data.types
     return context
 
-def handle_nrocertificado(queryset, nrocertificado):
+def handle_nrocertificado(nrocertificado, model):
+
+    queryset = model.objects.all()
 
     match nrocertificado:
         case ['']:
