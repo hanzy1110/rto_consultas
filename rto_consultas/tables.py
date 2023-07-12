@@ -53,13 +53,10 @@ class VerificacionesTables(tables.Table):
             return "Unknown!"
 
     def render_certificado(self, record):
-        print("TABLE RECORDS ==>")
-        print(record.idtaller)
-        print(record.idverificacion)
         query = self.Meta.model.get_nro_certificado(record)
         print("QUERY =>")
         print(query)
-        return query[0].nrocertificado
+        return query
 
     def render_idtaller(self, value):
         return value.nombre
