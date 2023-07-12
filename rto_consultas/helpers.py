@@ -44,9 +44,10 @@ def handle_args(query_params, queryset, fecha_field="fecha"):
 
 
 def handle_date_range(date_from, date_to, fecha_field="fecha"):
-    # date_from = parse_date(date_from)
-    # date_to = parse_date(date_to)
-    return Q(**{f"{fecha_field}__range":(date_from, date_to)})
+    if date_from and date_to:
+        return Q(**{f"{fecha_field}__range":(date_from, date_to)})
+    if date_from and not date_to:
+        return Q(**{f"{fecha_field}__gte":date_from})
 
 
 def clean_args(query_params):
