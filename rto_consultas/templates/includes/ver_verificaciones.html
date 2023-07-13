@@ -20,22 +20,21 @@
 			</tr>
 			<tr class="borBot">
 				<td colspan="4">Observaciones en la anulaci&oacute;n:
-					'{% query_dict certificado "observaciones" %}'</td>
+					'{{ observaciones }}'</td>
 			</tr>
 			{% endif %}
 			<tr>
 				<td id="tagCt">Nro Certificado:</td>
-				<td><input type="text" id="txtNroCert" style="width: 120px" class="txt" value='{% query_dict
-						certificado " nrocertificado" %}' /></td>
+				<td><input type="text" id="txtNroCert" style="width: 120px" class="txt" value='{{ nrocertificado }}' />
+				</td>
 				<td id="tagFcVal">Vigencia:</td>
-				<td><input type="text" id="txtFechaVal" style="width: 120px" alt="date" class="txt" value='{% query_dict
-						certificado " vigenciahasta" %}' /></td>
+				<td><input type="text" id="txtFechaVal" style="width: 120px" alt="date" class="txt"
+						value='{{ vigenciahasta }}' /></td>
 			</tr>
 			<tr>
 				<td id="tagRes">Resultado:</td>
 				<td colspan="3">
-					<input type="text" id="txtREsult" style="width: 250px" class="txt" value='{% query_dict
-						certificado " estado" %}' />
+					<input type="text" id="txtREsult" style="width: 250px" class="txt" value='{{ estado }}' />
 				</td>
 			</tr>
 			<tr>
@@ -79,8 +78,7 @@
 			</tr>
 			<tr>
 				<td>Categor&iacute;a:</td>
-				<td><input type="text" id="txtDT" style="width: 250px" class="txt" value='{% query_dict
-						certificado " idcategoria" %}' />
+				<td><input type="text" id="txtDT" style="width: 250px" class="txt" value='{{ categoria }}' />
 				</td>
 			</tr>
 			<tr>

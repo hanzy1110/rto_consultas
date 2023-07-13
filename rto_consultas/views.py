@@ -212,6 +212,15 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                         idtaller_id__exact=self.kwargs["idtaller"])
                 .values()
                 )
+        categoria = (Categorias.objects
+                               .get(idcategoria__exact=cert["idcategoria"])
+                               .descripcion)
+
+        context["nrocertificado"] = cert["nrocertificado"]
+        context["observaciones"] = cert["observaciones"]
+        context["vigenciahasta"] = cert["vigenciahasta"]
+        context["estado"] = cert["estado"]
+        context["categoria"] = categoria
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
