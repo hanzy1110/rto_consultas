@@ -5,6 +5,8 @@ from django_tables2 import SingleTableView, Table
 
 
 from .models import (
+    Localidades,
+    Provincias,
     Verificaciones,
     Certificadosasignadosportaller,
     Vehiculos,
@@ -221,11 +223,21 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                .get(idestado__exact=cert[0]["idestado"])
                                .descripcion)
 
+        localidad = (Localidades.objects
+                               .get(idlocalidad__exact=cert[0]["pidlocalidad"])
+                               .descripcion)
+
+        provincia = (Provincias.objects
+                               .get(idprovincia__exact=cert[0]["pidlocalidad"])
+                               .descripcion)
+
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
         context["vigenciahasta"] = cert[0]["vigenciahasta"]
         context["estado"] = estado
         context["categoria"] = categoria
+        context["provincia"] = provincia
+        context["localidad"] = localidad
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
