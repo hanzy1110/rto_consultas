@@ -16,7 +16,7 @@ class VerificacionesTables(tables.Table):
     ver_verificacion = tables.Column(linkify=("ver_verificacion",
                                               {
                                                "idverificacion": tables.A("idverificacion"),
-                                               "idtaller": tables.A("idtaller")
+                                               "idtaller": tables.A("idtaller__idtaller")
                                                }
                                               ),
                                      orderable=False,
