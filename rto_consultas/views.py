@@ -213,7 +213,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                 .values()
                 )
         categoria = (Categorias.objects
-                               .get(idcategoria__exact=cert["idcategoria"])
+                               .get(idcategoria__exact=cert[0]["idcategoria"])
                                .descripcion)
 
         context["nrocertificado"] = cert["nrocertificado"]
