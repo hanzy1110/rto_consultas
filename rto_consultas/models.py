@@ -2671,7 +2671,7 @@ class Verificaciones(models.Model):
         db_column="DirectorTecnico", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
     idestado = models.ForeignKey(
-        Estados, on_delete=models.CASCADE, db_column="idEstado",
+        Estados, on_delete=models.CASCADE, db_column="idEstado", verbose_name="Estado Certificado"
     )  # Field name made lowercase.
     eje1_tara = models.DecimalField(
         db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
@@ -2869,7 +2869,7 @@ class Verificaciones(models.Model):
     ultimorecpatente = models.CharField(
         db_column="UltimoRecPatente", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    idtipouso = models.IntegerField(db_column="idTipoUso", )  # Field name made lowercase.
+    idtipouso = models.IntegerField(db_column="idTipoUso", verbose_name="Tipo de Uso")  # Field name made lowercase.
     usuariocarga = models.CharField(
         db_column="usuarioCarga", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
