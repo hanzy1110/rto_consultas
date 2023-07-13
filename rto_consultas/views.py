@@ -208,15 +208,15 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         cert = (
             Certificados.objects
                 # .select_related("idcategoria")
-                .get(idverificacion_id__exact=self.kwargs["idverificacion"],
-                     idtaller_id__exact=self.kwargs["idtaller"])
+                .filter(idverificacion_id__exact=self.kwargs["idverificacion"],
+                        idtaller_id__exact=self.kwargs["idtaller"])
                 .values()
                 )
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = []
-        context["certificado"] = cert
+        context["certificado"] = cert[0]
         context["adjuntos"] = adjuntos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""
