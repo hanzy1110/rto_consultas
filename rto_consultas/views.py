@@ -201,6 +201,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                         .select_related("dominiovehiculo", "idestado", "codigotitular","idtaller")
                         .get(idverificacion=id_verificacion, idtaller=id_taller))
 
+        print(verificacion)
         return verificacion
 
     def get_context_data(self, **kwargs):
