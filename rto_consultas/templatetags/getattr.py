@@ -2,6 +2,8 @@ import re
 import types
 from django import template
 
+import rto_consultas.models as models
+
 numeric_test = re.compile("^\d+$")
 register = template.Library()
 
@@ -61,3 +63,40 @@ def get_by_name(context, name):
         for ar in arr:
             object = get_attr(object, ar)
     return object
+
+
+@register.simple_tag(takes_context=True)
+def get_categorias(context, idcategoria):
+    return (models.Categorias.objects
+                    .get(idcategoria__exact=idcategoria)
+                    .descripcion
+            )
+
+
+@register.simple_tag(takes_context=True)
+def get_certificado_url(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_tarjeta_verde_url(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_lista_defectos(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_pa_style(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_ca_style(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_TCa_style(context):
+    pass
+
+@register.simple_tag(takes_context=True)
+def get_tm_style(context):
+    pass

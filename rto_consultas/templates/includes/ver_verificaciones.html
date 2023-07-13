@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html' %}
 
+{% load getattr %}
 {% block content %}
 {% load render_table from django_tables2 %}
 {% load getattr %}
@@ -10,7 +11,7 @@
 		<table class="tblForm" width="100%">
 			<tr>
 				<td>
-					<?php echo $button; ?>
+					{{ get_certificado_url }}
 				</td>
 			</tr>
 			{% if certificado.anulado == 1 %}
@@ -351,7 +352,7 @@
 										</select></div>
 								</td>
 							</tr>
-							<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3" {{ get_pa_style }}>
 								<td>Posici&oacute;n Motor:</td>
 								<td><input type="text" id="txtPosM" style="width: 250px" class="txt"
 										value="{{ object.pocisionmotor }}" /></td>
@@ -359,7 +360,7 @@
 								<td><input type="text" id="txtTara" style="width: 250px" class="txt"
 										value="{{ object.tara }}" /></td>
 							</tr>
-							<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3" {{ get_pa_style }}>
 								<td>Peso Max.:</td>
 								<td><input type="text" id="txtPesoM" style="width: 250px" class="txt"
 										value="{{ object.tara }}" /></td>
@@ -367,51 +368,52 @@
 								<td><input type="text" id="txtCajaU" style="width: 250px" class="txt"
 										value="{{ object.cargautil }}" /></td>
 							</tr>
-							<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3" {{ get_pa_style }}>
 								<td>Expediente:</td>
 								<td><input type="text" id="txtExp" style="width: 250px" class="txt"
-										value="<?php echo $Expediente; ?>" /></td>
+										value="{{ object.dominiovehiculo.expediente }}" /></td>
 								<td>Asientos:</td>
 								<td><input type="text" id="txtAsientos" style="width: 250px" class="txt"
-										value="<?php echo $Asientos; ?>" /></td>
+										value="{{ object.asientos }}" /></td>
 							</tr>
-							<tr class="mostrar3 taxi" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3 taxi" {{ get_pa_style }}>
 								<td>Carrocer&iacute;a:</td>
 								<td><input type="text" id="txtCarroc" style="width: 250px" class="txt"
-										value="<?php echo $Carroceria; ?>" /></td>
+										value="{{ object.carroceria }}" /></td>
 								<td>Suspensi&oacute;n:</td>
 								<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
-										value="<?php echo $Suspencion; ?>" /></td>
+										value="{{ object.suspencion }}" /></td>
 							</tr>
-							<tr class="mostrar3 taxi" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3 taxi" {{ get_pa_style }}>
 								<td colspan="4">
 									Aire Acondicionado
-									<?php if($AireAco == "0"){ ?>
+									{% if object.aireaco=="0" %}
 									<input type="checkbox" id="chAAco" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } else { ?>
+									{% else %}
 									<input type="checkbox" id="chAAco" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } ?> Bar
-									<?php if($Bar == "0") { ?>
+									{% endif %}
+									Bar
+									{% if object.bar=="0" %}
 									<input type="checkbox" id="chBar" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } else { ?>
+									{% else %}
 									<input type="checkbox" id="chBar" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } ?>
+									{% endif %}
 									Ba&ntilde;os
-									<?php if($Banio == "0") { ?>
+									{% if object.banio=="0" %}
 									<input type="checkbox" id="chBanio" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } else { ?>
+									{% else %}
 									<input type="checkbox" id="chBanio" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
-									<?php } ?>
+									{% endif %}
 									Calefacci&oacute;n
-									<?php if($Calefaccion == "0") { ?>
+									{% if object.calefaccion=="0" %}
 									<input type="checkbox" id="chCalef" />
-									<?php } else { ?>
+									{% else %}
 									<input type="checkbox" id="chCalef" checked="checked" />
-									<?php } ?>
+									{% endif %}
 								</td>
 							</tr>
-							<tr class="mostrar3" <?php echo $mostrarPa; ?>>
-								<?php if($idHabilitacion==0 && $codigoHabilitacion==""){?>
+							<tr class="mostrar3" {{ get_pa_style }}>
+								{% if object.codigohabilitacion==0 and object.codigohabilitacion=='' %}
 								<td>Tipo Servicio:</td>
 								<td>
 									<div id="divTipoServP" style="display: inline;">
@@ -421,15 +423,16 @@
 										</select>
 									</div>
 								</td>
-								<?php }else{ ?>
+								{% else %}
 
 
 								<td>Tipo Servicio:</td>
 								<td colspan="3" id="listaServicioHab"></td>
 
-								<?php } ?>
+								{% endif %}
 							</tr>
-							<tr class="mostrar3" <?php echo $mostrarPa; ?>>
+							<tr class="mostrar3" {{ get_pa_style }}>
+								<!-- TODO HACER COMBO CATEGORIAS -->
 								<td>Cat. Servicio:</td>
 								<td colspan="3">
 									<div id="divClaseServP" style="display: inline;">
@@ -440,27 +443,28 @@
 									</div>
 								</td>
 							</tr>
-							<tr id="veCarga" class="mostrar2" <?php echo $mostrarCa; ?>>
+							<tr id="veCarga" class="mostrar2" {{ get_ca_style }}>
 								<td>Caja:</td>
 								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
 										value="<?php echo $caja; ?>" /></td>
-								<td id="tagTCarga" class="mostrar5" <?php echo $mostrarTCa; ?>>Tipo Carga:</td>
+								<td id="tagTCarga" class="mostrar5" {{ get_TCa_style }}>Tipo Carga:</td>
 								<td class="mostrar5" <?php echo $mostrarTCa; ?>>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
 										<option value="-1">Seleccione...</option>
-										<?php if($TipoCarga == "Carga Peligrosa") { ?>
+										{% if object.tipocarga=="Carga Peligrosa" %}
 										<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
-										<?php } else{ ?>
+										{% else %}
 										<option value="Carga Peligrosa">Carga Peligrosa</option>
-										<?php } if($TipoCarga == "Carga General") { ?>
+										{% elif object.tipocarga=="Carga General" %}
 										<option value="Carga General" selected="selected">Carga General</option>
-										<?php } else{ ?>
+										{% else %}
 										<option value="Carga General">Carga General</option>
-										<?php } ?>
+										{% endif %}
 									</select>
 								</td>
 							</tr>
-							<tr class="mostrar4" <?php echo $mostrarTM; ?> >
+							<tr class="mostrar4" {{ get_tm_style }}>
+								<!-- TODO combo servicion provincia -->
 								<td>Servicios en prov.:</td>
 								<td>
 									<span id="divProvTM">
@@ -479,7 +483,7 @@
 									</span>
 								</td>
 							</tr>
-							<tr class="mostrar4" <?php echo $mostrarTM; ?> >
+							<tr class="mostrar4" {{ get_tm_style }}>
 								<td id="tagTServ">Tipo Servicios:</td>
 								<td colspan="3">
 									<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt"
@@ -488,7 +492,9 @@
 							</tr>
 							<tr>
 								<td colspan="4">Tarjeta Verde:
-									<?php echo $archTV; ?>
+									<!-- TODO URL TarjetaVerde -->
+									<!-- context tarjeta verde? -->
+									{{ get_tarjeta_verde_url }}
 								</td>
 							</tr>
 							<tr>
@@ -521,96 +527,97 @@
 							<td>Eje 1:</td>
 							<td align="center"><input type="text" id="txtE1Tara" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="<?php echo $ME1Tara; ?>" /></td>
+									value="{{ object.eje1_tara }}" /></td>
 							<td align="center"><input type="text" id="txtE1FzaI" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="<?php echo $ME1FzaI; ?>" /></td>
+									value="{{ object.eje1_fzaizq }}" /></td>
 							<td align="center"><input type="text" id="txtE1FzaD" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="<?php echo $ME1FzaD; ?>" /></td>
+									value="{{ object.eje1_fzader }}" /></td>
 							<td align="center"><input type="text" id="txtE1Dif" style="width: 80px"
-									onkeypress="return acceptDec(event)" class="txtNum"
-									value="<?php echo $ME1Dif; ?>" /></td>
+									onkeypress="return acceptDec(event)" class="txtNum" value="{{ object.eje1_dif }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE1Efic" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="<?php echo $ME1Efic; ?>" /></td>
+									value="{{ object.eje1_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 2:</td>
 							<td align="center"><input type="text" id="txtE2Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME2Tara; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_tara }}" /></td>
 							<td align="center"><input type="text" id="txtE2FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME2FzaI; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_fzaizq }}" /></td>
 							<td align="center"><input type="text" id="txtE2FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME2FzaD; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_fzader }}" /></td>
 							<td align="center"><input type="text" id="txtE2Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME2Dif; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_dif }}" /></td>
 							<td align="center"><input type="text" id="txtE2Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME2Efic; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 3:</td>
 							<td align="center"><input type="text" id="txtE3Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME3Tara; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_tara }}" /></td>
 							<td align="center"><input type="text" id="txtE3FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME3FzaI; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_fzaizq }}" /></td>
 							<td align="center"><input type="text" id="txtE3FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME3FzaD; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_fzader }}" /></td>
 							<td align="center"><input type="text" id="txtE3Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME3Dif; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_dif }}" /></td>
 							<td align="center"><input type="text" id="txtE3Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME3Efic; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 4:</td>
 							<td align="center"><input type="text" id="txtE4Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME4Tara; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_tara }}" /></td>
 							<td align="center"><input type="text" id="txtE4FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME4FzaI; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_fzaizq }}" /></td>
 							<td align="center"><input type="text" id="txtE4FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME4FzaD; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_fzader }}" /></td>
 							<td align="center"><input type="text" id="txtE4Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME4Dif; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_dif }}" /></td>
 							<td align="center"><input type="text" id="txtE4Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME4Efic; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 5:</td>
-							<td align="center"><input type="text" id="txtE4Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME5Tara; ?>" /></td>
-							<td align="center"><input type="text" id="txtE4FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME5FzaI; ?>" /></td>
-							<td align="center"><input type="text" id="txtE4FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME5FzaD; ?>" /></td>
-							<td align="center"><input type="text" id="txtE4Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME5Dif; ?>" /></td>
-							<td align="center"><input type="text" id="txtE4Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $ME5Efic; ?>" /></td>
+							<td align="center"><input type="text" id="txtE5Tara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_tara }}" /></td>
+							<td align="center"><input type="text" id="txtE5FzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_fzaizq }}" /></td>
+							<td align="center"><input type="text" id="txtE5FzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_fzader }}" /></td>
+							<td align="center"><input type="text" id="txtE5Dif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_dif }}" /></td>
+							<td align="center"><input type="text" id="txtE5Efic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td><b>Totales:</b></td>
 							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo ($MToTara); ?>" /></td>
+									style="width: 80px" class="txt" value="{{ mto_tara }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MToFI; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ mto_fi }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MToFD; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ mto_der }}" /></td>
 							<td align="center">&nbsp;</td>
 							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MToEf; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ mto_eficiencia }}" /></td>
 						</tr>
 						<tr>
+							<!--  $ME1Tara + $ME2Tara -->
 							<td><b>Freno Estacionamiento:</b></td>
 							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo ($ME1Tara + $ME2Tara); ?>" /></td>
+									style="width: 80px" class="txt" value="{{ ME1ME2 }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MFrFzaI; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_fzaisq }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MFrFzaD; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_fzader }}" /></td>
 							<td align="center"><input type="text" id="txtFrDif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MFrDif; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_dif }}" /></td>
 							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="<?php echo $MFrEfic; ?>" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_eficiencia }}" /></td>
 						</tr>
 						<tr class="borTop">
 							<td rowspan="2"><b>Gases de
@@ -623,13 +630,13 @@
 						</tr>
 						<tr>
 							<td align="center"><input type="text" id="txtBach" style="width: 80px" class="txt"
-									value="<?php echo $MBach; ?>" /></td>
+									value="{{ object.bach }}" /></td>
 							<td align="center"><input type="text" id="txtCO" style="width: 80px" class="txt"
-									value="<?php echo $MCO; ?>" /></td>
+									value="{{ object.porcentajeco }}" /></td>
 							<td align="center"><input type="text" id="txtOpac" style="width: 80px" class="txt"
-									value="<?php echo $MOpac; ?>" /></td>
+									value="{{ object.opac }}" /></td>
 							<td align="center"><input type="text" id="txtppmHC" style="width: 80px" class="txt"
-									value="<?php echo $MppmHC; ?>" /></td>
+									value="{{ object.ppmhc }}" /></td>
 							<td>&nbsp;</td>
 						</tr>
 						<tr class="borTop">
@@ -643,18 +650,18 @@
 						<tr class="borBot">
 							<td align="center">
 								<input type="text" id="txtAlin" style="width: 80px" class="txt"
-									value="<?php echo $MAlin; ?>" />
+									value="{{ object.alineacion }}" />
 							</td>
 							<td align="center"><input type="text" id="txtNSon" style="width: 80px" class="txt"
-									value="<?php echo $MNSon; ?>" />
+									value="{{ object.nivelsonoro }}" />
 							</td>
 							<td align="center">
 								<input type="text" id="txtInter" style="width: 80px" class="txt"
-									value="<?php echo $MInter; ?>" />
+									value="{{ object.interno }}" />
 							</td>
 							<td align="center">
 								<input type="text" id="txtEscape" style="width: 80px" class="txt"
-									value="<?php echo $MEscape; ?>" />
+									value="{{ object.escape }}" />
 							</td>
 							<td>&nbsp;</td>
 						</tr>
@@ -672,7 +679,7 @@
 							<td>&nbsp;</td>
 							<td colspan="5">
 								<textarea id="txtObs" class="txt" rows="3"
-									style="width: 600px;margin-top: 3px;margin-left: 5px;"><?php echo $MObser; ?></textarea>
+									style="width: 600px;margin-top: 3px;margin-left: 5px;">{{ object.observaciones }}</textarea>
 							</td>
 						</tr>
 
@@ -687,7 +694,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td colspan="5">
-								<?php echo $listaDefectos; ?>
+								{{ get_lista_defectos }}
 							</td>
 						</tr>
 
