@@ -444,9 +444,9 @@
 							<tr id="veCarga" class="mostrar2" {% get_ca_style %}>
 								<td>Caja:</td>
 								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
-										value="<?php echo $caja; ?>" /></td>
+										value="{{ object.caja }}" /></td>
 								<td id="tagTCarga" class="mostrar5" {% get_TCa_style %}>Tipo Carga:</td>
-								<td class="mostrar5" <?php echo $mostrarTCa; ?>>
+								<td class="mostrar5" {% get_TCa_style %}>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
 										<option value="-1">Seleccione...</option>
 										{% if object.tipocarga == "Carga Peligrosa" %}
@@ -486,7 +486,7 @@
 								<td id="tagTServ">Tipo Servicios:</td>
 								<td colspan="3">
 									<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt"
-										value="<?php echo $tipoServTM; ?>" />
+										value="{{ object.tiposervtm }}" />
 								</td>
 							</tr>
 							<tr>
