@@ -11,8 +11,8 @@ from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
 
 class VerificacionesTables(tables.Table):
-    certificado = tables.Column(orderable=False, empty_values=())
-    fecha = tables.DateColumn()
+    certificado = tables.Column(orderable=False, empty_values=(), )
+    fecha = tables.DateColumn(format="d/M/Y")
     ver_verificacion = tables.Column(linkify=("ver_verificacion",
                                               {
                                                "idverificacion": tables.A("idverificacion"),
@@ -20,7 +20,8 @@ class VerificacionesTables(tables.Table):
                                                }
                                               ),
                                      orderable=False,
-                                     empty_values=()
+                                     empty_values=(),
+                                     attrs={'th':"Nro Certificado"}
                                      ) # (viewname, kwargs)
     aux_data = AuxData(
         query_fields=[],
@@ -46,7 +47,7 @@ class VerificacionesTables(tables.Table):
         extra_columns = ("certificado",)
 
     def render_ver_verificacion(self, record):
-        return f"Ver Verificacion: {record.idverificacion}"
+        return f"Ver Verificacion"
 
     def render_idestado(self, value):
         try:

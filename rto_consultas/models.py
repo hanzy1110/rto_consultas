@@ -713,7 +713,7 @@ class Certificados(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"CERT {self.nrocertificado} - {self.idcertificado} - {self.idtaller}"
+        return f"CERT {self.nrocertificado} - {self.idcertificado} -"
 
     class Meta:
         app_label = "rto_consultas"
@@ -957,7 +957,7 @@ class Equipos(models.Model):
 
 class Estados(models.Model):
     idestado = models.AutoField(
-        db_column="idEstado", primary_key=True
+        db_column="idEstado", primary_key=True,verbose_name="Estado Certificado"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
@@ -2211,7 +2211,7 @@ class Serviciostransportehab(models.Model):
 
 class Talleres(models.Model):
     idtaller = models.AutoField(
-        db_column="idTaller", primary_key=True
+        db_column="idTaller", primary_key=True,verbose_name="Taller"
     )  # Field name made lowercase.
     idlocalidad = models.ForeignKey(
         Localidades, on_delete=models.CASCADE, db_column="idLocalidad"
@@ -2275,7 +2275,7 @@ class Talleres(models.Model):
 
 class Tipousovehiculo(models.Model):
     idtipouso = models.AutoField(
-        db_column="idTipoUso", primary_key=True
+        db_column="idTipoUso", primary_key=True,verbose_name="Tipo Uso"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=50
@@ -2383,7 +2383,7 @@ class Valoresadm(models.Model):
 
 class Vehiculos(models.Model):
     dominio = models.CharField(
-        db_column="Dominio", primary_key=True, max_length=10
+        db_column="Dominio", primary_key=True, max_length=10,verbose_name="Dominio"
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
         db_column="idTipoVehiculo"
@@ -2613,19 +2613,19 @@ class Verificaciones(models.Model):
     idverificacion = models.IntegerField(
         db_column="idVerificacion", primary_key=True
     )  # Field name made lowercase.
-    fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
+    fecha = models.DateField(db_column="Fecha", verbose_name="Fecha")  # Field name made lowercase.
     hora = models.TimeField(db_column="Hora")  # Field name made lowercase.
     horafinal = models.TimeField(
         db_column="HoraFinal", blank=True, null=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, on_delete=models.CASCADE, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller",
     )  # Field name made lowercase.
     idfotovalidacion = models.IntegerField(
         db_column="idFotovalidacion", blank=True, null=True
     )  # Field name made lowercase.
     dominiovehiculo = models.ForeignKey(
-        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo"
+        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo",
     )  # Field name made lowercase.
     idhabilitacion = models.IntegerField(
         db_column="idHabilitacion", blank=True, null=True
@@ -2671,7 +2671,7 @@ class Verificaciones(models.Model):
         db_column="DirectorTecnico", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
     idestado = models.ForeignKey(
-        Estados, on_delete=models.CASCADE, db_column="idEstado"
+        Estados, on_delete=models.CASCADE, db_column="idEstado",
     )  # Field name made lowercase.
     eje1_tara = models.DecimalField(
         db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
@@ -2869,7 +2869,7 @@ class Verificaciones(models.Model):
     ultimorecpatente = models.CharField(
         db_column="UltimoRecPatente", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    idtipouso = models.IntegerField(db_column="idTipoUso")  # Field name made lowercase.
+    idtipouso = models.IntegerField(db_column="idTipoUso", )  # Field name made lowercase.
     usuariocarga = models.CharField(
         db_column="usuarioCarga", max_length=50, blank=True, null=True
     )  # Field name made lowercase.

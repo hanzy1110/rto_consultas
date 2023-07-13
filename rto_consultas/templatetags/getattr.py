@@ -105,3 +105,13 @@ def get_tm_style(context):
 @register.simple_tag(takes_context=True)
 def check_anulado(context):
     return context["certificado"]["anulado"] == 1
+
+@register.filter(takes_context=True)
+def parse_none(value):
+    match value:
+        case None:
+            return ""
+        case "NULL":
+            return ""
+        case _:
+            return value
