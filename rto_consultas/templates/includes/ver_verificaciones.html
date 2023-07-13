@@ -455,7 +455,8 @@
 										<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
 										{% else %}
 										<option value="Carga Peligrosa">Carga Peligrosa</option>
-										{% elif object.tipocarga == "Carga General" %}
+										{% endif %}
+										{% if object.tipocarga == "Carga General" %}
 										<option value="Carga General" selected="selected">Carga General</option>
 										{% else %}
 										<option value="Carga General">Carga General</option>
