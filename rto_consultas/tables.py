@@ -40,6 +40,7 @@ class VerificacionesTables(tables.Table):
             "idestado",
             "idtipouso",
             "fecha",
+            "certificado",
             "ver_verificacion"
         )
         extra_columns = ("certificado",)
