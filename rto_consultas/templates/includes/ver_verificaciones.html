@@ -451,11 +451,11 @@
 								<td class="mostrar5" <?php echo $mostrarTCa; ?>>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
 										<option value="-1">Seleccione...</option>
-										{% if object.tipocarga=="Carga Peligrosa" %}
+										{% if object.tipocarga == "Carga Peligrosa" %}
 										<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
 										{% else %}
 										<option value="Carga Peligrosa">Carga Peligrosa</option>
-										{% elif object.tipocarga=="Carga General" %}
+										{% elif object.tipocarga == "Carga General" %}
 										<option value="Carga General" selected="selected">Carga General</option>
 										{% else %}
 										<option value="Carga General">Carga General</option>
