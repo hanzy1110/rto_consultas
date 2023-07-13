@@ -52,20 +52,17 @@
 						value="{{ object.hora }}" /></td>
 			</tr>
 			<tr>
-				<!-- TODO TRAER PROVINCIAS Y LOCALIDADES DEL CONTEXTO -->
 				<td>Provincia:</td>
 				<td>
-					<div id="divProv"><select id="cmbProv" class="combo" name="cmbProv" style="width: 250px"
-							disabled="disabled">
-							<option value="-1">Seleccione...</option>
-						</select></div>
+					<div id="divProv">
+						{{ provincia }}
+					</div>
 				</td>
 				<td id="tagLoc">Localidad:</td>
 				<td>
-					<div id="divLoc"><select id="cmbLoc" class="combo" name="cmbLoc" style="width: 250px"
-							disabled="disabled">
-							<option value="-1">Seleccione...</option>
-						</select></div>
+					<div id="divLoc">
+						{{ localidad }}
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -167,17 +164,15 @@
 								<!-- TODO AGREGAR EL COMBO DE LAS PROVINCIAS -->
 								<td>Provincia:</td>
 								<td>
-									<div id="divProvT"><select id="cmbProvT" class="combo" name="cmbProvT"
-											style="width: 250px" disabled="disabled">
-											<option value="-1">Seleccione...</option>
-										</select></div>
+									<div id="divProvT">
+										{{ procincia }}
+									</div>
 								</td>
 								<td>Localidad:</td>
 								<td>
-									<div id="divLocT"><select id="cmbLocT" class="combo" name="cmbLocT"
-											style="width: 250px" disabled="disabled">
-											<option value="-1">Seleccione...</option>
-										</select></div>
+									<div id="divLocT">
+										{{ localidad }}
+									</div>
 								</td>
 							</tr>
 							<tr>

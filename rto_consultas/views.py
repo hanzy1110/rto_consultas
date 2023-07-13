@@ -204,6 +204,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                         .get(idverificacion=id_verificacion, idtaller=id_taller))
 
         print(verificacion)
+        self.verificacion = verificacion
         return verificacion
 
     def get_context_data(self, **kwargs):
@@ -224,11 +225,11 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                .descripcion)
 
         localidad = (Localidades.objects
-                               .get(idlocalidad__exact=cert[0]["pidlocalidad"])
+                               .get(idlocalidad__exact=self.verificacion["pidlocalidad"])
                                .descripcion)
 
         provincia = (Provincias.objects
-                               .get(idprovincia__exact=cert[0]["pidlocalidad"])
+                               .get(idprovincia__exact=self.verificacion["pidlocalidad"])
                                .descripcion)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
