@@ -229,16 +229,16 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                      )
 
 
-        provincia = (Provincias.objects
-                               .get(idprovincia__exact=localidad.idprovincia)
-                               .descripcion)
+        # provincia = (Provincias.objects
+        #                        .get(idprovincia__exact=localidad.idprovincia)
+        #                        .descripcion)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
         context["vigenciahasta"] = cert[0]["vigenciahasta"]
         context["estado"] = estado
         context["categoria"] = categoria
-        context["provincia"] = provincia
+        context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
