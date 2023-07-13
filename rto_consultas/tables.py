@@ -13,7 +13,7 @@ from .helpers import AuxData, map_fields
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(orderable=False, empty_values=())
     fecha = tables.DateColumn()
-    ver_verificacion = tables.Column(linkify=("ververificacion",
+    ver_verificacion = tables.Column(linkify=("ver_verificacion",
                                               {
                                                "idverificacion": tables.A("idverificacion"),
                                                "idtaller": tables.A("idtaller__idtaller")
