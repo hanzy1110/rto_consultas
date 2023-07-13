@@ -2619,13 +2619,13 @@ class Verificaciones(models.Model):
         db_column="HoraFinal", blank=True, null=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, on_delete=models.CASCADE, db_column="idTaller",
+        Talleres, on_delete=models.CASCADE, db_column="idTaller", verbose_name="Taller"
     )  # Field name made lowercase.
     idfotovalidacion = models.IntegerField(
         db_column="idFotovalidacion", blank=True, null=True
     )  # Field name made lowercase.
     dominiovehiculo = models.ForeignKey(
-        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo",
+        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo", verbose_name="Dominio"
     )  # Field name made lowercase.
     idhabilitacion = models.IntegerField(
         db_column="idHabilitacion", blank=True, null=True
