@@ -216,14 +216,14 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                .get(idcategoria__exact=cert[0]["idcategoria"])
                                .descripcion)
 
-        categoria = (Estados.objects
+        estado = (Estados.objects
                                .get(idestado__exact=cert[0]["idestado"])
                                .descripcion)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
         context["vigenciahasta"] = cert[0]["vigenciahasta"]
-        context["estado"] = cert[0]["estado"]
+        context["estado"] = estado
         context["categoria"] = categoria
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
