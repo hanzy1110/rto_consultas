@@ -21,7 +21,6 @@ class VerificacionesTables(tables.Table):
                                               ),
                                      orderable=False,
                                      empty_values=(),
-                                     attrs={'th':"Nro Certificado"}
                                      ) # (viewname, kwargs)
     aux_data = AuxData(
         query_fields=[],
