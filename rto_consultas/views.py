@@ -193,17 +193,29 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
     context_object_name: str
     aux_data: AuxData
 
-    def get_queryset(self):
+    def get_object(self):
         query_params = self.request.GET.copy()
-        id_taller = query_params.pop("id_taller", None)
-        id_verificacion = query_params.pop("id_verificacion", None)
+        id_taller = self.kwargs["idtaller"]
+        id_verificacion = self.kwargs["idverificacion"]
         verificacion = (self.model.objects
-                        .get(idverificacion=id_verificacion, idtaller=id_taller)
-                        .select_related("dominiovehiculo", "idestado", "codigotitular",))
-        # certificado = verificacion.certificados.all
+                        .select_related("dominiovehiculo", "idestado", "codigotitular","idtaller", "idcategoria")
+                        .get(idverificacion=id_verificacion, idtaller=id_taller))
+
+        self.id_verificacion = verificacion.idverificacion
         return verificacion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        cert = (Certificados.objects
+                .select_related("idcategoria")
+                .get(idverificacion_id__exact=self.id_verificacion))
+        # TODO AGREGAR COMBO DOC
+        context["comboDoc"] = []
+        # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
+        adjuntos = []
+        context["certificado"] = cert
+        context["adjuntos"] = adjuntos
+        context["mostrarJu"] = ""
+        context["mostrarFi"] = ""
         # context = handle_context(context, self)
         return context

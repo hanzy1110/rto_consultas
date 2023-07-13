@@ -13,6 +13,15 @@ from .helpers import AuxData, map_fields
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(orderable=False, empty_values=())
     fecha = tables.DateColumn()
+    ver_verificacion = tables.Column(linkify=("ver_verificacion",
+                                              {
+                                               "idverificacion": tables.A("idverificacion"),
+                                               "idtaller": tables.A("idtaller")
+                                               }
+                                              ),
+                                     orderable=False,
+                                     empty_values=()
+                                     ) # (viewname, kwargs)
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -31,8 +40,12 @@ class VerificacionesTables(tables.Table):
             "idestado",
             "idtipouso",
             "fecha",
+            "ver_verificacion"
         )
         extra_columns = ("certificado",)
+
+    def render_ver_verificacion(self, record):
+        return f"Ver Verificacion: {record.idverificacion}"
 
     def render_idestado(self, value):
         try:
