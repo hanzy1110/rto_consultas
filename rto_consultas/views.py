@@ -198,7 +198,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         id_taller = self.kwargs["idtaller"]
         id_verificacion = self.kwargs["idverificacion"]
         verificacion = (Verificaciones.objects
-                        .select_related("dominiovehiculo", "idestado", "codigotitular","idtaller", "idcategoria")
+                        .select_related("dominiovehiculo", "idestado", "codigotitular","idtaller")
                         .get(idverificacion=id_verificacion, idtaller=id_taller))
 
         return verificacion
