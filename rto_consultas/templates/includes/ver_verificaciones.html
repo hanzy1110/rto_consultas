@@ -11,7 +11,7 @@
 		<table class="tblForm" width="100%">
 			<tr>
 				<td>
-					{{ get_certificado_url }}
+					{% get_certificado_url %}
 				</td>
 			</tr>
 			{% if check_certificado %}
@@ -20,22 +20,22 @@
 			</tr>
 			<tr class="borBot">
 				<td colspan="4">Observaciones en la anulaci&oacute;n:
-					{% query_dict certificado observaciones %}</td>
+					{% query_dict certificado "observaciones" %}</td>
 			</tr>
 			{% endif %}
 			<tr>
 				<td id="tagCt">Nro Certificado:</td>
 				<td><input type="text" id="txtNroCert" style="width: 120px" class="txt" value="{%
-						query_dict certificado nrocertificado %}" /></td>
+						query_dict certificado " nrocertificado" %}" /></td>
 				<td id="tagFcVal">Vigencia:</td>
 				<td><input type="text" id="txtFechaVal" style="width: 120px" alt="date" class="txt"
-						value="{% query_dict certificado vigenciahasta %}" /></td>
+						value="{% query_dict certificado " vigenciahasta" %}" /></td>
 			</tr>
 			<tr>
 				<td id="tagRes">Resultado:</td>
 				<td colspan="3">
 					<input type="text" id="txtREsult" style="width: 250px" class="txt"
-						value="{% query_dict certificado estado %}" />
+						value="{% query_dict certificado " estado" %}" />
 				</td>
 			</tr>
 			<tr>
@@ -80,7 +80,7 @@
 			<tr>
 				<td>Categor&iacute;a:</td>
 				<td><input type="text" id="txtDT" style="width: 250px" class="txt" value="{% query_dict certificado
-						idcategoria %}" />
+						" idcategoria" %}" />
 				</td>
 			</tr>
 			<tr>
@@ -352,7 +352,7 @@
 										</select></div>
 								</td>
 							</tr>
-							<tr class="mostrar3" {{ get_pa_style }}>
+							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Posici&oacute;n Motor:</td>
 								<td><input type="text" id="txtPosM" style="width: 250px" class="txt"
 										value="{{ object.pocisionmotor }}" /></td>
@@ -360,7 +360,7 @@
 								<td><input type="text" id="txtTara" style="width: 250px" class="txt"
 										value="{{ object.tara }}" /></td>
 							</tr>
-							<tr class="mostrar3" {{ get_pa_style }}>
+							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Peso Max.:</td>
 								<td><input type="text" id="txtPesoM" style="width: 250px" class="txt"
 										value="{{ object.tara }}" /></td>
@@ -368,7 +368,7 @@
 								<td><input type="text" id="txtCajaU" style="width: 250px" class="txt"
 										value="{{ object.cargautil }}" /></td>
 							</tr>
-							<tr class="mostrar3" {{ get_pa_style }}>
+							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Expediente:</td>
 								<td><input type="text" id="txtExp" style="width: 250px" class="txt"
 										value="{{ object.dominiovehiculo.expediente }}" /></td>
@@ -376,7 +376,7 @@
 								<td><input type="text" id="txtAsientos" style="width: 250px" class="txt"
 										value="{{ object.asientos }}" /></td>
 							</tr>
-							<tr class="mostrar3 taxi" {{ get_pa_style }}>
+							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td>Carrocer&iacute;a:</td>
 								<td><input type="text" id="txtCarroc" style="width: 250px" class="txt"
 										value="{{ object.carroceria }}" /></td>
@@ -384,7 +384,7 @@
 								<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
 										value="{{ object.suspencion }}" /></td>
 							</tr>
-							<tr class="mostrar3 taxi" {{ get_pa_style }}>
+							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td colspan="4">
 									Aire Acondicionado
 									{% if object.aireaco == "0" %}
@@ -412,7 +412,7 @@
 									{% endif %}
 								</td>
 							</tr>
-							<tr class="mostrar3" {{ get_pa_style }}>
+							<tr class="mostrar3" {% get_pa_style %}>
 								{% if object.codigohabilitacion == 0 and object.codigohabilitacion == '' %}
 								<td>Tipo Servicio:</td>
 								<td>
@@ -431,7 +431,7 @@
 
 								{% endif %}
 							</tr>
-							<tr class="mostrar3" {{ get_pa_style }}>
+							<tr class="mostrar3" {% get_pa_style %}>
 								<!-- TODO HACER COMBO CATEGORIAS -->
 								<td>Cat. Servicio:</td>
 								<td colspan="3">
@@ -443,11 +443,11 @@
 									</div>
 								</td>
 							</tr>
-							<tr id="veCarga" class="mostrar2" {{ get_ca_style }}>
+							<tr id="veCarga" class="mostrar2" {% get_ca_style %}>
 								<td>Caja:</td>
 								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
 										value="<?php echo $caja; ?>" /></td>
-								<td id="tagTCarga" class="mostrar5" {{ get_TCa_style }}>Tipo Carga:</td>
+								<td id="tagTCarga" class="mostrar5" {% get_TCa_style %}>Tipo Carga:</td>
 								<td class="mostrar5" <?php echo $mostrarTCa; ?>>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
 										<option value="-1">Seleccione...</option>
@@ -464,7 +464,7 @@
 									</select>
 								</td>
 							</tr>
-							<tr class="mostrar4" {{ get_tm_style }}>
+							<tr class="mostrar4" {% get_tm_style %}>
 								<!-- TODO combo servicion provincia -->
 								<td>Servicios en prov.:</td>
 								<td>
@@ -484,7 +484,7 @@
 									</span>
 								</td>
 							</tr>
-							<tr class="mostrar4" {{ get_tm_style }}>
+							<tr class="mostrar4" {% get_tm_style %}>
 								<td id="tagTServ">Tipo Servicios:</td>
 								<td colspan="3">
 									<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt"
@@ -495,7 +495,7 @@
 								<td colspan="4">Tarjeta Verde:
 									<!-- TODO URL TarjetaVerde -->
 									<!-- context tarjeta verde? -->
-									{{ get_tarjeta_verde_url }}
+									{% get_tarjeta_verde_url %}
 								</td>
 							</tr>
 							<tr>
@@ -695,7 +695,7 @@
 						<tr>
 							<td>&nbsp;</td>
 							<td colspan="5">
-								{{ get_lista_defectos }}
+								{% get_lista_defectos %}
 							</td>
 						</tr>
 
