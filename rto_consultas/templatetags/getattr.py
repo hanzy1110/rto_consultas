@@ -36,6 +36,7 @@ def get_model_attr(context, instance, name):
 
 @register.simple_tag(takes_context=True)
 def query_dict(context, instance, name):
+    name = name.replace(" ", "")
     try:
         return instance[name]
     except KeyError:
@@ -100,3 +101,7 @@ def get_TCa_style(context):
 @register.simple_tag(takes_context=True)
 def get_tm_style(context):
     pass
+
+@register.simple_tag(takes_context=True)
+def check_anulado(context):
+    return context["certificado"]["anulado"] == 1
