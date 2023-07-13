@@ -208,7 +208,8 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         cert = (
             Certificados.objects
                 # .select_related("idcategoria")
-                .get(idverificacion_id__exact=self.kwargs["idverificacion"])
+                .get(idverificacion_id__exact=self.kwargs["idverificacion"],
+                     idtaller_id__exact=self.kwargs["idtaller"])
                 .values()
                 )
         # TODO AGREGAR COMBO DOC
