@@ -206,7 +206,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cert = (Certificados.objects
-                .select_related("idcategoria")
+                # .select_related("idcategoria")
                 .get(idverificacion_id__exact=self.kwargs["idverificacion"]))
         # TODO AGREGAR COMBO DOC
         context["comboDoc"] = []
