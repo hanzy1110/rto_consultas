@@ -225,11 +225,11 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                .descripcion)
 
         localidad = (Localidades.objects
-                               .get(idlocalidad__exact=self.verificacion["pidlocalidad"])
+                               .get(idlocalidad__exact=self.verificacion.pidlocalidad)
                                .descripcion)
 
         provincia = (Provincias.objects
-                               .get(idprovincia__exact=self.verificacion["pidlocalidad"])
+                               .get(idprovincia__exact=self.verificacion.pidlocalidad)
                                .descripcion)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
