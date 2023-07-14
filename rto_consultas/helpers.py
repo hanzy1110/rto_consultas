@@ -6,6 +6,8 @@ import re
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
+from silk.profiling.profiler import silk_profile
+
 from rto_consultas.models import Certificados, Verificaciones
 
 
@@ -125,7 +127,7 @@ def handle_form(data: AuxData, model: Model):
             values[field] = [0, 1]
     return values
 
-
+@silk_profile()
 def map_fields(data: AuxData, model: Model):
     values = {}
 
@@ -193,5 +195,3 @@ def handle_nrocertificado(nrocertificado, model):
 
             return queryset
 
-def sum_appropriatelly(values):
-    return sum([v for v in values if v])
