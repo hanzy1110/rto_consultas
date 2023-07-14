@@ -4,6 +4,7 @@ from .models import (
     # VWVerificaciones,
     Verificaciones,
     Vehiculos,
+    Personas,
     Certificados,
     Certificadosasignadosportaller,
 )
@@ -22,6 +23,8 @@ class VerificacionesTables(tables.Table):
                                      orderable=False,
                                      empty_values=(),
                                      ) # (viewname, kwargs)
+    titular = tables.Column(orderable=False, empty_values=())
+    vigencia = tables.Column(orderable=False, empty_values=())
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -35,12 +38,15 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         fields = (
+            "certificado",
+            "fecha",
             "idtaller",
             "dominiovehiculo",
-            "idestado",
             "idtipouso",
-            "fecha",
-            "certificado",
+            'idtipovehiculo'
+            "titular",
+            "idestado",
+            "vigencia"
             "ver_verificacion"
         )
         extra_columns = ("certificado",)
@@ -57,6 +63,9 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    def render_idtipovehiculo(self, record):
+        return f"{record.idtipovehiculo.descripcion}"
+
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -66,12 +75,23 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    def render_vigencia(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion_id,
+                                           idtaller_id__exact=record.idtaller_id)
+                .values())
+        return cert[0]['vigenciahasta']
+
     def render_certificado(self, record):
         query = self.Meta.model.get_nro_certificado(record)
         return query
 
     def render_idtaller(self, value):
         return value.nombre
+
+    def render_titular(self, record):
+        persona = record.codigotitular
+        return f"{persona.nombre} {persona.apellido}"
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
