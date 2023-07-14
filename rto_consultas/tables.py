@@ -77,8 +77,8 @@ class VerificacionesTables(tables.Table):
 
     def render_vigencia(self, record):
         cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion_id,
-                                           idtaller_id__exact=record.idtaller_id)
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
                 .values())
         return cert[0]['vigenciahasta']
 
