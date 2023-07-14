@@ -46,7 +46,7 @@ class VerificacionesTables(tables.Table):
             'idtipovehiculo'
             "titular",
             "idestado",
-            "vigencia"
+            "vigencia",
             "ver_verificacion"
         )
         extra_columns = ("certificado",)
