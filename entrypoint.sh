@@ -4,7 +4,7 @@ echo "Entrypoint..."
 echo "Setting up database..."
 # python manage.py makemigrations
 python manage.py migrate --fake-initial rto_consultas
-python manage.py collectstatic
+python manage.py collectstatic -y
 python manage.py createsuperuser --no-input
 
 sleep 10
