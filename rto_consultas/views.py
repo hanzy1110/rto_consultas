@@ -239,9 +239,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                      )
 
 
-        # provincia = (Provincias.objects
-        #                        .get(idprovincia__exact=localidad.idprovincia)
-        #                        .descripcion)
+        print(self.verificacion.values())
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
