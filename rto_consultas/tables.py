@@ -11,13 +11,15 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields
+from silk.profiling.profiler import silk_profile
 
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(orderable=False, empty_values=(), )
     fecha = tables.DateColumn(format="d/M/Y")
     ver_verificacion = tables.Column(linkify=("ver_verificacion",
                                               {
-                                               "idverificacion": tables.A("idverificacion"),
+
+"idverificacion": tables.A("idverificacion"),
                                                "idtaller": tables.A("idtaller__idtaller")
                                                }
                                               ),
@@ -56,6 +58,7 @@ class VerificacionesTables(tables.Table):
     def render_ver_verificacion(self, record):
         return f"Ver Verificacion"
 
+    @silk_profile()
     def render_idestado(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -65,6 +68,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    @silk_profile()
     def render_idtipovehiculo(self, record):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -74,6 +78,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    @silk_profile()
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -83,6 +88,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
+    @silk_profile()
     def render_vigencia(self, record):
         cert = (Certificados.objects
                            .filter(idverificacion_id__exact=record.idverificacion,
@@ -90,17 +96,21 @@ class VerificacionesTables(tables.Table):
                 .values())
         return cert[0]['vigenciahasta']
 
+    @silk_profile()
     def render_certificado(self, record):
         query = self.Meta.model.get_nro_certificado(record)
         return query
 
+    @silk_profile()
     def render_idtaller(self, value):
         return value.nombre
 
+    @silk_profile()
     def render_titular(self, record):
         persona = record.codigotitular
         return f"{persona.nombre} {persona.apellido}"
 
+    @silk_profile()
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
     ):

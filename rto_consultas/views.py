@@ -33,6 +33,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
     table_class: Table
     aux_data: AuxData
 
+    @silk_profile()
     def get_queryset(self):
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
@@ -44,13 +45,13 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
 
         return queryset
 
+    @silk_profile()
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
 
 
-@silk_profile()
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
