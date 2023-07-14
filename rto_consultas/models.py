@@ -3030,7 +3030,6 @@ class Verificaciones(models.Model):
             models.Index(fields=("idverificacion", "idtaller")),
             models.Index(fields=("idtipouso",)),
             models.Index(fields=("idhabilitacion",)),
-            models.Index(fields=("idestado",)),
             models.Index(fields=("idtipovehiculo",)),
         ]
 
