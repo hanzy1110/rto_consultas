@@ -35,3 +35,4 @@ urlpatterns = [
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('', include('admin_soft.urls'), name=admin),
 ]
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
