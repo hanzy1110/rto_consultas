@@ -3,6 +3,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 from django.forms.models import model_to_dict
+from silk.profiling.profiler import silk_profile
 
 
 from .models import (
@@ -49,6 +50,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
         return context
 
 
+@silk_profile()
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
