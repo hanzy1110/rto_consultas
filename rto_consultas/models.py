@@ -3018,7 +3018,7 @@ class Verificaciones(models.Model):
         return cert.nrocertificado
 
     def calc_valores_totales(self,):
-        MToTara = self.eje1_tara + self.eje2_tara + self.eje3_tara + self.eje4_tara;
+        MToTara = self.eje1_tara.value_from_object()+ self.eje2_tara.value_from_object() + self.eje3_tara.value_from_object() + self.eje4_tara.value_from_object();
         MToFI = self.eje1_fzaizq + self.eje2_fzaizq + self.eje3_fzaizq + self.eje4_fzaizq;
         MToFD = self.eje1_fzader + self.eje2_fzader + self.eje3_fzader + self.eje4_fzader;
         MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2);

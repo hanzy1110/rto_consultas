@@ -207,6 +207,13 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         self.verificacion = verificacion
         return verificacion
 
+    def get_total_values(self,):
+        MToTara = self.verificacion.eje1_tara + self.verificacion.eje2_tara + self.verificacion.eje3_tara + self.verificacion.eje4_tara;
+        MToFI = self.verificacion.eje1_fzaizq + self.verificacion.eje2_fzaizq + self.verificacion.eje3_fzaizq + self.verificacion.eje4_fzaizq;
+        MToFD = self.verificacion.eje1_fzader + self.verificacion.eje2_fzader + self.verificacion.eje3_fzader + self.verificacion.eje4_fzader;
+        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2);
+        return MToTara, MToFI, MToFD, MToEf
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cert = (
@@ -248,7 +255,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["adjuntos"] = adjuntos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""
-        MToTara, MToFI, MToFD, MToEf = self.verificacion.calc_valores_totales()
+        MToTara, MToFI, MToFD, MToEf = self.get_total_values()
         context["mto_tara"] = MToTara
         context["mto_fi"] = MToFI
         context["mto_der"] = MToFD
