@@ -2,6 +2,7 @@ import django_tables2 as tables
 from django.core.paginator import Paginator
 from .models import (
     # VWVerificaciones,
+    Tipovehiculo,
     Verificaciones,
     Vehiculos,
     Personas,
@@ -30,6 +31,7 @@ class VerificacionesTables(tables.Table):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtipovehiculo": ("descripcion", Tipovehiculo),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={"name": "name"},
@@ -64,7 +66,13 @@ class VerificacionesTables(tables.Table):
             return "Unknown!"
 
     def render_idtipovehiculo(self, record):
-        return f"{record.idtipovehiculo.descripcion}"
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipovehiculo"][record.idtipovehiculo]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
     def render_idtipouso(self, value):
         try:
