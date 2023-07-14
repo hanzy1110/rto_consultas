@@ -126,10 +126,7 @@
 								<td id="tagDoc">Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										{% for doc in comboDoc %}
-										<option value="{{ doc }}" selected="selected">{{ doc }}</option>
-										<option value="{{ doc }}">"{{ doc }}"</option>
-										{% endfor %}
+										<option value="{{ doc }}" selected="selected">{{ object.ptipodoc }}</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
 										class="txt" value="{{ object.nrodocconductor }}" />
 								</td>
@@ -203,10 +200,8 @@
 								<td>Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										{% for doc in comboDoc %}
-										<option value="{{ doc }}" selected="selected">{{ doc }}</option>
-										<option value="{{ doc }}">"{{ doc }}"</option>
-										{% endfor %}
+										<option value="{{ object.ptipodoc }}" selected="selected">{{ object.ptipodoc }}
+										</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
 										class="txt" value="{{ object.nrodocconductor }}" />
 								</td>
@@ -379,25 +374,25 @@
 							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td colspan="4">
 									Aire Acondicionado
-									{% if object.aireaco == "0" %}
+									{% if object.aireaco == 0 %}
 									<input type="checkbox" id="chAAco" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% else %}
 									<input type="checkbox" id="chAAco" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% endif %}
 									Bar
-									{% if object.bar == "0" %}
+									{% if object.bar == 0 %}
 									<input type="checkbox" id="chBar" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% else %}
 									<input type="checkbox" id="chBar" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% endif %}
 									Ba&ntilde;os
-									{% if object.banio == "0" %}
+									{% if object.banio == 0 %}
 									<input type="checkbox" id="chBanio" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% else %}
 									<input type="checkbox" id="chBanio" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
 									{% endif %}
 									Calefacci&oacute;n
-									{% if object.calefaccion == "0" %}
+									{% if object.calefaccion == 0 %}
 									<input type="checkbox" id="chCalef" />
 									{% else %}
 									<input type="checkbox" id="chCalef" checked="checked" />
