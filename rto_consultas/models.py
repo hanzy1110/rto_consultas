@@ -2602,7 +2602,7 @@ class Vehiculos(models.Model):
     activo = models.IntegerField(db_column="Activo")  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"Vehiculo: {self.dominio}"
+        return f"{self.dominio}"
 
     class Meta:
         app_label = "rto_consultas"
