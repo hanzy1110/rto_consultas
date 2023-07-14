@@ -192,3 +192,6 @@ def handle_nrocertificado(nrocertificado, model):
                 print(queryset)
 
             return queryset
+
+def sum_appropriatelly(values):
+    return sum([v for v in values if v])
