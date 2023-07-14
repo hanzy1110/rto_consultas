@@ -3028,6 +3028,10 @@ class Verificaciones(models.Model):
         unique_together = (("idverificacion", "idtaller"),)
         indexes = [
             models.Index(fields=("idverificacion", "idtaller")),
+            models.Index(fields=("idtipouso",)),
+            models.Index(fields=("idhabilitacion",)),
+            models.Index(fields=("idestado",)),
+            models.Index(fields=("idtipovehiculo",)),
         ]
 
 

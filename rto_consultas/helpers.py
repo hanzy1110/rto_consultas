@@ -142,6 +142,8 @@ def map_fields(data: AuxData, model: Model):
             cached_values = cache.get(cache_key)
 
             print(f"dfield {dfield} - dmodel {dmodel}")
+            print("cached_values")
+            print(cached_values)
 
             if cached_values is None:
                 try:
@@ -152,6 +154,7 @@ def map_fields(data: AuxData, model: Model):
 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
                 values = {v: d for v, d in zip(values_list, descriptions)}
+                print("values =>", values)
                 cache.set(cache_key, values)
             else:
                 print("Cache hit!")
