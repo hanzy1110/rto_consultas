@@ -2,6 +2,7 @@ from django.db.models import Model
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
+from django.forms.models import model_to_dict
 
 
 from .models import (
@@ -239,7 +240,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                      )
 
 
-        print(self.verificacion.values())
+        print(model_to_dict(self.verificacion))
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
