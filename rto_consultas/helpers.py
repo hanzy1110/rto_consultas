@@ -1,5 +1,6 @@
 from django.db.models import Q, QuerySet
 from django.db.models import Model
+from django.core.cache import cache
 
 
 import re
@@ -137,14 +138,19 @@ def map_fields(data: AuxData, model: Model):
             dfield = vals[0]
             dmodel: Model = vals[1]
 
-            try:
-                val = model.objects.values_list(field, flat=True).distinct()
-            except Exception as e:
-                print(e)
-                val = dmodel.objects.values_list("descripcion", flat=True).distinct()
+            cache_key = f"unique_values_{model._meta.db_table}_{field}"
+            cached_values = cache.get(cache_key)
 
-            descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-            values[field] = {v: d for v, d in zip(val, descriptions)}
+            if cached_values is None:
+                try:
+                    values_list = model.objects.values_list(field, flat=True).distinct()
+                except Exception as e:
+                    print(e)
+                    values_list = dmodel.objects.values_list("descripcion", flat=True).distinct()
+
+                descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
+                values = {v: d for v, d in zip(values_list, descriptions)}
+
         else:
             values[field] = {0: "Falso", 1: "Verdadero"}
 
