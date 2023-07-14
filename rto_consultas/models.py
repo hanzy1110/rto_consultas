@@ -3016,13 +3016,14 @@ class Verificaciones(models.Model):
                     )
 
         return cert.nrocertificado
-        # return (record.certificados
-        #                # .all()
-        #                .get(
-        #                    idverificacion=record.idverificacion,
-        #                    idtaller=record.idtaller
-        #                     )
-        #                )
+
+    def calc_valores_totales(self,):
+        MToTara = self.eje1_tara + self.eje2_tara + self.eje3_tara + self.eje4_tara;
+        MToFI = self.eje1_fzaizq + self.eje2_fzaizq + self.eje3_fzaizq + self.eje4_fzaizq;
+        MToFD = self.eje1_fzader + self.eje2_fzader + self.eje3_fzader + self.eje4_fzader;
+        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2);
+        return MToTara, MToFI, MToFD, MToEf
+
 
     class Meta:
         app_label = "rto_consultas"

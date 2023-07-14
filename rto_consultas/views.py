@@ -248,5 +248,11 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["adjuntos"] = adjuntos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""
+        MToTara, MToFI, MToFD, MToEf = self.verificacion.calc_valores_totales()
+        context["mto_tara"] = MToTara
+        context["mto_fi"] = MToFI
+        context["mto_der"] = MToFD
+        context["mto_eficiencia"] = MToEf
+
         # context = handle_context(context, self)
         return context
