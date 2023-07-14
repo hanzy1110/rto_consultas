@@ -43,7 +43,7 @@ class VerificacionesTables(tables.Table):
             "idtaller",
             "dominiovehiculo",
             "idtipouso",
-            'idtipovehiculo'
+            'idtipovehiculo',
             "titular",
             "idestado",
             "vigencia",
