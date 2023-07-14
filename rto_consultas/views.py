@@ -1,4 +1,3 @@
-import json
 from django.db.models import Model
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -241,7 +240,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                      )
 
 
-        print(json.dumps(model_to_dict(self.verificacion), indent=4))
+        print(model_to_dict(self.verificacion))
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
