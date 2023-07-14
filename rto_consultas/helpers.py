@@ -141,6 +141,8 @@ def map_fields(data: AuxData, model: Model):
             cache_key = f"unique_values_{model._meta.db_table}_{field}"
             cached_values = cache.get(cache_key)
 
+            print(f"dfield {dfield} - dmodel {dmodel}")
+
             if cached_values is None:
                 try:
                     values_list = model.objects.values_list(field, flat=True).distinct()
