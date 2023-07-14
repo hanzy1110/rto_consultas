@@ -210,8 +210,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
     def get_total_values(self,):
 
         def sum_appropriatelly(values):
-            return sum([v for v in values if v])
-
+            return sum([float(v) for v in values if v])
         MToTara = sum_appropriatelly([self.verificacion.eje1_tara , self.verificacion.eje2_tara , self.verificacion.eje3_tara , self.verificacion.eje4_tara])
         MToFI = sum_appropriatelly([self.verificacion.eje1_fzaizq , self.verificacion.eje2_fzaizq , self.verificacion.eje3_fzaizq , self.verificacion.eje4_fzaizq])
         MToFD = sum_appropriatelly([self.verificacion.eje1_fzader , self.verificacion.eje2_fzader , self.verificacion.eje3_fzader , self.verificacion.eje4_fzader])
