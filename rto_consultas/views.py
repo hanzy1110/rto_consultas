@@ -249,8 +249,6 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["categoria"] = categoria
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
-        # TODO AGREGAR COMBO DOC
-        context["comboDoc"] = []
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = []
         context["certificado"] = cert[0]

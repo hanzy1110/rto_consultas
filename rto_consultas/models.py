@@ -2268,6 +2268,7 @@ class Talleres(models.Model):
 
         db_table = "talleres"
 
+
         indexes = [
             models.Index(fields=("idtaller",)),
         ]
@@ -2731,7 +2732,8 @@ class Verificaciones(models.Model):
     eje2_eficiencia = models.DecimalField(
         db_column="Eje2_Eficiencia",
         max_digits=10,
-        decimal_places=2,
+
+    decimal_places=2,
         blank=True,
         null=True,
     )  # Field name made lowercase.
@@ -2874,7 +2876,7 @@ class Verificaciones(models.Model):
         db_column="usuarioCarga", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
-        db_column="idTipoVehiculo", blank=True, null=True
+        db_column="idTipoVehiculo", blank=True, null=True, verbose_name="Tipo de Vehiculo"
     )  # Field name made lowercase.
     vmarca = models.CharField(
         db_column="VMarca", max_length=100, blank=True, null=True
@@ -3017,12 +3019,6 @@ class Verificaciones(models.Model):
 
         return cert.nrocertificado
 
-    def calc_valores_totales(self,):
-        MToTara = self.eje1_tara.value_from_object()+ self.eje2_tara.value_from_object() + self.eje3_tara.value_from_object() + self.eje4_tara.value_from_object();
-        MToFI = self.eje1_fzaizq + self.eje2_fzaizq + self.eje3_fzaizq + self.eje4_fzaizq;
-        MToFD = self.eje1_fzader + self.eje2_fzader + self.eje3_fzader + self.eje4_fzader;
-        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2);
-        return MToTara, MToFI, MToFD, MToEf
 
 
     class Meta:
