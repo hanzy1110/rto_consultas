@@ -6,6 +6,8 @@ from django_tables2.export.views import ExportMixin
 from django.forms.models import model_to_dict
 from silk.profiling.profiler import silk_profile
 
+from django_tables2.config import RequestConfig
+from django_tables2.export.export import TableExport
 
 from .models import (
     Localidades,
@@ -37,8 +39,12 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
 
     @silk_profile()
     def get_queryset(self):
+        _export = self.request.GET.copy().pop("_export", None)
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
+
+        if _export:
+            return queryset
 
         if page:
             # Handle pagination...

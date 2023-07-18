@@ -31,15 +31,8 @@
                         <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
                         {% endfor %}
                     </select>
+                    {% endfor %}
                 </td>
-                {% endfor %}
-                {% if aux %}
-                {% for format in view.export_formats %}
-                <a href="{% export_url format %}">
-                    Descargar: <code>.{{ format }}</code>
-                </a>
-                {% endfor %}
-                {% endif %}
             </tr>
             <tr>
                 <td>
@@ -58,6 +51,15 @@
                             <input type="text" name="numero_documento" style="width: 100px" maxlength="11"
                                 class="txt" />
                 </td>
+            </tr>
+            <tr>
+                {% if aux %}
+                {% for format in view.export_formats %}
+                <form action="{% export_url format %}">
+                    <input type="submit">Descargar {{ format }}</input>
+                    </a>
+                    {% endfor %}
+                    {% endif %}
             </tr>
             <tr>
                 <td colspan="4"></td>
