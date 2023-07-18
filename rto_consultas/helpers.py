@@ -139,11 +139,7 @@ def map_fields(data: AuxData, model: Model):
             dmodel: Model = vals[1]
 
             cache_key = f"unique_values_{model._meta.db_table}_{field}"
-            print(f"cache_key=>{cache_key}")
             cached_values = cache.get(cache_key)
-
-            print("cached_values")
-            print(cached_values)
 
             if cached_values is None:
                 try:
@@ -158,7 +154,6 @@ def map_fields(data: AuxData, model: Model):
 
                 cache.set(cache_key, vals)
             else:
-                print("Cache hit!")
                 values[field] = cached_values
 
         else:
