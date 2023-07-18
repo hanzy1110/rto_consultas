@@ -20,6 +20,10 @@ import rto_consultas.views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path("accounts/", include("django.contrib.auth.urls")),
+    path('verificaciones/resumen?_export=csv', views.ListarVerificacionesTotales.as_view(),
+         name="descargar_resumen"),
+    path('verificaciones/resumen', views.ListarVerificacionesTotales.as_view(),
+         name="verificaciones_resumen"),
     path('verificaciones/', views.ListVerificacionesView.as_view(),
          name="verificaciones"),
     path('certs_assignados/', views.ListCertificadosAssignView.as_view(),

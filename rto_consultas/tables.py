@@ -194,3 +194,96 @@ class CertificadosAssignTable(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+
+class VerificacionesTablesResumen(tables.Table):
+    Aprobado = tables.Column(empty_values=(), orderable=False)
+    RechazadoLeveModerado = tables.Column(empty_values=(), orderable=False)
+    RechazadoGrave = tables.Column(empty_values=(), orderable=False)
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={"name": "name"},
+    )
+
+    class Meta:
+        model = Verificaciones
+        fields = (
+            "certificado",
+            "fecha",
+            "idtaller",
+            "dominiovehiculo",
+            "idtipouso",
+            "Aprobado",
+            "RechazadoLeveModerado",
+            "RechazadoGrave"
+        )
+        extra_columns = ("certificado",)
+
+    @silk_profile()
+    def render_idestado(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idestado"][value.idestado]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
+
+    @silk_profile()
+    def render_idtipouso(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipouso"][value]
+
+        except Exception as e:
+            print(e)
+            return "Unknown!"
+
+    @silk_profile()
+    def render_certificado(self, record):
+        query = self.Meta.model.get_nro_certificado(record)
+        return query
+
+    def render_idtaller(self, value):
+        return value.nombre
+
+    def render_RechazadoGrave(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert["idestado"] == 2:
+            return 1
+        return 0
+
+    def render_RechazadoLeveModerado(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert["idestado"] == 3:
+            return 1
+        return 0
+
+    def render_Aprobado(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert["idestado"] == 1:
+            return 1
+        return 0
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self

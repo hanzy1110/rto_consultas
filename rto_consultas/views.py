@@ -2,6 +2,7 @@ from django.db.models import Model
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
+from django_tables2.export.views import ExportMixin
 from django.forms.models import model_to_dict
 from silk.profiling.profiler import silk_profile
 
@@ -21,6 +22,7 @@ from .tables import (
     VehiculosTable,
     CertificadosTable,
     CertificadosAssignTable,
+    VerificacionesTablesResumen,
 )
 from .helpers import handle_context, handle_query, AuxData
 
@@ -190,6 +192,48 @@ class ListCertificadosView(CustomRTOView):
         },
     )
 
+class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Verificaciones
+    paginate_by = 10
+    template_name = "includes/list_table_verificaciones.html"
+    context_object_name = "Verificaciones"
+    table_class = VerificacionesTablesResumen
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominiovehiculo",
+            "nrocertificado",
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "dominiovehiculo": "Dominio Vehiculo",
+            "idestado": "Estado Certificado",
+            "idtipouso": "Tipo Uso Vehiculo",
+            "nrocertificado": "Nro. Certificado",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+            "idtaller": "Nombre Taller",
+        },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+            "nrocertificado": "Nro. Certificado",
+        },
+        types={
+            "dominiovehiculo": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
+    )
 
 class VerVerificacion(DetailView,LoginRequiredMixin):
     model: Verificaciones
