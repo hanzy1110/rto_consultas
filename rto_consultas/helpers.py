@@ -145,7 +145,7 @@ def map_fields(data: AuxData, model: Model):
             print("cached_values")
             print(cached_values)
 
-            if cached_values is None:
+            if cached_values:
                 try:
                     values_list = model.objects.values_list(field, flat=True).distinct()
                 except Exception as e:
