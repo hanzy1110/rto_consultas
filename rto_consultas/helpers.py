@@ -139,9 +139,9 @@ def map_fields(data: AuxData, model: Model):
             dmodel: Model = vals[1]
 
             cache_key = f"unique_values_{model._meta.db_table}_{field}"
+            print(f"cache_key=>{cache_key}")
             cached_values = cache.get(cache_key)
 
-            print(f"dfield {dfield} - dmodel {dmodel}")
             print("cached_values")
             print(cached_values)
 
@@ -153,9 +153,10 @@ def map_fields(data: AuxData, model: Model):
                     values_list = dmodel.objects.values_list("descripcion", flat=True).distinct()
 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-                values[field] = {v: d for v, d in zip(values_list, descriptions)}
-                print("values =>", values)
-                cache.set(cache_key, values)
+                vals = {v: d for v, d in zip(values_list, descriptions)}
+                values[field] = vals
+
+                cache.set(cache_key, vals)
             else:
                 print("Cache hit!")
                 values[field] = cached_values
