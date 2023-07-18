@@ -55,9 +55,9 @@
             <tr>
                 {% if aux %}
                 {% for format in view.export_formats %}
-                <form action="{% export_url format %}">
-                    <input type="submit">Descargar {{ format }}</input>
-                </form>
+                <a href="{% export_url format %}">
+                    <code>Descargar {{ format }}</code>
+                </a>
                 {% endfor %}
                 {% endif %}
             </tr>

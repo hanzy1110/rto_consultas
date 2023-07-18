@@ -169,8 +169,6 @@ def handle_context(context, view):
     val_dict = handle_form(view.aux_data, view.model)
     context["form_fields"] = val_dict
     context["descriptions"] = map_fields(view.aux_data, view.model)
-    print("Model descriptions ==>")
-    print(context['descriptions'])
     context["parsed_fields"] = view.aux_data.parsed_names
     fields = view.model._meta.fields
     context["fields"] = fields
