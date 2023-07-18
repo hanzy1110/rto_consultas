@@ -29,7 +29,7 @@ from .tables import (
 from .helpers import handle_context, handle_query, AuxData
 
 
-class CustomRTOView(SingleTableView, LoginRequiredMixin):
+class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     model: Model
     paginate_by: int
     template_name: str
@@ -45,7 +45,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
 
         if _export:
             print("EXPORT RECEIVED!!")
-            raise Exception
+            return queryset
 
         if page:
             # Handle pagination...
