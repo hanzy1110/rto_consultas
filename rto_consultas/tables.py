@@ -257,7 +257,7 @@ class VerificacionesTablesResumen(tables.Table):
                            .filter(idverificacion_id__exact=record.idverificacion,
                                            idtaller_id__exact=record.idtaller)
                 .values())
-        if cert["idestado"] == 2:
+        if cert[0]["idestado"] == 2:
             return 1
         return 0
 
@@ -266,7 +266,7 @@ class VerificacionesTablesResumen(tables.Table):
                            .filter(idverificacion_id__exact=record.idverificacion,
                                            idtaller_id__exact=record.idtaller)
                 .values())
-        if cert["idestado"] == 3:
+        if cert[0]["idestado"] == 3:
             return 1
         return 0
 
@@ -275,7 +275,7 @@ class VerificacionesTablesResumen(tables.Table):
                            .filter(idverificacion_id__exact=record.idverificacion,
                                            idtaller_id__exact=record.idtaller)
                 .values())
-        if cert["idestado"] == 1:
+        if cert[0]["idestado"] == 1:
             return 1
         return 0
 
