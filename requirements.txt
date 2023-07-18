@@ -4,3 +4,4 @@ mysqlclient
 django-admin-soft-dashboard==1.0.12
 django-tables2
 django-silk
+tablib
