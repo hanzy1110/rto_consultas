@@ -153,12 +153,12 @@ def map_fields(data: AuxData, model: Model):
                     values_list = dmodel.objects.values_list("descripcion", flat=True).distinct()
 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-                values = {v: d for v, d in zip(values_list, descriptions)}
+                values[field] = {v: d for v, d in zip(values_list, descriptions)}
                 print("values =>", values)
                 cache.set(cache_key, values)
             else:
                 print("Cache hit!")
-                values = cached_values
+                values[field] = cached_values
 
         else:
             values[field] = {0: "Falso", 1: "Verdadero"}
