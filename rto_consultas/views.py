@@ -43,10 +43,6 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
-        if _export:
-            print("EXPORT RECEIVED!!")
-            return queryset
-
         if page:
             # Handle pagination...
             self.table_data = queryset
