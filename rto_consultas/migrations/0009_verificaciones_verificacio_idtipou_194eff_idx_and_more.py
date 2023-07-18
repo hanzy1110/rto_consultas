@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('rto_consultas', '0008_remove_verificaciones_verificacio_idtipou_194eff_idx_and_more'),
+        ('rto_consultas', '0008_remove_verifs.py'),
     ]
 
     operations = [
