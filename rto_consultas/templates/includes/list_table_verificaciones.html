@@ -57,9 +57,9 @@
                 {% for format in view.export_formats %}
                 <form action="{% export_url format %}">
                     <input type="submit">Descargar {{ format }}</input>
-                    </a>
-                    {% endfor %}
-                    {% endif %}
+                </form>
+                {% endfor %}
+                {% endif %}
             </tr>
             <tr>
                 <td colspan="4"></td>

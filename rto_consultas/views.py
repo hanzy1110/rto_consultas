@@ -44,6 +44,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
         if _export:
+            print("EXPORT RECEIVED!!")
             return queryset
 
         if page:
