@@ -45,7 +45,7 @@ class CustomRTOView(SingleTableView, LoginRequiredMixin):
 
         if _export:
             print("EXPORT RECEIVED!!")
-            return queryset
+            raise Exception
 
         if page:
             # Handle pagination...
