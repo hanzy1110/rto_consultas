@@ -99,6 +99,7 @@ def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
     sort = query.pop("sort", None)
     page = query.pop("page", None)
+    _export = query.pop("_export", None)
     nrocertificado = query.pop("nrocertificado", None)
 
     queryset = handle_nrocertificado(nrocertificado, model)
