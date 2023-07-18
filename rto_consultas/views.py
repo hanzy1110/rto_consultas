@@ -199,6 +199,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTablesResumen
+    export_formats=["csv", "tsv", "xls"]
 
     aux_data = AuxData(
         query_fields=[
@@ -233,6 +234,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
+        aux={"Button": "DESCARGAR"}
     )
 
 class VerVerificacion(DetailView,LoginRequiredMixin):

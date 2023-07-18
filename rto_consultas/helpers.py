@@ -20,6 +20,8 @@ class AuxData:
     ids: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
     fecha_field:str = "fecha"
+    aux: Dict[str, str] = field(default_factory=dict)
+
 
 
 def handle_args(query_params, queryset, fecha_field="fecha"):
@@ -175,6 +177,7 @@ def handle_context(context, view):
     context["query_fields"] = view.aux_data.query_fields
     context["ids"] = view.aux_data.ids
     context["types"] = view.aux_data.types
+    context["aux"] = view.aux_data.aux
     return context
 
 def handle_nrocertificado(nrocertificado, model):

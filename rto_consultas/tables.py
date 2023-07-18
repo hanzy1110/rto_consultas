@@ -200,6 +200,7 @@ class VerificacionesTablesResumen(tables.Table):
     Aprobado = tables.Column(empty_values=(), orderable=False)
     RechazadoLeveModerado = tables.Column(empty_values=(), orderable=False)
     RechazadoGrave = tables.Column(empty_values=(), orderable=False)
+    certificado = tables.Column(empty_values=(), orderable=False)
     aux_data = AuxData(
         query_fields=[],
         form_fields={
