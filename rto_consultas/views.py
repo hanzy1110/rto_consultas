@@ -203,6 +203,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     context_object_name = "Verificaciones"
     table_class = VerificacionesTablesResumen
     export_formats=["csv", "tsv", "xls"]
+    table_name="resumen_verificaciones"
 
     aux_data = AuxData(
         query_fields=[
