@@ -196,7 +196,7 @@ class CertificadosAssignTable(tables.Table):
         return self
 
 
-class VerificacionesTablesResumen(tables.Table):
+class CertificadosTablesResumen(tables.Table):
     Aprobado = tables.Column(empty_values=(), orderable=False)
     RechazadoLeveModerado = tables.Column(empty_values=(), orderable=False)
     RechazadoGrave = tables.Column(empty_values=(), orderable=False)

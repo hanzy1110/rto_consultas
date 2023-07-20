@@ -24,7 +24,7 @@ from .tables import (
     VehiculosTable,
     CertificadosTable,
     CertificadosAssignTable,
-    VerificacionesTablesResumen,
+    CertificadosTablesResumen,
 )
 from .helpers import handle_context, handle_query, AuxData
 
@@ -197,11 +197,11 @@ class ListCertificadosView(CustomRTOView):
 
 class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     # authentication_classes = [authentication.TokenAuthentication]
-    model = Verificaciones
+    model = Certificados
     paginate_by = 10
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
-    table_class = VerificacionesTablesResumen
+    table_class = CertificadosTablesResumen
     export_formats=["csv", "tsv", "xls"]
     table_name="resumen_verificaciones"
 
