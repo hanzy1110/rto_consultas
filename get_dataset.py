@@ -17,19 +17,20 @@ async def get_csv(session, url, date):
     date = date.strftime("%Y-%m-%d")
     print(f"GETTING DATA FOR DATE: {date}")
     async with session.get(url) as resp:
-        stream = await resp.content.decode('utf-8')
-        while not stream.at_eof():
-            data = await stream.read()
-            print(data.decode('utf-8'))
-            try:
+        try:
+            stream = await resp.content.decode('utf-8')
+            while not stream.at_eof():
+                data = await stream.read()
+                print(data.decode('utf-8'))
                 filename = DATASET / f"{date}.csv"
                 with open(filename, 'w') as file:
                     print(f"WRITING TO FILE {filename}")
                     file.write(data)
-                return 0
-            except Exception as e:
-                print(e)
-                return -1
+            return 0
+
+        except Exception as e:
+            print(e)
+            return 1
 
 async def main():
 

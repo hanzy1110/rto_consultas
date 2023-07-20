@@ -212,9 +212,9 @@ class VerificacionesTablesResumen(tables.Table):
     )
 
     class Meta:
-        model = Verificaciones
+        model = Certificados
         fields = (
-            # "certificado",
+            "nrocertificado",
             "fecha",
             "idtaller",
             "dominiovehiculo",
@@ -226,16 +226,6 @@ class VerificacionesTablesResumen(tables.Table):
         extra_columns = ("certificado",)
 
     @silk_profile()
-    def render_idestado(self, value):
-        try:
-            descriptions = map_fields(self.aux_data, self.Meta.model)
-            return descriptions["idestado"][value.idestado]
-            # return value.descripcion
-        except Exception as e:
-            print(e)
-            return "Unknown!"
-
-    @silk_profile()
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -245,68 +235,43 @@ class VerificacionesTablesResumen(tables.Table):
             print(e)
             return "Unknown!"
 
-    # @silk_profile()
-    # def render_certificado(self, record):
-    #     query = self.Meta.model.get_nro_certificado(record)
-    #     return query
 
     def render_idtaller(self, value):
         return value.nombre
 
     @silk_profile()
     def value_RechazadoGrave(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 2:
+        if record.idestado == 2:
             return 1
         return 0
 
     @silk_profile()
     def value_RechazadoLeveModerado(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 3:
+        if record.idestado == 3:
             return 1
         return 0
 
     @silk_profile()
     def value_Aprobado(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 1:
+        if record.idestado == 1:
             return 1
         return 0
 
+    @silk_profile()
     def render_RechazadoGrave(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 2:
+        if record.idestado == 2:
             return 1
         return 0
 
+    @silk_profile()
     def render_RechazadoLeveModerado(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 3:
+        if record.idestado == 3:
             return 1
         return 0
 
+    @silk_profile()
     def render_Aprobado(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        if cert[0]["idestado"] == 1:
+        if record.idestado == 1:
             return 1
         return 0
 
