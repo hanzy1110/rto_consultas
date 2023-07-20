@@ -207,33 +207,33 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
 
     aux_data = AuxData(
         query_fields=[
-            "dominiovehiculo",
+            # "dominiovehiculo",
             "nrocertificado",
             "fecha_desde",
             "fecha_hasta",
         ],
         form_fields={
             "idestado": ("descripcion", Estados),
-            "idtipouso": ("descripcion", Tipousovehiculo),
+            # "idtipouso": ("descripcion", Tipousovehiculo),
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={
-            "dominiovehiculo": "Dominio Vehiculo",
+            # "dominiovehiculo": "Dominio Vehiculo",
             "idestado": "Estado Certificado",
-            "idtipouso": "Tipo Uso Vehiculo",
+            # "idtipouso": "Tipo Uso Vehiculo",
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
             "idtaller": "Nombre Taller",
         },
         ids={
-            "dominiovehiculo": "#txtDominio",
+            # "dominiovehiculo": "#txtDominio",
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
             "nrocertificado": "Nro. Certificado",
         },
         types={
-            "dominiovehiculo": "text",
+            # "dominiovehiculo": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",

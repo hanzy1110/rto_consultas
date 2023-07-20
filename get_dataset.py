@@ -16,20 +16,24 @@ def daterange(start_date, end_date):
 async def get_csv(session, url, date):
     date = date.strftime("%Y-%m-%d")
     print(f"GETTING DATA FOR DATE: {date}")
-    async with session.get(url) as resp:
-        try:
+    filename = DATASET / f"{date}.csv"
+
+    if os.path.exists(filename):
+        print("File scrapped!")
+        return 0
+
+    try:
+        async with session.get(url) as resp:
             stream = resp.content
             while not stream.at_eof():
                 data = await stream.read()
-                filename = DATASET / f"{date}.csv"
                 with open(filename, 'w') as file:
                     print(f"WRITING TO FILE {filename}")
                     file.write(data.decode('utf-8'))
             return 0
-
-        except Exception as e:
-            print(e)
-            return 1
+    except Exception as e:
+        print(e)
+        return 1
 
 async def main():
     my_timeout = aiohttp.ClientTimeout(
@@ -46,9 +50,9 @@ async def main():
 
     async with aiohttp.ClientSession(**client_args) as session:
         tasks = []
-        for year in range(2015, 2023):
+        for year in range(2015, 2017):
             start_date = date(year, 1, 1)
-            end_date = date(year, 2, 1)
+            end_date = date(year, 12, 31)
             for first, second in daterange(start_date, end_date):
                 url = parse_url(first, second)
                 tasks.append(asyncio.ensure_future(get_csv(session, url, first)))
