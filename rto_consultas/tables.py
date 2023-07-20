@@ -200,7 +200,7 @@ class VerificacionesTablesResumen(tables.Table):
     Aprobado = tables.Column(empty_values=(), orderable=False)
     RechazadoLeveModerado = tables.Column(empty_values=(), orderable=False)
     RechazadoGrave = tables.Column(empty_values=(), orderable=False)
-    certificado = tables.Column(empty_values=(), orderable=False)
+    # certificado = tables.Column(empty_values=(), orderable=False)
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -214,7 +214,7 @@ class VerificacionesTablesResumen(tables.Table):
     class Meta:
         model = Verificaciones
         fields = (
-            "certificado",
+            # "certificado",
             "fecha",
             "idtaller",
             "dominiovehiculo",
@@ -245,13 +245,43 @@ class VerificacionesTablesResumen(tables.Table):
             print(e)
             return "Unknown!"
 
-    @silk_profile()
-    def render_certificado(self, record):
-        query = self.Meta.model.get_nro_certificado(record)
-        return query
+    # @silk_profile()
+    # def render_certificado(self, record):
+    #     query = self.Meta.model.get_nro_certificado(record)
+    #     return query
 
     def render_idtaller(self, value):
         return value.nombre
+
+    @silk_profile()
+    def value_RechazadoGrave(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert[0]["idestado"] == 2:
+            return 1
+        return 0
+
+    @silk_profile()
+    def value_RechazadoLeveModerado(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert[0]["idestado"] == 3:
+            return 1
+        return 0
+
+    @silk_profile()
+    def value_Aprobado(self, record):
+        cert = (Certificados.objects
+                           .filter(idverificacion_id__exact=record.idverificacion,
+                                           idtaller_id__exact=record.idtaller)
+                .values())
+        if cert[0]["idestado"] == 1:
+            return 1
+        return 0
 
     def render_RechazadoGrave(self, record):
         cert = (Certificados.objects
