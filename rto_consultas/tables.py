@@ -218,7 +218,6 @@ class CertificadosTablesResumen(tables.Table):
             "fecha",
             "idtaller",
             "dominiovehiculo",
-            "idtipouso",
             "Aprobado",
             "RechazadoLeveModerado",
             "RechazadoGrave"
