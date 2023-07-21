@@ -50,7 +50,7 @@ async def main():
 
     async with aiohttp.ClientSession(**client_args) as session:
         tasks = []
-        for year in range(2015, 2017):
+        for year in range(2019, 2023):
             start_date = date(year, 1, 1)
             end_date = date(year, 12, 31)
             for first, second in daterange(start_date, end_date):

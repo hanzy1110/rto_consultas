@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 rto_consultas/mount
 dataset/
+data_analysis/dataset
