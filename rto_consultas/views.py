@@ -7,7 +7,7 @@ from django_tables2.export.views import ExportMixin
 from django.forms.models import model_to_dict
 from silk.profiling.profiler import silk_profile
 
-from date import date
+from datetime import date
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
 
