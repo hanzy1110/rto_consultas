@@ -325,6 +325,7 @@ def verificaciones_anuales(request):
         current = {}
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
+        current["year"] = year
         current["cant_verificaciones"] = (Verificaciones.objects
                                                 .filter(fecha__range=(start_date, end_date))
                                                 .count())
