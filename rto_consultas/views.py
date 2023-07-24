@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 from django_tables2.export.views import ExportMixin
+from django_tables2.export.export import TableExport
 from django.forms.models import model_to_dict
 from silk.profiling.profiler import silk_profile
 
@@ -349,5 +350,10 @@ def verificaciones_anuales(request):
                                                 .count())
         data.append(current)
     table = VerificacionesAnuales(data)
+
+    export_format = request.GET.get("_export", None)
+    if TableExport.is_valid_format(export_format):
+        exporter = TableExport(export_format, table)
+        return exporter.response(f"table.{export_format}")
 
     return render(request, "includes/table_view.html", {"table": table})
