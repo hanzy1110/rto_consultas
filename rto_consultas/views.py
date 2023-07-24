@@ -321,7 +321,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
 def verificaciones_anuales(request):
 
     data = []
-    for year in range(2019, 2023):
+    for year in range(2015, 2023):
         current = {}
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
