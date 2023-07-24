@@ -1,7 +1,7 @@
 from django.db.models import Q, QuerySet
 from django.db.models import Model
 from django.core.cache import cache
-from date import date, timedelta
+from datetime import timedelta
 
 
 import re
