@@ -332,19 +332,19 @@ def verificaciones_anuales(request):
 
         current["cant_aprobados"] = (Certificados.objects
                                                 .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 0
+                                                        idestado__exact = 1
                                                         )
                                                 .count())
 
         current["cant_aprobados_condicionales"] = (Certificados.objects
                                                 .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 1
+                                                        idestado__exact = 2
                                                         )
                                                 .count())
 
         current["cant_rechazados"] = (Certificados.objects
                                                 .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 2
+                                                        idestado__exact = 3
                                                         )
                                                 .count())
         data.append(current)
