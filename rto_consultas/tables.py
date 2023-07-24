@@ -282,3 +282,12 @@ class CertificadosTablesResumen(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+
+class VerificacionesAnuales(tables.Table):
+
+    year = tables.Column()
+    cant_verificaciones = tables.Column()
+    cant_aprobados = tables.Column()
+    cant_rechazados = tables.Column()
+    cant_aprobados_condicionales = tables.Column()

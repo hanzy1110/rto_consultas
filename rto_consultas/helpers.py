@@ -1,6 +1,7 @@
 from django.db.models import Q, QuerySet
 from django.db.models import Model
 from django.core.cache import cache
+from date import date, timedelta
 
 
 import re
@@ -210,3 +211,7 @@ def handle_nrocertificado(nrocertificado, model):
 
             return queryset
 
+
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield (start_date + timedelta(n), start_date + timedelta(n+1))

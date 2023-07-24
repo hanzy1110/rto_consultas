@@ -1,4 +1,5 @@
 from django.db.models import Model
+from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
@@ -6,6 +7,7 @@ from django_tables2.export.views import ExportMixin
 from django.forms.models import model_to_dict
 from silk.profiling.profiler import silk_profile
 
+from date import date
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
 
@@ -25,8 +27,9 @@ from .tables import (
     CertificadosTable,
     CertificadosAssignTable,
     CertificadosTablesResumen,
+    VerificacionesAnuales
 )
-from .helpers import handle_context, handle_query, AuxData
+from .helpers import handle_context, handle_query, AuxData, daterange
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
@@ -314,3 +317,36 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
 
         # context = handle_context(context, self)
         return context
+
+def verificaciones_anuales(request):
+
+    data = []
+    for year in range(2019, 2023):
+        current = {}
+        start_date = date(year, 1, 1)
+        end_date = date(year, 12, 31)
+        current["cant_verificaciones"] = (Verificaciones.objects
+                                                .filter(fecha__range=(start_date, end_date))
+                                                .count())
+
+        current["cant_aprobados"] = (Certificados.objects
+                                                .filter(fecha__range=(start_date, end_date),
+                                                        idestado__exact = 0
+                                                        )
+                                                .count())
+
+          current["cant_aprobados_condicionales"] = (Certificados.objects
+                                                .filter(fecha__range=(start_date, end_date),
+                                                        idestado__exact = 1
+                                                        )
+                                                .count())
+
+        current["cant_rechazados"] = (Certificados.objects
+                                                .filter(fecha__range=(start_date, end_date),
+                                                        idestado__exact = 2
+                                                        )
+                                                .count())
+        data.append(current)
+    table = VerificacionesAnuales(data)
+
+    return render(request, "includes/table_view.html", {"table": table})
