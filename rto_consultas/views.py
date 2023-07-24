@@ -335,7 +335,7 @@ def verificaciones_anuales(request):
                                                         )
                                                 .count())
 
-          current["cant_aprobados_condicionales"] = (Certificados.objects
+        current["cant_aprobados_condicionales"] = (Certificados.objects
                                                 .filter(fecha__range=(start_date, end_date),
                                                         idestado__exact = 1
                                                         )
