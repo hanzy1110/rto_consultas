@@ -23,11 +23,11 @@ class CustomFileColumn(tables.FileColumn):
             idverificacion_id__exact=record.idverificacion,
         )
         if certificado:
+            certificado = certificado[0]
             cache_key = (
                 f"certificado:{certificado.idtaller_id}-{certificado.idverificacion_id}"
             )
             cache.set(cache_key, certificado)
-            certificado = certificado[0]
             url = generate_key_from_params(
                 certificado.idtaller_id, certificado.nombrea4
             )
