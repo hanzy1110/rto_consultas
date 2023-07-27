@@ -218,7 +218,7 @@ def daterange(start_date, end_date):
         yield (start_date + timedelta(n), start_date + timedelta(n+1))
 
 def generate_key(adjunto):
-      key = f"{adjunto['idtaller']}/var/www/html/taller/uploads/{adjunto['nombre']}"
+      key = f"{adjunto.idtaller}/var/www/html/taller/uploads/{adjunto.nombre}"
       return generate_presigned_url(key)
 
 def generate_key_certificado(certificado):
