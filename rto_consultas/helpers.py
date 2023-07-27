@@ -234,11 +234,6 @@ def generate_key_certificado(certificado):
     return None
 
 
-def generate_key_from_params(idtaller, idverificacion):
-    print(idtaller)
-    print(idverificacion)
-    certificado = Verificacionespdf.objects.get(
-        idtaller_id__exact=idtaller, idverificacion_id__exact=idverificacion
-    )
-    key = f"{idtaller}/var/www/html/taller/uploads/pdf/{certificado.nombrea4}.pdf"
+def generate_key_from_params(idtaller, nombrea4):
+    key = f"{idtaller}/var/www/html/taller/uploads/pdf/{nombrea4}.pdf"
     return generate_presigned_url(key)

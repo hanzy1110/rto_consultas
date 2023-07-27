@@ -32,11 +32,6 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     ver_certificado = tables.Column(
-        linkify=(
-            generate_key_from_params(
-                tables.A("idverificacion"), tables.A("idtaller__idtaller")
-            ),
-        ),
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
@@ -73,7 +68,12 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record):
-        return f"Ver Certificado"
+        certificado = Verificacionespdf.objects.get(
+            idtaller_id__exact=record.idtaller,
+            idverificacion_id__exact=record.idverificacion,
+        )
+        url = generate_key_from_params(certificado.idtaller_id, certificado.nombrea4)
+        return f"<a href={url}>Ver Certificado </a>"
 
     def render_idestado(self, value):
         try:
