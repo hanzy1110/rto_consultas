@@ -43,16 +43,16 @@
 			<tr>
 				<td id="tagNT">Planta:</td>
 				<td colspan="3"><input type="text" id="txtNroTaller" style="width: 690px" class="txt"
-						value="{{ object.idtaller }}" />
+						value="{{ object.idtaller | default : " N\A" }}" />
 				</td>
 			</tr>
 			<tr>
 				<td id="tagFc">Fecha:</td>
 				<td><input type="text" id="txtFecha" style="width: 120px" alt="date" class="txt"
-						value="{{ object.fecha }}" /></td>
+						value="{{ object.fecha | default : " N\A" }}" /></td>
 				<td id="tagHora">Hora:</td>
 				<td><input type="text" id="txtHora" alt="time" style="width: 120px" class="txt"
-						value="{{ object.hora }}" /></td>
+						value="{{ object.hora | default : " N\A" }}" /></td>
 			</tr>
 			<tr>
 				<td>Provincia:</td>
@@ -71,9 +71,10 @@
 			<tr>
 				<td>Director T&eacute;cnico:</td>
 				<td><input type="text" id="txtDT" style="width: 250px" class="txt"
-						value="{{ object.directortecnico }}" /></td>
+						value="{{ object.directortecnico|default:" N\A" }}" /></td>
 				<td>Inspector:</td>
-				<td><input type="text" id="txtInsp" style="width: 250px" class="txt" value="{{ object.inspector }}" />
+				<td><input type="text" id="txtInsp" style="width: 250px" class="txt"
+						value="{{ object.inspector|default:" N\A" }}" />
 				</td>
 			</tr>
 			<tr>
@@ -108,11 +109,11 @@
 							</tr>
 							<tr>
 								<td colspan="4" align="center" id="tagTPers">
-									{% if object.ptipopersona == "F" %}
+									{% if object.ptipopersona|default:"N\A" == "F" %}
 									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F"
 										checked="checked" /> Persona
 									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" />
-									{% elif object.ptipopersona == "J" %}
+									{% elif object.ptipopersona|default:"N\A" == "J" %}
 									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F" /> Persona
 									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" checked="checked" />
 									{% else %}
@@ -125,14 +126,15 @@
 							<tr id="mostrarFis" {{ mostrarfi }}>
 								<td id="tagApe">Titular:</td>
 								<td><input type="text" id="txtAp" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.descripciontitular }}" /></td>
+										value="{{ object.descripciontitular|default:" N\A" }}" /></td>
 
 								<td id="tagDoc">Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										<option value="{{ doc }}" selected="selected">{{ object.ptipodoc }}</option>
+										<option value="{{ doc }}" selected="selected">{{ object.ptipodoc|default:"N\A"
+											}}</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
-										class="txt" value="{{ object.nrodocconductor }}" />
+										class="txt" value="{{ object.nrodocconductor|default:" N\A" }}" />
 								</td>
 							</tr>
 							<tr id="mostrarJur" {{ mostrarJu }}>
@@ -142,20 +144,20 @@
 											<td style="width:130px;" id="tagRS">Raz&oacute;n Social:</td>
 											<td style="width:330px;">
 												<input type="text" id="txtRazonSocial" style="width: 250px" class="txt"
-													value="{{ object.descripciontitular }}" />
+													value="{{ object.descripciontitular|default:" N\A" }}" />
 											</td>
 											<td style="width:130px;" id="tagCuit">CUIT:</td>
 											<td>
 												<input type="text" id="txtCuit" style="width: 120px" maxlength="11"
 													onkeypress="return acceptInt(event)" class="txt"
-													value="{{ object.pcuit }}" />
+													value="{{ object.pcuit|default:" N\A" }}" />
 											</td>
 										</tr>
 										<tr>
 											<td id="tagCPJ">Codigo PJ:</td>
 											<td colspan="3">
 												<input type="text" id="txtCodigoPJ" style="width: 120px" class="txt"
-													value="{{ object.pcodigopj }}" />
+													value="{{ object.pcodigopj|default:" N\A" }}" />
 											</td>
 										</tr>
 									</table>
@@ -178,15 +180,15 @@
 							<tr>
 								<td>Domicilio:</td>
 								<td><input type="text" id="txtDomicilio" style="width: 250px" class="txt"
-										value="{{ object.pdomicilio }}" /></td>
+										value="{{ object.pdomicilio|default:" N\A" }}" /></td>
 								<td>Tel&eacute;fono:</td>
 								<td><input type="text" id="txtTelefono" style="width: 250px" class="txt"
-										value="{{ object.ptelefono }}" /></td>
+										value="{{ object.ptelefono|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Email:</td>
 								<td colspan="3"><input type="text" id="txtEmailT" style="width: 250px" class="txt"
-										value="{{ object.pemail }}" /></td>
+										value="{{ object.pemail|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
@@ -195,19 +197,20 @@
 							<tr>
 								<td id="tagApeC">Apellido:</td>
 								<td><input type="text" id="txtApC" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.nombreconductor }}" /></td>
+										value="{{ object.nombreconductor|default:" N\A" }}" /></td>
 								<td id="tagNomC">Nombre:</td>
 								<td><input type="text" id="txtNomC" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.apellidoconductor }}" /></td>
+										value="{{ object.apellidoconductor|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										<option value="{{ object.ptipodoc }}" selected="selected">{{ object.ptipodoc }}
+										<option value="{{ object.ptipodoc|default:" N\A" }}" selected="selected">{{
+											object.ptipodoc|default:"N\A" }}
 										</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
-										class="txt" value="{{ object.nrodocconductor }}" />
+										class="txt" value="{{ object.nrodocconductor|default:" N\A" }}" />
 								</td>
 							</tr>
 							<tr>
@@ -224,15 +227,15 @@
 								</td>
 								<td>A&ntilde;o:</td>
 								<td><input type="text" id="txtAnio" style="width: 100px" class="txt"
-										value="{{ object.vanio }}" /></td>
+										value="{{ object.vanio|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Marca:</td>
 								<td><input type="text" id="txtMarca" style="width: 250px" class="txt"
-										value="{{ object.vmarca }}" /></td>
+										value="{{ object.vmarca|default:" N\A" }}" /></td>
 								<td>Modelo:</td>
 								<td><input type="text" id="txtModelo" style="width: 250px" class="txt"
-										value="{{ object.vmodelo }}" /></td>
+										value="{{ object.vmodelo|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 
@@ -255,75 +258,75 @@
 							<tr>
 								<td>Motor marca:</td>
 								<td><input type="text" id="txtMotorMarca" style="width: 250px" class="txt"
-										value="{{ object.motormarca }}" /></td>
+										value="{{ object.motormarca|default:" N\A" }}" /></td>
 								<td>Motor nro:</td>
 								<td><input type="text" id="txtMotorNro" style="width: 250px" class="txt"
-										value="{{ object.motornumero }}" /></td>
+										value="{{ object.motornumero|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Motor a&ntilde;o:</td>
 								<td><input type="text" id="txtMotorAnio" style="width: 250px" class="txt"
-										value="{{ object.motoranio }}" /></td>
+										value="{{ object.motoranio|default:" N\A" }}" /></td>
 								<td>Tipo Combustible:</td>
 								<td><input type="text" id="txtTipoComb" style="width: 250px" class="txt"
-										value="{{ object.tipocombustible }}" /></td>
+										value="{{ object.tipocombustible|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Chasis marca:</td>
 								<td><input type="text" id="txtChasisMarca" style="width: 250px" class="txt"
-										value="{{ object.chasismarca }}" /></td>
+										value="{{ object.chasismarca|default:" N\A" }}" /></td>
 								<td>Chasis nro:</td>
 								<td><input type="text" id="txtChasisNro" style="width: 250px" class="txt"
-										value="{{ object.chasisnro }}" /></td>
+										value="{{ object.chasisnro|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Chasis a&ntilde;o:</td>
 								<td><input type="text" id="txtChasisAnio" style="width: 250px" class="txt"
-										value="{{ object.chasisanio }}" /></td>
+										value="{{ object.chasisanio|default:" N\A" }}" /></td>
 								<td>Pot:</td>
 								<td><input type="text" id="txtPot" style="width: 250px" class="txt"
-										value="{{ object.vpotencia }}" /></td>
+										value="{{ object.vpotencia|default:" N\A" }}" /></td>
 							</tr>
 							<tr>
 								<td>Nro Ejes:</td>
 								<td><input type="text" id="txtNroEjes" style="width: 250px" class="txt"
-										value="{{ object.nroejec }}" /></td>
+										value="{{ object.nroejec|default:" N\A" }}" /></td>
 								<td>Nro. Rec. Patente:</td>
 								<td>
 									<input type="text" id="txtNroRecPat" style="width: 250px" class="txt" maxlength="20"
-										value="{{ object.dominiovehiculo.ultimorecpatente }}" />
+										value="{{ object.dominiovehiculo|default:" N\A".ultimorecpatente }}" />
 								</td>
 							</tr>
 							<tr>
 								<td>Compa&ntilde;ia Seguro:</td>
 								<td>
 									<input type="text" id="txtCompSeguro" style="width: 250px" class="txt"
-										value="{{ object.companiaseguro }}" />
+										value="{{ object.companiaseguro|default:" N\A" }}" />
 								</td>
 								<td>Nro. Poliza:</td>
 								<td>
 									<input type="text" id="txtPoliza" style="width: 250px" class="txt" maxlength="20"
-										value="{{ object.nropoliza }}" />
+										value="{{ object.nropoliza|default:" N\A" }}" />
 								</td>
 							</tr>
 							<tr>
 								<td>Tac&oacute;grafo marca:</td>
 								<td><input type="text" id="txtTacMarca" style="width: 250px" class="txt"
-										value="{{ object.tacografomarca }}" /></td>
+										value="{{ object.tacografomarca|default:" N\A" }}" /></td>
 								<td>Tac&oacute;grafo nro:</td>
 								<td><input type="text" id="txtTacNro" style="width: 250px" class="txt"
-										value="{{ object.tacografonro }}" /></td>
+										value="{{ object.tacografonro|default:" N\A" }}" /></td>
 
 							</tr>
 							<tr>
 								<td>CCCF Nro:</td>
 								<td><input type="text" id="txtCCCF" style="width: 250px" class="txt"
-										value="{{ object.cccf }}" /></td>
+										value="{{ object.cccf|default:" N\A" }}" /></td>
 								<td>Nro de Interno:</td>
 								<td>
 									<input type="text" id="txtNroIntPas" style="width: 100px" class="txt" maxlength="10"
-										onkeypress="return acceptInt(event)"
-										value="{{ object.dominiovehiculo.nrointerno }}" />
+										onkeypress="return acceptInt(event)" value="{{ object.dominiovehiculo|default:"
+										N\A".nrointerno }}" />
 								</td>
 							</tr>
 							<tr>
@@ -346,18 +349,18 @@
 							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Posici&oacute;n Motor:</td>
 								<td><input type="text" id="txtPosM" style="width: 250px" class="txt"
-										value="{{ object.pocisionmotor }}" /></td>
+										value="{{ object.pocisionmotor|default:" N\A" }}" /></td>
 								<td>Tara:</td>
 								<td><input type="text" id="txtTara" style="width: 250px" class="txt"
-										value="{{ object.tara }}" /></td>
+										value="{{ object.tara|default:" N\A" }}" /></td>
 							</tr>
 							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Peso Max.:</td>
 								<td><input type="text" id="txtPesoM" style="width: 250px" class="txt"
-										value="{{ object.tara }}" /></td>
+										value="{{ object.tara|default:" N\A" }}" /></td>
 								<td>Carga Util:</td>
 								<td><input type="text" id="txtCajaU" style="width: 250px" class="txt"
-										value="{{ object.cargautil }}" /></td>
+										value="{{ object.cargautil|default:" N\A" }}" /></td>
 							</tr>
 							<tr class="mostrar3" {% get_pa_style %}>
 								<td>Expediente:</td>
@@ -365,15 +368,15 @@
 										value="{{ object.dominiovehiculo.expediente }}" /></td>
 								<td>Asientos:</td>
 								<td><input type="text" id="txtAsientos" style="width: 250px" class="txt"
-										value="{{ object.asientos }}" /></td>
+										value="{{ object.asientos|default:" N\A" }}" /></td>
 							</tr>
 							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td>Carrocer&iacute;a:</td>
 								<td><input type="text" id="txtCarroc" style="width: 250px" class="txt"
-										value="{{ object.carroceria }}" /></td>
+										value="{{ object.carroceria|default:" N\A" }}" /></td>
 								<td>Suspensi&oacute;n:</td>
 								<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
-										value="{{ object.suspencion }}" /></td>
+										value="{{ object.suspencion|default:" N\A" }}" /></td>
 							</tr>
 							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td colspan="4">
@@ -437,7 +440,7 @@
 							<tr id="veCarga" class="mostrar2" {% get_ca_style %}>
 								<td>Caja:</td>
 								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
-										value="{{ object.caja }}" /></td>
+										value="{{ object.caja|default:" N\A" }}" /></td>
 								<td id="tagTCarga" class="mostrar5" {% get_TCa_style %}>Tipo Carga:</td>
 								<td class="mostrar5" {% get_TCa_style %}>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
@@ -479,7 +482,7 @@
 								<td id="tagTServ">Tipo Servicios:</td>
 								<td colspan="3">
 									<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt"
-										value="{{ object.tiposervtm }}" />
+										value="{{ object.tiposervtm|default:" N\A" }}" />
 								</td>
 							</tr>
 							<tr>
@@ -519,97 +522,118 @@
 							<td>Eje 1:</td>
 							<td align="center"><input type="text" id="txtE1Tara" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="{{ object.eje1_tara }}" /></td>
+									value="{{ object.eje1_tara|default:" N\A" }}" /></td>
 							<td align="center"><input type="text" id="txtE1FzaI" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="{{ object.eje1_fzaizq }}" /></td>
+									value="{{ object.eje1_fzaizq|default:" N\A" }}" /></td>
 							<td align="center"><input type="text" id="txtE1FzaD" style="width: 80px"
 									onkeypress="return acceptDec(event)" class="txtNum"
-									value="{{ object.eje1_fzader }}" /></td>
+									value="{{ object.eje1_fzader|default:" N\A" }}" /></td>
 							<td align="center"><input type="text" id="txtE1Dif" style="width: 80px"
-									onkeypress="return acceptDec(event)" class="txtNum" value="{{ object.eje1_dif }}" />
+									onkeypress="return acceptDec(event)" class="txtNum" value="{{ object.eje1|default:"
+									N\A"_dif }}" />
 							</td>
 							<td align="center"><input type="text" id="txtE1Efic" style="width: 80px"
-									onkeypress="return acceptDec(event)" class="txtNum"
-									value="{{ object.eje1_eficiencia }}" /></td>
+									onkeypress="return acceptDec(event)" class="txtNum" value="{{ object.eje1|default:"
+									N\A"_eficiencia }}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 2:</td>
 							<td align="center"><input type="text" id="txtE2Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje2_tara }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_tara|default:" N\A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE2FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje2_fzaizq }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_fzaizq|default:" N\A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE2FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje2_fzader }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_fzader|default:" N\A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE2Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje2_dif }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_dif|default:" N\A" }}" /></td>
 							<td align="center"><input type="text" id="txtE2Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje2_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje2_eficiencia|default:" N\A"
+									}}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 3:</td>
 							<td align="center"><input type="text" id="txtE3Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje3_tara }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_tara|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE3FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje3_fzaizq }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_fzaizq|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE3FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje3_fzader }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_fzader|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE3Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje3_dif }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_dif|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtE3Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje3_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje3_eficiencia|default:" N/A"
+									}}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 4:</td>
 							<td align="center"><input type="text" id="txtE4Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje4_tara }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_tara|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE4FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje4_fzaizq }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_fzaizq|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE4FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje4_fzader }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_fzader|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE4Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje4_dif }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_dif|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtE4Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje4_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje4_eficiencia|default:" N/A"
+									}}" /></td>
 						</tr>
 						<tr>
 							<td>Eje 5:</td>
 							<td align="center"><input type="text" id="txtE5Tara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje5_tara }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje5_tara|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE5FzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje5_fzaizq }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje5_fzaizq|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE5FzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje5_fzader }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje5_fzader|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtE5Dif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje5_dif }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje5_dif|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtE5Efic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.eje5_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.eje5_eficiencia|default:" N/A"
+									}}" /></td>
 						</tr>
 						<tr>
 							<td><b>Totales:</b></td>
 							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ mto_tara }}" /></td>
+									style="width: 80px" class="txt" value="{{ mto_tara|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ mto_fi }}" /></td>
+									style="width: 80px" class="txt" value="{{ mto_fi|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ mto_der }}" /></td>
+									style="width: 80px" class="txt" value="{{ mto_der|default:" N/A" }}" /></td>
 							<td align="center">&nbsp;</td>
 							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ mto_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ mto_eficiencia|default:" N/A" }}" /></td>
 						</tr>
 						<tr>
 							<!--  $ME1Tara + $ME2Tara -->
 							<td><b>Freno Estacionamiento:</b></td>
 							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ ME1ME2 }}" /></td>
+									style="width: 80px" class="txt" value="{{ ME1ME2|default: " N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.freno_fzaisq }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_fzaisq|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.freno_fzader }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_fzader|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtFrDif" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.freno_dif }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_dif|default:" N/A" }}" />
+							</td>
 							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
-									style="width: 80px" class="txt" value="{{ object.freno_eficiencia }}" /></td>
+									style="width: 80px" class="txt" value="{{ object.freno_eficiencia|default:" N/A"
+									}}" /></td>
 						</tr>
 						<tr class="borTop">
 							<td rowspan="2"><b>Gases de
@@ -622,13 +646,13 @@
 						</tr>
 						<tr>
 							<td align="center"><input type="text" id="txtBach" style="width: 80px" class="txt"
-									value="{{ object.bach }}" /></td>
+									value="{{ object.bach|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtCO" style="width: 80px" class="txt"
-									value="{{ object.porcentajeco }}" /></td>
+									value="{{ object.porcentajeco|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtOpac" style="width: 80px" class="txt"
-									value="{{ object.opac }}" /></td>
+									value="{{ object.opac|default:" N/A" }}" /></td>
 							<td align="center"><input type="text" id="txtppmHC" style="width: 80px" class="txt"
-									value="{{ object.ppmhc }}" /></td>
+									value="{{ object.ppmhc|default:" N/A" }}" /></td>
 							<td>&nbsp;</td>
 						</tr>
 						<tr class="borTop">
@@ -642,18 +666,18 @@
 						<tr class="borBot">
 							<td align="center">
 								<input type="text" id="txtAlin" style="width: 80px" class="txt"
-									value="{{ object.alineacion }}" />
+									value="{{ object.alineacion|default:" N/A" }}" />
 							</td>
 							<td align="center"><input type="text" id="txtNSon" style="width: 80px" class="txt"
-									value="{{ object.nivelsonoro }}" />
+									value="{{ object.nivelsonoro|default:" N/A" }}" />
 							</td>
 							<td align="center">
 								<input type="text" id="txtInter" style="width: 80px" class="txt"
-									value="{{ object.interno }}" />
+									value="{{ object.interno|default:" N/A" }}" />
 							</td>
 							<td align="center">
 								<input type="text" id="txtEscape" style="width: 80px" class="txt"
-									value="{{ object.escape }}" />
+									value="{{ object.escape|default:" N/A" }}" />
 							</td>
 							<td>&nbsp;</td>
 						</tr>
@@ -688,13 +712,6 @@
 								</ul>
 							</td>
 						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td colspan="5">
-								{% get_lista_defectos %}
-							</td>
-						</tr>
-
 						<tr>
 							<td colspan="6">&nbsp;</td>
 						</tr>
