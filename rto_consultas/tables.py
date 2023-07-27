@@ -15,6 +15,21 @@ from .helpers import AuxData, map_fields, generate_key_from_params
 from silk.profiling.profiler import silk_profile
 
 
+class CustomFileColumn(tables.FileColumn):
+    def get_url(self, value, record):
+        certificado = Verificacionespdf.objects.filter(
+            idtaller_id__exact=record.idtaller,
+            idverificacion_id__exact=record.idverificacion,
+        )
+        if certificado:
+            certificado = certificado[0]
+            url = generate_key_from_params(
+                certificado.idtaller_id, certificado.nombrea4
+            )
+            return url
+        return ""
+
+
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(
         orderable=False,
@@ -32,7 +47,7 @@ class VerificacionesTables(tables.Table):
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
-    ver_certificado = tables.FileColumn(
+    ver_certificado = CustomFileColumn(
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
@@ -69,17 +84,7 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record):
-        certificado = Verificacionespdf.objects.filter(
-            idtaller_id__exact=record.idtaller,
-            idverificacion_id__exact=record.idverificacion,
-        )
-        if certificado:
-            certificado = certificado[0]
-            url = generate_key_from_params(
-                certificado.idtaller_id, certificado.nombrea4
-            )
-            return url
-        return ""
+        pass
 
     def render_idestado(self, value):
         try:
