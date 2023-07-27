@@ -89,7 +89,7 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record, value):
-        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion_id}"
+        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
         if cached_cert:
             return "Ver Certificado"
