@@ -83,8 +83,10 @@ class VerificacionesTables(tables.Table):
     def render_ver_verificacion(self, record):
         return f"Ver Verificacion"
 
-    def render_ver_certificado(self, record):
-        return "Ver Certificado"
+    def render_ver_certificado(self, record, value):
+        if value:
+            return "Ver Certificado"
+        return ""
 
     def render_idestado(self, value):
         try:
