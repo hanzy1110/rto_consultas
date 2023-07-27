@@ -10,22 +10,39 @@ from .models import (
     Certificadosasignadosportaller,
 )
 from .models import Estados, Tipousovehiculo, Talleres
-from .helpers import AuxData, map_fields
+from .helpers import AuxData, map_fields, generate_key_from_params
 from silk.profiling.profiler import silk_profile
 
-class VerificacionesTables(tables.Table):
-    certificado = tables.Column(orderable=False, empty_values=(), )
-    fecha = tables.DateColumn(format="d/M/Y")
-    ver_verificacion = tables.Column(linkify=("ver_verificacion",
-                                              {
 
-"idverificacion": tables.A("idverificacion"),
-                                               "idtaller": tables.A("idtaller__idtaller")
-                                               }
-                                              ),
-                                     orderable=False,
-                                     empty_values=(),
-                                     ) # (viewname, kwargs)
+class VerificacionesTables(tables.Table):
+    certificado = tables.Column(
+        orderable=False,
+        empty_values=(),
+    )
+    fecha = tables.DateColumn(format="d/M/Y")
+    ver_verificacion = tables.Column(
+        linkify=(
+            "ver_verificacion",
+            {
+                "idverificacion": tables.A("idverificacion"),
+                "idtaller": tables.A("idtaller__idtaller"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+    )  # (viewname, kwargs)
+    ver_certificado = tables.Column(
+        linkify=(
+            generate_key_from_params(
+                **{
+                    "idverificacion": tables.A("idverificacion"),
+                    "idtaller": tables.A("idtaller__idtaller"),
+                }
+            ),
+        ),
+        orderable=False,
+        empty_values=(),
+    )  # (viewname, kwargs)
     titular = tables.Column(orderable=False, empty_values=())
     vigencia = tables.Column(orderable=False, empty_values=())
     aux_data = AuxData(
@@ -47,17 +64,19 @@ class VerificacionesTables(tables.Table):
             "idtaller",
             "dominiovehiculo",
             "idtipouso",
-            'idtipovehiculo',
+            "idtipovehiculo",
             "titular",
             "idestado",
             "vigencia",
-            "ver_verificacion"
+            "ver_verificacion",
         )
         extra_columns = ("certificado",)
 
     def render_ver_verificacion(self, record):
         return f"Ver Verificacion"
 
+    def render_ver_certificado(self, record):
+        return f"Ver Certificado"
 
     def render_idestado(self, value):
         try:
@@ -68,7 +87,6 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-
     def render_idtipovehiculo(self, record):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -77,7 +95,6 @@ class VerificacionesTables(tables.Table):
         except Exception as e:
             print(e)
             return "Unknown!"
-
 
     def render_idtipouso(self, value):
         try:
@@ -88,28 +105,23 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-
     def render_vigencia(self, record):
-        cert = (Certificados.objects
-                           .filter(idverificacion_id__exact=record.idverificacion,
-                                           idtaller_id__exact=record.idtaller)
-                .values())
-        return cert[0]['vigenciahasta']
-
+        cert = Certificados.objects.filter(
+            idverificacion_id__exact=record.idverificacion,
+            idtaller_id__exact=record.idtaller,
+        ).values()
+        return cert[0]["vigenciahasta"]
 
     def render_certificado(self, record):
         query = self.Meta.model.get_nro_certificado(record)
         return query
 
-
     def render_idtaller(self, value):
         return value.nombre
-
 
     def render_titular(self, record):
         persona = record.codigotitular
         return f"{persona.nombre} {persona.apellido}"
-
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
@@ -220,10 +232,9 @@ class CertificadosTablesResumen(tables.Table):
             "dominiovehiculo",
             "Aprobado",
             "RechazadoLeveModerado",
-            "RechazadoGrave"
+            "RechazadoGrave",
         )
         extra_columns = ("certificado",)
-
 
     def render_idtipouso(self, value):
         try:
@@ -234,40 +245,33 @@ class CertificadosTablesResumen(tables.Table):
             print(e)
             return "Unknown!"
 
-
     def render_idtaller(self, value):
         return value.nombre
-
 
     def value_RechazadoGrave(self, record):
         if record.idestado == 2:
             return 1
         return 0
 
-
     def value_RechazadoLeveModerado(self, record):
         if record.idestado == 3:
             return 1
         return 0
-
 
     def value_Aprobado(self, record):
         if record.idestado == 1:
             return 1
         return 0
 
-
     def render_RechazadoGrave(self, record):
         if record.idestado == 2:
             return 1
         return 0
 
-
     def render_RechazadoLeveModerado(self, record):
         if record.idestado == 3:
             return 1
         return 0
-
 
     def render_Aprobado(self, record):
         if record.idestado == 1:
@@ -285,7 +289,6 @@ class CertificadosTablesResumen(tables.Table):
 
 
 class VerificacionesAnuales(tables.Table):
-
     year = tables.Column()
     cant_verificaciones = tables.Column()
     cant_aprobados = tables.Column()

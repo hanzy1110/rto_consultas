@@ -31,9 +31,15 @@ from .tables import (
     CertificadosTable,
     CertificadosAssignTable,
     CertificadosTablesResumen,
-    VerificacionesAnuales
+    VerificacionesAnuales,
 )
-from .helpers import generate_key_certificado, handle_context, handle_query, AuxData, generate_key
+from .helpers import (
+    generate_key_certificado,
+    handle_context,
+    handle_query,
+    AuxData,
+    generate_key,
+)
 from .presigned_url import generate_presigned_url
 
 
@@ -44,7 +50,6 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     context_object_name: str
     table_class: Table
     aux_data: AuxData
-
 
     def get_queryset(self):
         _export = self.request.GET.copy().pop("_export", None)
@@ -57,7 +62,6 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
             self.get_table()
 
         return queryset
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -109,7 +113,6 @@ class ListVerificacionesView(CustomRTOView):
     )
 
 
-
 class ListCertificadosAssignView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -147,7 +150,7 @@ class ListCertificadosAssignView(CustomRTOView):
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
-        fecha_field="fechacarga"
+        fecha_field="fechacarga",
     )
 
 
@@ -203,6 +206,7 @@ class ListCertificadosView(CustomRTOView):
         },
     )
 
+
 class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
@@ -210,8 +214,8 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = CertificadosTablesResumen
-    export_formats=["csv", "tsv", "xls"]
-    table_name="resumen_verificaciones"
+    export_formats = ["csv", "tsv", "xls"]
+    table_name = "resumen_verificaciones"
 
     aux_data = AuxData(
         query_fields=[
@@ -246,10 +250,11 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
-        aux={"Button": "DESCARGAR"}
+        aux={"Button": "DESCARGAR"},
     )
 
-class VerVerificacion(DetailView,LoginRequiredMixin):
+
+class VerVerificacion(DetailView, LoginRequiredMixin):
     model: Verificaciones
     template_name = "includes/ver_verificaciones.html"
     context_object_name: str
@@ -259,56 +264,81 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         query_params = self.request.GET.copy()
         id_taller = self.kwargs["idtaller"]
         id_verificacion = self.kwargs["idverificacion"]
-        verificacion = (Verificaciones.objects
-                        .select_related("dominiovehiculo", "idestado", "codigotitular","idtaller")
-                        .get(idverificacion=id_verificacion, idtaller=id_taller))
+        verificacion = Verificaciones.objects.select_related(
+            "dominiovehiculo", "idestado", "codigotitular", "idtaller"
+        ).get(idverificacion=id_verificacion, idtaller=id_taller)
 
         print(verificacion)
         self.verificacion = verificacion
         return verificacion
 
-    def get_total_values(self,):
-
+    def get_total_values(
+        self,
+    ):
         def sum_appropriatelly(values):
             return sum([float(v) for v in values if v])
-        MToTara = sum_appropriatelly([self.verificacion.eje1_tara , self.verificacion.eje2_tara , self.verificacion.eje3_tara , self.verificacion.eje4_tara])
-        MToFI = sum_appropriatelly([self.verificacion.eje1_fzaizq , self.verificacion.eje2_fzaizq , self.verificacion.eje3_fzaizq , self.verificacion.eje4_fzaizq])
-        MToFD = sum_appropriatelly([self.verificacion.eje1_fzader , self.verificacion.eje2_fzader , self.verificacion.eje3_fzader , self.verificacion.eje4_fzader])
-        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2);
+
+        MToTara = sum_appropriatelly(
+            [
+                self.verificacion.eje1_tara,
+                self.verificacion.eje2_tara,
+                self.verificacion.eje3_tara,
+                self.verificacion.eje4_tara,
+            ]
+        )
+        MToFI = sum_appropriatelly(
+            [
+                self.verificacion.eje1_fzaizq,
+                self.verificacion.eje2_fzaizq,
+                self.verificacion.eje3_fzaizq,
+                self.verificacion.eje4_fzaizq,
+            ]
+        )
+        MToFD = sum_appropriatelly(
+            [
+                self.verificacion.eje1_fzader,
+                self.verificacion.eje2_fzader,
+                self.verificacion.eje3_fzader,
+                self.verificacion.eje4_fzader,
+            ]
+        )
+        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2)
         return MToTara, MToFI, MToFD, MToEf
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cert = (
             Certificados.objects
-                # .select_related("idcategoria")
-                .filter(idverificacion_id__exact=self.kwargs["idverificacion"],
-                        idtaller_id__exact=self.kwargs["idtaller"])
-                .values()
-                )
-        categoria = (Categorias.objects
-                               .get(idcategoria__exact=cert[0]["idcategoria"])
-                               .descripcion)
+            # .select_related("idcategoria")
+            .filter(
+                idverificacion_id__exact=self.kwargs["idverificacion"],
+                idtaller_id__exact=self.kwargs["idtaller"],
+            ).values()
+        )
+        categoria = Categorias.objects.get(
+            idcategoria__exact=cert[0]["idcategoria"]
+        ).descripcion
 
-        estado = (Estados.objects
-                               .get(idestado__exact=cert[0]["idestado"])
-                               .descripcion)
+        estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
-        localidad = (Localidades.objects
-                               .get(idlocalidad__exact=self.verificacion.pidlocalidad)
-                     )
+        localidad = Localidades.objects.get(
+            idlocalidad__exact=self.verificacion.pidlocalidad
+        )
 
-        adjuntos = (Adjuntos.objects.filter(idtaller__exact=cert[0]['idtaller_id'],
-                                            idverificacion__exact=cert[0]['idverificacion_id']))
+        adjuntos = Adjuntos.objects.filter(
+            idtaller__exact=cert[0]["idtaller_id"],
+            idverificacion__exact=cert[0]["idverificacion_id"],
+        )
 
-        defectos = (Verificacionesdefectos.objects
-                   .prefetch_related("idnivel")
-                   .filter(idtaller_id__exact=cert[0]["idtaller_id"],
-                           idverificacion_id__exact=cert[0]['idverificacion_id']))
+        defectos = Verificacionesdefectos.objects.prefetch_related("idnivel").filter(
+            idtaller_id__exact=cert[0]["idtaller_id"],
+            idverificacion_id__exact=cert[0]["idverificacion_id"],
+        )
 
-        pdf_certificado = (Verificacionespdf.objects
-                           .filter(idtaller_id__exact=cert[0]["idtaller_id"],
-                                idverificacion_id__exact=cert[0]['idverificacion_id']))
+        pdf_certificado = Verificacionespdf.objects.filter(
+            idtaller_id__exact=cert[0]["idtaller_id"],
+            idverificacion_id__exact=cert[0]["idverificacion_id"],
+        )
 
         print(defectos)
 
@@ -320,7 +350,6 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
 
-        # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = [generate_key(a) for a in adjuntos]
         context["certificado"] = cert[0]
         context["url_certificado"] = generate_key_certificado(pdf_certificado)
@@ -338,35 +367,29 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         # context = handle_context(context, self)
         return context
 
-def verificaciones_anuales(request):
 
+def verificaciones_anuales(request):
     data = []
     for year in range(2015, 2023):
         current = {}
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
         current["year"] = year
-        current["cant_verificaciones"] = (Verificaciones.objects
-                                                .filter(fecha__range=(start_date, end_date))
-                                                .count())
+        current["cant_verificaciones"] = Verificaciones.objects.filter(
+            fecha__range=(start_date, end_date)
+        ).count()
 
-        current["cant_aprobados"] = (Certificados.objects
-                                                .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 1
-                                                        )
-                                                .count())
+        current["cant_aprobados"] = Certificados.objects.filter(
+            fecha__range=(start_date, end_date), idestado__exact=1
+        ).count()
 
-        current["cant_aprobados_condicionales"] = (Certificados.objects
-                                                .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 2
-                                                        )
-                                                .count())
+        current["cant_aprobados_condicionales"] = Certificados.objects.filter(
+            fecha__range=(start_date, end_date), idestado__exact=2
+        ).count()
 
-        current["cant_rechazados"] = (Certificados.objects
-                                                .filter(fecha__range=(start_date, end_date),
-                                                        idestado__exact = 3
-                                                        )
-                                                .count())
+        current["cant_rechazados"] = Certificados.objects.filter(
+            fecha__range=(start_date, end_date), idestado__exact=3
+        ).count()
         data.append(current)
     table = VerificacionesAnuales(data)
 

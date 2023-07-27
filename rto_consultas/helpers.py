@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 
 from silk.profiling.profiler import silk_profile
 
-from rto_consultas.models import Certificados, Verificaciones
+from rto_consultas.models import Certificados, Verificaciones, Verificacionespdf
 from .presigned_url import generate_presigned_url
 
 
@@ -21,9 +21,8 @@ class AuxData:
     parsed_names: Dict[str, str]
     ids: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
-    fecha_field:str = "fecha"
+    fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
-
 
 
 def handle_args(query_params, queryset, fecha_field="fecha"):
@@ -52,9 +51,9 @@ def handle_args(query_params, queryset, fecha_field="fecha"):
 
 def handle_date_range(date_from, date_to, fecha_field="fecha"):
     if date_from and date_to:
-        return Q(**{f"{fecha_field}__range":(date_from, date_to)})
+        return Q(**{f"{fecha_field}__range": (date_from, date_to)})
     if date_from and not date_to:
-        return Q(**{f"{fecha_field}__gte":date_from})
+        return Q(**{f"{fecha_field}__gte": date_from})
 
 
 def clean_args(query_params):
@@ -133,6 +132,7 @@ def handle_form(data: AuxData, model: Model):
             values[field] = [0, 1]
     return values
 
+
 @silk_profile()
 def map_fields(data: AuxData, model: Model):
     values = {}
@@ -151,7 +151,9 @@ def map_fields(data: AuxData, model: Model):
                     values_list = model.objects.values_list(field, flat=True).distinct()
                 except Exception as e:
                     print(e)
-                    values_list = dmodel.objects.values_list("descripcion", flat=True).distinct()
+                    values_list = dmodel.objects.values_list(
+                        "descripcion", flat=True
+                    ).distinct()
 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
                 vals = {v: d for v, d in zip(values_list, descriptions)}
@@ -181,12 +183,12 @@ def handle_context(context, view):
     context["aux"] = view.aux_data.aux
     return context
 
-def handle_nrocertificado(nrocertificado, model):
 
+def handle_nrocertificado(nrocertificado, model):
     queryset = model.objects.all()
 
     match nrocertificado:
-        case ['']:
+        case [""]:
             return queryset
         case None:
             return queryset
@@ -194,20 +196,20 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
-            cert = Certificados.objects \
-                            .filter(nrocertificado__exact=nrocertificado).values()
+            cert = Certificados.objects.filter(
+                nrocertificado__exact=nrocertificado
+            ).values()
             print("CERTIFICADOS QUERYSET ===>")
             print(cert)
 
             queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert:
-                cert=cert.first()
+                cert = cert.first()
                 print("DATOS CERTIFICADOS ===>")
-                queryset = (Verificaciones.objects
-                            .filter(idverificacion=cert["idverificacion_id"]
-                                    ,idtaller=cert["idtaller_id"]
-                                )
-                            )
+                queryset = Verificaciones.objects.filter(
+                    idverificacion=cert["idverificacion_id"],
+                    idtaller=cert["idtaller_id"],
+                )
                 print(queryset)
 
             return queryset
@@ -215,17 +217,27 @@ def handle_nrocertificado(nrocertificado, model):
 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
-        yield (start_date + timedelta(n), start_date + timedelta(n+1))
+        yield (start_date + timedelta(n), start_date + timedelta(n + 1))
+
 
 def generate_key(adjunto):
-      key = f"{adjunto.idtaller}/var/www/html/taller/uploads/{adjunto.nombre}"
-      return generate_presigned_url(key)
+    key = f"{adjunto.idtaller}/var/www/html/taller/uploads/{adjunto.nombre}"
+    return generate_presigned_url(key)
+
 
 def generate_key_certificado(certificado):
-
     if certificado:
         print(certificado)
         certificado = certificado[0]
         key = f"{certificado.idtaller_id}/var/www/html/taller/uploads/pdf/{certificado.nombrea4}.pdf"
         return generate_presigned_url(key)
     return None
+
+
+def generate_key_from_params(idtaller, idverificacion):
+    print(certificado)
+    certificado = Verificacionespdf.objects.get(
+        idtaller_id__exact=idtaller, idverificacion_id__exact=idverificacion
+    )
+    key = f"{idtaller}/var/www/html/taller/uploads/pdf/{certificado.nombrea4}.pdf"
+    return generate_presigned_url(key)
