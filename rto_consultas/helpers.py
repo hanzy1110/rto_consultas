@@ -222,5 +222,7 @@ def generate_key(adjunto):
       return generate_presigned_url(key)
 
 def generate_key_certificado(certificado):
-      key = f"{certificado['idtaller_id']}var/www/html/taller/uploads/pdf/{certificado['nombrea4']}"
-      return generate_presigned_url(key)
+
+    certificado = certificado[0]
+    key = f"{certificado['idtaller_id']}var/www/html/taller/uploads/pdf/{certificado['nombrea4']}"
+    return generate_presigned_url(key)
