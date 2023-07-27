@@ -301,7 +301,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                             idverificacion__exact=cert[0]['idverificacion_id']))
 
         pdf_certificado = (Verificacionespdf.objects
-                           .get(idtaller_id__exact=cert[0]["idtaller_id"],
+                           .filter(idtaller_id__exact=cert[0]["idtaller_id"],
                                 idverificacion_id__exact=cert[0]['idverificacion_id']))
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
