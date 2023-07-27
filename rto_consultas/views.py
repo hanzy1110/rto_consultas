@@ -325,6 +325,7 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["certificado"] = cert[0]
         context["url_certificado"] = generate_key_certificado(pdf_certificado)
         context["adjuntos"] = adjuntos
+        context["defectos"] = defectos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""
 
