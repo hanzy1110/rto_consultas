@@ -1,3 +1,4 @@
+import os
 import boto3
 from dotenv import dotenv_values
 
@@ -12,10 +13,10 @@ def generate_presigned_url(object_key, expiration=3600):
     Returns:
         str: The generated presigned URL.
     """
-    env_config = dotenv_values('.env')
-    aws_access_key_id = env_config['AWS_ACCESS_KEY_ID']
-    aws_secret_access_key = env_config['AWS_SECRET_ACCESS_KEY']
-    bucket_name = env_config['AWS_BUCKET_NAME']
+    # env_config = dotenv_values('.env')
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    bucket_name = os.environ.get('AWS_BUCKET_NAME')
 
     session = boto3.Session(
         aws_access_key_id=aws_access_key_id,

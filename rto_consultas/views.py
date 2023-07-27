@@ -21,6 +21,7 @@ from .models import (
     Vehiculos,
     Certificados,
     Categorias,
+    Verificacionespdf,
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
@@ -31,7 +32,7 @@ from .tables import (
     CertificadosTablesResumen,
     VerificacionesAnuales
 )
-from .helpers import handle_context, handle_query, AuxData, daterange
+from .helpers import generate_key_certificado, handle_context, handle_query, AuxData, generate_key
 from .presigned_url import generate_presigned_url
 
 
@@ -296,9 +297,12 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                                .get(idlocalidad__exact=self.verificacion.pidlocalidad)
                      )
 
+        adjuntos = (Adjuntos.objects.filter(idtaller__exact=cert[0]['idtaller_id'],
+                                            idverificacion__exact=cert[0]['idverificacion_id']))
 
-        adjuntos = (Adjuntos.objects.filter(idtaller__exact=cert[0]['idtaller'],
-                                            idverificacion__exact=cert[0]['idverificacion']))
+        pdf_certificado = (Verificacionespdf.objects
+                           .get(idtaller_id__exact=cert[0]["idtaller_id"],
+                                idverificacion_id__exact=cert[0]['idverificacion_id']))
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
@@ -309,8 +313,9 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["localidad"] = localidad.descripcion
 
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
-        adjuntos = []
+        adjuntos = [generate_key(a) for a in adjuntos]
         context["certificado"] = cert[0]
+        context["url_certificado"] = generate_key_certificado(pdf_certificado)
         context["adjuntos"] = adjuntos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""

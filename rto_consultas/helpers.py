@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from silk.profiling.profiler import silk_profile
 
 from rto_consultas.models import Certificados, Verificaciones
+from .presigned_url import generate_presigned_url
 
 
 @dataclass
@@ -215,3 +216,11 @@ def handle_nrocertificado(nrocertificado, model):
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
         yield (start_date + timedelta(n), start_date + timedelta(n+1))
+
+def generate_key(adjunto):
+      key = f"{adjunto['idtaller']}/var/www/html/taller/uploads/{adjunto['nombre']}"
+      return generate_presigned_url(key)
+
+def generate_key_certificado(certificado):
+      key = f"{certificado['idtaller_id']}var/www/html/taller/uploads/pdf/{certificado['nombrea4']}"
+      return generate_presigned_url(key)

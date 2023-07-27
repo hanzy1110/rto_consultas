@@ -11,7 +11,8 @@
 		<table class="tblForm" width="100%">
 			<tr>
 				<td>
-					{% get_certificado_url %}
+					<input type='button' id='btnPDF' value='Ver certificado' class="btn btn-fill btn-sm btn-primary"
+						onclick="window.open('{{ url_certificado }}')" />
 				</td>
 			</tr>
 			{% if check_certificado %}
@@ -82,10 +83,12 @@
 				<!-- TODO AGREGAR AQUI LOS ADJUNTOS -->
 				<td>Adjuntos:</td>
 				<td colspan="3">
-					{% for a in adjuntos %}
-					<h2>ADJUNTO:</h2>
-					{{ a }}
-					{% endfor %}
+					<ul>
+						{% for a in adjuntos %}
+						<h2>ADJUNTO:</h2>
+						<li><a href="{{ a }}"> Adjunto </a></li>
+						{% endfor %}
+					</ul>
 				</td>
 			</tr>
 			<tr>
