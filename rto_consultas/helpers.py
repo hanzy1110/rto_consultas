@@ -30,13 +30,13 @@ def convert_date(input_date):
     input_format = "%b. %d, %Y"
 
     # Parse the input date string to a datetime object
-    date_obj = datetime.strptime(input_date, input_format)
+    # date_obj = datetime.strptime(input_date, input_format)
 
     # Define the format of the output date
     output_format = "%d/%m/%Y"
 
     # Format the datetime object to the desired output format
-    output_date = date_obj.strftime(output_format)
+    output_date = input_date.strftime(output_format)
 
     return output_date
 
