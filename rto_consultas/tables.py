@@ -69,12 +69,16 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record):
-        certificado = Verificacionespdf.objects.get(
+        certificado = Verificacionespdf.objects.filter(
             idtaller_id__exact=record.idtaller,
             idverificacion_id__exact=record.idverificacion,
         )
-        url = generate_key_from_params(certificado.idtaller_id, certificado.nombrea4)
-        return f"<a href={url}>Ver Certificado </a>"
+        if certificado:
+            url = generate_key_from_params(
+                certificado.idtaller_id, certificado.nombrea4
+            )
+            return f"<a href={url}>Ver Certificado</a>"
+        return ""
 
     def render_idestado(self, value):
         try:
