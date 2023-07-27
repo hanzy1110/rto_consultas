@@ -484,7 +484,9 @@ class CccfCertificados(models.Model):
         db_column="Observaciones"
     )  # Field name made lowercase.
     usuario = models.CharField(max_length=50)
-    idestado = models.IntegerField(db_column="idEstado")  # Field name made lowercase.
+    idestado = models.IntegerField(
+        db_column="idEstado", verbose_name="Calificación"
+    )  # Field name made lowercase.
     fechaanulacion = models.DateField(
         db_column="FechaAnulacion", blank=True, null=True
     )  # Field name made lowercase.
@@ -660,7 +662,7 @@ class Certificados(models.Model):
         "rto_consultas.Verificaciones",
         on_delete=models.CASCADE,
         db_column="idVerificacion",
-        related_name="certificados"
+        related_name="certificados",
     )  # Field name made lowercase.
     idconvenio = models.ForeignKey(
         "Convenios",
@@ -957,7 +959,7 @@ class Equipos(models.Model):
 
 class Estados(models.Model):
     idestado = models.AutoField(
-        db_column="idEstado", primary_key=True,verbose_name="Estado Certificado"
+        db_column="idEstado", primary_key=True, verbose_name="Estado Certificado"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
@@ -2211,7 +2213,7 @@ class Serviciostransportehab(models.Model):
 
 class Talleres(models.Model):
     idtaller = models.AutoField(
-        db_column="idTaller", primary_key=True,verbose_name="Taller"
+        db_column="idTaller", primary_key=True, verbose_name="Taller"
     )  # Field name made lowercase.
     idlocalidad = models.ForeignKey(
         Localidades, on_delete=models.CASCADE, db_column="idLocalidad"
@@ -2268,7 +2270,6 @@ class Talleres(models.Model):
 
         db_table = "talleres"
 
-
         indexes = [
             models.Index(fields=("idtaller",)),
         ]
@@ -2276,7 +2277,7 @@ class Talleres(models.Model):
 
 class Tipousovehiculo(models.Model):
     idtipouso = models.AutoField(
-        db_column="idTipoUso", primary_key=True,verbose_name="Tipo Uso"
+        db_column="idTipoUso", primary_key=True, verbose_name="Tipo Uso"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=50
@@ -2384,7 +2385,7 @@ class Valoresadm(models.Model):
 
 class Vehiculos(models.Model):
     dominio = models.CharField(
-        db_column="Dominio", primary_key=True, max_length=10,verbose_name="Dominio"
+        db_column="Dominio", primary_key=True, max_length=10, verbose_name="Dominio"
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
         db_column="idTipoVehiculo"
@@ -2614,19 +2615,24 @@ class Verificaciones(models.Model):
     idverificacion = models.IntegerField(
         db_column="idVerificacion", primary_key=True
     )  # Field name made lowercase.
-    fecha = models.DateField(db_column="Fecha", verbose_name="Fecha")  # Field name made lowercase.
+    fecha = models.DateField(
+        db_column="Fecha", verbose_name="Fecha"
+    )  # Field name made lowercase.
     hora = models.TimeField(db_column="Hora")  # Field name made lowercase.
     horafinal = models.TimeField(
         db_column="HoraFinal", blank=True, null=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, on_delete=models.CASCADE, db_column="idTaller", verbose_name="Taller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller", verbose_name="Planta"
     )  # Field name made lowercase.
     idfotovalidacion = models.IntegerField(
         db_column="idFotovalidacion", blank=True, null=True
     )  # Field name made lowercase.
     dominiovehiculo = models.ForeignKey(
-        Vehiculos, on_delete=models.CASCADE, db_column="DominioVehiculo", verbose_name="Dominio"
+        Vehiculos,
+        on_delete=models.CASCADE,
+        db_column="DominioVehiculo",
+        verbose_name="Dominio",
     )  # Field name made lowercase.
     idhabilitacion = models.IntegerField(
         db_column="idHabilitacion", blank=True, null=True
@@ -2672,7 +2678,10 @@ class Verificaciones(models.Model):
         db_column="DirectorTecnico", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
     idestado = models.ForeignKey(
-        Estados, on_delete=models.CASCADE, db_column="idEstado", verbose_name="Estado Certificado"
+        Estados,
+        on_delete=models.CASCADE,
+        db_column="idEstado",
+        verbose_name="Estado Certificado",
     )  # Field name made lowercase.
     eje1_tara = models.DecimalField(
         db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
@@ -2732,8 +2741,7 @@ class Verificaciones(models.Model):
     eje2_eficiencia = models.DecimalField(
         db_column="Eje2_Eficiencia",
         max_digits=10,
-
-    decimal_places=2,
+        decimal_places=2,
         blank=True,
         null=True,
     )  # Field name made lowercase.
@@ -2871,12 +2879,17 @@ class Verificaciones(models.Model):
     ultimorecpatente = models.CharField(
         db_column="UltimoRecPatente", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    idtipouso = models.IntegerField(db_column="idTipoUso", verbose_name="Tipo de Uso")  # Field name made lowercase.
+    idtipouso = models.IntegerField(
+        db_column="idTipoUso", verbose_name="Tipo de Uso"
+    )  # Field name made lowercase.
     usuariocarga = models.CharField(
         db_column="usuarioCarga", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
-        db_column="idTipoVehiculo", blank=True, null=True, verbose_name="Tipo de Vehiculo"
+        db_column="idTipoVehiculo",
+        blank=True,
+        null=True,
+        verbose_name="Tipo de Vehiculo",
     )  # Field name made lowercase.
     vmarca = models.CharField(
         db_column="VMarca", max_length=100, blank=True, null=True
@@ -3010,16 +3023,11 @@ class Verificaciones(models.Model):
 
     @staticmethod
     def get_nro_certificado(record):
-        cert = (Certificados
-                        .objects
-                        .prefetch_related("idverificacion")
-                        .get(idverificacion__exact=record.idverificacion,
-                                idtaller__exact=record.idtaller)
-                    )
+        cert = Certificados.objects.prefetch_related("idverificacion").get(
+            idverificacion__exact=record.idverificacion, idtaller__exact=record.idtaller
+        )
 
         return cert.nrocertificado
-
-
 
     class Meta:
         app_label = "rto_consultas"

@@ -72,15 +72,15 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         fields = (
+            "dominiovehiculo",
             "certificado",
             "fecha",
-            "idtaller",
-            "dominiovehiculo",
+            "vigencia",
             "idtipouso",
             "idtipovehiculo",
             "titular",
             "idestado",
-            "vigencia",
+            "idtaller",
             "ver_verificacion",
         )
         extra_columns = ("certificado",)
