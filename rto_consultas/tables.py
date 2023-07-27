@@ -27,7 +27,7 @@ class CustomFileColumn(tables.FileColumn):
                 certificado.idtaller_id, certificado.nombrea4
             )
             return url
-        return ""
+        return value
 
 
 class VerificacionesTables(tables.Table):
