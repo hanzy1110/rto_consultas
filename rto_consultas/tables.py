@@ -32,7 +32,7 @@ class VerificacionesTables(tables.Table):
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
-    ver_certificado = tables.Column(
+    ver_certificado = tables.FileColumn(
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
@@ -78,7 +78,7 @@ class VerificacionesTables(tables.Table):
             url = generate_key_from_params(
                 certificado.idtaller_id, certificado.nombrea4
             )
-            return f"<a href={url}>Ver Certificado</a>"
+            return url
         return ""
 
     def render_idestado(self, value):
