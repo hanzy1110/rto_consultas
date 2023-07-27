@@ -10,10 +10,12 @@
 		<h2><a href="#">Verificaci&oacute;n</a></h2>
 		<table class="tblForm" width="100%">
 			<tr>
+				{% if url_certificado %}
 				<td>
 					<input type='button' id='btnPDF' value='Ver certificado' class="btn btn-fill btn-sm btn-primary"
 						onclick="window.open('{{ url_certificado }}')" />
 				</td>
+				{% endif %}
 			</tr>
 			{% if check_certificado %}
 			<tr class="borTop">
