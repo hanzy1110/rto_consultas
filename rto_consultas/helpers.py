@@ -235,6 +235,8 @@ def generate_key_certificado(certificado):
 
 
 def generate_key_from_params(idtaller, idverificacion):
+    print(idtaller)
+    print(idverificacion)
     certificado = Verificacionespdf.objects.get(
         idtaller_id__exact=idtaller, idverificacion_id__exact=idverificacion
     )
