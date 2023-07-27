@@ -485,7 +485,7 @@ class CccfCertificados(models.Model):
     )  # Field name made lowercase.
     usuario = models.CharField(max_length=50)
     idestado = models.IntegerField(
-        db_column="idEstado", verbose_name="calificación"
+        db_column="idEstado", verbose_name="Calificación"
     )  # Field name made lowercase.
     fechaanulacion = models.DateField(
         db_column="FechaAnulacion", blank=True, null=True
@@ -2681,7 +2681,7 @@ class Verificaciones(models.Model):
         Estados,
         on_delete=models.CASCADE,
         db_column="idEstado",
-        verbose_name="Estado Certificado",
+        verbose_name="Calificación",
     )  # Field name made lowercase.
     eje1_tara = models.DecimalField(
         db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
