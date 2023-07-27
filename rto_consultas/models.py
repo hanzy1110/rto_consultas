@@ -485,7 +485,7 @@ class CccfCertificados(models.Model):
     )  # Field name made lowercase.
     usuario = models.CharField(max_length=50)
     idestado = models.IntegerField(
-        db_column="idEstado", verbose_name="Calificación"
+        db_column="idEstado", verbose_name="calificación"
     )  # Field name made lowercase.
     fechaanulacion = models.DateField(
         db_column="FechaAnulacion", blank=True, null=True
