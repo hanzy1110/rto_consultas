@@ -84,7 +84,7 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record):
-        pass
+        return "Ver Certificado"
 
     def render_idestado(self, value):
         try:
