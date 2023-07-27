@@ -21,6 +21,7 @@ from .models import (
     Vehiculos,
     Certificados,
     Categorias,
+    Verificacionesdefectos,
     Verificacionespdf,
 )
 from .models import Estados, Tipousovehiculo, Talleres
@@ -44,7 +45,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     table_class: Table
     aux_data: AuxData
 
-    @silk_profile()
+
     def get_queryset(self):
         _export = self.request.GET.copy().pop("_export", None)
         page = self.request.GET.copy().pop("page", None)
@@ -57,7 +58,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 
         return queryset
 
-    @silk_profile()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
@@ -300,9 +301,16 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         adjuntos = (Adjuntos.objects.filter(idtaller__exact=cert[0]['idtaller_id'],
                                             idverificacion__exact=cert[0]['idverificacion_id']))
 
+        defectos = (Verificacionesdefectos.objects
+                   .prefetch_related("idnivel")
+                   .filter(idtaller_id__exact=cert[0]["idtaller_id"],
+                           idverificacion_id__exact=cert[0]['idverificacion_id']))
+
         pdf_certificado = (Verificacionespdf.objects
                            .filter(idtaller_id__exact=cert[0]["idtaller_id"],
                                 idverificacion_id__exact=cert[0]['idverificacion_id']))
+
+        print(defectos)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]

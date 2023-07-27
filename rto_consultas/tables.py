@@ -58,7 +58,7 @@ class VerificacionesTables(tables.Table):
     def render_ver_verificacion(self, record):
         return f"Ver Verificacion"
 
-    @silk_profile()
+
     def render_idestado(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -68,7 +68,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-    @silk_profile()
+
     def render_idtipovehiculo(self, record):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -78,7 +78,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-    @silk_profile()
+
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -88,7 +88,7 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "Unknown!"
 
-    @silk_profile()
+
     def render_vigencia(self, record):
         cert = (Certificados.objects
                            .filter(idverificacion_id__exact=record.idverificacion,
@@ -96,21 +96,21 @@ class VerificacionesTables(tables.Table):
                 .values())
         return cert[0]['vigenciahasta']
 
-    @silk_profile()
+
     def render_certificado(self, record):
         query = self.Meta.model.get_nro_certificado(record)
         return query
 
-    @silk_profile()
+
     def render_idtaller(self, value):
         return value.nombre
 
-    @silk_profile()
+
     def render_titular(self, record):
         persona = record.codigotitular
         return f"{persona.nombre} {persona.apellido}"
 
-    @silk_profile()
+
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
     ):
@@ -224,7 +224,7 @@ class CertificadosTablesResumen(tables.Table):
         )
         extra_columns = ("certificado",)
 
-    @silk_profile()
+
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
@@ -238,37 +238,37 @@ class CertificadosTablesResumen(tables.Table):
     def render_idtaller(self, value):
         return value.nombre
 
-    @silk_profile()
+
     def value_RechazadoGrave(self, record):
         if record.idestado == 2:
             return 1
         return 0
 
-    @silk_profile()
+
     def value_RechazadoLeveModerado(self, record):
         if record.idestado == 3:
             return 1
         return 0
 
-    @silk_profile()
+
     def value_Aprobado(self, record):
         if record.idestado == 1:
             return 1
         return 0
 
-    @silk_profile()
+
     def render_RechazadoGrave(self, record):
         if record.idestado == 2:
             return 1
         return 0
 
-    @silk_profile()
+
     def render_RechazadoLeveModerado(self, record):
         if record.idestado == 3:
             return 1
         return 0
 
-    @silk_profile()
+
     def render_Aprobado(self, record):
         if record.idestado == 1:
             return 1
