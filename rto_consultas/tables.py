@@ -13,6 +13,7 @@ from .models import (
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields, generate_key_from_params
 from silk.profiling.profiler import silk_profile
+from django.core.cache import cache
 
 
 class CustomFileColumn(tables.FileColumn):
@@ -22,6 +23,10 @@ class CustomFileColumn(tables.FileColumn):
             idverificacion_id__exact=record.idverificacion,
         )
         if certificado:
+            cache_key = (
+                f"certificado:{certificado.idtaller_id}-{certificado.idverificacion_id}"
+            )
+            cache.set(cache_key, certificado)
             certificado = certificado[0]
             url = generate_key_from_params(
                 certificado.idtaller_id, certificado.nombrea4
@@ -84,9 +89,9 @@ class VerificacionesTables(tables.Table):
         return f"Ver Verificacion"
 
     def render_ver_certificado(self, record, value):
-        print("RECORD=>", record)
-        print("VALUE=>", value)
-        if value:
+        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion_id}"
+        cached_cert = cache.get(cache_key)
+        if cached_cert:
             return "Ver Certificado"
         return "Sin Certificado"
 
