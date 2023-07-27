@@ -959,7 +959,7 @@ class Equipos(models.Model):
 
 class Estados(models.Model):
     idestado = models.AutoField(
-        db_column="idEstado", primary_key=True, verbose_name="Estado Certificado"
+        db_column="idEstado", primary_key=True, verbose_name="Calificación"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
