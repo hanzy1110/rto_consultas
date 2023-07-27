@@ -11,7 +11,7 @@ from .models import (
     Certificadosasignadosportaller,
 )
 from .models import Estados, Tipousovehiculo, Talleres
-from .helpers import AuxData, map_fields, generate_key_from_params
+from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
 from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
@@ -40,7 +40,7 @@ class VerificacionesTables(tables.Table):
         orderable=False,
         empty_values=(),
     )
-    fecha = tables.DateColumn(format="d/M/Y")
+    fecha = tables.DateColumn(format="d/m/Y")
     ver_verificacion = tables.Column(
         linkify=(
             "ver_verificacion",
@@ -127,7 +127,7 @@ class VerificacionesTables(tables.Table):
             idverificacion_id__exact=record.idverificacion,
             idtaller_id__exact=record.idtaller,
         ).values()
-        return cert[0]["vigenciahasta"]
+        return convert_date(cert[0]["vigenciahasta"])
 
     def render_certificado(self, record):
         query = self.Meta.model.get_nro_certificado(record)

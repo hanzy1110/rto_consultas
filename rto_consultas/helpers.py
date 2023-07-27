@@ -1,7 +1,7 @@
 from django.db.models import Q, QuerySet
 from django.db.models import Model
 from django.core.cache import cache
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 import re
@@ -23,6 +23,22 @@ class AuxData:
     types: Dict[str, str] = field(default_factory=dict)
     fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
+
+
+def convert_date(input_date):
+    # Define the format of the input date
+    input_format = "%b. %d, %Y"
+
+    # Parse the input date string to a datetime object
+    date_obj = datetime.strptime(input_date, input_format)
+
+    # Define the format of the output date
+    output_format = "%d/%m/%Y"
+
+    # Format the datetime object to the desired output format
+    output_date = date_obj.strftime(output_format)
+
+    return output_date
 
 
 def handle_args(query_params, queryset, fecha_field="fecha"):
