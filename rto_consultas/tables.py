@@ -34,10 +34,7 @@ class VerificacionesTables(tables.Table):
     ver_certificado = tables.Column(
         linkify=(
             generate_key_from_params(
-                **{
-                    "idverificacion": tables.A("idverificacion"),
-                    "idtaller": tables.A("idtaller__idtaller"),
-                }
+                tables.A("idverificacion"), tables.A("idtaller__idtaller")
             ),
         ),
         orderable=False,
