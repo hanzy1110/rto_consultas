@@ -13,6 +13,7 @@ from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
 
 from .models import (
+    Adjuntos,
     Localidades,
     Provincias,
     Verificaciones,
@@ -31,6 +32,7 @@ from .tables import (
     VerificacionesAnuales
 )
 from .helpers import handle_context, handle_query, AuxData, daterange
+from .presigned_url import generate_presigned_url
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
@@ -295,7 +297,8 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
                      )
 
 
-        print(model_to_dict(self.verificacion))
+        adjuntos = (Adjuntos.objects.filter(idtaller__exact=cert[0]['idtaller'],
+                                            idverificacion__exact=cert[0]['idverificacion']))
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
@@ -304,12 +307,14 @@ class VerVerificacion(DetailView,LoginRequiredMixin):
         context["categoria"] = categoria
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
+
         # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = []
         context["certificado"] = cert[0]
         context["adjuntos"] = adjuntos
         context["mostrarJu"] = ""
         context["mostrarFi"] = ""
+
         MToTara, MToFI, MToFD, MToEf = self.get_total_values()
         context["mto_tara"] = MToTara
         context["mto_fi"] = MToFI
