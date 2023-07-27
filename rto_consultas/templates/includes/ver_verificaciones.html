@@ -43,16 +43,16 @@
 			<tr>
 				<td id="tagNT">Planta:</td>
 				<td colspan="3"><input type="text" id="txtNroTaller" style="width: 690px" class="txt"
-						value="{{ object.idtaller|default:" N\A" }}" />
+						value="{{ object.idtaller|default:'N\A' }}" />
 				</td>
 			</tr>
 			<tr>
 				<td id="tagFc">Fecha:</td>
 				<td><input type="text" id="txtFecha" style="width: 120px" alt="date" class="txt"
-						value="{{ object.fecha|default:" N\A" }}" /></td>
+						value="{{ object.fecha|default:'N/A' }}" /></td>
 				<td id="tagHora">Hora:</td>
 				<td><input type="text" id="txtHora" alt="time" style="width: 120px" class="txt"
-						value="{{ object.hora|default:" N\A" }}" /></td>
+						value="{{ object.hora|default:'N/A' }}" /></td>
 			</tr>
 			<tr>
 				<td>Provincia:</td>
@@ -71,10 +71,10 @@
 			<tr>
 				<td>Director T&eacute;cnico:</td>
 				<td><input type="text" id="txtDT" style="width: 250px" class="txt"
-						value="{{ object.directortecnico|default:" N\A" }}" /></td>
+						value="{{ object.directortecnico|default:'N/A' }}" /></td>
 				<td>Inspector:</td>
 				<td><input type="text" id="txtInsp" style="width: 250px" class="txt"
-						value="{{ object.inspector|default:" N\A" }}" />
+						value="{{ object.inspector|default:'N/A' }}" />
 				</td>
 			</tr>
 			<tr>
@@ -109,7 +109,7 @@
 							</tr>
 							<tr>
 								<td colspan="4" align="center" id="tagTPers">
-									{% if object.ptipopersona|default:"N\A" == "F" %}
+									{% if object.ptipopersona|default:'N\A' == "F" %}
 									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F"
 										checked="checked" /> Persona
 									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" />
@@ -126,7 +126,7 @@
 							<tr id="mostrarFis" {{ mostrarfi }}>
 								<td id="tagApe">Titular:</td>
 								<td><input type="text" id="txtAp" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.descripciontitular|default:" N\A" }}" /></td>
+										value="{{ object.descripciontitular|default:'N/A' }}" /></td>
 
 								<td id="tagDoc">Documento:</td>
 								<td colspan="3">
@@ -134,7 +134,7 @@
 										<option value="{{ doc }}" selected="selected">{{ object.ptipodoc|default:"N\A"
 											}}</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
-										class="txt" value="{{ object.nrodocconductor|default:" N\A" }}" />
+										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
 								</td>
 							</tr>
 							<tr id="mostrarJur" {{ mostrarJu }}>
@@ -144,20 +144,20 @@
 											<td style="width:130px;" id="tagRS">Raz&oacute;n Social:</td>
 											<td style="width:330px;">
 												<input type="text" id="txtRazonSocial" style="width: 250px" class="txt"
-													value="{{ object.descripciontitular|default:" N\A" }}" />
+													value="{{ object.descripciontitular|default:'N/A' }}" />
 											</td>
 											<td style="width:130px;" id="tagCuit">CUIT:</td>
 											<td>
 												<input type="text" id="txtCuit" style="width: 120px" maxlength="11"
 													onkeypress="return acceptInt(event)" class="txt"
-													value="{{ object.pcuit|default:" N\A" }}" />
+													value="{{ object.pcuit|default:'N/A' }}" />
 											</td>
 										</tr>
 										<tr>
 											<td id="tagCPJ">Codigo PJ:</td>
 											<td colspan="3">
 												<input type="text" id="txtCodigoPJ" style="width: 120px" class="txt"
-													value="{{ object.pcodigopj|default:" N\A" }}" />
+													value="{{ object.pcodigopj|default:'N/A' }}" />
 											</td>
 										</tr>
 									</table>
@@ -180,15 +180,15 @@
 							<tr>
 								<td>Domicilio:</td>
 								<td><input type="text" id="txtDomicilio" style="width: 250px" class="txt"
-										value="{{ object.pdomicilio|default:" N\A" }}" /></td>
+										value="{{ object.pdomicilio|default:'N/A' }}" /></td>
 								<td>Tel&eacute;fono:</td>
 								<td><input type="text" id="txtTelefono" style="width: 250px" class="txt"
-										value="{{ object.ptelefono|default:" N\A" }}" /></td>
+										value="{{ object.ptelefono|default:'N/A' }}" /></td>
 							</tr>
 							<tr>
 								<td>Email:</td>
 								<td colspan="3"><input type="text" id="txtEmailT" style="width: 250px" class="txt"
-										value="{{ object.pemail|default:" N\A" }}" /></td>
+										value="{{ object.pemail|default:'N/A' }}" /></td>
 							</tr>
 							<tr>
 								<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
@@ -197,20 +197,20 @@
 							<tr>
 								<td id="tagApeC">Apellido:</td>
 								<td><input type="text" id="txtApC" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.nombreconductor|default:" N\A" }}" /></td>
+										value="{{ object.nombreconductor|default:'N/A' }}" /></td>
 								<td id="tagNomC">Nombre:</td>
 								<td><input type="text" id="txtNomC" style="width: 250px" maxlength="50" class="txt"
-										value="{{ object.apellidoconductor|default:" N\A" }}" /></td>
+										value="{{ object.apellidoconductor|default:'N/A' }}" /></td>
 							</tr>
 							<tr>
 								<td>Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										<option value="{{ object.ptipodoc|default:" N\A" }}" selected="selected">{{
+										<option value="{{ object.ptipodoc|default:'N/A' }}" selected="selected">{{
 											object.ptipodoc|default:"N\A" }}
 										</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
-										class="txt" value="{{ object.nrodocconductor|default:" N\A" }}" />
+										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
 								</td>
 							</tr>
 							<tr>
@@ -227,15 +227,15 @@
 								</td>
 								<td>A&ntilde;o:</td>
 								<td><input type="text" id="txtAnio" style="width: 100px" class="txt"
-										value="{{ object.vanio|default:" N\A" }}" /></td>
+										value="{{ object.vanio|default:'N/A' }}" /></td>
 							</tr>
 							<tr>
 								<td>Marca:</td>
 								<td><input type="text" id="txtMarca" style="width: 250px" class="txt"
-										value="{{ object.vmarca|default:" N\A" }}" /></td>
+										value="{{ object.vmarca|default:'N/A' }}" /></td>
 								<td>Modelo:</td>
 								<td><input type="text" id="txtModelo" style="width: 250px" class="txt"
-										value="{{ object.vmodelo|default:" N\A" }}" /></td>
+										value="{{ object.vmodelo|default:'N/A' }}" /></td>
 							</tr>
 							<tr>
 
