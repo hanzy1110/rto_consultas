@@ -131,8 +131,8 @@
 								<td id="tagDoc">Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										<option value="{{ doc }}" selected="selected">{{ object.ptipodoc|default:"N\A"
-											}}</option>
+										<option value="{{ doc }}" selected="selected">
+											{{ object.ptipodoc|default:'N/A' }}</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
 										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
 								</td>
@@ -206,8 +206,8 @@
 								<td>Documento:</td>
 								<td colspan="3">
 									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
-										<option value="{{ object.ptipodoc|default:'N/A' }}" selected="selected">{{
-											object.ptipodoc|default:"N\A" }}
+										<option value="{{ object.ptipodoc|default:'N/A' }}" selected="selected">
+											{{ object.ptipodoc|default:'N/A' }}
 										</option>
 									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
 										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
@@ -325,8 +325,8 @@
 								<td>Nro de Interno:</td>
 								<td>
 									<input type="text" id="txtNroIntPas" style="width: 100px" class="txt" maxlength="10"
-										onkeypress="return acceptInt(event)" value="{{ object.dominiovehiculo|default:"
-										N\A".nrointerno }}" />
+										onkeypress="return acceptInt(event)"
+										value="{{ object.dominiovehiculo.nrointerno|default:'N/A' }}" />
 								</td>
 							</tr>
 							<tr>
