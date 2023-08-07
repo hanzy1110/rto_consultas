@@ -14,6 +14,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
+
 # from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
@@ -505,6 +506,10 @@ class ResumenTransporteCargaTable(tables.Table):
     def render_idtaller(self, value):
         return value.nombre
 
+    def value_titular(self, record):
+        persona = record.codigotitular
+        return f"{persona.nombre} {persona.apellido}"
+
     def render_titular(self, record):
         persona = record.codigotitular
         return f"{persona.nombre} {persona.apellido}"
@@ -517,6 +522,24 @@ class ResumenTransporteCargaTable(tables.Table):
 
     def render_anio_fab(self, record):
         return record.vanio
+
+    def value_tipo_carga(self, record):
+        try:
+            tipo_carga = Vehiculos.objects.get(
+                dominio__exact=record.dominiovehiculo
+            ).tipocarga
+            return tipo_carga if tipo_carga else "No Especificado"
+        except:
+            return "N/A"
+
+    def value_localidad(self, record):
+        try:
+            localidad = Localidades.objects.get(
+                idlocalidad__exact=record.pidlocalidad
+            ).descripcion
+            return localidad if localidad else "N/E"
+        except:
+            return "N/E"
 
     def render_tipo_carga(self, record):
         try:
