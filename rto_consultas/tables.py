@@ -409,9 +409,6 @@ class ResumenTransporteTable(tables.Table):
                 idtiposervicio__exact=record.idtiposervicio
             )
         except Exception as e:
-            print(e)
-            print("ID TIPO SERVICIO ==>")
-            print(record.idtiposervicio)
             return "N/A"
 
     def render_localidad(self, record):
