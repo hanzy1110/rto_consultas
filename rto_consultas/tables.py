@@ -145,7 +145,11 @@ class VerificacionesTables(tables.Table):
 
     def render_titular(self, record):
         persona = record.codigotitular
-        return f"{persona.nombre} {persona.apellido}"
+        match persona.tipopersona:
+            case "J":
+                return persona.razonsocial
+            case _:
+                return f"{persona.nombre} {persona.apellido}"
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
