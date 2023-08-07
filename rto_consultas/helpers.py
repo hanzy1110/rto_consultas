@@ -124,6 +124,8 @@ def handle_query(request, model, fecha_field="fecha"):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
+
+    queryset = filter(check_for_anulado, queryset)
     return queryset
 
 
@@ -252,3 +254,14 @@ def generate_key_certificado(certificado):
 def generate_key_from_params(idtaller, nombrea4):
     key = f"{idtaller}/var/www/html/taller/uploads/pdf/{nombrea4}.pdf"
     return generate_presigned_url(key)
+
+
+def check_for_anulado(verif):
+    if isinstance(verif, Verificaciones):
+        print("FOUND VERIFICACION!!")
+        cert = Certificados.objects.get(
+            idverificacion_id=verif.idverificacion, idtaller_id=verif.idtaller_id
+        )
+        return cert.anulado == 0
+
+    return True

@@ -112,6 +112,8 @@ class ListVerificacionesView(CustomRTOView):
             "nrocertificado": "text",
         },
     )
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
 
 
 class ListCertificadosAssignView(CustomRTOView):
