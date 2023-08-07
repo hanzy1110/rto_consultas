@@ -418,3 +418,108 @@ class ResumenTransporteTable(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+
+class ResumenTransporteCargaTable(tables.Table):
+    certificado = tables.Column(
+        orderable=False,
+        empty_values=(),
+    )
+    fecha = tables.DateColumn(format="d/m/Y")
+    titular = tables.Column(orderable=False, empty_values=())
+    marca = tables.Column(orderable=False, empty_values=())
+    modelo = tables.Column(orderable=False, empty_values=())
+    anio_fab = tables.Column(orderable=False, empty_values=())
+    tipo_servicio = tables.Column(orderable=False, empty_values=())
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtipovehiculo": ("descripcion", Tipovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={"name": "name"},
+    )
+
+    class Meta:
+        model = Verificaciones
+        fields = (
+            "certificado",
+            "localidad",
+            "fecha",
+            "idtaller",
+            "titular",
+            "dominiovehiculo",
+            "marca",
+            "modelo",
+            "anio_fab",
+            "tipo_carga",
+            "idtipovehiculo",
+            "idestado",
+        )
+        extra_columns = ("certificado",)
+
+    def render_idestado(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idestado"][value.idestado]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
+
+    def render_idtipovehiculo(self, record):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipovehiculo"][record.idtipovehiculo]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
+
+    def render_idtipouso(self, value):
+        try:
+            descriptions = map_fields(self.aux_data, self.Meta.model)
+            return descriptions["idtipouso"][value]
+
+        except Exception as e:
+            print(e)
+            return "Unknown!"
+
+    def render_certificado(self, record):
+        query = self.Meta.model.get_nro_certificado(record)
+        return query
+
+    def render_idtaller(self, value):
+        return value.nombre
+
+    def render_titular(self, record):
+        persona = record.codigotitular
+        return f"{persona.nombre} {persona.apellido}"
+
+    def render_marca(self, record):
+        return record.vmarca
+
+    def render_modelo(self, record):
+        return record.vmodelo
+
+    def render_anio_fab(self, record):
+        return record.vanio
+
+    def render_tipo_carga(self, record):
+        try:
+            return Vehiculos.objects.get(
+                dominio__exact=record.dominiovehiculo
+            ).values()["tipocarga"]
+        except:
+            return "N/A"
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self

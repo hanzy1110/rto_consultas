@@ -437,3 +437,39 @@ class ResumenTransportePasajeros(CustomRTOView):
             "fecha_hasta": "date",
         },
     )
+
+
+class ResumenTransporteCarga(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Verificaciones
+    paginate_by = 10
+    template_name = "includes/list_table_verificaciones.html"
+    context_object_name = "Verificaciones"
+    table_class = ResumenTransporteCarga
+
+    aux_data = AuxData(
+        query_fields=[
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idestado": "Estado Certificado",
+            "idtipouso": "Tipo Uso Vehiculo",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+            "idtaller": "Nombre Taller",
+        },
+        ids={
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+        },
+        types={
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+        },
+    )

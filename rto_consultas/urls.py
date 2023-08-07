@@ -56,6 +56,11 @@ urlpatterns += [
     path(
         "resumen/transporte",
         views.ResumenTransportePasajeros.as_view(),
-        name="resumen_dpt",
-    )
+        name="resumen_dpt_pasajeros",
+    ),
+    path(
+        "resumen/carga",
+        views.ResumenTransporteCarga.as_view(),
+        name="resumen_dpt_carga",
+    ),
 ]

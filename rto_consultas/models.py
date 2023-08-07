@@ -2199,7 +2199,7 @@ class Serviciostransporte(models.Model):
         db_table = "serviciostransporte"
 
     def __str__(self):
-        return f"{self.idtiposervicio}:{self.descripcion}"
+        return f"{self.descripcion}"
 
 
 class Serviciostransportehab(models.Model):
