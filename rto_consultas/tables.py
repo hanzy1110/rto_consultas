@@ -430,7 +430,7 @@ class ResumenTransporteCargaTable(tables.Table):
     marca = tables.Column(orderable=False, empty_values=())
     modelo = tables.Column(orderable=False, empty_values=())
     anio_fab = tables.Column(orderable=False, empty_values=())
-    tipo_servicio = tables.Column(orderable=False, empty_values=())
+    tipo_carga = tables.Column(orderable=False, empty_values=())
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -511,7 +511,7 @@ class ResumenTransporteCargaTable(tables.Table):
         try:
             return Vehiculos.objects.get(
                 dominio__exact=record.dominiovehiculo
-            ).values()["tipocarga"]
+            ).tipocarga
         except:
             return "N/A"
 
