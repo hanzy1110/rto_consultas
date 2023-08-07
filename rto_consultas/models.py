@@ -2669,7 +2669,7 @@ class Verificaciones(models.Model):
         db_column="ApellidoConductor", max_length=50
     )  # Field name made lowercase.
     reverificacion = models.IntegerField(
-        db_column="Reverificacion", blank=True, null=Trumodelo
+        db_column="Reverificacion", blank=True, null=True
     )  # Field name made lowercase.
     idverificacionoriginal = models.IntegerField(
         db_column="idVerificacionOriginal", blank=True, null=True
