@@ -26,6 +26,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
     VehiculosTable,
@@ -445,7 +446,7 @@ class ResumenTransporteCarga(CustomRTOView):
     paginate_by = 10
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
-    table_class = ResumenTransporteCarga
+    table_class = ResumenTransporteCargaTable
 
     aux_data = AuxData(
         query_fields=[
