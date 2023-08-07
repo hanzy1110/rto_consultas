@@ -3,6 +3,6 @@ Django
 mysqlclient
 django-admin-soft-dashboard==1.0.12
 django-tables2
-django-silk
+# django-silk
 tablib
 boto3
