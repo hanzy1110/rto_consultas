@@ -212,7 +212,7 @@ def handle_nrocertificado(nrocertificado, model):
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
             cert = Certificados.objects.filter(
-                nrocertificado__exact=nrocertificado
+                nrocertificado__exact=nrocertificado, anulado__exact=0
             ).values()
             print("CERTIFICADOS QUERYSET ===>")
             print(cert)

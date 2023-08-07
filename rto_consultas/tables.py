@@ -401,7 +401,11 @@ class ResumenTransporteTable(tables.Table):
 
     def render_titular(self, record):
         persona = record.codigotitular
-        return f"{persona.nombre} {persona.apellido}"
+        match persona.tipopersona:
+            case "J":
+                return persona.razonsocial
+            case _:
+                return f"{persona.nombre} {persona.apellido}"
 
     def render_marca(self, record):
         return record.vmarca
@@ -514,13 +518,13 @@ class ResumenTransporteCargaTable(tables.Table):
     def render_idtaller(self, value):
         return value.nombre
 
-    def value_titular(self, record):
-        persona = record.codigotitular
-        return f"{persona.nombre} {persona.apellido}"
-
     def render_titular(self, record):
         persona = record.codigotitular
-        return f"{persona.nombre} {persona.apellido}"
+        match persona.tipopersona:
+            case "J":
+                return persona.razonsocial
+            case _:
+                return f"{persona.nombre} {persona.apellido}"
 
     def render_marca(self, record):
         return record.vmarca
