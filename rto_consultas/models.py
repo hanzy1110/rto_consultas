@@ -2198,6 +2198,9 @@ class Serviciostransporte(models.Model):
 
         db_table = "serviciostransporte"
 
+    def __str__(self):
+        return f"{self.idtiposervicio}:{self.descripcion}"
+
 
 class Serviciostransportehab(models.Model):
     idserviciostransportehab = models.IntegerField(
@@ -2666,7 +2669,7 @@ class Verificaciones(models.Model):
         db_column="ApellidoConductor", max_length=50
     )  # Field name made lowercase.
     reverificacion = models.IntegerField(
-        db_column="Reverificacion", blank=True, null=True
+        db_column="Reverificacion", blank=True, null=Trumodelo
     )  # Field name made lowercase.
     idverificacionoriginal = models.IntegerField(
         db_column="idVerificacionOriginal", blank=True, null=True
