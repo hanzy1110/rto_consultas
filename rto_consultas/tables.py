@@ -408,7 +408,8 @@ class ResumenTransporteTable(tables.Table):
             return Serviciostransporte.objects.get(
                 idtiposervicio__exact=record.idtiposervicio
             )
-        except:
+        except Exception as e:
+            print(e)
             return "N/A"
 
     def render_localidad(self, record):
