@@ -2,6 +2,7 @@ import django_tables2 as tables
 from django.core.paginator import Paginator
 from .models import (
     # VWVerificaciones,
+    Localidades,
     Verificacionespdf,
     Tipovehiculo,
     Verificaciones,
@@ -410,6 +411,15 @@ class ResumenTransporteTable(tables.Table):
         except:
             return "N/A"
 
+    def render_localidad(self, record):
+        try:
+            localidad = Localidades.objects.get(
+                idlocalidad__exact=record.pidlocalidad
+            ).descripcion
+            return localidad if localidad else "N/E"
+        except:
+            return "N/E"
+
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
     ):
@@ -431,6 +441,7 @@ class ResumenTransporteCargaTable(tables.Table):
     modelo = tables.Column(orderable=False, empty_values=())
     anio_fab = tables.Column(orderable=False, empty_values=())
     tipo_carga = tables.Column(orderable=False, empty_values=())
+    localidad = tables.Column(orderable=False, empty_values=())
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -509,11 +520,21 @@ class ResumenTransporteCargaTable(tables.Table):
 
     def render_tipo_carga(self, record):
         try:
-            return Vehiculos.objects.get(
+            tipo_carga = Vehiculos.objects.get(
                 dominio__exact=record.dominiovehiculo
             ).tipocarga
+            return tipo_carga if tipo_carga else "No Especificado"
         except:
             return "N/A"
+
+    def render_localidad(self, record):
+        try:
+            localidad = Localidades.objects.get(
+                idlocalidad__exact=record.pidlocalidad
+            ).descripcion
+            return localidad if localidad else "N/E"
+        except:
+            return "N/E"
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
