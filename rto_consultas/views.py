@@ -26,6 +26,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    ResumenTransporteTable,
     VerificacionesTables,
     VehiculosTable,
     CertificadosTable,
@@ -350,6 +351,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
 
+        # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = [generate_key(a) for a in adjuntos]
         context["certificado"] = cert[0]
         context["url_certificado"] = generate_key_certificado(pdf_certificado)
@@ -399,3 +401,39 @@ def verificaciones_anuales(request):
         return exporter.response(f"table.{export_format}")
 
     return render(request, "includes/table_view.html", {"table": table})
+
+
+class ResumenTransportePasajeros(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Verificaciones
+    paginate_by = 10
+    template_name = "includes/list_table_verificaciones.html"
+    context_object_name = "Verificaciones"
+    table_class = ResumenTransporteTable
+
+    aux_data = AuxData(
+        query_fields=[
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idestado": "Estado Certificado",
+            "idtipouso": "Tipo Uso Vehiculo",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+            "idtaller": "Nombre Taller",
+        },
+        ids={
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+        },
+        types={
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+        },
+    )

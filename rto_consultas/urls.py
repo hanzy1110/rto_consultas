@@ -18,26 +18,44 @@ from django.urls import path, include
 import rto_consultas.views as views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     # path("accounts/", include("django.contrib.auth.urls")),
-    path('verificaciones/resumen?_export=csv', views.ListarVerificacionesTotales.as_view(),
-         name="descargar_resumen"),
-    path('verificaciones/resumen', views.ListarVerificacionesTotales.as_view(),
-         name="verificaciones_resumen"),
-    path('verificaciones/', views.ListVerificacionesView.as_view(),
-         name="verificaciones"),
-    path('certs_assignados/', views.ListCertificadosAssignView.as_view(),
-         name="certs_asignados"),
-    path('certificados/', views.ListCertificadosView.as_view(),
-         name="certificados"),
-    path('vehiculos/', views.ListVehiculosView.as_view(),
-         name="vehiculos"),
-    path('ververificacion/<int:idverificacion>/<int:idtaller>', views.VerVerificacion.as_view(),
-         name="ver_verificacion"),
+    path(
+        "verificaciones/resumen?_export=csv",
+        views.ListarVerificacionesTotales.as_view(),
+        name="descargar_resumen",
+    ),
+    path(
+        "verificaciones/resumen",
+        views.ListarVerificacionesTotales.as_view(),
+        name="verificaciones_resumen",
+    ),
+    path(
+        "verificaciones/", views.ListVerificacionesView.as_view(), name="verificaciones"
+    ),
+    path(
+        "certs_assignados/",
+        views.ListCertificadosAssignView.as_view(),
+        name="certs_asignados",
+    ),
+    path("certificados/", views.ListCertificadosView.as_view(), name="certificados"),
+    path("vehiculos/", views.ListVehiculosView.as_view(), name="vehiculos"),
+    path(
+        "ververificacion/<int:idverificacion>/<int:idtaller>",
+        views.VerVerificacion.as_view(),
+        name="ver_verificacion",
+    ),
     # path('vw_verificaciones/', views.ListVWVerificacionesView.as_view(),
     #      name="vw_verificaciones"),
     # path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    path('', include('admin_soft.urls'), name=admin),
+    path("", include("admin_soft.urls"), name=admin),
 ]
-urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
-urlpatterns += [path('cantverificaciones', views.verificaciones_anuales)]
+urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
+urlpatterns += [path("cantverificaciones", views.verificaciones_anuales)]
+urlpatterns += [
+    path(
+        "resumen/transporte",
+        views.ResumenTransportePasajeros.as_view(),
+        name="resumen_dpt",
+    )
+]
