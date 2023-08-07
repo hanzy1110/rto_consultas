@@ -109,12 +109,16 @@ class VerificacionesTables(tables.Table):
 
     def render_idtipovehiculo(self, record):
         try:
-            descriptions = map_fields(self.aux_data, self.Meta.model)
-            return descriptions["idtipovehiculo"][record.idtipovehiculo]
+            # descriptions = map_fields(self.aux_data, self.Meta.model)
+            # return descriptions["idtipovehiculo"][record.idtipovehiculo]
             # return value.descripcion
+            idtipovehiculo = record.idtipovehiculo
+            return Tipovehiculo.objects.get(
+                idtipovehiculo__exact=idtipovehiculo
+            ).descripcion
         except Exception as e:
             print(e)
-            return "Unknown!"
+            return "N/E"
 
     def render_idtipouso(self, value):
         try:
