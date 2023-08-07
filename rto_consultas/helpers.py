@@ -125,8 +125,9 @@ def handle_query(request, model, fecha_field="fecha"):
     if sort:
         queryset = queryset.order_by(sort[0])
 
-    queryset = filter(check_for_anulado, queryset)
-    return list(queryset)
+    # queryset = filter(check_for_anulado, queryset)
+    # return list(queryset)
+    return queryset
 
 
 def handle_form(data: AuxData, model: Model):
