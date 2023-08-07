@@ -258,10 +258,13 @@ def generate_key_from_params(idtaller, nombrea4):
 
 def check_for_anulado(verif):
     if isinstance(verif, Verificaciones):
-        print("FOUND VERIFICACION!!")
-        cert = Certificados.objects.get(
-            idverificacion_id=verif.idverificacion, idtaller_id=verif.idtaller_id
-        )
-        return cert.anulado == 0
+        try:
+            cert = Certificados.objects.get(
+                idverificacion_id=verif.idverificacion, idtaller_id=verif.idtaller_id
+            )
+            return cert.anulado == 0
+        except Exception as e:
+            print(e)
+            return True
 
     return True
