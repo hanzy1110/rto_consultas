@@ -6,7 +6,6 @@ from django_tables2 import SingleTableView, Table
 from django_tables2.export.views import ExportMixin
 from django_tables2.export.export import TableExport
 from django.forms.models import model_to_dict
-from silk.profiling.profiler import silk_profile
 
 from datetime import date
 from django_tables2.config import RequestConfig

@@ -8,7 +8,7 @@ import re
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
-from silk.profiling.profiler import silk_profile
+# from silk.profiling.profiler import silk_profile
 
 from rto_consultas.models import Certificados, Verificaciones, Verificacionespdf
 from .presigned_url import generate_presigned_url
@@ -149,7 +149,6 @@ def handle_form(data: AuxData, model: Model):
     return values
 
 
-@silk_profile()
 def map_fields(data: AuxData, model: Model):
     values = {}
 

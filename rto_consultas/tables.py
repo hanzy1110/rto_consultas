@@ -14,7 +14,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
-from silk.profiling.profiler import silk_profile
+# from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
 
