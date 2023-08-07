@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-SILKY_PYTHON_PROFILER = True
+# SILKY_PYTHON_PROFILER = True
 
 # Application definition
 
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rto_consultas',
     'django_tables2',
-    'silk'
+    # 'silk'
 ]
 
 MIDDLEWARE = [
