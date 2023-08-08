@@ -121,11 +121,7 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
     anulado = query.pop("anulado", None)
 
-    if anulado:
-        queryset = handle_anulado(anulado, model)
-        queryset = handle_nrocertificado(nrocertificado, anulado, model)
-    else:
-        queryset = handle_nrocertificado(nrocertificado, None, model)
+    queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
@@ -134,6 +130,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
     # queryset = filter(check_for_anulado, queryset)
     # return list(queryset)
+    queryset = handle_anulado(queryset, anulado, model)
     return queryset
 
 
@@ -209,11 +206,12 @@ def handle_context(context, view):
     return context
 
 
-def handle_anulado(anulado, model):
+def handle_anulado(queryset, anulado, model):
     queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
     anulado = int(anulado[0])
 
+    print("ANULADO: ", anulado)
     match anulado:
         case [""]:
             return queryset
@@ -230,7 +228,8 @@ def handle_anulado(anulado, model):
             ]
             query = reduce(lambda x, y: x and y, cert_queries)
             # certs = model.objects.filter(query)
-            return Verificaciones.objects.filter(query)
+            verifs_anulado = Verificaciones.objects.filter(query)
+            return queryset.intersection(verifs_anulado)
 
 
 def handle_nrocertificado(nrocertificado, anulado, model):
