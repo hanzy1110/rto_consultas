@@ -224,28 +224,13 @@ def handle_anulado(queryset, anulado, model):
             certs = Certificados.objects.filter(anulado__exact=anulado).values()
             cert_queries = [
                 Q(
-                    idtaller_id=q.idtaller_id,
-                    idverificacion_id=q.idverificacion,
+                    idtaller_id=q["idtaller_id"],
+                    idverificacion=q["idverificacion_id"],
                 )
                 for q in certs
             ]
             query = reduce(lambda x, y: x or y, cert_queries)
-            verifs_segun_anulado = (
-                Verificaciones.objects.filter(query)
-                # .filter(anulado__exact=anulado)
-                # .values_list("idtaller_id", "idverificacion_id")
-            )
-            # cert_queries = [
-            #     Q(
-            #         idtaller_id=q["idtaller_id"],
-            #         idverificacion=q["idverificacion_id"],
-            #     )
-            #     for q in certs_segun_anulado
-            # ]
-            # query = reduce(lambda x, y: x or y, cert_queries)
-            # verifs_segun_anulado = Verificaciones.objects.filter(query)
-            # print(verifs_segun_anulado)
-            # return verifs_segun_anulado
+            verifs_segun_anulado = Verificaciones.objects.filter(query)
             final_q = queryset.intersection(verifs_segun_anulado)
             print(final_q)
             return final_q
