@@ -1,4 +1,4 @@
-from django.db.models import Model
+from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,6 +10,7 @@ from django.forms.models import model_to_dict
 from datetime import date
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
+from django.db.models import OuterRef, Subquery
 
 from .models import (
     Adjuntos,
@@ -115,9 +116,11 @@ class ListVerificacionesView(CustomRTOView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        certs_anulados = Certificados.objects.filter(anulado__exact=0)
-        certs = queryset.select_related("idtaller_id", "idverificacion_id")
-        return certs.difference(certs_anulados)
+        certs = Verificaciones.objects.prefetch_related(
+            Prefetch("rto_consultas.Certificados", queryset=queryset)
+        )
+        certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
+        return certs.intersect(certs_no_anulados)
 
 
 class ListCertificadosAssignView(CustomRTOView):

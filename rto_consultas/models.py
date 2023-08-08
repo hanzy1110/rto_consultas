@@ -725,7 +725,7 @@ class Certificados(models.Model):
 
         indexes = [
             models.Index(fields=("idcertificado", "idtaller")),
-            models.Index(fields=("idverificacion",)),
+            models.Index(fields=("idverificacion", "idtaller")),
             models.Index(fields=("idtaller",)),
         ]
 
