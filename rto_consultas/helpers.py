@@ -119,7 +119,10 @@ def handle_query(request, model, fecha_field="fecha"):
     page = query.pop("page", None)
     _export = query.pop("_export", None)
     nrocertificado = query.pop("nrocertificado", None)
+    anulado = query.pop("anulado", None)
 
+    if anulado:
+        queryset = handle_anulado(anulado, model)
     queryset = handle_nrocertificado(nrocertificado, model)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
@@ -219,11 +222,11 @@ def handle_anulado(anulado, model):
                 for q in cert
             ]
             query = reduce(lambda x, y: x and y, cert_queries)
-            certs = model.objects.filter(query)
+            # certs = model.objects.filter(query)
             return Verificaciones.objects.filter(query)
 
 
-def handle_nrocertificado(nrocertificado, model):
+def handle_nrocertificado(nrocertificado, anulado, model):
     queryset = model.objects.all()
 
     match nrocertificado:
@@ -235,10 +238,15 @@ def handle_nrocertificado(nrocertificado, model):
             print(nrocertificado)
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
-            cert = Certificados.objects.filter(
-                nrocertificado__exact=nrocertificado,
-                # anulado__exact=0
-            ).values()
+            if anulado:
+                cert = Certificados.objects.filter(
+                    nrocertificado__exact=nrocertificado, anulado__exact=1
+                ).values()
+            else:
+                cert = Certificados.objects.filter(
+                    nrocertificado__exact=nrocertificado,
+                ).values()
+
             print("CERTIFICADOS QUERYSET ===>")
             print(cert)
 
