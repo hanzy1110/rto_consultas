@@ -123,7 +123,10 @@ def handle_query(request, model, fecha_field="fecha"):
 
     if anulado:
         queryset = handle_anulado(anulado, model)
-    queryset = handle_nrocertificado(nrocertificado, model)
+        queryset = handle_nrocertificado(nrocertificado, anulado, model)
+    else:
+        queryset = handle_nrocertificado(nrocertificado, None, model)
+
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
