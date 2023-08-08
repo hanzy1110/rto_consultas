@@ -231,7 +231,12 @@ def handle_anulado(queryset, anulado, model):
             ]
             query = reduce(lambda x, y: x or y, cert_queries)
             verifs_segun_anulado = Verificaciones.objects.filter(query)
+            print("ORIGINAL_QUERY")
+            print(queryset)
+            print("VERIFS SEGUN ANULADO: ")
+            print(verifs_segun_anulado)
             final_q = queryset.intersection(verifs_segun_anulado)
+            print("FINAL_QUERYSET: ")
             print(final_q)
             return final_q
 
