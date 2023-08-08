@@ -237,13 +237,13 @@ def handle_anulado(queryset, anulado, model):
                 idverificacion__in=Subquery(certs.values("idverificacion_id")),
             )
             verifs_segun_anulado = Verificaciones.objects.filter(qa & qb)
-            print("ORIGINAL_QUERY")
-            print(len(queryset))
-            print("VERIFS SEGUN ANULADO: ")
-            print(len(verifs_segun_anulado))
+            # print("ORIGINAL_QUERY")
+            # print(len(queryset))
+            # print("VERIFS SEGUN ANULADO: ")
+            # print(len(verifs_segun_anulado))
             final_q = queryset.intersection(verifs_segun_anulado)
-            print("FINAL_QUERYSET: ")
-            print(len(final_q))
+            # print("FINAL_QUERYSET: ")
+            # print(len(final_q))
             return final_q
 
 
