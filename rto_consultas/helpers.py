@@ -221,18 +221,20 @@ def handle_anulado(queryset, anulado, model):
         case None:
             return queryset
         case _:
-            cert = Certificados.objects.filter(anulado__exact=anulado).values()
+            certs = Certificados.objects.filter(anulado__exact=anulado).values()
             cert_queries = [
                 Q(
                     idtaller_id=q["idtaller_id"],
                     idverificacion=q["idverificacion_id"],
                 )
-                for q in cert
+                for q in certs
             ]
             query = reduce(lambda x, y: x and y, cert_queries)
             # certs = model.objects.filter(query)
             verifs_anulado = Verificaciones.objects.filter(query)
-            return verifs_anulado.intersection(queryset)
+            final_q = verifs_anulado.intersection(queryset)
+            print(final_q)
+            return final_q
 
 
 def handle_nrocertificado(nrocertificado, anulado, model):
