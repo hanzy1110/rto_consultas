@@ -230,10 +230,13 @@ def handle_anulado(queryset, anulado, model):
             #     for q in certs
             # ]
             # query = reduce(lambda x, y: x or y, cert_queries)
-            verifs_segun_anulado = Verificaciones.objects.filter(
+            qa = Q(
                 idtaller_id__in=Subquery(certs.values("idtaller_id")),
+            )
+            qb = Q(
                 idverificacion__in=Subquery(certs.values("idverificacion_id")),
             )
+            verifs_segun_anulado = Verificaciones.objects.filter(qa & qb)
             print("ORIGINAL_QUERY")
             print(len(queryset))
             print("VERIFS SEGUN ANULADO: ")
