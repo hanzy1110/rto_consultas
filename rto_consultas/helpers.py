@@ -210,7 +210,7 @@ def handle_anulado(queryset, anulado, model):
     queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
     try:
-        anulado = int(not int(anulado[0]))
+        anulado = int(anulado[0])
     except:
         anulado = None
 
