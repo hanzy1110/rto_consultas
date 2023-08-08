@@ -224,7 +224,7 @@ def handle_anulado(anulado, model):
             cert_queries = [
                 Q(
                     idtaller_id=q["idtaller_id"],
-                    idverificacion_id=q["idverificacion_id"],
+                    idverificacion=q["idverificacion_id"],
                 )
                 for q in cert
             ]
