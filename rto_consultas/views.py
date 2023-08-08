@@ -112,8 +112,12 @@ class ListVerificacionesView(CustomRTOView):
             "nrocertificado": "text",
         },
     )
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        certs_anulados = Certificados.objects.filter(anulado__exact=0)
+        certs = queryset.select_related("idtaller_id", "idverificacion_id")
+        return certs.difference(certs_anulados)
 
 
 class ListCertificadosAssignView(CustomRTOView):
