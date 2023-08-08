@@ -232,7 +232,8 @@ def handle_anulado(queryset, anulado, model):
             query = reduce(lambda x, y: x and y, cert_queries)
             # certs = model.objects.filter(query)
             verifs_anulado = Verificaciones.objects.filter(query)
-            final_q = verifs_anulado.intersection(queryset)
+            final_q = verifs_anulado.difference(queryset)
+            # final_q = queryset.difference(verifs_anulado)
             print(final_q)
             return final_q
 
