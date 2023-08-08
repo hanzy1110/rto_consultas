@@ -224,8 +224,8 @@ def handle_anulado(queryset, anulado, model):
             # certs = Certificados.objects.filter(anulado__exact=anulado).values()
             cert_queries = [
                 Q(
-                    idtaller_id=q["idtaller_id"],
-                    idverificacion=q["idverificacion_id"],
+                    idtaller_id=q.idtaller_id,
+                    idverificacion_id=q.idverificacion,
                 )
                 for q in queryset
             ]
