@@ -120,7 +120,7 @@ class ListVerificacionesView(CustomRTOView):
             Prefetch("rto_consultas.Certificados", queryset=queryset)
         )
         certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
-        return certs.intersect(certs_no_anulados)
+        return certs.intersection(certs_no_anulados)
 
 
 class ListCertificadosAssignView(CustomRTOView):
