@@ -212,6 +212,7 @@ def handle_context(context, view):
 def handle_anulado(anulado, model):
     queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
+    anulado = int(anulado[0])
 
     match anulado:
         case [""]:
