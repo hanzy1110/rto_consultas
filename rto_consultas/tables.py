@@ -18,6 +18,8 @@ from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
 # from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
+vals = {1: "Verdadero", 0: "Falso"}
+
 
 class CustomFileColumn(tables.FileColumn):
     def get_url(self, value, record):
@@ -60,6 +62,7 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     titular = tables.Column(orderable=False, empty_values=())
+    anulado = tables.Column(orderable=False, empty_values=())
     vigencia = tables.Column(orderable=False, empty_values=())
     aux_data = AuxData(
         query_fields=[],
@@ -77,6 +80,7 @@ class VerificacionesTables(tables.Table):
         fields = (
             "dominiovehiculo",
             "certificado",
+            "anulado",
             "fecha",
             "vigencia",
             "idtipouso",
@@ -119,6 +123,13 @@ class VerificacionesTables(tables.Table):
         except Exception as e:
             print(e)
             return "N/E"
+
+    def render_anulado(self, record):
+        cert = Certificados.objects.filter(
+            idverificacion_id__exact=record.idverificacion,
+            idtaller_id__exact=record.idtaller,
+        ).values()
+        return vals[cert[0]["anulado"]]
 
     def render_idtipouso(self, value):
         try:

@@ -5,6 +5,7 @@ from datetime import timedelta, datetime
 
 
 import re
+from functools import reduce
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
@@ -202,6 +203,26 @@ def handle_context(context, view):
     return context
 
 
+def handle_anulado(anulado, model):
+    queryset = model.objects.all()
+    # vals = {"Verdadero": 1, "Falso": 0}
+
+    match anulado:
+        case [""]:
+            return queryset
+        case None:
+            return queryset
+        case _:
+            cert = Certificados.objects.filter(anulado__exact=anulado).values()
+            cert_queries = [
+                Q(idtaller_id=q.idtaller_id, idverificacion_id=q.idverificacion)
+                for q in cert
+            ]
+            query = reduce(lambda x, y: x and y, cert_queries)
+            certs = model.objects.filter(query)
+            return Verificaciones.objects.filter(query)
+
+
 def handle_nrocertificado(nrocertificado, model):
     queryset = model.objects.all()
 
@@ -215,7 +236,8 @@ def handle_nrocertificado(nrocertificado, model):
             nrocertificado = int(nrocertificado[0])
             print(nrocertificado)
             cert = Certificados.objects.filter(
-                nrocertificado__exact=nrocertificado, anulado__exact=0
+                nrocertificado__exact=nrocertificado,
+                # anulado__exact=0
             ).values()
             print("CERTIFICADOS QUERYSET ===>")
             print(cert)
