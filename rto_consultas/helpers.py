@@ -1,4 +1,4 @@
-from django.db.models import Q, QuerySet
+from django.db.models import Q, QuerySet, Subquery
 from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
@@ -221,16 +221,19 @@ def handle_anulado(queryset, anulado, model):
         case None:
             return queryset
         case _:
-            certs = Certificados.objects.filter(anulado__exact=anulado).values()
-            cert_queries = [
-                Q(
-                    idtaller_id=q["idtaller_id"],
-                    idverificacion=q["idverificacion_id"],
-                )
-                for q in certs
-            ]
-            query = reduce(lambda x, y: x or y, cert_queries)
-            verifs_segun_anulado = Verificaciones.objects.filter(query)
+            certs = Certificados.objects.filter(anulado__exact=anulado)
+            # cert_queries = [
+            #     Q(
+            #         idtaller_id=q["idtaller_id"],
+            #         idverificacion=q["idverificacion_id"],
+            #     )
+            #     for q in certs
+            # ]
+            # query = reduce(lambda x, y: x or y, cert_queries)
+            verifs_segun_anulado = Verificaciones.objects.filter(
+                idtaller_id__in=Subquery(certs.values("idtaller_id")),
+                idverificacion__in=Subquery(certs.values("idverificacion_id")),
+            )
             print("ORIGINAL_QUERY")
             print(queryset)
             print("VERIFS SEGUN ANULADO: ")
