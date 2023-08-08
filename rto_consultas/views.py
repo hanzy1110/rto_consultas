@@ -116,13 +116,14 @@ class ListVerificacionesView(CustomRTOView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        certs = Verificaciones.objects.prefetch_related(
-            Prefetch("Certificados", queryset=queryset)
-        )
-        print(certs)
-        certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
-        print("-x-" * 30)
-        print(certs_no_anulados)
+        certs = set()
+        for q in queryset:
+            certs.add(
+                Certificados.objects.get(
+                    idtaller_id__exact=q.idtaller_id, idverificacion=q.idverificacion_id
+                )
+            )
+        certs_no_anulados = set(Certificados.objects.filter(anulado__exact=0))
         return certs.intersection(certs_no_anulados)
 
 
