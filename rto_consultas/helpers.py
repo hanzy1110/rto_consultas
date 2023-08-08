@@ -222,7 +222,10 @@ def handle_anulado(anulado, model):
         case _:
             cert = Certificados.objects.filter(anulado__exact=anulado).values()
             cert_queries = [
-                Q(idtaller_id=q["idtaller_id"], idverificacion_id=q["idverificacion"])
+                Q(
+                    idtaller_id=q["idtaller_id"],
+                    idverificacion_id=q["idverificacion_id"],
+                )
                 for q in cert
             ]
             query = reduce(lambda x, y: x and y, cert_queries)
