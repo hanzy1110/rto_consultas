@@ -124,7 +124,7 @@ class ListVerificacionesView(CustomRTOView):
         ]
         query = reduce(lambda x, y: x and y, cert_queries)
         certs = Certificados.objects.filter(query)
-        certs_no_anulados = set(Certificados.objects.filter(anulado__exact=0))
+        certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
         return certs.intersection(certs_no_anulados)
 
 
