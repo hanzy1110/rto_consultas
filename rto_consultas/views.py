@@ -10,7 +10,9 @@ from django.forms.models import model_to_dict
 from datetime import date
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
-from django.db.models import OuterRef, Subquery
+from django.db.models import Q
+
+from functools import reduce
 
 from .models import (
     Adjuntos,
@@ -116,13 +118,12 @@ class ListVerificacionesView(CustomRTOView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        certs = set()
-        for q in queryset:
-            certs.add(
-                Certificados.objects.get(
-                    idtaller_id__exact=q.idtaller_id, idverificacion=q.idverificacion_id
-                )
-            )
+        cert_queries = [
+            Q(idtaller_id=q.idtaller_id, idverificacion_id=q.idverificacion)
+            for q in queryset
+        ]
+        query = reduce(lambda x, y: x and y, cert_queries)
+        certs = Certificados.objects.filter(query)
         certs_no_anulados = set(Certificados.objects.filter(anulado__exact=0))
         return certs.intersection(certs_no_anulados)
 
