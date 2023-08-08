@@ -219,6 +219,7 @@ def handle_anulado(queryset, anulado, model):
             return queryset
         case _:
             cert = Certificados.objects.filter(anulado__exact=anulado).values()
+            print([c["anulado"] for c in cert])
             cert_queries = [
                 Q(
                     idtaller_id=q["idtaller_id"],
