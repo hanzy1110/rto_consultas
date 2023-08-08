@@ -209,7 +209,10 @@ def handle_context(context, view):
 def handle_anulado(queryset, anulado, model):
     queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
-    anulado = int(anulado[0])
+    try:
+        anulado = int(anulado[0])
+    except:
+        anulado = ""
 
     print("ANULADO: ", anulado)
     match anulado:
