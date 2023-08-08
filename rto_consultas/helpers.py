@@ -212,7 +212,7 @@ def handle_anulado(queryset, anulado, model):
     try:
         anulado = int(anulado[0])
     except:
-        anulado = ""
+        anulado = None
 
     print("ANULADO: ", anulado)
     match anulado:
