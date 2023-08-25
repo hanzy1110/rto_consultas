@@ -8,6 +8,7 @@ services:
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+      - ./my.cnf:/etc/mysql/my.cnf
     environment:
       - MYSQL_ROOT_HOST=%
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -49,10 +50,10 @@ services:
     ports:
       - 9100:9100
     command:
-      - '--path.rootfs=/host'
+      - "--path.rootfs=/host"
     restart: unless-stopped
     volumes:
-      - '.:/host:ro,rslave'
+      - ".:/host:ro,rslave"
 
   prometheus:
     image: prom/prometheus:latest
@@ -80,16 +81,16 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
-      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_db)/?allowCleartextPasswords&allowNativePasswords&allowOldPasswords"
+      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_exporter)/?allowCleartextPasswords&allowNativePasswords&allowOldPasswords"
 
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
     volumes:
-    - grafana-data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
     ports:
-    - 3000:3000
+      - 3000:3000
 
 volumes:
   grafana-data:
