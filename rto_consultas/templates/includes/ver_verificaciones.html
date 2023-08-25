@@ -1,0 +1,741 @@
+{% extends 'layouts/base.html' %}
+
+{% load getattr %}
+{% block content %}
+{% load render_table from django_tables2 %}
+{% load getattr %}
+
+<div id="templatemo_main">
+	<div class="col_w900 col_w900_last">
+		<h2><a href="#">Verificaci&oacute;n</a></h2>
+		<table class="tblForm" width="100%">
+			<tr>
+				{% if url_certificado %}
+				<td>
+					<input type='button' id='btnPDF' value='Ver certificado' class="btn btn-fill btn-sm btn-primary"
+						onclick="window.open('{{ url_certificado }}')" />
+				</td>
+				{% endif %}
+			</tr>
+			{% if check_certificado %}
+			<tr class="borTop">
+				<td colspan="4"><b>Certificado ANULADO</b></td>
+			</tr>
+			<tr class="borBot">
+				<td colspan="4">Observaciones en la anulaci&oacute;n:
+					'{{ observaciones }}'</td>
+			</tr>
+			{% endif %}
+			<tr>
+				<td id="tagCt">Nro Certificado:</td>
+				<td><input type="text" id="txtNroCert" style="width: 120px" class="txt" value='{{ nrocertificado }}' />
+				</td>
+				<td id="tagFcVal">Vigencia:</td>
+				<td><input type="text" id="txtFechaVal" style="width: 120px" alt="date" class="txt"
+						value='{{ vigenciahasta }}' /></td>
+			</tr>
+			<tr>
+				<td id="tagRes">Resultado:</td>
+				<td colspan="3">
+					<input type="text" id="txtREsult" style="width: 250px" class="txt" value='{{ estado }}' />
+				</td>
+			</tr>
+			<tr>
+				<td id="tagNT">Planta:</td>
+				<td colspan="3"><input type="text" id="txtNroTaller" style="width: 690px" class="txt"
+						value="{{ object.idtaller|default:'N\A' }}" />
+				</td>
+			</tr>
+			<tr>
+				<td id="tagFc">Fecha:</td>
+				<td><input type="text" id="txtFecha" style="width: 120px" alt="date" class="txt"
+						value="{{ object.fecha|default:'N/A' }}" /></td>
+				<td id="tagHora">Hora:</td>
+				<td><input type="text" id="txtHora" alt="time" style="width: 120px" class="txt"
+						value="{{ object.hora|default:'N/A' }}" /></td>
+			</tr>
+			<tr>
+				<td>Provincia:</td>
+				<td>
+					<div id="divProv">
+						{{ provincia }}
+					</div>
+				</td>
+				<td id="tagLoc">Localidad:</td>
+				<td>
+					<div id="divLoc">
+						{{ localidad }}
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Director T&eacute;cnico:</td>
+				<td><input type="text" id="txtDT" style="width: 250px" class="txt"
+						value="{{ object.directortecnico|default:'N/A' }}" /></td>
+				<td>Inspector:</td>
+				<td><input type="text" id="txtInsp" style="width: 250px" class="txt"
+						value="{{ object.inspector|default:'N/A' }}" />
+				</td>
+			</tr>
+			<tr>
+				<td>Categor&iacute;a:</td>
+				<td><input type="text" id="txtDT" style="width: 250px" class="txt" value='{{ categoria }}' />
+				</td>
+			</tr>
+			<tr>
+				<!-- TODO AGREGAR AQUI LOS ADJUNTOS -->
+				<td>Adjuntos:</td>
+				<td colspan="3">
+					<ul>
+						{% for a in adjuntos %}
+						<li><a href="{{ a }}"> Adjunto </a></li>
+						{% endfor %}
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="center"><span id="Respuesta" style="color: #ff0000;"></span></td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<div id="formDatosV">
+						<table style="width: 100%;">
+							<tr>
+								<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+										del Titular</b></td>
+							</tr>
+							<tr>
+								<td colspan="4" align="center" id="tagTPers">
+									{% if object.ptipopersona|default:'N\A' == "F" %}
+									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F"
+										checked="checked" /> Persona
+									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" />
+									{% elif object.ptipopersona|default:"N\A" == "J" %}
+									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F" /> Persona
+									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" checked="checked" />
+									{% else %}
+									Persona F&iacute;sica <input type="radio" name="rdPersona" value="F" /> Persona
+									Jur&iacute;dica <input type="radio" name="rdPersona" value="J" />
+									{% endif %}
+								</td>
+							</tr>
+							<!-- TODO calcular mostrarfi -->
+							<tr id="mostrarFis" {{ mostrarfi }}>
+								<td id="tagApe">Titular:</td>
+								<td><input type="text" id="txtAp" style="width: 250px" maxlength="50" class="txt"
+										value="{{ object.descripciontitular|default:'N/A' }}" /></td>
+
+								<td id="tagDoc">Documento:</td>
+								<td colspan="3">
+									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
+										<option value="{{ doc }}" selected="selected">
+											{{ object.ptipodoc|default:'N/A' }}</option>
+									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
+										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
+								</td>
+							</tr>
+							<tr id="mostrarJur" {{ mostrarJu }}>
+								<td colspan="4">
+									<table style="width:100%;">
+										<tr>
+											<td style="width:130px;" id="tagRS">Raz&oacute;n Social:</td>
+											<td style="width:330px;">
+												<input type="text" id="txtRazonSocial" style="width: 250px" class="txt"
+													value="{{ object.descripciontitular|default:'N/A' }}" />
+											</td>
+											<td style="width:130px;" id="tagCuit">CUIT:</td>
+											<td>
+												<input type="text" id="txtCuit" style="width: 120px" maxlength="11"
+													onkeypress="return acceptInt(event)" class="txt"
+													value="{{ object.pcuit|default:'N/A' }}" />
+											</td>
+										</tr>
+										<tr>
+											<td id="tagCPJ">Codigo PJ:</td>
+											<td colspan="3">
+												<input type="text" id="txtCodigoPJ" style="width: 120px" class="txt"
+													value="{{ object.pcodigopj|default:'N/A' }}" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>Provincia:</td>
+								<td>
+									<div id="divProvT">
+										{{ provincia }}
+									</div>
+								</td>
+								<td>Localidad:</td>
+								<td>
+									<div id="divLocT">
+										{{ localidad }}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>Domicilio:</td>
+								<td><input type="text" id="txtDomicilio" style="width: 250px" class="txt"
+										value="{{ object.pdomicilio|default:'N/A' }}" /></td>
+								<td>Tel&eacute;fono:</td>
+								<td><input type="text" id="txtTelefono" style="width: 250px" class="txt"
+										value="{{ object.ptelefono|default:'N/A' }}" /></td>
+							</tr>
+							<tr>
+								<td>Email:</td>
+								<td colspan="3"><input type="text" id="txtEmailT" style="width: 250px" class="txt"
+										value="{{ object.pemail|default:'N/A' }}" /></td>
+							</tr>
+							<tr>
+								<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+										del Conductor</b></td>
+							</tr>
+							<tr>
+								<td id="tagApeC">Apellido:</td>
+								<td><input type="text" id="txtApC" style="width: 250px" maxlength="50" class="txt"
+										value="{{ object.nombreconductor|default:'N/A' }}" /></td>
+								<td id="tagNomC">Nombre:</td>
+								<td><input type="text" id="txtNomC" style="width: 250px" maxlength="50" class="txt"
+										value="{{ object.apellidoconductor|default:'N/A' }}" /></td>
+							</tr>
+							<tr>
+								<td>Documento:</td>
+								<td colspan="3">
+									<select id="cbTipoDoc" name="cbTipoDoc" class="combo" style="width: 100px;">
+										<option value="{{ object.ptipodoc|default:'N/A' }}" selected="selected">
+											{{ object.ptipodoc|default:'N/A' }}
+										</option>
+									</select> <input type="text" id="txtNroDoc" style="width: 100px" maxlength="8"
+										class="txt" value="{{ object.nrodocconductor|default:'N/A' }}" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="4" style="border-bottom: 2px solid #0D3A5B;"><b>Datos
+										del Veh&iacute;culo</b></td>
+							</tr>
+							<tr>
+								<td>Dominio:</td>
+								<td><input type="text" id="txtDominio" style="width: 150px" readonly="readonly"
+										class="txt" value="{{ object.dominiovehiculo.dominio }}" />
+								</td>
+								<td>A&ntilde;o:</td>
+								<td><input type="text" id="txtAnio" style="width: 100px" class="txt"
+										value="{{ object.vanio|default:'N/A' }}" /></td>
+							</tr>
+							<tr>
+								<td>Marca:</td>
+								<td><input type="text" id="txtMarca" style="width: 250px" class="txt"
+										value="{{ object.vmarca|default:'N/A' }}" /></td>
+								<td>Modelo:</td>
+								<td><input type="text" id="txtModelo" style="width: 250px" class="txt"
+										value="{{ object.vmodelo|default:'N/A' }}" /></td>
+							</tr>
+							<tr>
+
+								<!-- TODO COMBO PROVINCIAS -->
+								<td>Provincia:</td>
+								<td>
+									<div id="divProvR"><select id="cmbProvR" class="combo" name="cmbProvR"
+											style="width: 250px" disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select></div>
+								</td>
+								<td>Localidad:</td>
+								<td>
+									<div id="divLocR"><select id="cmbLocR" class="combo" name="cmbLocR"
+											style="width: 250px" disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select></div>
+								</td>
+							</tr>
+							<tr>
+								<td>Motor marca:</td>
+								<td><input type="text" id="txtMotorMarca" style="width: 250px" class="txt"
+										value="{{ object.motormarca|default:" N\A" }}" /></td>
+								<td>Motor nro:</td>
+								<td><input type="text" id="txtMotorNro" style="width: 250px" class="txt"
+										value="{{ object.motornumero|default:" N\A" }}" /></td>
+							</tr>
+							<tr>
+								<td>Motor a&ntilde;o:</td>
+								<td><input type="text" id="txtMotorAnio" style="width: 250px" class="txt"
+										value="{{ object.motoranio|default:" N\A" }}" /></td>
+								<td>Tipo Combustible:</td>
+								<td><input type="text" id="txtTipoComb" style="width: 250px" class="txt"
+										value="{{ object.tipocombustible|default:" N\A" }}" /></td>
+							</tr>
+							<tr>
+								<td>Chasis marca:</td>
+								<td><input type="text" id="txtChasisMarca" style="width: 250px" class="txt"
+										value="{{ object.chasismarca|default:" N\A" }}" /></td>
+								<td>Chasis nro:</td>
+								<td><input type="text" id="txtChasisNro" style="width: 250px" class="txt"
+										value="{{ object.chasisnro|default:" N\A" }}" /></td>
+							</tr>
+							<tr>
+								<td>Chasis a&ntilde;o:</td>
+								<td><input type="text" id="txtChasisAnio" style="width: 250px" class="txt"
+										value="{{ object.chasisanio|default:" N\A" }}" /></td>
+								<td>Pot:</td>
+								<td><input type="text" id="txtPot" style="width: 250px" class="txt"
+										value="{{ object.vpotencia|default:" N\A" }}" /></td>
+							</tr>
+							<tr>
+								<td>Nro Ejes:</td>
+								<td><input type="text" id="txtNroEjes" style="width: 250px" class="txt"
+										value="{{ object.nroejec|default:" N\A" }}" /></td>
+								<td>Nro. Rec. Patente:</td>
+								<td>
+									<input type="text" id="txtNroRecPat" style="width: 250px" class="txt" maxlength="20"
+										value="{{ object.dominiovehiculo.ultimorecpatente|default:" N\A"}}" />
+								</td>
+							</tr>
+							<tr>
+								<td>Compa&ntilde;ia Seguro:</td>
+								<td>
+									<input type="text" id="txtCompSeguro" style="width: 250px" class="txt"
+										value="{{ object.companiaseguro|default:" N\A" }}" />
+								</td>
+								<td>Nro. Poliza:</td>
+								<td>
+									<input type="text" id="txtPoliza" style="width: 250px" class="txt" maxlength="20"
+										value="{{ object.nropoliza|default:" N\A" }}" />
+								</td>
+							</tr>
+							<tr>
+								<td>Tac&oacute;grafo marca:</td>
+								<td><input type="text" id="txtTacMarca" style="width: 250px" class="txt"
+										value="{{ object.tacografomarca|default:" N\A" }}" /></td>
+								<td>Tac&oacute;grafo nro:</td>
+								<td><input type="text" id="txtTacNro" style="width: 250px" class="txt"
+										value="{{ object.tacografonro|default:" N\A" }}" /></td>
+
+							</tr>
+							<tr>
+								<td>CCCF Nro:</td>
+								<td><input type="text" id="txtCCCF" style="width: 250px" class="txt"
+										value="{{ object.cccf|default:" N\A" }}" /></td>
+								<td>Nro de Interno:</td>
+								<td>
+									<input type="text" id="txtNroIntPas" style="width: 100px" class="txt" maxlength="10"
+										onkeypress="return acceptInt(event)"
+										value="{{ object.dominiovehiculo.nrointerno|default:'N/A' }}" />
+								</td>
+							</tr>
+							<tr>
+								<!-- TODO COMBO TIPO Y USO VEHICULO -->
+								<td>Tipo Vehiculo:</td>
+								<td>
+									<div id="divVe"><select id="cmbTipoVe" class="combo" name="cmbTipoVe"
+											style="width: 250px" disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select></div>
+								</td>
+								<td>Tipo Uso:</td>
+								<td>
+									<div id="divUso"><select id="cmbTipoUso" class="combo" name="cmbTipoUso"
+											style="width: 250px" disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select></div>
+								</td>
+							</tr>
+							<tr class="mostrar3" {% get_pa_style %}>
+								<td>Posici&oacute;n Motor:</td>
+								<td><input type="text" id="txtPosM" style="width: 250px" class="txt"
+										value="{{ object.pocisionmotor|default:" N\A" }}" /></td>
+								<td>Tara:</td>
+								<td><input type="text" id="txtTara" style="width: 250px" class="txt"
+										value="{{ object.tara|default:" N\A" }}" /></td>
+							</tr>
+							<tr class="mostrar3" {% get_pa_style %}>
+								<td>Peso Max.:</td>
+								<td><input type="text" id="txtPesoM" style="width: 250px" class="txt"
+										value="{{ object.tara|default:" N\A" }}" /></td>
+								<td>Carga Util:</td>
+								<td><input type="text" id="txtCajaU" style="width: 250px" class="txt"
+										value="{{ object.cargautil|default:" N\A" }}" /></td>
+							</tr>
+							<tr class="mostrar3" {% get_pa_style %}>
+								<td>Expediente:</td>
+								<td><input type="text" id="txtExp" style="width: 250px" class="txt"
+										value="{{ object.dominiovehiculo.expediente }}" /></td>
+								<td>Asientos:</td>
+								<td><input type="text" id="txtAsientos" style="width: 250px" class="txt"
+										value="{{ object.asientos|default:" N\A" }}" /></td>
+							</tr>
+							<tr class="mostrar3 taxi" {% get_pa_style %}>
+								<td>Carrocer&iacute;a:</td>
+								<td><input type="text" id="txtCarroc" style="width: 250px" class="txt"
+										value="{{ object.carroceria|default:" N\A" }}" /></td>
+								<td>Suspensi&oacute;n:</td>
+								<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
+										value="{{ object.suspencion|default:" N\A" }}" /></td>
+							</tr>
+							<tr class="mostrar3 taxi" {% get_pa_style %}>
+								<td colspan="4">
+									Aire Acondicionado
+									{% if object.aireaco == 0 %}
+									<input type="checkbox" id="chAAco" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% else %}
+									<input type="checkbox" id="chAAco" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% endif %}
+									Bar
+									{% if object.bar == 0 %}
+									<input type="checkbox" id="chBar" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% else %}
+									<input type="checkbox" id="chBar" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% endif %}
+									Ba&ntilde;os
+									{% if object.banio == 0 %}
+									<input type="checkbox" id="chBanio" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% else %}
+									<input type="checkbox" id="chBanio" checked="checked" /> &nbsp;&nbsp; &nbsp;&nbsp;
+									{% endif %}
+									Calefacci&oacute;n
+									{% if object.calefaccion == 0 %}
+									<input type="checkbox" id="chCalef" />
+									{% else %}
+									<input type="checkbox" id="chCalef" checked="checked" />
+									{% endif %}
+								</td>
+							</tr>
+							<tr class="mostrar3" {% get_pa_style %}>
+								{% if object.codigohabilitacion == 0 and object.codigohabilitacion == '' %}
+								<td>Tipo Servicio:</td>
+								<td>
+									<div id="divTipoServP" style="display: inline;">
+										<select id="cmbTipoServP" class="combo" name="cmbTipoServP" style="width: 250px"
+											disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select>
+									</div>
+								</td>
+								{% else %}
+
+
+								<td>Tipo Servicio:</td>
+								<td colspan="3" id="listaServicioHab"></td>
+
+								{% endif %}
+							</tr>
+							<tr class="mostrar3" {% get_pa_style %}>
+								<!-- TODO HACER COMBO CATEGORIAS -->
+								<td>Cat. Servicio:</td>
+								<td colspan="3">
+									<div id="divClaseServP" style="display: inline;">
+										<select id="cmbClaseServP" class="combo" name="cmbClaseServP"
+											style="width: 250px" disabled="disabled">
+											<option value="-1">Seleccione...</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr id="veCarga" class="mostrar2" {% get_ca_style %}>
+								<td>Caja:</td>
+								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
+										value="{{ object.caja|default:" N\A" }}" /></td>
+								<td id="tagTCarga" class="mostrar5" {% get_TCa_style %}>Tipo Carga:</td>
+								<td class="mostrar5" {% get_TCa_style %}>
+									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
+										<option value="-1">Seleccione...</option>
+										{% if object.tipocarga == "Carga Peligrosa" %}
+										<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
+										{% else %}
+										<option value="Carga Peligrosa">Carga Peligrosa</option>
+										{% endif %}
+										{% if object.tipocarga == "Carga General" %}
+										<option value="Carga General" selected="selected">Carga General</option>
+										{% else %}
+										<option value="Carga General">Carga General</option>
+										{% endif %}
+									</select>
+								</td>
+							</tr>
+							<tr class="mostrar4" {% get_tm_style %}>
+								<!-- TODO combo servicion provincia -->
+								<td>Servicios en prov.:</td>
+								<td>
+									<span id="divProvTM">
+										<select id="cmbProvTM" class="combo" name="cmbProvTM" style="width: 250px"
+											disabled="disabled">
+											<option value="-1">Provincia...</option>
+										</select></span>
+								</td>
+								<td id="TagServLoc">Servicios en loc.:</td>
+								<td>
+									<span id="divLocTM">
+										<select id="cmbLocTM" class="combo" name="cmbLocTM" style="width: 250px"
+											disabled="disabled">
+											<option value="-1">Localidad...</option>
+										</select>
+									</span>
+								</td>
+							</tr>
+							<tr class="mostrar4" {% get_tm_style %}>
+								<td id="tagTServ">Tipo Servicios:</td>
+								<td colspan="3">
+									<input type="text" id="txtTipoSerTM" style="width: 250px" class="txt"
+										value="{{ object.tiposervtm|default:" N\A" }}" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">Tarjeta Verde:
+									<!-- TODO URL TarjetaVerde -->
+									<!-- context tarjeta verde? -->
+									{% get_tarjeta_verde_url %}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4">&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" id="formDatosVerif">
+					<table width="95%" cellspacing="0">
+						<tr>
+							<td colspan="8" style="border-bottom: 2px solid #0D3A5B; text-align: left;"><b>Valores
+									Medidos</b></td>
+						</tr>
+						<tr>
+							<td rowspan="2">&nbsp;</td>
+							<td align="center"><b>Control de Peso</b></td>
+							<td colspan="4" align="center"><b>Control de Frenos de servicios</b></td>
+						</tr>
+						<tr>
+							<td align="center">Tara Kg</td>
+							<td align="center">Fza Izq</td>
+							<td align="center">Fza Der</td>
+							<td align="center">Dif.</td>
+							<td align="center">Efic.</td>
+						</tr>
+						<tr>
+							<td>Eje 1:</td>
+							<td align="center"><input type="text" id="txtE1Tara" style="width: 80px"
+									onkeypress="return acceptDec(event)" class="txtNum"
+									value="{{ object.eje1_tara|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE1FzaI" style="width: 80px"
+									onkeypress="return acceptDec(event)" class="txtNum"
+									value="{{ object.eje1_fzaizq|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE1FzaD" style="width: 80px"
+									onkeypress="return acceptDec(event)" class="txtNum"
+									value="{{ object.eje1_fzader|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE1Dif" style="width: 80px"
+									onkeypress="return acceptDec(event)" class="txtNum"
+									value="{{ object.eje1_dif|default:'N\A'}}" />
+							</td>
+							<td align="center"><input type="text" id="txtE1Efic" style="width: 80px"
+									onkeypress="return acceptDec(event)" class="txtNum"
+									value="{{ object.eje1_eficiencia|default:'N/A'}}" /></td>
+						</tr>
+						<tr>
+							<td>Eje 2:</td>
+							<td align="center"><input type="text" id="txtE2Tara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje2_tara|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE2FzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje2_fzaizq|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE2FzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje2_fzader|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE2Dif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje2_dif|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE2Efic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje2_eficiencia|default:'N/A'}}" />
+							</td>
+						</tr>
+						<tr>
+							<td>Eje 3:</td>
+							<td align="center"><input type="text" id="txtE3Tara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje3_tara|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE3FzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje3_fzaizq|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE3FzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje3_fzader|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE3Dif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje3_dif|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE3Efic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje3_eficiencia|default:'N/A'}}" />
+							</td>
+						</tr>
+						<tr>
+							<td>Eje 4:</td>
+							<td align="center"><input type="text" id="txtE4Tara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje4_tara|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE4FzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje4_fzaizq|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE4FzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje4_fzader|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE4Dif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje4_dif|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE4Efic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje4_eficiencia|default:'N/A'}}" />
+							</td>
+						</tr>
+						<tr>
+							<td>Eje 5:</td>
+							<td align="center"><input type="text" id="txtE5Tara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_tara|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE5FzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_fzaizq|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE5FzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_fzader|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtE5Dif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_dif|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtE5Efic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.eje5_eficiencia|default:'N/A'}}" />
+							</td>
+						</tr>
+						<tr>
+							<td><b>Totales:</b></td>
+							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ mto_tara|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ mto_fi|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ mto_der|default:'N/A' }}" /></td>
+							<td align="center">&nbsp;</td>
+							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ mto_eficiencia|default:'N/A' }}" /></td>
+						</tr>
+						<tr>
+							<!--  $ME1Tara + $ME2Tara -->
+							<td><b>Freno Estacionamiento:</b></td>
+							<td align="center"><input type="text" id="txtFrTara" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ ME1ME2|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtFrFzaI" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.freno_fzaisq|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtFrFzaD" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.freno_fzader|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtFrDif" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt" value="{{ object.freno_dif|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtFrEfic" onkeypress="return acceptDec(event)"
+									style="width: 80px" class="txt"
+									value="{{ object.freno_eficiencia|default:'N/A'}}" /></td>
+						</tr>
+						<tr class="borTop">
+							<td rowspan="2"><b>Gases de
+									escape</b></td>
+							<td align="center">Bach:</td>
+							<td align="center">% CO:</td>
+							<td align="center">Opac.:</td>
+							<td align="center">ppmHC:</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td align="center"><input type="text" id="txtBach" style="width: 80px" class="txt"
+									value="{{ object.bach|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtCO" style="width: 80px" class="txt"
+									value="{{ object.porcentajeco|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtOpac" style="width: 80px" class="txt"
+									value="{{ object.opac|default:'N/A' }}" /></td>
+							<td align="center"><input type="text" id="txtppmHC" style="width: 80px" class="txt"
+									value="{{ object.ppmhc|default:'N/A' }}" /></td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr class="borTop">
+							<td rowspan="2" style="border-bottom: 1px solid #cccccc;"><b>Otros Valores:</b></td>
+							<td align="center">Alineaci&oacute;n:</td>
+							<td align="center">Nivel Son.:</td>
+							<td align="center">Interior:</td>
+							<td align="center">Escape:</td>
+							<td align="center">&nbsp;</td>
+						</tr>
+						<tr class="borBot">
+							<td align="center">
+								<input type="text" id="txtAlin" style="width: 80px" class="txt"
+									value="{{ object.alineacion|default:'N/A' }}" />
+							</td>
+							<td align="center"><input type="text" id="txtNSon" style="width: 80px" class="txt"
+									value="{{ object.nivelsonoro|default:'N/A' }}" />
+							</td>
+							<td align="center">
+								<input type="text" id="txtInter" style="width: 80px" class="txt"
+									value="{{ object.interno|default:'N/A' }}" />
+							</td>
+							<td align="center">
+								<input type="text" id="txtEscape" style="width: 80px" class="txt"
+									value="{{ object.escape|default:'N/A' }}" />
+							</td>
+							<td>&nbsp;</td>
+						</tr>
+
+						<tr>
+							<td colspan="6">&nbsp;</td>
+						</tr>
+
+						<tr>
+							<td colspan="6" style="border-bottom: 2px solid #0D3A5B;text-align: left;">
+								<b>Observaciones</b>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td colspan="5">
+								<textarea id="txtObs" class="txt" rows="3"
+									style="width: 600px;margin-top: 3px;margin-left: 5px;">{{ object.observaciones }}</textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="6">&nbsp;</td>
+						</tr>
+
+						<tr>
+							<td colspan="6" style="border-bottom: 2px solid #0D3A5B;text-align: left;"><b>Defectos</b>
+								<ul>
+									{% for d in defectos %}
+									<li> {{ d.descripciondefecto }}: {{ d.idnivel.descripcion }}</li>
+									{% endfor %}
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table id="files"></table>
+								<span id="resultado"></span>
+							</td>
+						</tr>
+
+						<tr>
+							<td colspan="6">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<div class="cleaner"></div>
+	</div>
+	<div id="ModificarTitular" style="display: none;"></div>
+	<div id="ModificarVehiculo" style="display: none;"></div>
+
+
+	<div class="cleaner"></div>
+</div>
+{% endblock %}

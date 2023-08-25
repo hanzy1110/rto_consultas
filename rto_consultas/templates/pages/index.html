@@ -3,36 +3,43 @@
 
 {% block content %}
 <div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-body p-3">
-          <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    <a href="{% url 'verificaciones' %}" class="my-button">Verificaciones</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-body p-3">
-          <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    <a href="{% url 'certificados' %}" class="my-button">Certificados</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-body p-3">
-          <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    <a href="{% url 'vehiculos' %}" class="my-button">Vehiculos</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card">
-        <div class="card-body p-3">
-          <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body p-3">
+                    <a href="{% url 'certs_asignados' %}" class="my-button">Certificados Asignados por taller</a>
+                </div>
+            </div>
+            <div class="col col-sm-6 col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body p-3 align-content">
+                        <a href="{% url 'verificaciones_resumen' %}" class="my-button">Resumen Verificaciones</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 {% endblock content %}
 

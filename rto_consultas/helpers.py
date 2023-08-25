@@ -1,10 +1,18 @@
-from django.db.models import Q
+from django.db.models import Q, QuerySet, Subquery
 from django.db.models import Model
+from django.core.cache import cache
+from datetime import timedelta, datetime
 
 
 import re
+from functools import reduce
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
+
+# from silk.profiling.profiler import silk_profile
+
+from rto_consultas.models import Certificados, Verificaciones, Verificacionespdf
+from .presigned_url import generate_presigned_url
 
 
 @dataclass
@@ -14,16 +22,34 @@ class AuxData:
     parsed_names: Dict[str, str]
     ids: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
+    fecha_field: str = "fecha"
+    aux: Dict[str, str] = field(default_factory=dict)
 
 
-def handle_args(query_params, queryset):
+def convert_date(input_date):
+    # Define the format of the input date
+    input_format = "%b. %d, %Y"
+
+    # Parse the input date string to a datetime object
+    # date_obj = datetime.strptime(input_date, input_format)
+
+    # Define the format of the output date
+    output_format = "%d/%m/%Y"
+
+    # Format the datetime object to the desired output format
+    output_date = input_date.strftime(output_format)
+
+    return output_date
+
+
+def handle_args(query_params, queryset, fecha_field="fecha"):
     numeric_test = re.compile(r"^\d+$")
     cleaned_query = clean_args(query_params)
 
     date_from = cleaned_query.pop("fecha_desde", None)
     date_to = cleaned_query.pop("fecha_hasta", None)
     if date_from or date_to:
-        queryset = queryset.filter(handle_date_range(date_from, date_to))
+        queryset = queryset.filter(handle_date_range(date_from, date_to, fecha_field))
 
     for key, arg in cleaned_query.items():
         if numeric_test.match(str(arg)):
@@ -40,10 +66,11 @@ def handle_args(query_params, queryset):
     return queryset
 
 
-def handle_date_range(date_from, date_to):
-    # date_from = parse_date(date_from)
-    # date_to = parse_date(date_to)
-    return Q(fecha__range=(date_from, date_to))
+def handle_date_range(date_from, date_to, fecha_field="fecha"):
+    if date_from and date_to:
+        return Q(**{f"{fecha_field}__range": (date_from, date_to)})
+    if date_from and not date_to:
+        return Q(**{f"{fecha_field}__gte": date_from})
 
 
 def clean_args(query_params):
@@ -70,7 +97,7 @@ def parse_date(value):
 
 def parse_license_plate(value):
     # Remove any non-alphanumeric characters from the input value
-    value = value[0]
+    # value = value[0]
     alphanumeric_only = re.sub(r"\W", "", value)
 
     # Format the license plate
@@ -86,15 +113,24 @@ def parse_license_plate(value):
     return formatted_value
 
 
-def handle_query(request, model):
+def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
     sort = query.pop("sort", None)
     page = query.pop("page", None)
-    queryset = model.objects.all()
+    _export = query.pop("_export", None)
+    nrocertificado = query.pop("nrocertificado", None)
+    anulado = query.pop("anulado", None)
+
+    queryset = handle_nrocertificado(nrocertificado, anulado, model)
+
     if query:
-        queryset = handle_args(query, queryset)
+        queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
+
+    # queryset = filter(check_for_anulado, queryset)
+    # return list(queryset)
+    queryset = handle_anulado(queryset, anulado, model)
     return queryset
 
 
@@ -129,14 +165,26 @@ def map_fields(data: AuxData, model: Model):
             dfield = vals[0]
             dmodel: Model = vals[1]
 
-            try:
-                val = model.objects.values_list(field, flat=True).distinct()
-            except Exception as e:
-                print(e)
-                val = dmodel.objects.values_list("descripcion", flat=True).distinct()
+            cache_key = f"unique_values_{model._meta.db_table}_{field}"
+            cached_values = cache.get(cache_key)
 
-            descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-            values[field] = {v: d for v, d in zip(val, descriptions)}
+            if cached_values is None:
+                try:
+                    values_list = model.objects.values_list(field, flat=True).distinct()
+                except Exception as e:
+                    print(e)
+                    values_list = dmodel.objects.values_list(
+                        "descripcion", flat=True
+                    ).distinct()
+
+                descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
+                vals = {v: d for v, d in zip(values_list, descriptions)}
+                values[field] = vals
+
+                cache.set(cache_key, vals)
+            else:
+                values[field] = cached_values
+
         else:
             values[field] = {0: "Falso", 1: "Verdadero"}
 
@@ -154,4 +202,121 @@ def handle_context(context, view):
     context["query_fields"] = view.aux_data.query_fields
     context["ids"] = view.aux_data.ids
     context["types"] = view.aux_data.types
+    context["aux"] = view.aux_data.aux
     return context
+
+
+def handle_anulado(queryset, anulado, model):
+    queryset = model.objects.all()
+    # vals = {"Verdadero": 1, "Falso": 0}
+    try:
+        anulado = int(anulado[0])
+    except:
+        anulado = None
+
+    print("ANULADO: ", anulado)
+    match anulado:
+        case [""]:
+            return queryset
+        case None:
+            return queryset
+        case _:
+            certs = Certificados.objects.filter(anulado__exact=anulado)
+            # cert_queries = [
+            #     Q(
+            #         idtaller_id=q["idtaller_id"],
+            #         idverificacion=q["idverificacion_id"],
+            #     )
+            #     for q in certs
+            # ]
+            # query = reduce(lambda x, y: x or y, cert_queries)
+            qa = Q(
+                idtaller_id__in=Subquery(certs.values("idtaller_id")),
+            )
+            qb = Q(
+                idverificacion__in=Subquery(certs.values("idverificacion_id")),
+            )
+            verifs_segun_anulado = Verificaciones.objects.filter(qa & qb)
+            # print("ORIGINAL_QUERY")
+            # print(len(queryset))
+            # print("VERIFS SEGUN ANULADO: ")
+            # print(len(verifs_segun_anulado))
+            final_q = queryset.intersection(verifs_segun_anulado)
+            # print("FINAL_QUERYSET: ")
+            # print(len(final_q))
+            return final_q
+
+
+def handle_nrocertificado(nrocertificado, anulado, model):
+    queryset = model.objects.all()
+
+    match nrocertificado:
+        case [""]:
+            return queryset
+        case None:
+            return queryset
+        case _:
+            print(nrocertificado)
+            nrocertificado = int(nrocertificado[0])
+            print(nrocertificado)
+            if anulado:
+                cert = Certificados.objects.filter(
+                    nrocertificado__exact=nrocertificado, anulado__exact=1
+                ).values()
+            else:
+                cert = Certificados.objects.filter(
+                    nrocertificado__exact=nrocertificado,
+                ).values()
+
+            print("CERTIFICADOS QUERYSET ===>")
+            print(cert)
+
+            queryset = Verificaciones.objects.none()  # Initialize an empty queryset
+            if cert:
+                cert = cert.first()
+                print("DATOS CERTIFICADOS ===>")
+                queryset = Verificaciones.objects.filter(
+                    idverificacion=cert["idverificacion_id"],
+                    idtaller=cert["idtaller_id"],
+                )
+                print(queryset)
+
+            return queryset
+
+
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield (start_date + timedelta(n), start_date + timedelta(n + 1))
+
+
+def generate_key(adjunto):
+    key = f"{adjunto.idtaller}/var/www/html/taller/uploads/{adjunto.nombre}"
+    return generate_presigned_url(key)
+
+
+def generate_key_certificado(certificado):
+    if certificado:
+        print(certificado)
+        certificado = certificado[0]
+        key = f"{certificado.idtaller_id}/var/www/html/taller/uploads/pdf/{certificado.nombrea4}.pdf"
+        return generate_presigned_url(key)
+    return None
+
+
+def generate_key_from_params(idtaller, nombrea4):
+    key = f"{idtaller}/var/www/html/taller/uploads/pdf/{nombrea4}.pdf"
+    return generate_presigned_url(key)
+
+
+def check_for_anulado(verif):
+    if isinstance(verif, Verificaciones):
+        try:
+            cert = Certificados.objects.get(
+                idverificacion_id=verif.idverificacion, idtaller_id=verif.idtaller_id
+            )
+            return cert.anulado == 0
+        except Exception as e:
+            print(e)
+            return True
+
+    return True
