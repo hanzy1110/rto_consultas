@@ -1,8 +1,8 @@
 #!/bin/sh
-docker-compose  --env-file envfiles/.env down --remove-orphans
-docker-compose  --env-file envfiles/.env build --no-cache
-docker-compose  --env-file envfiles/.env up -d
-docker-compose  --env-file envfiles/.env ps -a
+docker-compose  --env-file .env down --remove-orphans
+docker-compose  --env-file .env build --no-cache
+docker-compose  --env-file .env up -d
+docker-compose  --env-file .env ps -a
 
 echo "Waiting for the bus"
 # sleep 60

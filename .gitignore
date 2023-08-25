@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 rto_consultas/mount
+db_build/sql
