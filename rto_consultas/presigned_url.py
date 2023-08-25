@@ -24,7 +24,6 @@ def generate_presigned_url(object_key, expiration=3600):
     )
     s3_client = session.client("s3")
 
-    assert False
     try:
         response = s3_client.generate_presigned_url(
             "get_object",
