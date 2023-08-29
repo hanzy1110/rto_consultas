@@ -7,7 +7,7 @@ services:
       - "3306:3306"
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d
+      - ./sql_init:/docker-entrypoint-initdb.d
       - ./my.cnf:/etc/mysql/my.cnf
     environment:
       - MYSQL_ROOT_HOST=%
@@ -81,8 +81,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
-      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_exporter)/?allowCleartextPasswords&allowNativePasswords&allowOldPasswords"
-
+      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_db)"
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
