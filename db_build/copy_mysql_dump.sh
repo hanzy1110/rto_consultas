@@ -12,7 +12,7 @@ LOCAL_DUMP_DIR="/home/ubuntu/central_dump"
 # LOCAL_DUMP_FILE="dump.sql"
 
 # MySQL dump command
-MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} > $REMOTE_DUMP_PATH"
+MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE} > $REMOTE_DUMP_PATH"
 
 # Create a database dump on the remote server
 ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}"
