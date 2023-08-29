@@ -8,7 +8,7 @@ REMOTE_SERVER="azureSVR"
 REMOTE_DUMP_PATH="/tmp/dump.sql"
 
 # Local directory for dump file
-LOCAL_DUMP_DIR="/home/ubuntu/central_dump"
+LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
 # LOCAL_DUMP_FILE="dump.sql"
 
 # MySQL dump command
