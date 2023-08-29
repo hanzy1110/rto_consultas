@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xe
 
-source envfiles/.env
+source .env
 
 # Remote server details
 REMOTE_SERVER="azureSVR"
