@@ -81,7 +81,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
-      - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@rto_mysql_db/vehicularunc"
+      - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(rto_mysql_db)/vehicularunc"
 
   grafana:
     image: grafana/grafana:latest
