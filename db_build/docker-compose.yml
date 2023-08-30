@@ -65,23 +65,23 @@ services:
       - "./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml"
       - prometheus-data:/prometheus
 
-  rto_mysql_exporter:
-    image: bitnami/mysqld-exporter
-    container_name: rto_mysql_exporter
-    depends_on:
-      - rto_mysql_db
-    ports:
-      - 9104:9104
-    # volumes:
-    #   - ./exporter/.my.cnf:/home/exporter/.my.cnf
-    environment:
-      - MYSQL_HOST=rto_mysql_db
-      - MYSQL_PORT=3306
-      - MYSQL_USER=exporter
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
-      - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(rto_mysql_db)/vehicularunc"
+  # rto_mysql_exporter:
+  #   image: bitnami/mysqld-exporter
+  #   container_name: rto_mysql_exporter
+  #   depends_on:
+  #     - rto_mysql_db
+  #   ports:
+  #     - 9104:9104
+  #   # volumes:
+  #   #   - ./exporter/.my.cnf:/home/exporter/.my.cnf
+  #   environment:
+  #     - MYSQL_HOST=rto_mysql_db
+  #     - MYSQL_PORT=3306
+  #     - MYSQL_USER=exporter
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
+  #     - DATA_SOURCE_NAME="${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(rto_mysql_db)/vehicularunc"
 
   grafana:
     image: grafana/grafana:latest
