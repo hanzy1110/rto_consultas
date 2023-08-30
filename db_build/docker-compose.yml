@@ -81,7 +81,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQLD_EXPORTER_PASSWORD=${MYSQL_PASSWORD}
-      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_db)"
+      - DATA_SOURCE_NAME="exporter:123@tcp(rto_mysql_db)/${MYSQL_DATABASE}"
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
