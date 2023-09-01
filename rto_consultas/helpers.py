@@ -249,10 +249,6 @@ def handle_nrocertificado(nrocertificado, anulado, model):
 
     print(model)
 
-    if model == Verificaciones:
-        print("Filtering for Verificaciones!!")
-    elif model==Certificadosasignadosportaller:
-        print("Filtering for assigned certs!!")
 
     match nrocertificado:
         case [""]:
@@ -278,11 +274,17 @@ def handle_nrocertificado(nrocertificado, anulado, model):
             queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert:
                 cert = cert.first()
-                print("DATOS CERTIFICADOS ===>")
-                queryset = Verificaciones.objects.filter(
-                    idverificacion=cert["idverificacion_id"],
-                    idtaller=cert["idtaller_id"],
-                )
+                if model == Verificaciones:
+                    queryset = Verificaciones.objects.filter(
+                        idverificacion=cert["idverificacion_id"],
+                        idtaller=cert["idtaller_id"],
+                    )
+                elif model==Certificadosasignadosportaller:
+                    queryset = Certificadosasignadosportaller.objects.filter(
+                        nrocertificado=cert["nrocertificado"],
+                        idtaller=cert["idtaller_id"],
+                    )
+
                 print(queryset)
 
             return queryset
