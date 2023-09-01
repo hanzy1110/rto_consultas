@@ -43,11 +43,7 @@ def convert_date(input_date):
 
 
 def check_for_empty_query(query):
-    print("Query...")
-    print(query)
-
     def check_for_empty(val):
-        print(f"value from query:{type(val)}")
         match val:
             case "":
                 return True
@@ -149,7 +145,10 @@ def handle_query(request, model, fecha_field="fecha"):
 
     # queryset = filter(check_for_anulado, queryset)
     # return list(queryset)
+    print(queryset)
+    print("-x-" * 10)
     queryset = handle_anulado(queryset, anulado, model)
+    print(queryset)
     return queryset
 
 
