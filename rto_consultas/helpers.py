@@ -143,12 +143,7 @@ def handle_query(request, model, fecha_field="fecha"):
     if sort:
         queryset = queryset.order_by(sort[0])
 
-    # queryset = filter(check_for_anulado, queryset)
-    # return list(queryset)
-    print(queryset)
-    print("-x-" * 10)
     queryset = handle_anulado(queryset, anulado, model)
-    print(queryset)
     return queryset
 
 
@@ -225,7 +220,7 @@ def handle_context(context, view):
 
 
 def handle_anulado(queryset, anulado, model):
-    queryset = model.objects.all()
+    _queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
     try:
         anulado = int(anulado[0])
