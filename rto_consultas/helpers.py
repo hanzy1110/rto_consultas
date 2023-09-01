@@ -44,6 +44,7 @@ def convert_date(input_date):
 
 def check_for_empty_query(query):
     def check_for_empty(val):
+        print(f"value from query:{val}")
         match val:
             case [""]:
                 return True
