@@ -42,6 +42,17 @@ def convert_date(input_date):
     return output_date
 
 
+def check_for_empty_query(query):
+    def check_for_empty(val):
+        match val:
+            case [""]:
+                return True
+            case _:
+                return False
+
+    return all([check_for_empty(val) for val in query.values()])
+
+
 def handle_args(query_params, queryset, fecha_field="fecha"):
     numeric_test = re.compile(r"^\d+$")
     cleaned_query = clean_args(query_params)
@@ -115,8 +126,6 @@ def parse_license_plate(value):
 
 def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
-    print(query)
-    print("-x-")
     sort = query.pop("sort", None)
     page = query.pop("page", None)
     _export = query.pop("_export", None)
@@ -125,8 +134,9 @@ def handle_query(request, model, fecha_field="fecha"):
 
     queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
-    print(query)
-    if query:
+    print(f"check forr empty: {query} => {check_for_empty_query(query)}")
+
+    if not check_for_empty_query(query):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
