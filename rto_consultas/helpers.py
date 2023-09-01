@@ -123,6 +123,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
     queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
+    print(query)
     if query:
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
