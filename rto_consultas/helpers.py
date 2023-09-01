@@ -43,10 +43,15 @@ def convert_date(input_date):
 
 
 def check_for_empty_query(query):
+    print("Query...")
+    print(query)
+
     def check_for_empty(val):
-        print(f"value from query:{val}")
+        print(f"value from query:{type(val)}")
         match val:
             case [""]:
+                return True
+            case None:
                 return True
             case _:
                 return False
