@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 
 # from silk.profiling.profiler import silk_profile
 
-from rto_consultas.models import Certificados, Verificaciones, Verificacionespdf
+from rto_consultas.models import Certificados, Certificadosasignadosportaller, Verificaciones, Verificacionespdf
 from .presigned_url import generate_presigned_url
 
 
@@ -136,21 +136,12 @@ def handle_query(request, model, fecha_field="fecha"):
 
     queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
-    print("1")
-    print(queryset)
-    print("-x-"*10)
     if not check_for_empty_query(query):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
 
-    print("2")
-    print(queryset)
-    print("-x-"*10)
     queryset = handle_anulado(queryset, anulado, model)
-    print("3")
-    print(queryset)
-    print("-x-"*10)
     return queryset
 
 
@@ -255,6 +246,13 @@ def handle_anulado(queryset, anulado, model):
 
 def handle_nrocertificado(nrocertificado, anulado, model):
     queryset = model.objects.all()
+
+    print(model)
+
+    if model == Verificaciones:
+        print("Filtering for Verificaciones!!")
+    elif model==Certificadosasignadosportaller:
+        print("Filtering for assigned certs!!")
 
     match nrocertificado:
         case [""]:
