@@ -115,6 +115,8 @@ def parse_license_plate(value):
 
 def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
+    print(query)
+    print("-x-")
     sort = query.pop("sort", None)
     page = query.pop("page", None)
     _export = query.pop("_export", None)
