@@ -136,14 +136,21 @@ def handle_query(request, model, fecha_field="fecha"):
 
     queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
-    print(f"check forr empty: {query} => {check_for_empty_query(query)}")
-
+    print("1")
+    print(queryset)
+    print("-x-"*10)
     if not check_for_empty_query(query):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
         queryset = queryset.order_by(sort[0])
 
+    print("2")
+    print(queryset)
+    print("-x-"*10)
     queryset = handle_anulado(queryset, anulado, model)
+    print("3")
+    print(queryset)
+    print("-x-"*10)
     return queryset
 
 
@@ -220,7 +227,7 @@ def handle_context(context, view):
 
 
 def handle_anulado(queryset, anulado, model):
-    _queryset = model.objects.all()
+    # _queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
     try:
         anulado = int(anulado[0])
@@ -235,14 +242,6 @@ def handle_anulado(queryset, anulado, model):
             return queryset
         case _:
             certs = model.objects.filter(anulado__exact=anulado)
-            # cert_queries = [
-            #     Q(
-            #         idtaller_id=q["idtaller_id"],
-            #         idverificacion=q["idverificacion_id"],
-            #     )
-            #     for q in certs
-            # ]
-            # query = reduce(lambda x, y: x or y, cert_queries)
             qa = Q(
                 idtaller_id__in=Subquery(certs.values("idtaller_id")),
             )
@@ -251,9 +250,6 @@ def handle_anulado(queryset, anulado, model):
             )
             verifs_segun_anulado = Verificaciones.objects.filter(qa & qb)
             final_q = queryset.intersection(verifs_segun_anulado)
-
-            print(f"final_q => {final_q}")
-
             return final_q
 
 
