@@ -49,7 +49,7 @@ def check_for_empty_query(query):
     def check_for_empty(val):
         print(f"value from query:{type(val)}")
         match val:
-            case [""]:
+            case "":
                 return True
             case None:
                 return True
