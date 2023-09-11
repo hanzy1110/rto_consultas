@@ -160,7 +160,7 @@ def handle_cert_insert(taller_id, cert_init, cert_end):
     print("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
     if taller_id and cert_end and cert_init:
         taller_id = int(taller_id[0])
-        taller = Talleres.objects.get(id__iexact=taller_id)
+        taller = Talleres.objects.get(idtaller__iexact=taller_id)
         certs = [
             Certificadosasignadosportaller(
                 nrocertificado=nro,
