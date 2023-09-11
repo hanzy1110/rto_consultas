@@ -11,7 +11,12 @@ from dataclasses import dataclass, field
 
 # from silk.profiling.profiler import silk_profile
 
-from rto_consultas.models import Certificados, Certificadosasignadosportaller, Verificaciones, Verificacionespdf
+from rto_consultas.models import (
+    Certificados,
+    Certificadosasignadosportaller,
+    Verificaciones,
+    Verificacionespdf,
+)
 from .presigned_url import generate_presigned_url
 
 
@@ -134,6 +139,11 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
     anulado = query.pop("anulado", None)
 
+    cert_init = query.pop("cert_init", None)
+    cert_end = query.pop("cert_end", None)
+
+    handle_cert_insert(query.get("idtaller", None), cert_init, cert_end)
+
     queryset = handle_nrocertificado(nrocertificado, anulado, model)
 
     if not check_for_empty_query(query):
@@ -143,6 +153,22 @@ def handle_query(request, model, fecha_field="fecha"):
 
     queryset = handle_anulado(queryset, anulado, model)
     return queryset
+
+
+def handle_cert_insert(taller_id, cert_init, cert_end):
+    if taller_id and cert_end and cert_init:
+        certs = [
+            Certificadosasignadosportaller(
+                nrocertificado=nro,
+                idtaller=taller_id,
+                fechacarga=datetime.today(),
+                disponible=1,
+                replicado=0,
+            )
+            for nro in range(int(cert_init), int(cert_end))
+        ]
+
+        Certificadosasignadosportaller.objects.bulk_create(certs)
 
 
 def handle_form(data: AuxData, model: Model):
@@ -249,7 +275,6 @@ def handle_nrocertificado(nrocertificado, anulado, model):
 
     print(model)
 
-
     match nrocertificado:
         case [""]:
             return queryset
@@ -279,7 +304,7 @@ def handle_nrocertificado(nrocertificado, anulado, model):
                         idverificacion=cert["idverificacion_id"],
                         idtaller=cert["idtaller_id"],
                     )
-                elif model==Certificadosasignadosportaller:
+                elif model == Certificadosasignadosportaller:
                     queryset = Certificadosasignadosportaller.objects.filter(
                         nrocertificado=cert["nrocertificado"],
                         idtaller=cert["idtaller_id"],
