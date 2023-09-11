@@ -166,7 +166,7 @@ def handle_cert_insert(taller_id, cert_init, cert_end):
                 disponible=1,
                 replicado=0,
             )
-            for nro in range(int(cert_init), int(cert_end))
+            for nro in range(int(cert_init[0]), int(cert_end[0]))
         ]
 
         Certificadosasignadosportaller.objects.bulk_create(certs)
