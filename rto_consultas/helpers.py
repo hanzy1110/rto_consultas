@@ -156,6 +156,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
 
 def handle_cert_insert(taller_id, cert_init, cert_end):
+    print("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
     if taller_id and cert_end and cert_init:
         certs = [
             Certificadosasignadosportaller(
