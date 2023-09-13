@@ -44,7 +44,7 @@ from .helpers import (
     AuxData,
     generate_key,
 )
-from .presigned_url import generate_presigned_url
+# from .presigned_url import generate_presigned_url
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
@@ -128,6 +128,36 @@ class ListVerificacionesView(CustomRTOView):
     #     certs = Certificados.objects.filter(query)
     #     certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
     #     return certs.intersection(certs_no_anulados)
+
+
+class CargaObleas(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Certificadosasignadosportaller
+    paginate_by = 10
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = CertificadosAssignTable
+
+    aux_data = AuxData(
+        query_fields=[
+            "cert_init",
+            "cert_end",
+        ],
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idtaller": "Nombre Taller",
+            "cert_init": "Nro Oblea desde",
+            "cert_end": "Nro Oblea hasta",
+        },
+        ids={},
+        types={
+            "cert_init": "text",
+            "cert_end": "text",
+        },
+        fecha_field="fechacarga",
+    )
 
 
 class ListCertificadosAssignView(CustomRTOView):
