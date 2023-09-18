@@ -2,6 +2,8 @@
 set -xe
 source .env
 
+SQL_INIT_DUMP_PATH=/home/ubuntu/git/rto_consultas/db_build/sql_init/a_vehicularunc_ultimo.sql
+SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 # Define default values for flags
 RELOAD=false
 COPY=false
@@ -28,6 +30,8 @@ function reload_db() {
 
     if [ "$1" = true ]; then
         rm -rf sql_volume
+        cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
+        rm ${SQL_AZURE_DUMP_PATH:?}/*
     fi
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
