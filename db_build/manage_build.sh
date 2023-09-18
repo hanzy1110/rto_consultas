@@ -36,6 +36,11 @@ function reload_db() {
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
+        -rc | --reload-copy)
+            RELOAD=true
+            COPY=true
+            shift
+            ;;
         -R | --rebuild)
             RELOAD=true
             delete_volume=false
