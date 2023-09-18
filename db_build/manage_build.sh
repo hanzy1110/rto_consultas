@@ -4,18 +4,18 @@ source .env
 
 SQL_INIT_DUMP_PATH=/home/ubuntu/git/rto_consultas/db_build/sql_init/a_vehicularunc_ultimo.sql
 SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
+REMOTE_SERVER="azuresvr"
+REMOTE_DUMP_PATH="/tmp/dump.sql"
+# Local directory for dump file
+LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
+# LOCAL_DUMP_FILE="dump.sql"
+# MySQL dump command
+MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE} > $REMOTE_DUMP_PATH"
 # Define default values for flags
 RELOAD=false
 COPY=false
 
 function copy_dump() {
-    REMOTE_SERVER="azuresvr"
-    REMOTE_DUMP_PATH="/tmp/dump.sql"
-    # Local directory for dump file
-    LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
-    # LOCAL_DUMP_FILE="dump.sql"
-    # MySQL dump command
-    MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE} > $REMOTE_DUMP_PATH"
     # Create a database dump on the remote server
     ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}"
     # Copy the dump file to the local machine using rsync
