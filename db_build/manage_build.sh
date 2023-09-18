@@ -7,7 +7,6 @@ SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 # Define default values for flags
 RELOAD=false
 COPY=false
-delete_volume=false
 
 function copy_dump() {
     REMOTE_SERVER="azuresvr"
@@ -51,12 +50,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         -R | --rebuild)
             RELOAD=true
-            delete_volume=false
             shift
             ;;
         -r | --reload)
             RELOAD=true
-            delete_volume=true
             shift
             ;;
         -c | --copy)
@@ -75,11 +72,11 @@ if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
     echo "Copying dump..."
     copy_dump ""
     echo "Reloading database..." # Add code to copy the database dump here
-    reload_db $delete_volume
+    reload_db true
     # Add code to reload the database here
 elif [ "$RELOAD" = true ]; then
     echo "Reloading database..."
-    reload_db $delete_volume
+    reload_db false
     # Add code to reload the database here
 elif [ "$COPY" = true ]; then
     echo "Copying dump..."
