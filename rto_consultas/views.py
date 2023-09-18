@@ -1,6 +1,7 @@
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.views.generic.base import RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 from django_tables2.export.views import ExportMixin
@@ -28,6 +29,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    ObleasPorTaller,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
@@ -38,12 +40,14 @@ from .tables import (
     VerificacionesAnuales,
 )
 from .helpers import (
+    filter_vup_transporte,
     generate_key_certificado,
     handle_context,
     handle_query,
     AuxData,
     generate_key,
 )
+
 # from .presigned_url import generate_presigned_url
 
 
@@ -130,7 +134,8 @@ class ListVerificacionesView(CustomRTOView):
     #     return certs.intersection(certs_no_anulados)
 
 
-class CargaObleas(CustomRTOView):
+# TODO falta el redirect
+class CargaObleas(CustomRTOView, RedirectView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
     paginate_by = 10
@@ -403,7 +408,6 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
 
-        # TODO AGREGAR EL QUERY DE ADJUNTOS Y LAS URLS
         adjuntos = [generate_key(a) for a in adjuntos]
         context["certificado"] = cert[0]
         context["url_certificado"] = generate_key_certificado(pdf_certificado)
@@ -420,6 +424,25 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
 
         # context = handle_context(context, self)
         return context
+
+
+def resumen_obleas(request):
+    data = []
+
+    talleres = Talleres.objects.all()
+
+    for t in talleres:
+        certs_by_taller = Certificados.objects.filter(
+            idtaller_id=t.idtaller, disponible__iexact=1
+        )
+        cert_data = filter_vup_transporte(certs_by_taller)
+        cert_data["taller"] = t.nombre
+
+        data.append(cert_data)
+
+    table = ObleasPorTaller(data)
+
+    return render(request, "includes/table_view.html", {"table": table})
 
 
 def verificaciones_anuales(request):

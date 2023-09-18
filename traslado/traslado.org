@@ -1,0 +1,36 @@
+* Traslado Server Azure:
+
+** Definiciones:
+\begin{itemize}
+\item Servidor Azure
+\item Servidor AWS
+\item Software central
+\item Software RTOConsultas
+\item Servicios Autoridades Aplicacion
+\end{itemize}
+
+** Objetivos:
+\begin{itemize}
+\item Reemplazar la funcionalidad del servidor Azure
+\item Mejorar la performance de las funcionalidades existentes del software Central
+\end{itemize}
+
+** Metodologia:
+El reemplazo de un servidor por otro sera un proceso gradual durante el cual se pondran en funcionamiento los servidores al mismo tiempo. Durante este periodo, se probaran las funcionalidades faltantes con el fin de reemplazar el funcionamiento de un servidor por el otro de forma gradual.
+
+Para realizar esto, se proponen los siguientes pasos:
+\begin{itemize}
+\item Poner en funcionamiento el software RTOConsultas cuya base de datos estara vinculada a la del software central mediante un esquema Amo-Esclavo.
+\item Vincular los servicios de las autoridades de aplicacion con el servidor central (Habilitaciones finales, Base de Datos DPT).
+\item Probar las funcionalidades basicas contrastando contra la informacion presente en el Servidor Azure.
+\item Dar de baja el servidor Azure completando el traslado.
+\end{itemize}
+
+*** Funcionalidades Basicas:
+
+\begin{itemize}
+\item Consulta de certificados en vista del navegador y en formato PDF [ COMPLETADO ]
+\item Carga de Obleas a un taller determinado [ COMPLETADO ]
+\item Consulta de habilitaciones y habilitaciones finales [ PENDIENTE ]
+\item Consulta de la cantidad de obleas disponibles por planta [ PENDIENTE ]
+\end{itemize}

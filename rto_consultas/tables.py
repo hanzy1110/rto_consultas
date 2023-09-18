@@ -335,6 +335,12 @@ class VerificacionesAnuales(tables.Table):
     cant_aprobados_condicionales = tables.Column()
 
 
+class ObleasPorTaller(tables.Table):
+    taller = tables.Column()
+    cant_vup = tables.Column()
+    cant_transporte = tables.Column()
+
+
 class ResumenTransporteTable(tables.Table):
     certificado = tables.Column(
         orderable=False,

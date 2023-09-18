@@ -4,5 +4,6 @@
   (ssh-deploy-async . 1)
   (ssh-deploy-async-with-threads . 1)
   (ssh-deploy-on-explicit-save . 1)
+  (conda-project-env-path . "api")
   ;; (ssh-deploy-script . (lambda() (let ((default-directory ssh-deploy-root-remote)) (shell-command "bash compile.sh"))))
 )))

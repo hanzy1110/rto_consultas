@@ -1,0 +1,70 @@
+% Created 2023-09-18 lun 09:52
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Enrique Loeser}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Enrique Loeser},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.1 (Org mode 9.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Traslado Server Azure:}
+\label{sec:org26fb3cb}
+
+\subsection{Definiciones:}
+\label{sec:org5d6b9b1}
+\begin{itemize}
+\item Servidor Azure
+\item Servidor AWS
+\item Software central
+\item Software RTOConsultas
+\item Servicios Autoridades Aplicacion
+\end{itemize}
+
+\subsection{Objetivos:}
+\label{sec:org3921e5f}
+\begin{itemize}
+\item Reemplazar la funcionalidad del servidor Azure
+\item Mejorar la performance de las funcionalidades existentes del software Central
+\end{itemize}
+
+\subsection{Metodologia:}
+\label{sec:org8f17102}
+El reemplazo de un servidor por otro sera un proceso gradual durante el cual se pondran en funcionamiento los servidores al mismo tiempo. Durante este periodo, se probaran las funcionalidades faltantes con el fin de reemplazar el funcionamiento de un servidor por el otro de forma gradual.
+
+Para realizar esto, se proponen los siguientes pasos:
+\begin{itemize}
+\item Poner en funcionamiento el software RTOConsultas cuya base de datos estara vinculada a la del software central mediante un esquema Amo-Esclavo.
+\item Vincular los servicios de las autoridades de aplicacion con el servidor central (Habilitaciones finales, Base de Datos DPT).
+\item Probar las funcionalidades basicas contrastando contra la informacion presente en el Servidor Azure.
+\item Dar de baja el servidor Azure completando el traslado.
+\end{itemize}
+
+\subsubsection{Funcionalidades Basicas:}
+\label{sec:org8100173}
+
+\begin{itemize}
+\item Consulta de certificados en vista del navegador y en formato PDF [ COMPLETADO ]
+\item Carga de Obleas a un taller determinado [ COMPLETADO ]
+\item Consulta de habilitaciones y habilitaciones finales [ PENDIENTE ]
+\item Consulta de la cantidad de obleas disponibles por planta [ PENDIENTE ]
+\end{itemize}
+\end{document}

@@ -355,3 +355,20 @@ def check_for_anulado(verif):
             return True
 
     return True
+
+
+def check_vup(nrocertificado):
+    start = str(nrocertificado)[:3]
+    match start:
+        case "123":
+            return False
+        case "152":
+            return True
+        case _:
+            raise ValueError("Unknown pattern in NRO certificado")
+
+
+def filter_vup_transporte(certs: QuerySet):
+    vup_certs = len([c for c in certs if check_vup(c.nrocertificado)])
+    transporte_certs = len(certs) - vup_certs
+    return {"cant_vup": vup_certs, "cant_transporte": transporte_certs}

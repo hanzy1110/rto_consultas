@@ -49,7 +49,10 @@ urlpatterns = [
     path("", include("admin_soft.urls"), name=admin),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
-urlpatterns += [path("cantverificaciones", views.verificaciones_anuales)]
+urlpatterns += [
+    path("cantverificaciones", views.verificaciones_anuales),
+    path("obleasportaller", views.resumen_obleas),
+]
 urlpatterns += [
     path(
         "resumen/transporte",
