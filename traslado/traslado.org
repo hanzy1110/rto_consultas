@@ -4,7 +4,8 @@
 \begin{itemize}
 \item Servidor Azure
 \item Servidor AWS
-\item Software central
+\item Software central_site
+\item Software central_mysql
 \item Software RTOConsultas
 \item Servicios Autoridades Aplicacion
 \end{itemize}
@@ -35,3 +36,6 @@ Para realizar esto, se proponen los siguientes pasos:
 
 \item Consulta de habilitaciones y habilitaciones finales [ PENDIENTE ]
 \end{itemize}
+
+*** Replicacion:
+configuracion de la replicacion se encuentra en la carpeta sql_init del directorio db_build del repositorio en servidor central_mysql
