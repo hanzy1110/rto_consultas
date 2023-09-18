@@ -7,7 +7,7 @@ RELOAD=false
 COPY=false
 
 function copy_dump() {
-    REMOTE_SERVER="azureSVR"
+    REMOTE_SERVER="azuresvr"
     REMOTE_DUMP_PATH="/tmp/dump.sql"
     # Local directory for dump file
     LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
