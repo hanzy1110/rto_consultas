@@ -30,9 +30,9 @@ function reload_db() {
     sudo docker-compose --env-file .env down --remove-orphans
 
     if [ "$1" = true ]; then
-        rm -rf sql_volume
-        cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
-        rm ${SQL_AZURE_DUMP_PATH:?}/*
+        sudo rm -rf sql_volume
+        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
+        sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
     fi
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
