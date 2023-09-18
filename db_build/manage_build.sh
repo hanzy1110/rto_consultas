@@ -24,13 +24,14 @@ function copy_dump() {
 }
 
 function reload_db() {
-    docker-compose --env-file .env down --remove-orphans
+    sudo docker-compose --env-file .env down --remove-orphans
+
     if [ "$1" = true ]; then
         rm -rf sql_volume
     fi
-    docker-compose --env-file .env build --no-cache
-    docker-compose --env-file .env up -d
-    docker-compose --env-file .env ps -a
+    sudo docker-compose --env-file .env build --no-cache
+    sudo docker-compose --env-file .env up -d
+    sudo docker-compose --env-file .env ps -a
 }
 # Remote server details
 # Parse command-line arguments
