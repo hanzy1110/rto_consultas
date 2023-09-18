@@ -432,9 +432,10 @@ def resumen_obleas(request):
     talleres = Talleres.objects.all()
 
     for t in talleres:
-        certs_by_taller = Certificados.objects.filter(
+        certs_by_taller = Certificadosasignadosportaller.objects.filter(
             idtaller_id=t.idtaller, disponible__iexact=1
         )
+
         cert_data = filter_vup_transporte(certs_by_taller)
         cert_data["taller"] = t.nombre
 

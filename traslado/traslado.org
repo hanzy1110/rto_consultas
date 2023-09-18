@@ -31,6 +31,7 @@ Para realizar esto, se proponen los siguientes pasos:
 \begin{itemize}
 \item Consulta de certificados en vista del navegador y en formato PDF [ COMPLETADO ]
 \item Carga de Obleas a un taller determinado [ COMPLETADO ]
-\item Consulta de habilitaciones y habilitaciones finales [ PENDIENTE ]
 \item Consulta de la cantidad de obleas disponibles por planta [ PENDIENTE ]
+
+\item Consulta de habilitaciones y habilitaciones finales [ PENDIENTE ]
 \end{itemize}
