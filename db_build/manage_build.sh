@@ -7,6 +7,7 @@ SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 # Define default values for flags
 RELOAD=false
 COPY=false
+delete_volume=false
 
 function copy_dump() {
     REMOTE_SERVER="azuresvr"
@@ -23,6 +24,7 @@ function copy_dump() {
     # Delete the dump file from the remote server
     ssh $REMOTE_SERVER "rm ${REMOTE_DUMP_PATH}"
     echo "Database dump copied and deleted from the remote server."
+    return 0
 }
 
 function reload_db() {
@@ -36,6 +38,7 @@ function reload_db() {
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
     sudo docker-compose --env-file .env ps -a
+    return 0
 }
 # Remote server details
 # Parse command-line arguments
