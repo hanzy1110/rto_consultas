@@ -28,7 +28,7 @@ APP_DIR = Path(__file__).resolve().parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@'
+SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,73 +39,76 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_soft.apps.AdminSoftDashboardConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rto_consultas',
-    'django_tables2',
+    "admin_soft.apps.AdminSoftDashboardConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rto_consultas",
+    "django_tables2",
     # 'silk'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
     # 'silk.middleware.SilkyMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'rto_consultas.urls'
+ROOT_URLCONF = "rto_consultas.urls"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+STATIC_ROOT = BASE_DIR / "static"
+
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / "static",
 ]
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
             # BASE_DIR / 'templates',
-            APP_DIR / 'templates'
+            APP_DIR
+            / "templates"
         ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'rto_consultas.wsgi.application'
+WSGI_APPLICATION = "rto_consultas.wsgi.application"
 # DATABASE_ROUTERS = 'rto_consultas.db_routers'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': MYSQL_DATABASE,
-        'USER': MYSQL_USER,
-        'PASSWORD': MYSQL_PASSWORD,
-        'HOST': MYSQL_HOST,
-        'PORT': MYSQL_PORT,
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": MYSQL_DATABASE,
+        "USER": MYSQL_USER,
+        "PASSWORD": MYSQL_PASSWORD,
+        "HOST": MYSQL_HOST,
+        "PORT": MYSQL_PORT,
     }
 }
 # ROLE_GROUPS = ["admin", "employee"]
@@ -116,16 +119,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -133,9 +136,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -145,16 +148,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DJANGO_TABLES2_TABLE_ATTRS = {
-    'class': "table align-items-center mb-0",
-    # 'th': "text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" 
+    "class": "table align-items-center mb-0",
+    # 'th': "text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
     # 'thead': {
     #     'class': 'table-light',
     # },

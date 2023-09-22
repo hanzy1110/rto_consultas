@@ -370,5 +370,5 @@ def check_vup(nrocertificado):
 
 def filter_vup_transporte(certs: QuerySet):
     vup_certs = len([c for c in certs if check_vup(c.nrocertificado)])
-    transporte_certs = len(certs) - vup_certs
+    transporte_certs = len([c for c in certs if not check_vup(c.nrocertificado)])
     return {"cant_vup": vup_certs, "cant_transporte": transporte_certs}

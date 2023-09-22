@@ -80,15 +80,15 @@ class VerificacionesTables(tables.Table):
         fields = (
             "dominiovehiculo",
             "certificado",
-            "anulado",
             "fecha",
             "vigencia",
-            "idtipouso",
-            "idtipovehiculo",
             "titular",
+            "ver_verificacion",
             "idestado",
             "idtaller",
-            "ver_verificacion",
+            "idtipouso",
+            "idtipovehiculo",
+            "anulado",
         )
         extra_columns = ("certificado",)
 

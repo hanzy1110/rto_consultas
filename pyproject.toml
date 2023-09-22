@@ -1,2 +1,18 @@
 [tool.pyright]
 include = ["rto_consultas"]
+
+[project]
+name = "RTO Consultas"
+description="Software para consultas centralizadas del grupo ART UNCOma"
+readme = "README.md"
+version = "0.1.0"
+dependencies = [
+"python-dotenv",
+"Django",
+"mysqlclient",
+"django-admin-soft-dashboard==1.0.12",
+"django-tables2",
+# django-silk
+"tablib",
+"boto3",
+]

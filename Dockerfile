@@ -10,7 +10,8 @@ RUN apt-get install -y pkg-config default-libmysqlclient-dev libpq-dev build-ess
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install wheel
-RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt
+RUN pip install .
 
 # FROM continuumio/miniconda3 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \

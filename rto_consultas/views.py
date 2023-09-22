@@ -178,8 +178,8 @@ class ListCertificadosAssignView(CustomRTOView):
             "nrocertificado",
             "fecha_desde",
             "fecha_hasta",
-            "cert_init",
-            "cert_end",
+            # "cert_init",
+            # "cert_end",
         ],
         form_fields={
             "idtaller": ("nombre", Talleres),
@@ -193,8 +193,8 @@ class ListCertificadosAssignView(CustomRTOView):
             "replicado": "Replicado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
-            "cert_init": "Nro Oblea desde",
-            "cert_end": "Nro Oblea hasta",
+            # "cert_init": "Nro Oblea desde",
+            # "cert_end": "Nro Oblea hasta",
         },
         ids={
             "nrocertificado": "#txtNroCertificado",
@@ -205,8 +205,8 @@ class ListCertificadosAssignView(CustomRTOView):
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
-            "cert_init": "text",
-            "cert_end": "text",
+            # "cert_init": "text",
+            # "cert_end": "text",
         },
         fecha_field="fechacarga",
     )
