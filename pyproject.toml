@@ -2,7 +2,7 @@
 include = ["rto_consultas"]
 
 [project]
-name = "RTO Consultas"
+name = "rto_consultas"
 description="Software para consultas centralizadas del grupo ART UNCOma"
 readme = "README.md"
 version = "0.1.0"
