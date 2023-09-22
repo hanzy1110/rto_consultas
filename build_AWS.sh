@@ -1,6 +1,7 @@
 #!/bin/bash
-# rm ./event_manager/migrations/*
-echo "Working dir"
+set -xe
+
+sudo git pull
 
 sudo docker-compose --env-file envfiles/.env down --remove-orphans
 sudo docker-compose --env-file envfiles/.env build --progress plain
