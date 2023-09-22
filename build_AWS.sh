@@ -1,7 +1,6 @@
 #!/bin/bash
 set -xe
-
-sudo git pull
+git pull
 
 sudo docker-compose --env-file envfiles/.env down --remove-orphans
 sudo docker-compose --env-file envfiles/.env build --progress plain
