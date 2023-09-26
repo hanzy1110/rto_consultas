@@ -10,7 +10,7 @@ RUN apt-get install -y pkg-config default-libmysqlclient-dev libpq-dev build-ess
 COPY requirements.txt .
 COPY pyproject.toml .
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install wheel
+# RUN pip install wheel
 # RUN pip install -r requirements.txt
 RUN pip install .
 
