@@ -11,8 +11,8 @@ COPY requirements.txt .
 COPY pyproject.toml .
 RUN pip install --upgrade pip setuptools wheel
 # RUN pip install wheel
-# RUN pip install -r requirements.txt
-RUN pip install .
+RUN pip install -r requirements.txt
+# RUN pip install .
 
 # FROM continuumio/miniconda3 AS runner-image
 # RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
