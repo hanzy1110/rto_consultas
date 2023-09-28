@@ -191,7 +191,8 @@ def handle_cert_insert(taller_id, cert_init, cert_end):
             logger.error("ERROR DURING INSERTING CERTS...")
             logger.error(e.__cause__)
 
-    return None, None
+    return cert_init, cert_end
+    # return None, None
 
 
 def handle_form(data: AuxData, model: Model):
