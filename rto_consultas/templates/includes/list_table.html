@@ -6,7 +6,7 @@
 {% load getattr %}
 <h1>{{ context_object_name }}</h1>
 <div class="card-body px-0 pt-0 pb-2">
-<form method="GET">
+<form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
   <table width="90%" style="margin-left: 10px;">
     {% comment %} Render the "Nueva Revisión" button {% endcomment %}
     <tr>
@@ -37,10 +37,8 @@
       <td colspan="4"></td>
     </tr>
   </table>
-  <!-- <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button> -->
-<button type="button" hx-get="{% url render_url %}" hx-target="#table_div" class="btn btn-fill btn-sm btn-primary" hx-debug>
-  Buscar
-</button>
+  <!-- <button type="button" hx-get="{% url render_url %}" hx-target="#table_div" class="btn btn-fill btn-sm btn-primary" hx-debug> -->
+  <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
 </form>
 </div>
 <div class="card-body px-0 pt-0 pb-2">
