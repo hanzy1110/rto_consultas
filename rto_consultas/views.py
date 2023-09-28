@@ -77,11 +77,10 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = handle_context(context, self)
         return context
 
-    def get(self, request, **kwargs):
-        self.get_context_data()
-        if request.htmx:
-            return render(request, self.partial_template)
-        return render(request, self.template_name)
+    def get_template_names(self):
+        if self.request.htmx:
+            return [self.partial_template]
+        return [self.template_name]
 
 
 class ListVerificacionesView(CustomRTOView):
@@ -179,6 +178,7 @@ class ListCertificadosAssignView(CustomRTOView):
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
+    partial_template = "includes/table_view.html"
 
     aux_data = AuxData(
         query_fields=[
