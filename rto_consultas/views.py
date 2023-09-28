@@ -151,7 +151,6 @@ class ListVerificacionesView(CustomRTOView):
     #     return certs.intersection(certs_no_anulados)
 
 
-# TODO falta el redirect
 class CargaObleas(CustomRTOView, RedirectView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -159,6 +158,7 @@ class CargaObleas(CustomRTOView, RedirectView):
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
+    partial_template = "includes/table_view.html"
 
     aux_data = AuxData(
         query_fields=[
@@ -179,6 +179,7 @@ class CargaObleas(CustomRTOView, RedirectView):
             "cert_end": "text",
         },
         fecha_field="fechacarga",
+        render_url="carga_obleas"
     )
 
 
