@@ -43,6 +43,7 @@ class CustomFileColumn(tables.FileColumn):
 
 
 class VerificacionesTables(tables.Table):
+    template_name="tables/htmx_table.html"
     certificado = tables.Column(
         orderable=False,
         empty_values=(),
