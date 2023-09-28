@@ -151,7 +151,7 @@ class ListVerificacionesView(CustomRTOView):
     #     return certs.intersection(certs_no_anulados)
 
 
-class CargaObleas(CustomRTOView, RedirectView):
+class CargaObleas(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
     paginate_by = 10

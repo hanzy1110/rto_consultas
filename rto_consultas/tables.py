@@ -190,6 +190,7 @@ class VehiculosTable(tables.Table):
     )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Vehiculos
         fields = {"dominio", "idtipouso", "marca"}
 
@@ -220,6 +221,7 @@ class CertificadosTable(tables.Table):
     )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Certificados
         fields = {"nrocertificado", "idtaller", "fecha", "anulado"}
 
@@ -244,6 +246,7 @@ class CertificadosAssignTable(tables.Table):
     # )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Certificadosasignadosportaller
         query_fields = {"nrocertificado", "idtaller", "disponible", "replicado"}
 
@@ -273,6 +276,7 @@ class CertificadosTablesResumen(tables.Table):
     )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Certificados
         fields = (
             "nrocertificado",
@@ -374,6 +378,7 @@ class ResumenTransporteTable(tables.Table):
     )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Verificaciones
         fields = (
             "certificado",
@@ -494,6 +499,7 @@ class ResumenTransporteCargaTable(tables.Table):
     )
 
     class Meta:
+        template_name = "tables/htmx_table.html"
         model = Verificaciones
         fields = (
             "certificado",

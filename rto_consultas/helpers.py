@@ -153,7 +153,7 @@ def handle_query(request, model, fecha_field="fecha"):
     )
 
     if cert_init and cert_end:
-        queryset = handle_nrocertificados(nrocertificado, anulado, model)
+        queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
         pass
     else:
         queryset = handle_nrocertificados(nrocertificado, anulado, model)
@@ -324,7 +324,8 @@ def handle_nrocertificados(
                             nrocertificado__exact=nrocertificado_init,
                         ).values()
                     case _:
-                        logger.debug("MULTIPLE CERTS")
+                        logger.info("MULTIPLE CERTS")
+                        nrocertificado_end = int(nrocertificado_end[0])
                         assert nrocertificado_init < nrocertificado_end
 
                         cert = Certificados.objects.filter(
