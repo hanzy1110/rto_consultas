@@ -170,8 +170,8 @@ def handle_query(request, model, fecha_field="fecha"):
 def handle_cert_insert(taller_id, cert_init, cert_end):
     print("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
     if taller_id and cert_end and cert_init:
-        # TODO Check bounds for certificate numbers...
-        taller_id = int(taller_id[0]) if isinstance(taller_id, str) else taller_id
+        # TODO Check bounds for c]ertificate numbers...
+        taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
         taller = Talleres.objects.get(idtaller__iexact=taller_id)
         certs = [
             Certificadosasignadosportaller(
