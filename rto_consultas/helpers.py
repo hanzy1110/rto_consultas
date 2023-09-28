@@ -352,6 +352,7 @@ def handle_nrocertificados(
                             idtaller=c["idtaller_id"],
                         )
                         queryset = chain(queryset, new_q)
+                    return list(queryset)
 
                 elif model == Certificadosasignadosportaller:
                     queryset = Certificadosasignadosportaller.objects.none()
@@ -361,6 +362,7 @@ def handle_nrocertificados(
                             idtaller=c["idtaller_id"],
                         )
                         queryset = chain(queryset, new_q)
+                    return list(queryset)
 
                 logger.info(queryset)
 
