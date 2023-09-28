@@ -103,7 +103,11 @@ class VerificacionesTables(tables.Table):
             nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
             # return "Ver Certificado"
             return str(nro_cert)
-        return "No disponible"
+        else:
+            nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            # return "Ver Certificado"
+            return str(nro_cert)
+        # return "No disponible"
 
     def render_idestado(self, value):
         try:
