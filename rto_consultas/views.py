@@ -58,6 +58,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     context_object_name: str
     table_class: Table
     aux_data: AuxData
+    partial_template: str
 
     def get_queryset(self):
         _export = self.request.GET.copy().pop("_export", None)
@@ -75,6 +76,11 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
+
+    def get(self, request, **kwargs):
+        if request.htmx:
+            return render(request, self.partial_template)
+        return render(request, self.template_name)
 
 
 class ListVerificacionesView(CustomRTOView):
@@ -209,6 +215,7 @@ class ListCertificadosAssignView(CustomRTOView):
             # "cert_end": "text",
         },
         fecha_field="fechacarga",
+        render_url="certs_asignados",
     )
 
 

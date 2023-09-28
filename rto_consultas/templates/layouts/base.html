@@ -80,6 +80,11 @@
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
 <script src="{% static 'js/scripts.js' %}"></script>
-
+<script src="{% static ‘htmx.min.js’ %}"></script>
+<script>
+    document.body.addEventListener("htmx:configRequest", (event) => {
+        event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
+    });
+</script>
 </body>
 </html>

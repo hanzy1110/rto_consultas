@@ -37,12 +37,15 @@
       <td colspan="4"></td>
     </tr>
   </table>
-  <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
+  <!-- <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button> -->
+<button type="button" hx-get="{% url render_url %}" hx-target="#table_div" class="btn btn-fill btn-sm btn-primary">
+  Buscar
+</button>
 </form>
 </div>
 <div class="card-body px-0 pt-0 pb-2">
-  <div class="table-responsive p-0">
-    {% render_table table %}
+  <div id="#table_div" class="table-responsive p-0">
+    {#% render_table table %#}
   </div>
 </div>
 {% endblock %}

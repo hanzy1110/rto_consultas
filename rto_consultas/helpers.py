@@ -30,6 +30,7 @@ class AuxData:
     types: Dict[str, str] = field(default_factory=dict)
     fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
+    render_url: str = ""
 
 
 def convert_date(input_date):
@@ -244,6 +245,7 @@ def handle_context(context, view):
     context["ids"] = view.aux_data.ids
     context["types"] = view.aux_data.types
     context["aux"] = view.aux_data.aux
+    context["render_url"] = view.aux_data.render_url
     return context
 
 
