@@ -5,7 +5,7 @@ from datetime import timedelta, datetime
 
 import os
 import re
-from functools import reduce
+from itertools import chain
 from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
@@ -154,7 +154,6 @@ def handle_query(request, model, fecha_field="fecha"):
 
     if cert_init and cert_end:
         queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
-        pass
     else:
         queryset = handle_nrocertificados(nrocertificado, anulado, model)
 
@@ -340,20 +339,27 @@ def handle_nrocertificados(
             logger.debug("CERTIFICADOS QUERYSET ===>")
             logger.debug(cert)
 
-            queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert:
                 # cert = cert.first()
-                for c in cert:
-                    if model == Verificaciones:
-                        queryset = Verificaciones.objects.filter(
+                if model == Verificaciones:
+                    queryset = (
+                        Verificaciones.objects.none()
+                    )  # Initialize an empty queryset
+                    for c in cert:
+                        new_q = Verificaciones.objects.filter(
                             idverificacion=c["idverificacion_id"],
                             idtaller=c["idtaller_id"],
                         )
-                    elif model == Certificadosasignadosportaller:
-                        queryset = Certificadosasignadosportaller.objects.filter(
+                        queryset = chain(queryset, new_q)
+
+                elif model == Certificadosasignadosportaller:
+                    queryset = Certificadosasignadosportaller.objects.none()
+                    for c in cert:
+                        new_q = Certificadosasignadosportaller.objects.filter(
                             nrocertificado=c["nrocertificado"],
                             idtaller=c["idtaller_id"],
                         )
+                        queryset = chain(queryset, new_q)
 
                 logger.info(queryset)
 
