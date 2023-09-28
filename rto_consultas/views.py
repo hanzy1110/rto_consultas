@@ -99,6 +99,7 @@ class ListVerificacionesView(CustomRTOView):
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
+    partial_template = "includes/table_view.html"
 
     aux_data = AuxData(
         query_fields=[
@@ -135,6 +136,7 @@ class ListVerificacionesView(CustomRTOView):
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
+        render_url="verificaciones",
     )
 
     # def get_queryset(self):
