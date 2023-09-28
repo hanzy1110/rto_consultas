@@ -19,6 +19,7 @@ from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
 from django.core.cache import cache
 
 vals = {1: "Verdadero", 0: "Falso"}
+vals_anulado = {1: "Anulado", 0: "Vigente"}
 
 
 class CustomFileColumn(tables.FileColumn):
@@ -79,16 +80,16 @@ class VerificacionesTables(tables.Table):
         model = Verificaciones
         fields = (
             "dominiovehiculo",
-            "certificado",
             "fecha",
             "vigencia",
-            "titular",
-            "ver_verificacion",
             "idestado",
-            "idtaller",
-            "idtipouso",
-            "idtipovehiculo",
             "anulado",
+            "titular",
+            "idtipouso",
+            "ver_verificacion",
+            "certificado",
+            # "idtipovehiculo",
+            "idtaller",
         )
         extra_columns = ("certificado",)
 
@@ -99,8 +100,10 @@ class VerificacionesTables(tables.Table):
         cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
         if cached_cert:
-            return "Ver Certificado"
-        return "Certificado"
+            nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            # return "Ver Certificado"
+            return str(nro_cert)
+        return "No disponible"
 
     def render_idestado(self, value):
         try:
@@ -129,7 +132,7 @@ class VerificacionesTables(tables.Table):
             idverificacion_id__exact=record.idverificacion,
             idtaller_id__exact=record.idtaller,
         ).values()
-        return vals[cert[0]["anulado"]]
+        return vals_anulado[cert[0]["anulado"]]
 
     def render_idtipouso(self, value):
         try:

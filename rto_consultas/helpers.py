@@ -148,9 +148,15 @@ def handle_query(request, model, fecha_field="fecha"):
     cert_init = query.pop("cert_init", None)
     cert_end = query.pop("cert_end", None)
 
-    handle_cert_insert(query.get("idtaller", None), cert_init, cert_end)
+    cert_init, cert_end = handle_cert_insert(
+        query.get("idtaller", None), cert_init, cert_end
+    )
 
-    queryset = handle_nrocertificado(nrocertificado, anulado, model)
+    if cert_init and cert_end:
+        queryset = handle_nrocertificados(nrocertificado, anulado, model)
+        pass
+    else:
+        queryset = handle_nrocertificados(nrocertificado, anulado, model)
 
     if not check_for_empty_query(query):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
@@ -164,6 +170,7 @@ def handle_query(request, model, fecha_field="fecha"):
 def handle_cert_insert(taller_id, cert_init, cert_end):
     print("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
     if taller_id and cert_end and cert_init:
+        # TODO Check bounds for certificate numbers...
         taller_id = int(taller_id[0]) if isinstance(taller_id, str) else taller_id
         taller = Talleres.objects.get(idtaller__iexact=taller_id)
         certs = [
@@ -177,7 +184,14 @@ def handle_cert_insert(taller_id, cert_init, cert_end):
             for nro in range(int(cert_init[0]), int(cert_end[0]))
         ]
 
-        Certificadosasignadosportaller.objects.bulk_create(certs)
+        try:
+            Certificadosasignadosportaller.objects.bulk_create(certs)
+            return cert_init, cert_end
+        except Exception as e:
+            logger.error("ERROR DURING INSERTING CERTS...")
+            logger.error(e.__cause__)
+
+    return None, None
 
 
 def handle_form(data: AuxData, model: Model):
@@ -283,47 +297,62 @@ def handle_anulado(queryset, anulado, model):
             return final_q
 
 
-def handle_nrocertificado(nrocertificado, anulado, model):
+def handle_nrocertificados(
+    nrocertificado_init, anulado, model, nrocertificado_end=None
+):
     queryset = model.objects.all()
 
-    print(model)
-
-    match nrocertificado:
+    match nrocertificado_init:
         case [""]:
             return queryset
         case None:
             return queryset
         case _:
-            print(nrocertificado)
-            nrocertificado = int(nrocertificado[0])
-            print(nrocertificado)
+            nrocertificado_init = int(nrocertificado_init[0])
             if anulado:
                 cert = Certificados.objects.filter(
-                    nrocertificado__exact=nrocertificado, anulado__exact=1
+                    nrocertificado__exact=nrocertificado_init, anulado__exact=1
                 ).values()
             else:
-                cert = Certificados.objects.filter(
-                    nrocertificado__exact=nrocertificado,
-                ).values()
+                match nrocertificado_end:
+                    case [""]:
+                        cert = Certificados.objects.filter(
+                            nrocertificado__exact=nrocertificado_init,
+                        ).values()
+                    case None:
+                        cert = Certificados.objects.filter(
+                            nrocertificado__exact=nrocertificado_init,
+                        ).values()
+                    case _:
+                        logger.debug("MULTIPLE CERTS")
+                        assert nrocertificado_init < nrocertificado_end
 
-            print("CERTIFICADOS QUERYSET ===>")
-            print(cert)
+                        cert = Certificados.objects.filter(
+                            nrocertificado__range=(
+                                nrocertificado_init,
+                                nrocertificado_end,
+                            ),
+                        ).values()
+
+            logger.debug("CERTIFICADOS QUERYSET ===>")
+            logger.debug(cert)
 
             queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert:
                 cert = cert.first()
-                if model == Verificaciones:
-                    queryset = Verificaciones.objects.filter(
-                        idverificacion=cert["idverificacion_id"],
-                        idtaller=cert["idtaller_id"],
-                    )
-                elif model == Certificadosasignadosportaller:
-                    queryset = Certificadosasignadosportaller.objects.filter(
-                        nrocertificado=cert["nrocertificado"],
-                        idtaller=cert["idtaller_id"],
-                    )
+                for c in cert:
+                    if model == Verificaciones:
+                        queryset = Verificaciones.objects.filter(
+                            idverificacion=c["idverificacion_id"],
+                            idtaller=c["idtaller_id"],
+                        )
+                    elif model == Certificadosasignadosportaller:
+                        queryset = Certificadosasignadosportaller.objects.filter(
+                            nrocertificado=c["nrocertificado"],
+                            idtaller=c["idtaller_id"],
+                        )
 
-                print(queryset)
+                logger.debug(queryset)
 
             return queryset
 
