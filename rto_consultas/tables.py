@@ -87,7 +87,7 @@ class VerificacionesTables(tables.Table):
             "titular",
             "idtipouso",
             "ver_verificacion",
-            "certificado",
+            "ver_certificado",
             # "idtipovehiculo",
             "idtaller",
         )
