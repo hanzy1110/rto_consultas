@@ -3,11 +3,15 @@
 {% get_current_language_bidi as LANGUAGE_BIDI %}
 {% get_direction as direction %}
 {% get_admin_setting as admin_setting %}
+{% load django_htmx %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
 
 <head>
+
+    <script src="{% static 'js/htmx.min.js'  %}"></script>
+    {% django_htmx_script %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>
       RTO Consultas - {% block title %}{% endblock %}
@@ -80,7 +84,6 @@
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
 <script src="{% static 'js/scripts.js' %}"></script>
-<script src="{% static 'js/htmx.min.js'  %}"></script>
 <script>
     document.body.addEventListener("htmx:configRequest", (event) => {
         event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
