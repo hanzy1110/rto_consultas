@@ -30,6 +30,7 @@ class CustomFileColumn(tables.FileColumn):
         )
         if certificado:
             certificado = certificado[0]
+
             cache_key = (
                 f"certificado:{certificado.idtaller_id}-{certificado.idverificacion_id}"
             )
@@ -100,13 +101,13 @@ class VerificacionesTables(tables.Table):
         cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
         if cached_cert:
-            nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            # return "Ver Certificado"
-            return str(nro_cert)
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            return "Ver Certificado"
+            # return str(nro_cert)
         else:
-            nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            # return "Ver Certificado"
-            return str(nro_cert)
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            return "Ver Certificado"
+            # return str(nro_cert)
         # return "No disponible"
 
     def render_idestado(self, value):
