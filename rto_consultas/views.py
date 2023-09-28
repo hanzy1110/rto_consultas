@@ -78,6 +78,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         return context
 
     def get(self, request, **kwargs):
+        self.get_context_data()
         if request.htmx:
             return render(request, self.partial_template)
         return render(request, self.template_name)
