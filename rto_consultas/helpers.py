@@ -340,7 +340,7 @@ def handle_nrocertificados(
 
             queryset = Verificaciones.objects.none()  # Initialize an empty queryset
             if cert:
-                cert = cert.first()
+                # cert = cert.first()
                 for c in cert:
                     if model == Verificaciones:
                         queryset = Verificaciones.objects.filter(
@@ -353,7 +353,7 @@ def handle_nrocertificados(
                             idtaller=c["idtaller_id"],
                         )
 
-                logger.debug(queryset)
+                logger.info(queryset)
 
             return queryset
 
