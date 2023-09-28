@@ -179,7 +179,7 @@ class CargaObleas(CustomRTOView, RedirectView):
             "cert_end": "text",
         },
         fecha_field="fechacarga",
-        render_url="carga_obleas"
+        render_url="carga_obleas",
     )
 
 
