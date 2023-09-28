@@ -266,7 +266,7 @@ def handle_context(context, view):
     context["types"] = view.aux_data.types
     context["aux"] = view.aux_data.aux
     context["render_url"] = view.aux_data.render_url
-    logger.debug(f"Context: {context}")
+    # logger.debug(f"Context: {context}")
     return context
 
 
