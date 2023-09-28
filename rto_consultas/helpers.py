@@ -154,6 +154,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
     if cert_init and cert_end:
         queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
+        return queryset
     else:
         queryset = handle_nrocertificados(nrocertificado, anulado, model)
 
