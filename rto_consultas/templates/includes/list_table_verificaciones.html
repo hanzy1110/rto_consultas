@@ -66,6 +66,9 @@
             </tr>
         </table>
         <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
+        <button type="button" hx-trigger="click" hx-target="#table_div" hx-swap="static">
+            Limpiar Busqueda
+        </button>
     </form>
 </div>
 <div class="card-body px-0 pt-0 pb-2">
@@ -74,4 +77,15 @@
     </div>
 </div>
 
+<script>
+    // Define the static HTML content you want to use for swapping
+    const staticContent = '';
+
+    // Add an event listener to the button
+    const button = document.querySelector('button[hx-swap="static"]');
+    button.addEventListener('click', function () {
+        const target = document.querySelector(button.getAttribute('hx-target'));
+        target.innerHTML = staticContent;
+    });
+</script>
 {% endblock %}
