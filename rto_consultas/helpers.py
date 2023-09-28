@@ -3,7 +3,7 @@ from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
 
-
+import os
 import re
 from functools import reduce
 from typing import Dict, List, Tuple, Set, Union
@@ -19,6 +19,10 @@ from rto_consultas.models import (
     Verificacionespdf,
 )
 from .presigned_url import generate_presigned_url
+from .logging import configure_logger
+
+LOG_FILE = os.environ["LOG_FILE"]
+logger = configure_logger(LOG_FILE)
 
 
 @dataclass
@@ -234,6 +238,8 @@ def map_fields(data: AuxData, model: Model):
 
 
 def handle_context(context, view):
+    logger.info("Handling context!")
+
     val_dict = handle_form(view.aux_data, view.model)
     context["form_fields"] = val_dict
     context["descriptions"] = map_fields(view.aux_data, view.model)
@@ -246,6 +252,7 @@ def handle_context(context, view):
     context["types"] = view.aux_data.types
     context["aux"] = view.aux_data.aux
     context["render_url"] = view.aux_data.render_url
+    logger.debug(f"Context: {context}")
     return context
 
 
