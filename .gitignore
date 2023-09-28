@@ -132,3 +132,4 @@ db_build/sql
 dataset/
 data_analysis/dataset
 traslado/
+log/
