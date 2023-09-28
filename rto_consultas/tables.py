@@ -43,7 +43,6 @@ class CustomFileColumn(tables.FileColumn):
 
 
 class VerificacionesTables(tables.Table):
-    template_name="tables/htmx_table.html"
     certificado = tables.Column(
         orderable=False,
         empty_values=(),
@@ -94,6 +93,7 @@ class VerificacionesTables(tables.Table):
             "idtaller",
         )
         extra_columns = ("certificado",)
+        template_name = "tables/htmx_table.html"
 
     def render_ver_verificacion(self, record):
         return f"Ver Verificacion"
