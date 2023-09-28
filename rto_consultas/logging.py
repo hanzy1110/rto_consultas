@@ -7,13 +7,13 @@ def configure_logger(log_filename):
         "version": 1,
         "formatters": {
             "verbose": {
-                "format": "{levelname} {asctime} {name} {message}",
+                "format": "[{levelname}] [{asctime} {name}] => {message}",
                 "style": "{",
             },
         },
         "handlers": {
             "file": {
-                "level": "DEBUG",
+                "level": "INFO",
                 "class": "logging.FileHandler",
                 "filename": log_filename,
                 "formatter": "verbose",
