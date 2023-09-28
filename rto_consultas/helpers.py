@@ -314,6 +314,7 @@ def handle_nrocertificados(
                     nrocertificado__exact=nrocertificado_init, anulado__exact=1
                 ).values()
             else:
+                logging.info("Handling multiple certs")
                 match nrocertificado_end:
                     case [""]:
                         cert = Certificados.objects.filter(

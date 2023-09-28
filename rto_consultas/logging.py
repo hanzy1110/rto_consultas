@@ -7,7 +7,7 @@ def configure_logger(log_filename):
         "version": 1,
         "formatters": {
             "verbose": {
-                "format": "[{levelname}] [{asctime} {name}] => {message}",
+                "format": "[{levelname}]--[{asctime}] => {message}",
                 "style": "{",
             },
         },
