@@ -1,3 +1,4 @@
+import os
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
@@ -48,6 +49,11 @@ from .helpers import (
     generate_key,
 )
 
+from .logging import configure_logger
+
+LOG_FILE = os.environ["LOG_FILE"]
+logger = configure_logger(LOG_FILE)
+
 # from .presigned_url import generate_presigned_url
 
 
@@ -73,12 +79,15 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         return queryset
 
     def get_context_data(self, **kwargs):
+        logger.debug("HANDLING CONTEXT...")
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
 
     def get_template_names(self):
+        logger.debug("Checking for template...")
         if self.request.htmx:
+            logger.debug("HTMX REQUEST!!")
             return [self.partial_template]
         return [self.template_name]
 
