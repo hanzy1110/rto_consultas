@@ -30,7 +30,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
-    ObleasPorTaller,
+    ObleasPorTallerTable,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
@@ -527,7 +527,7 @@ def resumen_obleas(request):
 
             data.append(cert_data)
 
-        table = ObleasPorTaller(data)
+        table = ObleasPorTallerTable(data)
         return render(request, "includes/table_view.html", {"table": table})
 
     form = ObleasPorTaller()
