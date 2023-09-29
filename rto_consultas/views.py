@@ -217,7 +217,9 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
         render_url="resumen_obleas",
     )
 
-    def get_queryset(self):
+    def get_context_data(self):
+        context = self.get_context_data()
+
         data = []
         talleres = Talleres.objects.all()
         if self.request.GET:
@@ -233,11 +235,12 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
             cert_data["taller"] = t.nombre
 
             data.append(cert_data)
-            # # Handle pagination...
-            # self.table_data = data
-            # self.get_table()
 
-        return data
+        logger.info(data)
+        table = ObleasPorTaller(data)
+        context["table"] = table
+
+        return context
 
 
 class ListCertificadosAssignView(CustomRTOView):
