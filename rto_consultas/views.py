@@ -183,6 +183,63 @@ class CargaObleas(CustomRTOView):
     )
 
 
+class ResumenObleas(CustomRTOView, LoginRequiredMixin):
+    model = Certificadosasignadosportaller
+    paginate_by = 10
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = ObleasPorTaller
+    partial_template = "includes/table_view.html"
+
+    aux_data = AuxData(
+        query_fields=[
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idtaller": "Nombre Taller",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+        },
+        ids={
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+        },
+        types={
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
+        fecha_field="fechacarga",
+        render_url="resumen_obleas",
+    )
+
+    def get_queryset(self):
+        data = []
+        talleres = Talleres.objects.all()
+        if self.request.GET:
+            taller_id = self.request.GET.get("taller", None)
+            talleres = Talleres.objects.filter(tallerid_id__iexact=taller_id)
+
+        for t in talleres:
+            certs_by_taller = Certificadosasignadosportaller.objects.filter(
+                idtaller_id=t.idtaller, disponible__iexact=1
+            )
+
+            cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data["taller"] = t.nombre
+
+            data.append(cert_data)
+            # # Handle pagination...
+            # self.table_data = data
+            self.get_table()
+
+        return data
+
+
 class ListCertificadosAssignView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -447,23 +504,28 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
 
 
 def resumen_obleas(request):
-    data = []
+    if request.htmx:
+        logger.info("RENDERING HTMX!")
+        data = []
+        talleres = Talleres.objects.all()
+        if request.GET:
+            taller_id = request.GET.get("taller", None)
+            talleres = Talleres.objects.filter(tallerid_id__iexact=taller_id)
 
-    talleres = Talleres.objects.all()
+        for t in talleres:
+            certs_by_taller = Certificadosasignadosportaller.objects.filter(
+                idtaller_id=t.idtaller, disponible__iexact=1
+            )
 
-    for t in talleres:
-        certs_by_taller = Certificadosasignadosportaller.objects.filter(
-            idtaller_id=t.idtaller, disponible__iexact=1
-        )
+            cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data["taller"] = t.nombre
 
-        cert_data = filter_vup_transporte(certs_by_taller)
-        cert_data["taller"] = t.nombre
+            data.append(cert_data)
 
-        data.append(cert_data)
+        table = ObleasPorTaller(data)
+        return render(request, "includes/table_view.html", {"table": table})
 
-    table = ObleasPorTaller(data)
-
-    return render(request, "includes/table_view.html", {"table": table})
+    return render(request, "includes/consulta_obleas.html")
 
 
 def verificaciones_anuales(request):
