@@ -2,7 +2,7 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 
-<form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
+<form hx-get="{% url resumen_obleas %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
     {% csrf_token %}
     {{ form.as_p }}
   <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
