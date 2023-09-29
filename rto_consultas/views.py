@@ -221,8 +221,8 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
         data = []
         talleres = Talleres.objects.all()
         if self.request.GET:
-            taller_id = self.request.GET.get("taller", None)
-            talleres = Talleres.objects.filter(tallerid_id__iexact=taller_id)
+            idtaller = self.request.GET.get("taller", None)
+            talleres = Talleres.objects.filter(idtaller_id__iexact=idtaller)
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
