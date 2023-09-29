@@ -34,6 +34,6 @@ class ObleasPorTaller(forms.Form):
     taller_id = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=get_choices(),
-        required=True,
+        required=False,
         label="Planta",
     )
