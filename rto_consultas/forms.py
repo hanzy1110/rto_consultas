@@ -23,7 +23,9 @@ def get_choices():
     logger.debug(vals)
 
     choices = list(tuple(vals["idtaller"].items()))
-    return [("", "")].extend(choices)
+    a = [("", "")]
+    a.extend(choices)
+    return a
 
 
 class ObleasPorTaller(forms.Form):
