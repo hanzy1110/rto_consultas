@@ -49,7 +49,7 @@ from .helpers import (
     generate_key,
 )
 
-import forms
+from .forms import ObleasPorTaller
 
 from .logging import configure_logger
 
