@@ -18,8 +18,8 @@ class ObleasPorTaller(forms.Form):
         },
         parsed_names={"name": "name"},
     )
-    fecha_desde = forms.DateField(max_length=100, required=True, label="Parameter 1")
-    fecha_hasta = forms.DateField(required=True, label="Parameter 2")
+    fecha_desde = forms.DateField(required=False, label="fecha_desde")
+    fecha_hasta = forms.DateField(required=False, label="fecha_hasta")
     taller_id = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=list(tuple(map_fields(aux_data, Talleres)["idtaller"])),
