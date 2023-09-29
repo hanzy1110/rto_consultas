@@ -514,6 +514,7 @@ def resumen_obleas(request):
         data = []
         talleres = Talleres.objects.all()
         idtaller = request.GET.get("taller", None)
+        logger.debug(request.GET)
         if idtaller:
             talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
 
@@ -527,8 +528,8 @@ def resumen_obleas(request):
 
             data.append(cert_data)
 
-        logger.debug(talleres)
-        logger.debug(data)
+        # logger.debug(talleres)
+        # logger.debug(data)
         table = ObleasPorTallerTable(data)
         return render(request, "includes/table_view.html", {"table": table})
 
