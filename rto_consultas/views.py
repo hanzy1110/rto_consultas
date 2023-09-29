@@ -235,7 +235,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
             data.append(cert_data)
             # # Handle pagination...
             # self.table_data = data
-            self.get_table()
+            # self.get_table()
 
         return data
 
