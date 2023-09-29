@@ -222,11 +222,11 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
         talleres = Talleres.objects.all()
         if self.request.GET:
             idtaller = self.request.GET.get("taller", None)
-            talleres = Talleres.objects.filter(idtaller_id__iexact=idtaller)
+            talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
-                idtaller_id=t.idtaller, disponible__iexact=1
+                idtaller=t.idtaller_id, disponible__iexact=1
             )
 
             cert_data = filter_vup_transporte(certs_by_taller)
