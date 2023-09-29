@@ -33,4 +33,5 @@ class ObleasPorTaller(forms.Form):
         choices=get_choices(),
         required=True,
         label="Planta",
+        initial_values=""
     )
