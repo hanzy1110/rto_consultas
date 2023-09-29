@@ -13,7 +13,7 @@ def configure_logger(log_filename):
         },
         "handlers": {
             "file": {
-                "level": "INFO",
+                "level": "DEBUG",
                 "class": "logging.FileHandler",
                 "filename": log_filename,
                 "formatter": "verbose",
