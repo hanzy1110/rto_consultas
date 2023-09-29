@@ -226,7 +226,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
-                idtaller=t.idtaller_id, disponible__iexact=1
+                idtaller=t.idtaller, disponible__iexact=1
             )
 
             cert_data = filter_vup_transporte(certs_by_taller)
