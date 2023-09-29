@@ -49,6 +49,8 @@ from .helpers import (
     generate_key,
 )
 
+import forms
+
 from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
@@ -512,12 +514,12 @@ def resumen_obleas(request):
         data = []
         talleres = Talleres.objects.all()
         if request.GET:
-            taller_id = request.GET.get("taller", None)
-            talleres = Talleres.objects.filter(tallerid_id__iexact=taller_id)
+            idtaller = request.GET.get("taller", None)
+            talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
-                idtaller_id=t.idtaller, disponible__iexact=1
+                idtaller=t.idtaller, disponible__iexact=1
             )
 
             cert_data = filter_vup_transporte(certs_by_taller)
@@ -528,7 +530,8 @@ def resumen_obleas(request):
         table = ObleasPorTaller(data)
         return render(request, "includes/table_view.html", {"table": table})
 
-    return render(request, "includes/consulta_obleas.html")
+    form = forms.ObleasPorTaller()
+    return render(request, "includes/consulta_obleas.html", {"form": form})
 
 
 def verificaciones_anuales(request):
