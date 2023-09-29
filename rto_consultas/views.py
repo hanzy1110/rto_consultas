@@ -218,7 +218,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
     )
 
     def get_context_data(self):
-        context = self.get_context_data()
+        context = super().get_context_data()
 
         data = []
         talleres = Talleres.objects.all()
