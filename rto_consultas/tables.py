@@ -350,9 +350,12 @@ class VerificacionesAnuales(tables.Table):
 
 
 class ObleasPorTallerTable(tables.Table):
-    taller = tables.Column()
-    cant_vup = tables.Column()
-    cant_transporte = tables.Column()
+    planta = tables.Column(verbose_name="Planta")
+    cant_vup = tables.Column(verbose_name="ANSV")
+    cant_transporte = tables.Column(verbose_name="DPT")
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
 
 
 class ResumenTransporteTable(tables.Table):
