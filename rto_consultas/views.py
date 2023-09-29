@@ -530,7 +530,7 @@ def resumen_obleas(request):
         table = ObleasPorTaller(data)
         return render(request, "includes/table_view.html", {"table": table})
 
-    form = forms.ObleasPorTaller()
+    form = ObleasPorTaller()
     return render(request, "includes/consulta_obleas.html", {"form": form})
 
 
