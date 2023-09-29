@@ -22,7 +22,8 @@ def get_choices():
     vals = map_fields(aux_data, Talleres)
     logger.debug(vals)
 
-    return list(tuple(vals["idtaller"].items()))
+    choices = list(tuple(vals["idtaller"].items()))
+    return [("", "")].extend(choices)
 
 
 class ObleasPorTaller(forms.Form):
