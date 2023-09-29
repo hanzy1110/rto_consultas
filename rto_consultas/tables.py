@@ -350,7 +350,7 @@ class VerificacionesAnuales(tables.Table):
 
 
 class ObleasPorTallerTable(tables.Table):
-    planta = tables.Column(verbose_name="Planta")
+    taller = tables.Column(verbose_name="Planta")
     cant_vup = tables.Column(verbose_name="ANSV")
     cant_transporte = tables.Column(verbose_name="DPT")
 
