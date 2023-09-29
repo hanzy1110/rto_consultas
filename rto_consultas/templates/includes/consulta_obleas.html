@@ -2,10 +2,13 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 
-<form method="post">
+<form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Buscar</button>
+  <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
+  <button type="button" class="btn btn-fill btn-sm btn-primary" hx-trigger="click" hx-target="#table_div" hx-swap="static">
+      Limpiar Busqueda
+  </button>
 </form>
 
 <div class="card-body px-0 pt-0 pb-2">
@@ -13,4 +16,15 @@
     </div>
 </div>
 
+<script>
+    // Define the static HTML content you want to use for swapping
+    const staticContent = '';
+
+    // Add an event listener to the button
+    const button = document.querySelector('button[hx-swap="static"]');
+    button.addEventListener('click', function () {
+        const target = document.querySelector(button.getAttribute('hx-target'));
+        target.innerHTML = staticContent;
+    });
+</script>
 {% endblock %}
