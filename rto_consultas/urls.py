@@ -41,7 +41,7 @@ urlpatterns = [
     path("certificados/", views.ListCertificadosView.as_view(), name="certificados"),
     path("vehiculos/", views.ListVehiculosView.as_view(), name="vehiculos"),
     path("cargaobleas/", views.CargaObleas.as_view(), name="carga_obleas"),
-    path("resumenobleas/", views.ResumenObleas.as_view(), name="resumen_obleas"),
+    path("resumenobleas/", views.resumen_obleas, name="resumen_obleas"),
     path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
         views.VerVerificacion.as_view(),
