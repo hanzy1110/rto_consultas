@@ -512,7 +512,7 @@ def resumen_obleas(request):
     if request.htmx:
         logger.info("RENDERING HTMX!")
         data = []
-        talleres = Talleres.objects.all()
+        talleres = Talleres.objects.filter(activo__iexact=1)
         idtaller = request.GET.get("taller_id", None)
         logger.debug(request.GET)
         if idtaller:
@@ -528,15 +528,13 @@ def resumen_obleas(request):
 
             data.append(cert_data)
 
-        # logger.debug(talleres)
-        # logger.debug(data)
         table = ObleasPorTallerTable(data)
         return render(request, "includes/table_view.html", {"table": table})
 
     initial_values = {
-        'fecha_desde':'',
-        'fecha_hasta':'',
-        'taller_id':'',
+        "fecha_desde": "",
+        "fecha_hasta": "",
+        "taller_id": "",
     }
 
     form = ObleasPorTaller(initial=initial_values)

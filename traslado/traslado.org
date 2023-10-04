@@ -39,3 +39,11 @@ Para realizar esto, se proponen los siguientes pasos:
 
 *** Replicacion:
 configuracion de la replicacion se encuentra en la carpeta sql_init del directorio db_build del repositorio en servidor central_mysql
+
+** Cambios
++ Dominio => Nro Cert =>  Fecha Emision => Vigencia => Calificacion => Tipo Uso => Titular
++ Fecha -> Emision
++ Anulado va para el fondo, cambiarlo por Estado. Colorear como el semaforo
++ Cambiar Estado por coloreado a partir del valor de la celda
++ Planta va para el fondo
++ Sistema usuarios / Replicacion
