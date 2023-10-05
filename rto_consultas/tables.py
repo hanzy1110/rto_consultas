@@ -39,6 +39,7 @@ class ImageColumn(tables.Column):
 
         key = vals_anulado[cert["anulado"]]
 
+        # return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
         return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
 
 
@@ -156,12 +157,12 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "N/E"
 
-    def render_anulado(self, record):
-        cert = Certificados.objects.filter(
-            idverificacion_id__exact=record.idverificacion,
-            idtaller_id__exact=record.idtaller,
-        ).values()
-        return vals_anulado[cert[0]["anulado"]]
+    # def render_anulado(self, record):
+    #     cert = Certificados.objects.filter(
+    #         idverificacion_id__exact=record.idverificacion,
+    #         idtaller_id__exact=record.idtaller,
+    #     ).values()
+    #     return vals_anulado[cert[0]["anulado"]]
 
     def render_idtipouso(self, value):
         try:
