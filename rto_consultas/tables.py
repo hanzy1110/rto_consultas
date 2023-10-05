@@ -84,9 +84,10 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     titular = tables.Column(orderable=False, empty_values=())
-    anulado = ImageColumn(orderable=False, empty_values=())
+    anulado = ImageColumn(orderable=False, empty_values=(), verbose_name="Estado")
     vigencia = tables.Column(orderable=False, empty_values=())
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
+    idestado = tables.Column(empty_values=(), verbose_name="Calificación")
     aux_data = AuxData(
         query_fields=[],
         form_fields={
