@@ -1,6 +1,7 @@
 import django_tables2 as tables
 from django.core.paginator import Paginator
 from django.utils.html import format_html
+from django.templatetags.static import static
 from .models import (
     # VWVerificaciones,
     Localidades,
@@ -38,10 +39,13 @@ class ImageColumn(tables.Column):
             cert = cert[0]
 
         key = vals_anulado[cert["anulado"]]
-
+        # Use the static template tag to generate the image URL
+        image_url = static(f"img/small-logos/{key}.png")
+        # Return the HTML with the correct image URL
+        return format_html('<img src="{}" />', image_url)
         # return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
         # return format_html('<img src="{% static img/small-logos/{}.png %}" />', key)
-        return format_html('<img src="img/small-logos/{}.png" />', key)
+        # return format_html('<img src="img/small-logos/{}.png" />', key)
 
 
 class CustomFileColumn(tables.FileColumn):
