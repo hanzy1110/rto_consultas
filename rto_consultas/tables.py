@@ -40,7 +40,7 @@ class ImageColumn(tables.Column):
         key = vals_anulado[cert["anulado"]]
 
         # return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
-        return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
+        return format_html('<img src="{% static img/small-logos/{}.png %}" />', key)
 
 
 class CustomFileColumn(tables.FileColumn):
