@@ -15,7 +15,16 @@ from .models import (
     Serviciostransporte,
 )
 from .models import Estados, Tipousovehiculo, Talleres
-from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
+from .helpers import (
+    LOG_FILE,
+    AuxData,
+    map_fields,
+    generate_key_from_params,
+    convert_date,
+)
+from .logging import configure_logger
+
+logger = configure_logger(LOG_FILE)
 
 # from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
@@ -30,11 +39,14 @@ class ImageColumn(tables.Column):
 
         cert = cache.get(cache_key, None)
 
+        logger.info("CACHE HIT IMAGE COLUMN")
+
         if not cert:
             cert = Certificados.objects.filter(
                 idverificacion_id__exact=record.idverificacion,
                 idtaller_id__exact=record.idtaller,
             ).values()
+            logger.info("CACHE MISS IMAGE COLUMN")
 
             cert = cert[0]
 
