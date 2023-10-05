@@ -1,5 +1,6 @@
 import django_tables2 as tables
 from django.core.paginator import Paginator
+from django.utils.html import format_html
 from .models import (
     # VWVerificaciones,
     Localidades,
@@ -19,7 +20,26 @@ from .helpers import AuxData, map_fields, generate_key_from_params, convert_date
 from django.core.cache import cache
 
 vals = {1: "Verdadero", 0: "Falso"}
-vals_anulado = {1: "Anulado", 0: "Vigente"}
+vals_anulado = {1: "anulado", 0: "vigente"}
+
+
+class ImageColumn(tables.Column):
+    def render(self, record):
+        cache_key = f"certificado:{record.idtaller}-{record.idverificacion}"
+
+        cert = cache.get(cache_key, None)
+
+        if not cert:
+            cert = Certificados.objects.filter(
+                idverificacion_id__exact=record.idverificacion,
+                idtaller_id__exact=record.idtaller,
+            ).values()
+
+            cert = cert[0]
+
+        key = vals_anulado[cert["anulado"]]
+
+        return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
 
 
 class CustomFileColumn(tables.FileColumn):
@@ -47,7 +67,7 @@ class VerificacionesTables(tables.Table):
         orderable=False,
         empty_values=(),
     )
-    fecha = tables.DateColumn(format="d/m/Y")
+    fecha = tables.DateColumn(verbose_name="Emision", format="d/m/Y")
     ver_verificacion = tables.Column(
         linkify=(
             "ver_verificacion",
@@ -64,8 +84,9 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     titular = tables.Column(orderable=False, empty_values=())
-    anulado = tables.Column(orderable=False, empty_values=())
+    anulado = ImageColumn(orderable=False, empty_values=())
     vigencia = tables.Column(orderable=False, empty_values=())
+    idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     aux_data = AuxData(
         query_fields=[],
         form_fields={
@@ -81,17 +102,17 @@ class VerificacionesTables(tables.Table):
         model = Verificaciones
         fields = (
             "dominiovehiculo",
+            "certificado",
             "fecha",
             "vigencia",
             "idestado",
-            "anulado",
-            "titular",
             "idtipouso",
+            "titular",
             "ver_verificacion",
-            "certificado",
             "ver_certificado",
             # "idtipovehiculo",
             "idtaller",
+            "anulado",
         )
         extra_columns = ("certificado",)
         template_name = "tables/htmx_table.html"
