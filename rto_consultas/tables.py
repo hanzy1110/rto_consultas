@@ -82,11 +82,13 @@ class CustomFileColumn(tables.FileColumn):
 
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(
+        verbose_name="Nro. Certificado",
         orderable=False,
         empty_values=(),
     )
     fecha = tables.DateColumn(verbose_name="Emision", format="d/m/Y")
     ver_verificacion = tables.Column(
+        verbose_name="Verificación",
         linkify=(
             "ver_verificacion",
             {
@@ -98,6 +100,7 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
+        verbose_name="Certificado",
         orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
