@@ -137,18 +137,22 @@ class VerificacionesTables(tables.Table):
         template_name = "tables/htmx_table.html"
 
     def render_ver_verificacion(self, record):
-        return f"Ver Verificacion"
+        image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
 
     def render_ver_certificado(self, record, value):
         cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
+
+        image_url = static(f"img/small-logos/printer.png")
+        img_tag = format_html('<img src="{}" />', image_url)
         if cached_cert:
             # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            return "Ver Certificado"
+            return img_tag
             # return str(nro_cert)
         else:
             # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            return "Ver Certificado"
+            return img_tag
             # return str(nro_cert)
         # return "No disponible"
 
