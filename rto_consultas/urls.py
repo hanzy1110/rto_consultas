@@ -52,7 +52,8 @@ urlpatterns += [
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
-    path("", include("admin_soft.urls"), name=admin),
+    # path("", include("admin_soft.urls"), name=admin),
+    path("", views.index, name="index"),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
 urlpatterns += [

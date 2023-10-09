@@ -68,6 +68,12 @@ logger = configure_logger(LOG_FILE)
 # from .presigned_url import generate_presigned_url
 
 
+@login_required
+def index(request):
+    # Your view logic here
+    return render(request, "pages/index.html")
+
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
