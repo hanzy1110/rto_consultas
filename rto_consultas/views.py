@@ -10,6 +10,11 @@ from django_tables2.export.export import TableExport
 from django.forms.models import model_to_dict
 
 from datetime import date
+
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
 from django.db.models import Q
@@ -57,6 +62,25 @@ LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
 
 # from .presigned_url import generate_presigned_url
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home")  # Redirect to your home page
+        else:
+            # Handle invalid login
+            pass
+    return render(request, "accounts/login.html")
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):

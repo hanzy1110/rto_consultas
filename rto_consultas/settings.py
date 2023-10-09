@@ -68,8 +68,8 @@ ROOT_URLCONF = "rto_consultas.urls"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/login"
+LOGOUT_REDIRECT_URL = "/logout"
 
 STATIC_ROOT = BASE_DIR / "static"
 
