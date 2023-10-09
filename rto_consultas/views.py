@@ -15,6 +15,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+
 from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
 from django.db.models import Q
@@ -118,6 +122,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         return [self.template_name]
 
 
+@method_decorator(login_required, name="dispatch")
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
@@ -177,6 +182,7 @@ class ListVerificacionesView(CustomRTOView):
     #     return certs.intersection(certs_no_anulados)
 
 
+@method_decorator(login_required, name="dispatch")
 class CargaObleas(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -209,6 +215,7 @@ class CargaObleas(CustomRTOView):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class ResumenObleas(CustomRTOView, LoginRequiredMixin):
     model = Certificadosasignadosportaller
     paginate_by = 10
@@ -269,6 +276,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
         return context
 
 
+@method_decorator(login_required, name="dispatch")
 class ListCertificadosAssignView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
@@ -318,6 +326,7 @@ class ListCertificadosAssignView(CustomRTOView):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class ListVehiculosView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Vehiculos
@@ -342,6 +351,7 @@ class ListVehiculosView(CustomRTOView):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class ListCertificadosView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
@@ -371,6 +381,7 @@ class ListCertificadosView(CustomRTOView):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
@@ -418,6 +429,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class VerVerificacion(DetailView, LoginRequiredMixin):
     model: Verificaciones
     template_name = "includes/ver_verificaciones.html"
@@ -598,6 +610,7 @@ def verificaciones_anuales(request):
     return render(request, "includes/table_view.html", {"table": table})
 
 
+@method_decorator(login_required, name="dispatch")
 class ResumenTransportePasajeros(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
@@ -634,6 +647,7 @@ class ResumenTransportePasajeros(CustomRTOView):
     )
 
 
+@method_decorator(login_required, name="dispatch")
 class ResumenTransporteCarga(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
