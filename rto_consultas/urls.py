@@ -18,8 +18,8 @@ from django.urls import path, include
 import rto_consultas.views as views
 
 urlpatterns = [
-    path("accounts/login/", views.login_view, name="login"),
-    path("accounts/logout/", views.logout_view, name="logout"),
+    path("login/", views.login_view, name="login"),
+    path("logout/", views.logout_view, name="logout"),
 ]
 
 urlpatterns += [
@@ -52,8 +52,8 @@ urlpatterns += [
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
-    # path("", include("admin_soft.urls"), name=admin),
-    path("", views.index, name="index"),
+    path("", include("admin_soft.urls"), name=admin),
+    # path("", views.index, name="index"),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
 urlpatterns += [

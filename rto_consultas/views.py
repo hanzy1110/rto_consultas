@@ -68,10 +68,20 @@ logger = configure_logger(LOG_FILE)
 # from .presigned_url import generate_presigned_url
 
 
-@login_required
-def index(request):
-    # Your view logic here
-    return render(request, "pages/index.html")
+# @login_required
+# def index(request):
+#     # Your view logic here
+#     if request.method == "POST":
+#         username = request.POST["username"]
+#         password = request.POST["password"]
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect("home")  # Redirect to your home page
+#         else:
+#             # Handle invalid login
+#             pass
+#     return render(request, "pages/index.html")
 
 
 def login_view(request):
