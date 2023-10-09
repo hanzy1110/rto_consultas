@@ -2,28 +2,35 @@
   {% load static %}
     <style>
         /* Base styles for the banner */
-        .banner-container img {
-            max-width: 50%; /* Default: full width */
-            height: auto; /* Maintain aspect ratio and prevent distortion */
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
+        .banner-container {
+          display: inline-block;
+          vertical-align: top;
+          margin-right: 10px; /* Adjust the margin as needed */
         }
 
-        /* Media query for smaller screens */
-        @media screen and (max-width: 768px) {
-            .banner-container img {
-                max-width: 50%; /* Full width for smaller screens */
-            }
+        .image-container {
+          display: flex;
+          flex-direction: column;
         }
 
-        /* Media query for larger screens */
-        @media screen and (min-width: 769px) {
-            .banner-container img {
-                max-width: 30%; /* 80% width for larger screens */
-            }
+        .image-container img {
+          margin-bottom: 10px; /* Adjust the margin between the images as needed */
         }
-    </style>
+
+        @media (min-width: 768px) {
+          .banner-container {
+            margin-right: 20px; /* Increase the margin on larger screens */
+          }
+
+          .image-container {
+            flex-direction: row; /* Display images side by side on larger screens */
+          }
+
+          .image-container img {
+            margin-bottom: 0; /* Remove margin between images on larger screens */
+            margin-right: 10px; /* Add margin between images horizontally on larger screens */
+          }
+}    </style>
 
   <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
 
@@ -40,10 +47,10 @@
       <div class="container" id="navigation">
 
         <div class="banner-container">
-          <div class="banner-container">
+          <div class="image-container">
             <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
           </div>
-          <div class="banner-container">
+          <div class="image-container">
             <img src="{% static 'img/logos/banner_logo5Fain.png' %}"  alt="">
             <img src="{% static 'img/logos/logo_gob_nqn.png' %}"  alt="">
             <img src="{% static 'img/logos/Seguridad_Vial.png' %}"  alt="">
