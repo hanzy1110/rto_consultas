@@ -14,13 +14,13 @@
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
                   <h3 class="font-weight-bolder text-info text-gradient">
-                    Sign IN  
+                    Ingresar
                   </h3>
                   <p class="mb-0">
                     {% if msg %}
                       <span class="text-danger">{{ msg | safe }}</span>
                     {% else %}
-                      Add your credentials
+                      Ingrese sus Credenciales
                     {% endif %}                      
                   </p>
                 </div>
@@ -38,16 +38,16 @@
                         {{field}}
                       </div>
                     {% endfor %}
-                    <p class=""> 
-                      <a href="{% url 'password_reset' %}" class="text-primary">Forgot password</a>
-                    </p>
+                    <!-- <p class="">
+                         <a href="{#% url 'password_reset' %#}" class="text-primary">Forgot password</a>
+                         </p> -->
 
                     <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-info w-100 mt-1 mb-0">Sign in</button>
-                      <p class="mt-4">
-                        Don't have an account? 
-                        <a href="{% url 'register' %}" class="text-primary">Register</a>
-                      </p>
+                      <button type="submit" class="btn bg-gradient-info w-100 mt-1 mb-0">Ingresar</button>
+                      <!-- <p class="mt-4">
+                           Don't have an account?
+                           <a href="{#% url 'register' %#}" class="text-primary">Register</a>
+                           </p> -->
                     </div>
 
                   </form>
