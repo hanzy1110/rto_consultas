@@ -1,36 +1,41 @@
   <!-- Navbar -->
-  {% load static %}
-    <style>
-        /* Base styles for the banner */
-        .banner-container {
-          display: inline-block;
-          vertical-align: top;
-          margin-right: 10px; /* Adjust the margin as needed */
-        }
+      {% load static %}
+        <style>
+          .container {
+      max-width: 1200px; /* Adjust the maximum width as needed */
+      margin: 0 auto; /* Center the container horizontally */
+    }
 
-        .image-container {
-          display: flex;
-          flex-direction: column;
-        }
+    .banner-container {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 10px; /* Adjust the margin as needed */
+    }
 
-        .image-container img {
-          margin-bottom: 10px; /* Adjust the margin between the images as needed */
-        }
+    .image-container {
+      display: flex;
+      flex-direction: column;
+    }
 
-        @media (min-width: 768px) {
-          .banner-container {
-            margin-right: 20px; /* Increase the margin on larger screens */
-          }
+    .image-container img {
+      margin-bottom: 10px; /* Adjust the margin between the images as needed */
+    }
 
-          .image-container {
-            flex-direction: row; /* Display images side by side on larger screens */
-          }
+    @media (min-width: 768px) {
+      .banner-container {
+        margin-right: 20px; /* Increase the margin on larger screens */
+      }
 
-          .image-container img {
-            margin-bottom: 0; /* Remove margin between images on larger screens */
-            margin-right: 10px; /* Add margin between images horizontally on larger screens */
-          }
-}    </style>
+      .image-container {
+        flex-direction: row; /* Display images side by side on larger screens */
+      }
+
+      .image-container img {
+        margin-bottom: 0; /* Remove margin between images on larger screens */
+        margin-right: 10px; /* Add margin between images horizontally on larger screens */
+      }
+        }}
+    </style>
 
   <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
 
@@ -47,7 +52,7 @@
       <div class="container" id="navigation">
 
         <div class="banner-container">
-          <div class="image-container">
+          <div class="banner-container">
             <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
           </div>
           <div class="image-container">
