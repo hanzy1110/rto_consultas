@@ -85,13 +85,19 @@ class CustomFileColumn(tables.FileColumn):
         cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
 
-        image_url = static(f"img/small-logos/printer.png")
+        image_url = static(f"img/small-logos/pdf-flat.png")
 
-        atag = format_html(
-            '<a href="{url}" target="_blank"><img src="{image_url}" alt="Image"></a>',
-            url,
-            image_url,
-        )
+        if url:
+            atag = format_html(
+                '<a href="{}" target="_blank"><img src="{}" alt="Image"></a>',
+                url,
+                image_url,
+            )
+
+        else:
+            img_not_found = static(f"img/small-logos/cert_no_encontrado2.png")
+            atag = format_html('<img src="{}" alt="Image">', img_not_found)
+
         logger.debug(f"atag => {atag}")
         if cached_cert:
             # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
