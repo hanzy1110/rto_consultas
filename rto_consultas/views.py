@@ -105,7 +105,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("accounts/login")
+    return redirect("login")
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
