@@ -79,6 +79,28 @@ class CustomFileColumn(tables.FileColumn):
             return url
         return value
 
+    def render(self, value, record):
+        url = self.get_url(value, record)
+        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
+        cached_cert = cache.get(cache_key)
+
+        image_url = static(f"img/small-logos/printer.png")
+
+        atag = format_html(
+            '<a href="{url}" target="_blank"><img src="{value.url}" alt="Image"></a>',
+            url,
+            image_url,
+        )
+        if cached_cert:
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            logger.info("CACHE HIT")
+            return atag
+            # return str(nro_cert)
+        else:
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            logger.info("CACHE MISS")
+            return atag
+
 
 class VerificacionesTables(tables.Table):
     certificado = tables.Column(
@@ -143,21 +165,21 @@ class VerificacionesTables(tables.Table):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
 
-    def render_ver_certificado(self, record, value):
-        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
-        cached_cert = cache.get(cache_key)
+    # def render_ver_certificado(self, record, value):
+    #     cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
+    #     cached_cert = cache.get(cache_key)
 
-        image_url = static(f"img/small-logos/printer.png")
-        img_tag = format_html('<img src="{}" />', image_url)
-        if cached_cert:
-            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            return img_tag
-            # return str(nro_cert)
-        else:
-            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-            return img_tag
-            # return str(nro_cert)
-        # return "No disponible"
+    #     image_url = static(f"img/small-logos/printer.png")
+    #     img_tag = format_html('<img src="{}" />', image_url)
+    #     if cached_cert:
+    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+    #         return img_tag
+    #         # return str(nro_cert)
+    #     else:
+    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+    #         return img_tag
+    #         # return str(nro_cert)
+    # return "No disponible"
 
     def render_idestado(self, value):
         try:
