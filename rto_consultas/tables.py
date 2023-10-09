@@ -87,7 +87,7 @@ class CustomFileColumn(tables.FileColumn):
         image_url = static(f"img/small-logos/printer.png")
 
         atag = format_html(
-            '<a href="{url}" target="_blank"><img src="{value.url}" alt="Image"></a>',
+            '<a href="{url}" target="_blank"><img src="{image_url}" alt="Image"></a>',
             url,
             image_url,
         )
