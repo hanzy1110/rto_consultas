@@ -3,7 +3,7 @@
     <style>
         /* Base styles for the banner */
         .banner-container img {
-            max-width: 100%; /* Default: full width */
+            max-width: 50%; /* Default: full width */
             height: auto; /* Maintain aspect ratio and prevent distortion */
             display: flex;
             justify-content: center; /* Center horizontally */
@@ -13,14 +13,14 @@
         /* Media query for smaller screens */
         @media screen and (max-width: 768px) {
             .banner-container img {
-                max-width: 100%; /* Full width for smaller screens */
+                max-width: 50%; /* Full width for smaller screens */
             }
         }
 
         /* Media query for larger screens */
         @media screen and (min-width: 769px) {
             .banner-container img {
-                max-width: 80%; /* 80% width for larger screens */
+                max-width: 30%; /* 80% width for larger screens */
             }
         }
     </style>
@@ -40,10 +40,10 @@
       <div class="container" id="navigation">
 
         <div class="container">
-          <div class=" text-center mb-6">
+          <div class="banner-container text-center mb-6">
             <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
           </div>
-          <div class=" text-center mb-6">
+          <div class="banner-container text-center mb-6">
             <img src="{% static 'img/logos/banner_logo5Fain.png' %}" class="h-8" alt="">
             <img src="{% static 'img/logos/logo_gob_nqn.png' %}" class="h-8" alt="">
             <img src="{% static 'img/logos/Seguridad_Vial.png' %}" class="h-8" alt="">
