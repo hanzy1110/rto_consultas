@@ -81,6 +81,7 @@ class CustomFileColumn(tables.FileColumn):
 
     def render(self, value, record):
         url = self.get_url(value, record)
+        logger.debug(f"URL => {url}")
         cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
         cached_cert = cache.get(cache_key)
 
