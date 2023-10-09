@@ -34,7 +34,7 @@
                     {% endif %}
                     {% csrf_token %}
                     {% for field in form %}
-                      <label for="{{ translate field.id_for_label }}">{{ translate field.label }}</label>
+                      <label for="{% translate field.id_for_label %}">{% translate field.label %}</label>
                       <div class="mb-3">
                         {{field}}
                       </div>
