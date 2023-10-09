@@ -18,7 +18,7 @@ from django.urls import path, include
 import rto_consultas.views as views
 
 urlpatterns = [
-    path("accounts/login/", views.login_view, name="login"),
+    path("accounts/login/", views.UserLoginView.as_view(), name="login"),
     path("logout/", views.logout_view, name="logout"),
 ]
 

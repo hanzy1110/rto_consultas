@@ -8,22 +8,24 @@ from django_tables2 import SingleTableView, Table
 from django_tables2.export.views import ExportMixin
 from django_tables2.export.export import TableExport
 from django.forms.models import model_to_dict
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordResetView,
+    PasswordChangeView,
+    PasswordResetConfirmView,
+)
 
 from datetime import date
 
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-
-from django_tables2.config import RequestConfig
 from django_tables2.export.export import TableExport
-from django.db.models import Q
 
-from functools import reduce
+from admin_soft.forms import LoginForm
 
 from .models import (
     Adjuntos,
@@ -89,18 +91,10 @@ def index(request):
     return render(request, "pages/index.html", {"segment": "index"})
 
 
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("home")  # Redirect to your home page
-        else:
-            # Handle invalid login
-            pass
-    return render(request, "accounts/login.html")
+# Authentication
+class UserLoginView(LoginView):
+    template_name = "accounts/login.html"
+    form_class = LoginForm
 
 
 def logout_view(request):
