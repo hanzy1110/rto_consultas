@@ -1,6 +1,7 @@
 {% extends 'layouts/base-fullscreen.html' %}
 {% load i18n static admin_soft %}
 
+{% load getattr %}
 {% block content %}
 
   {% include 'includes/navigation-fullscreen.html' %}
@@ -33,7 +34,7 @@
                     {% endif %}
                     {% csrf_token %}
                     {% for field in form %}
-                      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                      <label for="{{ translate field.id_for_label }}">{{ translate field.label }}</label>
                       <div class="mb-3">
                         {{field}}
                       </div>

@@ -68,43 +68,59 @@ def get_by_name(context, name):
 
 @register.simple_tag(takes_context=True)
 def get_categorias(context, idcategoria):
-    return (models.Categorias.objects
-                    .get(idcategoria__exact=idcategoria)
-                    .descripcion
-            )
+    return models.Categorias.objects.get(idcategoria__exact=idcategoria).descripcion
 
 
 @register.simple_tag(takes_context=True)
 def get_certificado_url(context):
     pass
 
+
 @register.simple_tag(takes_context=True)
 def get_tarjeta_verde_url(context):
     pass
+
 
 @register.simple_tag(takes_context=True)
 def get_lista_defectos(context):
     pass
 
+
 @register.simple_tag(takes_context=True)
 def get_pa_style(context):
     pass
+
 
 @register.simple_tag(takes_context=True)
 def get_ca_style(context):
     pass
 
+
 @register.simple_tag(takes_context=True)
 def get_TCa_style(context):
     pass
+
 
 @register.simple_tag(takes_context=True)
 def get_tm_style(context):
     pass
 
+
 @register.simple_tag(takes_context=True)
 def check_anulado(context):
     return context["certificado"]["anulado"] == 1
+
+
+@register.simple_tag(takes_context=True)
+def translate(context, name):
+    match name:
+        case "Username":
+            return "Usuario"
+        case "Password":
+            return "Contraseña"
+        case _:
+            return name
+
 
 @register.filter(takes_context=True)
 def parse_none(value):
