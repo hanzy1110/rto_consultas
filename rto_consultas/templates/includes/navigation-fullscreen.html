@@ -1,5 +1,27 @@
   <!-- Navbar -->
   {% load static %}
+    <style>
+        /* Base styles for the banner */
+        .banner-container img {
+            max-width: 100%; /* Default: full width */
+            height: auto; /* Maintain aspect ratio and prevent distortion */
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 768px) {
+            .banner-container img {
+                max-width: 100%; /* Full width for smaller screens */
+            }
+        }
+
+        /* Media query for larger screens */
+        @media screen and (min-width: 769px) {
+            .banner-container img {
+                max-width: 80%; /* 80% width for larger screens */
+            }
+        }
+    </style>
+
   <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
     <div class="container-fluid pe-0">
       <!-- <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/">
@@ -12,7 +34,7 @@
             <span class="navbar-toggler-bar bar3"></span>
           </span>
       </button>
-      <div class="collapse navbar-collapse" id="navigation">
+      <div class="banner-container" id="navigation">
 
         <img src="{% static 'images/banner_pdf.jpg'  %}">
         <!-- <ul class="navbar-nav mx-auto ms-xl-auto">
