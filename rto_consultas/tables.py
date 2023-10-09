@@ -91,6 +91,7 @@ class CustomFileColumn(tables.FileColumn):
             url,
             image_url,
         )
+        logger.debug(f"atag => {atag}")
         if cached_cert:
             # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
             logger.info("CACHE HIT")
