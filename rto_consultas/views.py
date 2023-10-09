@@ -84,6 +84,11 @@ logger = configure_logger(LOG_FILE)
 #     return render(request, "pages/index.html")
 
 
+@login_required
+def index(request):
+    return render(request, "pages/index.html", {"segment": "index"})
+
+
 def login_view(request):
     if request.method == "POST":
         username = request.POST["username"]
