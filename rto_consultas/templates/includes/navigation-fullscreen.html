@@ -1,109 +1,64 @@
   <!-- Navbar -->
-      {% load static %}
-        <style>
-      .container {
-          width: 100%;
-          padding-right: 0.75rem;
-          padding-left: 0.75rem;
-          margin-right: auto;
-          margin-left: auto;
-        }
+{% load static %}
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .image-container {
+    text-align: center;
+  }
 
+  .top-image {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
 
-      @media (min-width: 576px) {
-        .banner-container {
-          max-width: 540px;
-        }
-        .image-container {
-          max-width: 540px;
-        }
-        .container {
-          max-width: 540px;
-        }
-      }
+  .bottom-images {
+    display: flex;
+    justify-content: center;
+  }
 
-      @media (min-width: 768px) {
-        .banner-container {
-          max-width: 720px;
-        }
-        .image-container {
-          max-width: 720px;
-        }
-        .container {
-          max-width: 720px;
-        }
-      }
+  .image {
+    margin: 0 10px; /* Adjust the horizontal spacing between images */
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
 
-      @media (min-width: 992px) {
-        .banner-container {
-          max-width: 960px;
-        }
-        .image-container {
-          max-width: 960px;
-        }
-        .container {
-          max-width: 960px;
-        }
-      }
+<nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
 
-      @media (min-width: 1280px) {
-        .banner-container {
-          max-width: 1200px;
-        }
-        .image-container {
-          max-width: 1200px;
-        }
-        .container {
-          max-width: 1200px;
-        }
-      }
+  <div class="container-fluid pe-0">
 
-    .banner-container {
-      display: inline-block;
-      vertical-align: top;
-    }
+    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </span>
+    </button>
 
-    .image-container {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .image-container img {
-      margin-bottom: 10px;
-        flex-direction: row;
-    }
-    .image-container img {
-      margin-bottom: 0;
-      margin-right: 10px;
-    }
-        }}
-    </style>
-
-  <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
-
-    <div class="container-fluid pe-0">
-
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon mt-2">
-            <span class="navbar-toggler-bar bar1"></span>
-            <span class="navbar-toggler-bar bar2"></span>
-            <span class="navbar-toggler-bar bar3"></span>
-          </span>
-      </button>
-
-      <div class="container" id="navigation">
-
-        <div class="banner-container">
-          <div class="banner-container">
-            <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
-          </div>
-          <div class="image-container">
-            <img src="{% static 'img/logos/banner_logo5Fain.png' %}"  alt="">
-            <img src="{% static 'img/logos/logo_gob_nqn.png' %}"  alt="">
-            <img src="{% static 'img/logos/Seguridad_Vial.png' %}"  alt="">
-          </div>
-
+    <div class="container" id="navigation">
+  <div class="image-container">
+    <div class="top-image">
+        <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
+    </div>
+    <div class="bottom-images">
+      <div class="image">
+          <img src="{% static 'img/logos/banner_logo5Fain.png' %}"  alt="">
+      </div>
+      <div class="image">
+          <img src="{% static 'img/logos/logo_gob_nqn.png' %}"  alt="">
+      </div>
+      <div class="image">
+          <img src="{% static 'img/logos/Seguridad_Vial.png' %}"  alt="">
       </div>
     </div>
-  </nav>
-  <!-- End Navbar -->
+  </div>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->
