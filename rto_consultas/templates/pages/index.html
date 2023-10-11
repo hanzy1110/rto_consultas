@@ -1,44 +1,151 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 {% block content %}
+
+<div class="row">
+    <div class="col-8">
+        <div class="numbers">
+            <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
+            <h5 class="font-weight-bolder mb-0">
+                $53,000
+                <span class="text-success text-sm font-weight-bolder">+55%</span>
+            </h5>
+        </div>
+    </div>
+    <div class="col-4 text-end">
+        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+            <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body p-3">
-                    <a href="{% url 'verificaciones' %}" class="btn btn-fill btn-sm btn-primary">Verificaciones</a>
+
+        <!-- ITEM -->
+        <div class="row">
+            <div class="col-8">
+                <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Consulta Verificaciones</p>
+                    <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                    <a href="{% url 'verificaciones' %}" class="btn btn-fill btn-sm btn-primary">
+                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body p-3">
-                    <a href="{% url 'certificados' %}" class="btn btn-fill btn-sm btn-primary">Certificados</a>
+
+        <!-- ITEM -->
+        <div class="row">
+            <div class="col-8">
+                <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Consulta Certificados</p>
+                    <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                    <a href="{% url 'certificados' %}" class="btn btn-fill btn-sm btn-primary">
+                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body p-3">
-                    <a href="{% url 'vehiculos' %}" class="btn btn-fill btn-sm btn-primary">Vehiculos</a>
+
+        <!-- ITEM -->
+
+        <div class="row">
+            <div class="col-8">
+                <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Consulta Vehiculos</p>
+                    <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                    <a href="{% url 'vehiculos' %}" class="btn btn-fill btn-sm btn-primary">
+                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body p-3">
-                    <a href="{% url 'certs_asignados' %}" class="btn btn-fill btn-sm btn-primary">Certificados Asignados por taller</a>
+
+        <!-- ITEM -->
+        <div class="row">
+            <div class="col-8">
+                <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Consulta Obleas Asignadas</p>
+                    <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
                 </div>
             </div>
-            <div class="col col-sm-6 col-md-3 mb-3">
-                <div class="card">
-                    <div class="card-body p-3 align-content">
-                        <a href="{% url 'verificaciones_resumen' %}" class="btn btn-fill btn-sm btn-primary">Resumen Verificaciones</a>
-                    </div>
+            <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                    <a href="{% url 'certs_asignados' %}" class="btn btn-fill btn-sm btn-primary">
+                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    </a>
                 </div>
+            </div>
+        </div>
+
+        <!-- ITEM -->
+        <div class="row">
+            <div class="col-8">
+                <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Carga Obleas</p>
+                    <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
+                </div>
+            </div>
+            <div class="col-4 text-end">
+                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                    <a href="{% url 'carga_obleas' %}" class="btn btn-fill btn-sm btn-primary">
+                        <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- ITEM -->
+    <div class="row">
+        <div class="col-8">
+            <div class="numbers">
+                <p class="text-sm mb-0 text-capitalize font-weight-bold">Consulta Disponibilidad Obleas</p>
+                <!-- <h5 class="font-weight-bolder mb-0">
+                                    Vista Verificaciones
+                                </h5> -->
+            </div>
+        </div>
+        <div class="col-4 text-end">
+            <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+
+                <a href="{% url 'resumen_obleas' %}" class="btn btn-fill btn-sm btn-primary">
+                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
     </div>
+
+    <!-- ITEM -->
+</div>
 </div>
 {% endblock content %}
 
