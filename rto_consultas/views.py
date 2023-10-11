@@ -349,6 +349,7 @@ class ListVehiculosView(CustomRTOView):
     paginate_by = 10
     context_object_name = "Vehiculos"
     table_class = VehiculosTable
+    partial_template = "includes/table_view.html"
 
     aux_data = AuxData(
         query_fields=["dominio", "marca"],
@@ -363,6 +364,7 @@ class ListVehiculosView(CustomRTOView):
             "marca": "text",
             "dominio": "text",
         },
+        render_url="vehiculos",
     )
 
 
@@ -374,6 +376,7 @@ class ListCertificadosView(CustomRTOView):
     paginate_by = 10
     context_object_name = "Certificados"
     table_class = CertificadosTable
+    partial_template = "includes/table_view.html"
 
     aux_data = AuxData(
         query_fields=["nrocertificado", "fecha", "anulado"],
@@ -393,6 +396,7 @@ class ListCertificadosView(CustomRTOView):
             "fecha": "date",
             "anulado": "text",
         },
+        render_url="certificados",
     )
 
 
@@ -559,6 +563,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         return context
 
 
+@login_required
 def resumen_obleas(request):
     if request.htmx:
         logger.info("RENDERING HTMX!")
