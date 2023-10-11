@@ -61,7 +61,6 @@
     .banner-container {
       display: inline-block;
       vertical-align: top;
-         /* margin-right: 10px; */
     }
 
     .image-container {
@@ -70,23 +69,13 @@
     }
 
     .image-container img {
-      margin-bottom: 10px; /* Adjust the margin between the images as needed */
+      margin-bottom: 10px;
+        flex-direction: row;
     }
-
-     @media screen and (max-width: 768px) {
-      .banner-container {
-        margin-right: 20px; /* Increase the margin on larger screens */
-         max-width: 30%
-      }
-
-      .image-container {
-        flex-direction: row; /* Display images side by side on larger screens */
-      }
-
-      .image-container img {
-        margin-bottom: 0; /* Remove margin between images on larger screens */
-        margin-right: 10px; /* Add margin between images horizontally on larger screens */
-      }
+    .image-container img {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
         }}
     </style>
 
