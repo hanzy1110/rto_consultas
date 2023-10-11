@@ -415,7 +415,8 @@ def check_vup(nrocertificado):
         case "152":
             return True
         case _:
-            raise ValueError("Unknown pattern in NRO certificado")
+            return False
+            # raise ValueError("Unknown pattern in NRO certificado")
 
 
 def filter_vup_transporte(certs: QuerySet):
