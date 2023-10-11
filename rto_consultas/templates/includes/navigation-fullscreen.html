@@ -1,15 +1,67 @@
   <!-- Navbar -->
       {% load static %}
         <style>
-          .container {
-      max-width: 40%; /* Adjust the maximum width as needed */
-      margin: 0 auto; /* Center the container horizontally */
-    }
+      .container {
+          width: 100%;
+          padding-right: 0.75rem;
+          padding-left: 0.75rem;
+          margin-right: auto;
+          margin-left: auto;
+        }
+
+
+      @media (min-width: 576px) {
+        .banner-container {
+          max-width: 540px;
+        }
+        .image-container {
+          max-width: 540px;
+        }
+        .container {
+          max-width: 540px;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .banner-container {
+          max-width: 720px;
+        }
+        .image-container {
+          max-width: 720px;
+        }
+        .container {
+          max-width: 720px;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .banner-container {
+          max-width: 960px;
+        }
+        .image-container {
+          max-width: 960px;
+        }
+        .container {
+          max-width: 960px;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .banner-container {
+          max-width: 1200px;
+        }
+        .image-container {
+          max-width: 1200px;
+        }
+        .container {
+          max-width: 1200px;
+        }
+      }
 
     .banner-container {
       display: inline-block;
       vertical-align: top;
-      margin-right: 10px; /* Adjust the margin as needed */
+         /* margin-right: 10px; */
     }
 
     .image-container {
@@ -21,7 +73,7 @@
       margin-bottom: 10px; /* Adjust the margin between the images as needed */
     }
 
-    @media (min-width: 768px) {
+     @media screen and (max-width: 768px) {
       .banner-container {
         margin-right: 20px; /* Increase the margin on larger screens */
          max-width: 30%
