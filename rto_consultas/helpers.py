@@ -217,6 +217,13 @@ def handle_form(data: AuxData, model: Model):
     return values
 
 
+def filter_vup(s: str):
+    to_replace = "VUP - "
+    if to_replace in s:
+        s.replace(to_replace, "")
+    return s
+
+
 def map_fields(data: AuxData, model: Model):
     values = {}
 
@@ -239,6 +246,8 @@ def map_fields(data: AuxData, model: Model):
                     ).distinct()
 
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
+                descriptions = list(map(filter_vup, descriptions))
+
                 vals = {v: d for v, d in zip(values_list, descriptions)}
                 values[field] = vals
 

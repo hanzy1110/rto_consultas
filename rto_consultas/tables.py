@@ -4,6 +4,7 @@ from django.utils.html import format_html
 from django.templatetags.static import static
 from .models import (
     # VWVerificaciones,
+    Habilitacion,
     Localidades,
     Verificacionespdf,
     Tipovehiculo,
@@ -248,6 +249,65 @@ class VerificacionesTables(tables.Table):
                 return persona.razonsocial
             case _:
                 return f"{persona.nombre} {persona.apellido}"
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
+class HabilitacionesTable(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={},
+        parsed_names={"name": "name"},
+    )
+
+    vista_previa = tables.Column(
+        verbose_name="Vista Previa",
+        linkify=(
+            "ver_habilitacion",
+            {
+                "idhabilitacion": tables.A("idhabilitacion"),
+                "dominio": tables.A("dominio"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+    )  # (viewname, kwargs)
+
+    imprimir = CustomFileColumn(
+        verbose_name="Habilitacion",
+        orderable=False,
+        empty_values=(),
+    )  # (viewname, kwargs)
+
+    modificar = tables.Column(verbose_name="Modificado", default="No")
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = Habilitacion
+        fields = {
+            "nrocodigobarrashab",
+            "dominio",
+            "titular",
+            "fechahoracreacion",
+            "usuariodictamen",
+            "modificado",
+            # HYPERLINKS:
+            "vista_previa",
+            "modificar",
+            "dar_de_baja",
+            "imprimir",
+        }
+
+    def render_ver_verificacion(self, record):
+        image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs

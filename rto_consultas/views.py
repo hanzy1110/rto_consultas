@@ -29,6 +29,7 @@ from admin_soft.forms import LoginForm
 
 from .models import (
     Adjuntos,
+    Habilitacion,
     Localidades,
     Provincias,
     Verificaciones,
@@ -41,6 +42,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    HabilitacionesTable,
     ObleasPorTallerTable,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
@@ -88,7 +90,15 @@ logger = configure_logger(LOG_FILE)
 
 @login_required
 def index(request):
-    return render(request, "pages/index.html", {"segment": "index"})
+    user = request.user
+    # Check the user's group or any other condition
+    template_name = "pages/index.html"
+    if user.groups.filter(name="DPTGroup").exists():
+        template_name = "pages/dpt_index.html"
+    elif user.groups.filter(name="SVGroup").exists():
+        template_name = "pages/sv_index.html"
+
+    return render(request, template_name, {"segment": "index"})
 
 
 # Authentication
@@ -161,13 +171,13 @@ class ListVerificacionesView(CustomRTOView):
             "anulado": (None, None),
         },
         parsed_names={
-            "dominiovehiculo": "Dominio Vehiculo",
-            "idestado": "Estado Certificado",
+            "dominiovehiculo": "Dominio",
+            "idestado": "Calificación",
             "idtipouso": "Tipo Uso Vehiculo",
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
-            "idtaller": "Nombre Taller",
+            "idtaller": "Planta",
             "anulado": "Anulado",
         },
         ids={
@@ -338,6 +348,43 @@ class ListCertificadosAssignView(CustomRTOView):
         },
         fecha_field="fechacarga",
         render_url="certs_asignados",
+    )
+
+
+@method_decorator(login_required, name="dispatch")
+class ListHabilitaciones(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Habilitacion
+    template_name = "includes/list_table.html"
+    paginate_by = 10
+    context_object_name = "Habilitaciones"
+    table_class = HabilitacionesTable
+    partial_template = "includes/table_view.html"
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
+            "nrocodigobarrashab",
+            "usuario",
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+            "nrocodigobarrashab": "Nro. Orden de Inspección",
+            "usuario": "Usuario",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+        },
+        ids={"dominiovehiculo": "#txtDominio", "nrocodigobarrashab": "#txtNro"},
+        types={
+            "dominio": "text",
+            "nrocodigobarrashab": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+        },
+        render_url="habilitaciones",
     )
 
 

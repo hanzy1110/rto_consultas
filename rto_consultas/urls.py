@@ -35,6 +35,7 @@ urlpatterns += [
         views.ListarVerificacionesTotales.as_view(),
         name="verificaciones_resumen",
     ),
+    path("habilitaciones/", views.ListHabilitaciones.as_view(), name="habilitaciones"),
     path(
         "verificaciones/", views.ListVerificacionesView.as_view(), name="verificaciones"
     ),
@@ -48,12 +49,18 @@ urlpatterns += [
     path("cargaobleas/", views.CargaObleas.as_view(), name="carga_obleas"),
     path("resumenobleas/", views.resumen_obleas, name="resumen_obleas"),
     path(
+        "ververificacion/<int:idhabilitacion>/<str:dominio>",
+        views.VerHabilitacion.as_view(),
+        name="ver_habilitacion",
+    ),
+    path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
     # path("", include("admin_soft.urls"), name=admin),
     path("", views.index, name="home"),
+    path("", views.index, name="index"),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
 urlpatterns += [
