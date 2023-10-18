@@ -494,6 +494,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
         aux={"Button": "DESCARGAR"},
     )
 
+
 @method_decorator(login_required, name="dispatch")
 class VerHabilitacion(DetailView, LoginRequiredMixin):
     model: Verificaciones
@@ -505,8 +506,9 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
         query_params = self.request.GET.copy()
         id_habilitacion = self.kwargs["idhabilitacion"]
         dominio = self.kwargs["dominio"]
-        habilitacion = Habilitacion.objects.select_related(
-            "dominiovehiculo",).get(idhabilitacion=id_habilitacion, dominio=dominio)
+        habilitacion = Habilitacion.objects.get(
+            idhabilitacion=id_habilitacion, dominio=dominio
+        )
         print(habilitacion)
         self.habilitacion = habilitacion
         return habilitacion
