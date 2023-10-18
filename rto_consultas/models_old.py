@@ -3,7 +3,7 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remove `` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
@@ -18,7 +18,7 @@ tipo_uso_dict = {
 class Adjuntos(models.Model):
     idarchivo = models.IntegerField(
         db_column="idArchivo", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idArchivo, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     nombre = models.CharField(
         db_column="Nombre", max_length=200
     )  # Field name made lowercase.
@@ -30,14 +30,14 @@ class Adjuntos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntos"
         unique_together = (("idarchivo", "idtaller"),)
 
 
 class Adjuntosauditoria(models.Model):
     idauditoria = models.ForeignKey(
-        "Auditorias", models.DO_NOTHING, db_column="idAuditoria"
+        "Auditorias", on_delete=models.CASCADE, db_column="idAuditoria"
     )  # Field name made lowercase.
     idtaller = models.IntegerField(db_column="idTaller")  # Field name made lowercase.
     archivo = models.CharField(
@@ -50,7 +50,7 @@ class Adjuntosauditoria(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntosauditoria"
 
 
@@ -59,10 +59,10 @@ class Adjuntosexcepcion(models.Model):
         db_column="idAdjuntosExcepcion", primary_key=True
     )  # Field name made lowercase.
     idexcepcion = models.ForeignKey(
-        "Excepcion", models.DO_NOTHING, db_column="idExcepcion"
+        "Excepcion", on_delete=models.CASCADE, db_column="idExcepcion"
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     archivo = models.CharField(max_length=255)
     fechacarga = models.DateField(db_column="fechaCarga")  # Field name made lowercase.
@@ -71,7 +71,7 @@ class Adjuntosexcepcion(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntosexcepcion"
 
 
@@ -87,14 +87,14 @@ class Adjuntosmantenimientos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntosmantenimientos"
 
 
 class Adjuntospendientes(models.Model):
     idarchivo = models.IntegerField(
         db_column="idArchivo", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idArchivo, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     nombre = models.CharField(
         db_column="Nombre", max_length=200
     )  # Field name made lowercase.
@@ -110,7 +110,7 @@ class Adjuntospendientes(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntospendientes"
         unique_together = (("idarchivo", "idtaller"),)
 
@@ -120,10 +120,10 @@ class Adjuntosprorroga(models.Model):
         db_column="idAdjuntosProrroga", primary_key=True
     )  # Field name made lowercase.
     idprorroga = models.ForeignKey(
-        "Prorroga", models.DO_NOTHING, db_column="idProrroga"
+        "Prorroga", on_delete=models.CASCADE, db_column="idProrroga"
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     archivo = models.CharField(max_length=255)
     fechacarga = models.DateField(db_column="fechaCarga")  # Field name made lowercase.
@@ -132,16 +132,16 @@ class Adjuntosprorroga(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "adjuntosprorroga"
 
 
 class Administrativos(models.Model):
     idadministrativo = models.IntegerField(
         db_column="idAdministrativo", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idAdministrativo, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     apellido = models.CharField(
         db_column="Apellido", max_length=50
@@ -170,7 +170,7 @@ class Administrativos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "administrativos"
         unique_together = (("idadministrativo", "idtaller"),)
 
@@ -178,7 +178,7 @@ class Administrativos(models.Model):
 class Administrativosusuarios(models.Model):
     idtaller = models.IntegerField(
         db_column="idTaller", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idTaller, idUsuario, idAdministrativo) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idusuario = models.IntegerField(db_column="idUsuario")  # Field name made lowercase.
     idadministrativo = models.IntegerField(
         db_column="idAdministrativo"
@@ -186,7 +186,7 @@ class Administrativosusuarios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "administrativosusuarios"
         unique_together = (("idtaller", "idusuario", "idadministrativo"),)
 
@@ -194,7 +194,7 @@ class Administrativosusuarios(models.Model):
 class Auditorias(models.Model):
     idauditoria = models.IntegerField(
         db_column="idAuditoria", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idAuditoria, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idtaller = models.IntegerField(db_column="idTaller")  # Field name made lowercase.
     fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
     observaciones = models.TextField(
@@ -206,18 +206,18 @@ class Auditorias(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "auditorias"
         unique_together = (("idauditoria", "idtaller"),)
 
 
 class Auditoriasequipos(models.Model):
     idauditoria = models.OneToOneField(
-        Auditorias, models.DO_NOTHING, db_column="idAuditoria", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idAuditoria, idTaller, idEquipo) found, that is not supported. The first column is selected.
+        Auditorias, on_delete=models.CASCADE, db_column="idAuditoria", primary_key=True
+    )  # Field name made lowercase.
     idtaller = models.IntegerField(db_column="idTaller")  # Field name made lowercase.
     idequipo = models.ForeignKey(
-        "Equipos", models.DO_NOTHING, db_column="idEquipo"
+        "Equipos", on_delete=models.CASCADE, db_column="idEquipo"
     )  # Field name made lowercase.
     funcionamientocorrecto = models.IntegerField(
         db_column="FuncionamientoCorrecto"
@@ -231,9 +231,84 @@ class Auditoriasequipos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "auditoriasequipos"
         unique_together = (("idauditoria", "idtaller", "idequipo"),)
+
+
+# class AuthGroup(models.Model):
+#     name = models.CharField(unique=True, max_length=150)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_group'
+
+
+# class AuthGroupPermissions(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
+#     permission = models.ForeignKey('AuthPermission', on_delete=models.CASCADE)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_group_permissions'
+#         unique_together = (('group', 'permission'),)
+
+
+# class AuthPermission(models.Model):
+#     name = models.CharField(max_length=255)
+#     content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE)
+#     codename = models.CharField(max_length=100)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_permission'
+#         unique_together = (('content_type', 'codename'),)
+
+
+# class AuthUser(models.Model):
+#     password = models.CharField(max_length=128)
+#     last_login = models.DateTimeField(blank=True, null=True)
+#     is_superuser = models.IntegerField()
+#     username = models.CharField(unique=True, max_length=150)
+#     first_name = models.CharField(max_length=150)
+#     last_name = models.CharField(max_length=150)
+#     email = models.CharField(max_length=254)
+#     is_staff = models.IntegerField()
+#     is_active = models.IntegerField()
+#     date_joined = models.DateTimeField()
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_user'
+
+
+# class AuthUserGroups(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+#     group = models.ForeignKey(AuthGroup, on_delete=models.CASCADE)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_user_groups'
+#         unique_together = (('user', 'group'),)
+
+
+# class AuthUserUserPermissions(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+#     permission = models.ForeignKey(AuthPermission, on_delete=models.CASCADE)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'auth_user_user_permissions'
+#         unique_together = (('user', 'permission'),)
 
 
 class Categorias(models.Model):
@@ -259,16 +334,16 @@ class Categorias(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "categorias"
 
 
 class Categoriastalleres(models.Model):
     idcategoria = models.OneToOneField(
-        Categorias, models.DO_NOTHING, db_column="idCategoria", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idCategoria, idTaller) found, that is not supported. The first column is selected.
+        Categorias, on_delete=models.CASCADE, db_column="idCategoria", primary_key=True
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     porcentaje = models.DecimalField(
         db_column="Porcentaje", max_digits=10, decimal_places=2
@@ -279,7 +354,7 @@ class Categoriastalleres(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "categoriastalleres"
         unique_together = (("idcategoria", "idtaller"),)
 
@@ -297,7 +372,7 @@ class CccfAdjuntoscertificados(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_adjuntoscertificados"
 
 
@@ -306,7 +381,7 @@ class CccfCertificadoexcesos(models.Model):
         db_column="idCertificadoExceso", primary_key=True
     )  # Field name made lowercase.
     idcertificado = models.ForeignKey(
-        "CccfCertificados", models.DO_NOTHING, db_column="idCertificado"
+        "CccfCertificados", on_delete=models.CASCADE, db_column="idCertificado"
     )  # Field name made lowercase.
     numero = models.PositiveIntegerField(
         db_column="Numero"
@@ -322,7 +397,7 @@ class CccfCertificadoexcesos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_certificadoexcesos"
 
 
@@ -334,7 +409,7 @@ class CccfCertificados(models.Model):
         db_column="NroCertificado", unique=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "CccfTalleres", models.DO_NOTHING, db_column="idTaller"
+        "CccfTalleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     fechahoracarga = models.DateTimeField(
         db_column="FechaHoraCarga"
@@ -346,7 +421,7 @@ class CccfCertificados(models.Model):
         db_column="FechaVencimiento"
     )  # Field name made lowercase.
     idempresa = models.ForeignKey(
-        "CccfEmpresas", models.DO_NOTHING, db_column="idEmpresa"
+        "CccfEmpresas", on_delete=models.CASCADE, db_column="idEmpresa"
     )  # Field name made lowercase.
     propusuario = models.CharField(
         db_column="PropUsuario", max_length=50, blank=True, null=True
@@ -378,8 +453,20 @@ class CccfCertificados(models.Model):
     constantek = models.CharField(
         db_column="ConstanteK", max_length=50
     )  # Field name made lowercase.
-    rodado = models.CharField(
-        db_column="Rodado", max_length=50
+    rodado_eje1 = models.CharField(
+        db_column="Rodado_Eje1", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodado_eje2 = models.CharField(
+        db_column="Rodado_Eje2", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodado_eje3 = models.CharField(
+        db_column="Rodado_Eje3", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodado_eje4 = models.CharField(
+        db_column="Rodado_Eje4", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodado_eje5 = models.CharField(
+        db_column="Rodado_Eje5", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     precinto = models.CharField(
         db_column="Precinto", max_length=50
@@ -397,7 +484,9 @@ class CccfCertificados(models.Model):
         db_column="Observaciones"
     )  # Field name made lowercase.
     usuario = models.CharField(max_length=50)
-    idestado = models.IntegerField(db_column="idEstado")  # Field name made lowercase.
+    idestado = models.IntegerField(
+        db_column="idEstado", verbose_name="Calificación"
+    )  # Field name made lowercase.
     fechaanulacion = models.DateField(
         db_column="FechaAnulacion", blank=True, null=True
     )  # Field name made lowercase.
@@ -437,7 +526,7 @@ class CccfCertificados(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_certificados"
 
 
@@ -454,7 +543,7 @@ class CccfEmpresas(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_empresas"
 
 
@@ -468,7 +557,7 @@ class CccfEstados(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_estados"
 
 
@@ -477,7 +566,7 @@ class CccfNroscertificadosasignados(models.Model):
         db_column="NroCertificado", primary_key=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "CccfTalleres", models.DO_NOTHING, db_column="idTaller"
+        "CccfTalleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     fechacarga = models.DateField(db_column="FechaCarga")  # Field name made lowercase.
     disponible = models.IntegerField(
@@ -486,7 +575,7 @@ class CccfNroscertificadosasignados(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_nroscertificadosasignados"
 
 
@@ -512,12 +601,9 @@ class CccfTalleres(models.Model):
         db_column="FechaBaja", blank=True, null=True
     )  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return f"{self.nombre}"
-
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_talleres"
 
 
@@ -542,41 +628,55 @@ class CccfUsuarios(models.Model):
         db_column="Email", max_length=100
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        CccfTalleres, models.DO_NOTHING, db_column="idTaller", blank=True, null=True
+        CccfTalleres,
+        on_delete=models.CASCADE,
+        db_column="idTaller",
+        blank=True,
+        null=True,
     )  # Field name made lowercase.
     activo = models.IntegerField(db_column="Activo")  # Field name made lowercase.
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "cccf_usuarios"
 
 
 class Certificados(models.Model):
     idcertificado = models.IntegerField(
         db_column="idCertificado", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idCertificado, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     nrocertificado = models.BigIntegerField(
         db_column="NroCertificado"
     )  # Field name made lowercase.
     fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
     hora = models.TimeField(db_column="Hora")  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     idestado = models.IntegerField(db_column="idEstado")  # Field name made lowercase.
     vigenciahasta = models.DateField(
         db_column="VigenciaHasta"
     )  # Field name made lowercase.
     idverificacion = models.ForeignKey(
-        "Verificaciones", models.DO_NOTHING, db_column="idVerificacion"
+        "rto_consultas.Verificaciones",
+        on_delete=models.CASCADE,
+        db_column="idVerificacion",
+        related_name="certificados",
     )  # Field name made lowercase.
     idconvenio = models.ForeignKey(
-        "Convenios", models.DO_NOTHING, db_column="idConvenio", blank=True, null=True
+        "Convenios",
+        on_delete=models.CASCADE,
+        db_column="idConvenio",
+        blank=True,
+        null=True,
     )  # Field name made lowercase.
     anulado = models.IntegerField(db_column="Anulado")  # Field name made lowercase.
     fechaanulacion = models.DateField(
         db_column="FechaAnulacion", blank=True, null=True
+    )  # Field name made lowercase.
+    horaanulacion = models.TimeField(
+        db_column="HoraAnulacion", blank=True, null=True
     )  # Field name made lowercase.
     observaciones = models.TextField(
         db_column="Observaciones", blank=True, null=True
@@ -614,11 +714,20 @@ class Certificados(models.Model):
         db_column="IntentosObtencionHab", blank=True, null=True
     )  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"CERT {self.nrocertificado} - {self.idcertificado} -"
+
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "certificados"
         unique_together = (("idcertificado", "idtaller"),)
+
+        indexes = [
+            models.Index(fields=("idcertificado", "idtaller")),
+            models.Index(fields=("idverificacion", "idtaller")),
+            models.Index(fields=("idtaller",)),
+        ]
 
 
 class Certificadosasignadosportaller(models.Model):
@@ -626,7 +735,7 @@ class Certificadosasignadosportaller(models.Model):
         db_column="NroCertificado", primary_key=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     fechacarga = models.DateField(db_column="FechaCarga")  # Field name made lowercase.
     disponible = models.IntegerField(
@@ -636,7 +745,7 @@ class Certificadosasignadosportaller(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "certificadosasignadosportaller"
 
 
@@ -650,7 +759,7 @@ class Clasesservicios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "clasesservicios"
 
 
@@ -665,7 +774,7 @@ class Convenios(models.Model):
         db_column="Descripcion", max_length=500
     )  # Field name made lowercase.
     idprovincia = models.ForeignKey(
-        "Provincias", models.DO_NOTHING, db_column="idProvincia"
+        "Provincias", on_delete=models.CASCADE, db_column="idProvincia"
     )  # Field name made lowercase.
     formula = models.CharField(
         db_column="Formula", max_length=100
@@ -680,7 +789,7 @@ class Convenios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "convenios"
 
 
@@ -695,7 +804,7 @@ class Defectos(models.Model):
         db_collation="utf8mb3_general_ci",
     )  # Field name made lowercase.
     idrubro = models.ForeignKey(
-        "Rubrosdefectos", models.DO_NOTHING, db_column="idRubro"
+        "Rubrosdefectos", on_delete=models.CASCADE, db_column="idRubro"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=250, db_collation="utf8mb3_general_ci"
@@ -704,14 +813,14 @@ class Defectos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "defectos"
 
 
 class Direcotrestecnicos(models.Model):
     iddirector = models.IntegerField(
         db_column="idDirector", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idDirector, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     apellido = models.CharField(
         db_column="Apellido", max_length=50
     )  # Field name made lowercase.
@@ -725,7 +834,7 @@ class Direcotrestecnicos(models.Model):
         db_column="Curriculum", max_length=200
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     fechadesde = models.DateField(db_column="FechaDesde")  # Field name made lowercase.
     fechahasta = models.DateField(
@@ -748,15 +857,64 @@ class Direcotrestecnicos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "direcotrestecnicos"
         unique_together = (("iddirector", "idtaller"),)
+
+
+# class DjangoAdminLog(models.Model):
+#     action_time = models.DateTimeField()
+#     object_id = models.TextField(blank=True, null=True)
+#     object_repr = models.CharField(max_length=200)
+#     action_flag = models.PositiveSmallIntegerField()
+#     change_message = models.TextField()
+#     content_type = models.ForeignKey('DjangoContentType', on_delete=models.CASCADE, blank=True, null=True)
+#     user = models.ForeignKey(AuthUser, on_delete=models.CASCADE)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'django_admin_log'
+
+
+# class DjangoContentType(models.Model):
+#     app_label = models.CharField(max_length=100)
+#     model = models.CharField(max_length=100)
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'django_content_type'
+#         unique_together = (('app_label', 'model'),)
+
+
+# class DjangoMigrations(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     app = models.CharField(max_length=255)
+#     name = models.CharField(max_length=255)
+#     applied = models.DateTimeField()
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'django_migrations'
+
+
+# class DjangoSession(models.Model):
+#     session_key = models.CharField(primary_key=True, max_length=40)
+#     session_data = models.TextField()
+#     expire_date = models.DateTimeField()
+
+#     class Meta:
+#         app_label = 'rto_consultas'
+
+#         db_table = 'django_session'
 
 
 class Equipos(models.Model):
     idequipo = models.IntegerField(
         db_column="idEquipo", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idEquipo, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     nroserie = models.CharField(
         db_column="NroSerie", max_length=50
     )  # Field name made lowercase.
@@ -776,7 +934,7 @@ class Equipos(models.Model):
         db_column="NroInterno", max_length=20
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     nrolinea = models.IntegerField(
         db_column="NroLinea", blank=True, null=True
@@ -794,26 +952,29 @@ class Equipos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "equipos"
         unique_together = (("idequipo", "idtaller"),)
 
 
 class Estados(models.Model):
     idestado = models.AutoField(
-        db_column="idEstado", primary_key=True
+        db_column="idEstado", primary_key=True, verbose_name="Calificación"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
     )  # Field name made lowercase.
 
-    def __str__(self) -> str:
-        return f"{self.descripcion}"
-
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "estados"
+        indexes = [
+            models.Index(fields=("idestado",)),
+        ]
+
+    def __str__(self) -> str:
+        return f"{self.descripcion}"
 
 
 class Estadosequipo(models.Model):
@@ -826,14 +987,14 @@ class Estadosequipo(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "estadosequipo"
 
 
 class Excepcion(models.Model):
     idexcepcion = models.IntegerField(
         db_column="idExcepcion", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idExcepcion, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     replicado = models.IntegerField(blank=True, null=True)
     modificado = models.IntegerField()
     fechahoramodificacion = models.DateField(
@@ -971,7 +1132,7 @@ class Excepcion(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "excepcion"
         unique_together = (("idexcepcion", "idtaller"),)
 
@@ -979,7 +1140,7 @@ class Excepcion(models.Model):
 class Fotovalidacionpatente(models.Model):
     idfotovalidacion = models.IntegerField(
         db_column="idFotovalidacion", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idFotovalidacion, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     dominio = models.CharField(max_length=10)
     fechahora = models.DateTimeField(
         db_column="fechaHora"
@@ -988,7 +1149,7 @@ class Fotovalidacionpatente(models.Model):
     resultado = models.CharField(max_length=200)
     path = models.CharField(max_length=100)
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     output = models.CharField(max_length=1024, blank=True, null=True)
     activo = models.IntegerField()
@@ -998,7 +1159,7 @@ class Fotovalidacionpatente(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "fotovalidacionPatente"
         unique_together = (("idfotovalidacion", "idtaller"),)
 
@@ -1085,7 +1246,7 @@ class Habilitacion(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "habilitacion"
 
 
@@ -1116,16 +1277,16 @@ class Habsfinales(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "habsfinales"
 
 
 class Inspectores(models.Model):
     idinspector = models.IntegerField(
         db_column="idInspector", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idInspector, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     apellido = models.CharField(
         db_column="Apellido", max_length=50
@@ -1160,7 +1321,7 @@ class Inspectores(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "inspectores"
         unique_together = (("idinspector", "idtaller"),)
 
@@ -1168,7 +1329,7 @@ class Inspectores(models.Model):
 class Inspectoresusuarios(models.Model):
     idtaller = models.IntegerField(
         db_column="idTaller", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idTaller, idUsuario, idInspector) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idusuario = models.IntegerField(db_column="idUsuario")  # Field name made lowercase.
     idinspector = models.IntegerField(
         db_column="idInspector"
@@ -1176,7 +1337,7 @@ class Inspectoresusuarios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "inspectoresusuarios"
         unique_together = (("idtaller", "idusuario", "idinspector"),)
 
@@ -1184,7 +1345,7 @@ class Inspectoresusuarios(models.Model):
 class Instalaciones(models.Model):
     idinstalacion = models.AutoField(
         db_column="idInstalacion", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idInstalacion, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=200
     )  # Field name made lowercase.
@@ -1193,13 +1354,13 @@ class Instalaciones(models.Model):
         db_column="FechaHoraRep", blank=True, null=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     replicado = models.IntegerField(db_column="Replicado")  # Field name made lowercase.
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "instalaciones"
         unique_together = (("idinstalacion", "idtaller"),)
 
@@ -1207,7 +1368,7 @@ class Instalaciones(models.Model):
 class Lineasequipos(models.Model):
     idequipo = models.IntegerField(
         db_column="idEquipo", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idEquipo, idTaller, NroLinea, FechaDesde) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idtaller = models.IntegerField(db_column="idTaller")  # Field name made lowercase.
     nrolinea = models.IntegerField(db_column="NroLinea")  # Field name made lowercase.
     fechadesde = models.DateField(db_column="FechaDesde")  # Field name made lowercase.
@@ -1223,7 +1384,7 @@ class Lineasequipos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "lineasequipos"
         unique_together = (("idequipo", "idtaller", "nrolinea", "fechadesde"),)
 
@@ -1231,9 +1392,9 @@ class Lineasequipos(models.Model):
 class Lineastaller(models.Model):
     nrolinea = models.IntegerField(
         db_column="NroLinea", primary_key=True
-    )  # Field name made lowercase. The composite primary key (NroLinea, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
@@ -1242,7 +1403,7 @@ class Lineastaller(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "lineastaller"
         unique_together = (("nrolinea", "idtaller"),)
 
@@ -1252,7 +1413,7 @@ class Localidades(models.Model):
         db_column="idLocalidad", primary_key=True
     )  # Field name made lowercase.
     idprovincia = models.ForeignKey(
-        "Provincias", models.DO_NOTHING, db_column="idProvincia"
+        "Provincias", on_delete=models.CASCADE, db_column="idProvincia"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=100
@@ -1260,16 +1421,19 @@ class Localidades(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "localidades"
+        indexes = [
+            models.Index(fields=("idlocalidad",)),
+        ]
 
 
 class Mantenimientos(models.Model):
     idmantenimiento = models.IntegerField(
         db_column="idMantenimiento", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idMantenimiento, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idequipo = models.ForeignKey(
-        Equipos, models.DO_NOTHING, db_column="idEquipo"
+        Equipos, on_delete=models.CASCADE, db_column="idEquipo"
     )  # Field name made lowercase.
     fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
     observaciones = models.TextField(
@@ -1282,7 +1446,7 @@ class Mantenimientos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "mantenimientos"
         unique_together = (("idmantenimiento", "idtaller"),)
 
@@ -1297,7 +1461,7 @@ class Marcasautos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "marcasautos"
 
 
@@ -1311,14 +1475,14 @@ class Nivelesdefectos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "nivelesdefectos"
 
 
 class Noconformidades(models.Model):
     idnc = models.IntegerField(
         db_column="idNC", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idNC, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     dominio = models.CharField(max_length=10)
     descripcionnc = models.CharField(
         db_column="descripcionNC", max_length=200
@@ -1334,7 +1498,7 @@ class Noconformidades(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "noConformidades"
         unique_together = (("idnc", "idtaller"),)
 
@@ -1347,14 +1511,14 @@ class Parametros(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "parametros"
 
 
 class Pendientes(models.Model):
     idpendiente = models.IntegerField(
         db_column="idPendiente", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idPendiente, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
     hora = models.TimeField(db_column="Hora")  # Field name made lowercase.
     horafinal = models.TimeField(db_column="HoraFinal")  # Field name made lowercase.
@@ -1556,8 +1720,20 @@ class Pendientes(models.Model):
     nrotac = models.CharField(
         db_column="NroTac", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    rodadotac = models.CharField(
-        db_column="RodadoTac", max_length=50, blank=True, null=True
+    rodadotac_eje1 = models.CharField(
+        db_column="RodadoTac_Eje1", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje2 = models.CharField(
+        db_column="RodadoTac_Eje2", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje3 = models.CharField(
+        db_column="RodadoTac_Eje3", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje4 = models.CharField(
+        db_column="RodadoTac_Eje4", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje5 = models.CharField(
+        db_column="RodadoTac_Eje5", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     nrointerno = models.CharField(
         db_column="NroInterno", max_length=50, blank=True, null=True
@@ -1733,17 +1909,17 @@ class Pendientes(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "pendientes"
         unique_together = (("idpendiente", "idtaller"),)
 
 
 class Pendientesdefectos(models.Model):
     idpendiente = models.OneToOneField(
-        Pendientes, models.DO_NOTHING, db_column="idPendiente", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idPendiente, idTaller, idDefecto) found, that is not supported. The first column is selected.
+        Pendientes, on_delete=models.CASCADE, db_column="idPendiente", primary_key=True
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     iddefecto = models.IntegerField(db_column="idDefecto")  # Field name made lowercase.
     idnivel = models.IntegerField(db_column="idNivel")  # Field name made lowercase.
@@ -1763,7 +1939,7 @@ class Pendientesdefectos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "pendientesdefectos"
         unique_together = (("idpendiente", "idtaller", "iddefecto"),)
 
@@ -1771,15 +1947,15 @@ class Pendientesdefectos(models.Model):
 class Pendientesservicios(models.Model):
     idpendienteservicios = models.IntegerField(
         db_column="idPendienteServicios", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idPendienteServicios, idTaller, idServicio) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idpendiente = models.ForeignKey(
-        Pendientes, models.DO_NOTHING, db_column="idPendiente"
+        Pendientes, on_delete=models.CASCADE, db_column="idPendiente"
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        "Talleres", models.DO_NOTHING, db_column="idTaller"
+        "Talleres", on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     idservicio = models.ForeignKey(
-        "Serviciostransporte", models.DO_NOTHING, db_column="idServicio"
+        "Serviciostransporte", on_delete=models.CASCADE, db_column="idServicio"
     )  # Field name made lowercase.
     fechahorarep = models.DateTimeField(
         db_column="fechaHoraRep", blank=True, null=True
@@ -1788,7 +1964,7 @@ class Pendientesservicios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "pendientesservicios"
         unique_together = (("idpendienteservicios", "idtaller", "idservicio"),)
 
@@ -1803,7 +1979,7 @@ class Perfiles(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "perfiles"
 
 
@@ -1853,7 +2029,7 @@ class Personas(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "personas"
         unique_together = (("tipodoc", "nrodoc"),)
 
@@ -1901,7 +2077,7 @@ class Prorroga(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "prorroga"
 
 
@@ -1918,7 +2094,7 @@ class Provincias(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "provincias"
 
 
@@ -1936,7 +2112,7 @@ class RepTablasparametricas(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "rep_tablasparametricas"
 
 
@@ -1958,7 +2134,7 @@ class Replicacionlogs(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "replicacionlogs"
 
 
@@ -1979,7 +2155,7 @@ class Rubrosdefectos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "rubrosdefectos"
 
 
@@ -1988,17 +2164,17 @@ class Serviciohab(models.Model):
         db_column="idServicioHab", primary_key=True
     )  # Field name made lowercase.
     idhabilitacion = models.ForeignKey(
-        Habilitacion, models.DO_NOTHING, db_column="idHabilitacion"
+        Habilitacion, on_delete=models.CASCADE, db_column="idHabilitacion"
     )  # Field name made lowercase.
     idserviciostransportehab = models.ForeignKey(
         "Serviciostransportehab",
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         db_column="idServiciosTransporteHab",
     )  # Field name made lowercase.
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "serviciohab"
 
 
@@ -2017,13 +2193,13 @@ class Serviciostransporte(models.Model):
     )  # Field name made lowercase.
     municipal = models.IntegerField(db_column="Municipal")  # Field name made lowercase.
 
-    def __str__(self):
-        return f"{self.descripcion}"
-
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "serviciostransporte"
+
+    def __str__(self):
+        return f"{self.descripcion}"
 
 
 class Serviciostransportehab(models.Model):
@@ -2034,16 +2210,16 @@ class Serviciostransportehab(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "serviciostransportehab"
 
 
 class Talleres(models.Model):
     idtaller = models.AutoField(
-        db_column="idTaller", primary_key=True
+        db_column="idTaller", primary_key=True, verbose_name="Taller"
     )  # Field name made lowercase.
     idlocalidad = models.ForeignKey(
-        Localidades, models.DO_NOTHING, db_column="idLocalidad"
+        Localidades, on_delete=models.CASCADE, db_column="idLocalidad"
     )  # Field name made lowercase.
     nombre = models.CharField(
         db_column="Nombre", max_length=100, db_collation="utf8mb3_general_ci"
@@ -2089,10 +2265,14 @@ class Talleres(models.Model):
         db_column="AdjObligatorio"
     )  # Field name made lowercase.
 
+    def __str__(self) -> str:
+        return f"{self.nombre}"
+
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "talleres"
+
         indexes = [
             models.Index(fields=("idtaller",)),
         ]
@@ -2100,7 +2280,7 @@ class Talleres(models.Model):
 
 class Tipousovehiculo(models.Model):
     idtipouso = models.AutoField(
-        db_column="idTipoUso", primary_key=True
+        db_column="idTipoUso", primary_key=True, verbose_name="Tipo Uso"
     )  # Field name made lowercase.
     descripcion = models.CharField(
         db_column="Descripcion", max_length=50
@@ -2117,7 +2297,7 @@ class Tipousovehiculo(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "tipousovehiculo"
         indexes = [
             models.Index(fields=("idtipouso",)),
@@ -2141,8 +2321,11 @@ class Tipovehiculo(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "tipovehiculo"
+        indexes = [
+            models.Index(fields=("idtipovehiculo",)),
+        ]
 
 
 class Usuarios(models.Model):
@@ -2153,7 +2336,7 @@ class Usuarios(models.Model):
         db_column="Usuario", unique=True, max_length=50
     )  # Field name made lowercase.
     idperfil = models.ForeignKey(
-        Perfiles, models.DO_NOTHING, db_column="idPerfil"
+        Perfiles, on_delete=models.CASCADE, db_column="idPerfil"
     )  # Field name made lowercase.
     password = models.CharField(
         db_column="Password", max_length=150
@@ -2171,21 +2354,21 @@ class Usuarios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "usuarios"
 
 
 class Usuariostaller(models.Model):
     idusuario = models.OneToOneField(
-        Usuarios, models.DO_NOTHING, db_column="idUsuario", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idUsuario, idTaller) found, that is not supported. The first column is selected.
+        Usuarios, on_delete=models.CASCADE, db_column="idUsuario", primary_key=True
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, models.DO_NOTHING, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "usuariostaller"
         unique_together = (("idusuario", "idtaller"),)
 
@@ -2199,13 +2382,13 @@ class Valoresadm(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "valoresAdm"
 
 
 class Vehiculos(models.Model):
     dominio = models.CharField(
-        db_column="Dominio", primary_key=True, max_length=10
+        db_column="Dominio", primary_key=True, max_length=10, verbose_name="Dominio"
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
         db_column="idTipoVehiculo"
@@ -2244,8 +2427,20 @@ class Vehiculos(models.Model):
     tacografonro = models.CharField(
         db_column="TacografoNro", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    tacograforodado = models.CharField(
-        db_column="TacografoRodado", max_length=50, blank=True, null=True
+    tacograforodado_eje1 = models.CharField(
+        db_column="TacografoRodado_Eje1", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    tacograforodado_eje2 = models.CharField(
+        db_column="TacografoRodado_Eje2", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    tacograforodado_eje3 = models.CharField(
+        db_column="TacografoRodado_Eje3", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    tacograforodado_eje4 = models.CharField(
+        db_column="TacografoRodado_Eje4", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    tacograforodado_eje5 = models.CharField(
+        db_column="TacografoRodado_Eje5", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     cccf = models.CharField(
         db_column="CCCF", max_length=50, blank=True, null=True
@@ -2260,7 +2455,7 @@ class Vehiculos(models.Model):
         db_column="NroEjes", blank=True, null=True
     )  # Field name made lowercase.
     idtipouso = models.ForeignKey(
-        Tipousovehiculo, models.DO_NOTHING, db_column="idTipoUso"
+        Tipousovehiculo, on_delete=models.CASCADE, db_column="idTipoUso"
     )  # Field name made lowercase.
     caja = models.CharField(
         db_column="Caja", max_length=50, blank=True, null=True
@@ -2308,14 +2503,18 @@ class Vehiculos(models.Model):
         db_column="CodigoTitular", max_length=12
     )  # Field name made lowercase.
     idloctmserv = models.ForeignKey(
-        Localidades, models.DO_NOTHING, db_column="idLocTMServ", blank=True, null=True
+        Localidades,
+        on_delete=models.CASCADE,
+        db_column="idLocTMServ",
+        blank=True,
+        null=True,
     )  # Field name made lowercase.
     tiposervtm = models.CharField(
         db_column="TipoServTM", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
     idtiposervicio = models.ForeignKey(
         Serviciostransporte,
-        models.DO_NOTHING,
+        on_delete=models.CASCADE,
         db_column="idTipoServicio",
         blank=True,
         null=True,
@@ -2411,27 +2610,32 @@ class Vehiculos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "vehiculos"
 
 
 class Verificaciones(models.Model):
     idverificacion = models.IntegerField(
         db_column="idVerificacion", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idVerificacion, idTaller) found, that is not supported. The first column is selected.
-    fecha = models.DateField(db_column="Fecha")  # Field name made lowercase.
+    )  # Field name made lowercase.
+    fecha = models.DateField(
+        db_column="Fecha", verbose_name="Fecha"
+    )  # Field name made lowercase.
     hora = models.TimeField(db_column="Hora")  # Field name made lowercase.
     horafinal = models.TimeField(
         db_column="HoraFinal", blank=True, null=True
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, models.DO_NOTHING, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller", verbose_name="Planta"
     )  # Field name made lowercase.
     idfotovalidacion = models.IntegerField(
         db_column="idFotovalidacion", blank=True, null=True
     )  # Field name made lowercase.
     dominiovehiculo = models.ForeignKey(
-        Vehiculos, models.DO_NOTHING, db_column="DominioVehiculo"
+        Vehiculos,
+        on_delete=models.CASCADE,
+        db_column="DominioVehiculo",
+        verbose_name="Dominio",
     )  # Field name made lowercase.
     idhabilitacion = models.IntegerField(
         db_column="idHabilitacion", blank=True, null=True
@@ -2477,7 +2681,10 @@ class Verificaciones(models.Model):
         db_column="DirectorTecnico", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
     idestado = models.ForeignKey(
-        Estados, models.DO_NOTHING, db_column="idEstado"
+        Estados,
+        on_delete=models.CASCADE,
+        db_column="idEstado",
+        verbose_name="Calificación",
     )  # Field name made lowercase.
     eje1_tara = models.DecimalField(
         db_column="Eje1_Tara", max_digits=10, decimal_places=2, blank=True, null=True
@@ -2623,14 +2830,26 @@ class Verificaciones(models.Model):
     nrotac = models.CharField(
         db_column="NroTac", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    rodadotac = models.CharField(
-        db_column="RodadoTac", max_length=50, blank=True, null=True
+    rodadotac_eje1 = models.CharField(
+        db_column="RodadoTac_Eje1", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje2 = models.CharField(
+        db_column="RodadoTac_Eje2", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje3 = models.CharField(
+        db_column="RodadoTac_Eje3", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje4 = models.CharField(
+        db_column="RodadoTac_Eje4", max_length=50, blank=True, null=True
+    )  # Field name made lowercase.
+    rodadotac_eje5 = models.CharField(
+        db_column="RodadoTac_Eje5", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     nrointerno = models.CharField(
         db_column="NroInterno", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     codigotitular = models.ForeignKey(
-        Personas, models.DO_NOTHING, db_column="CodigoTitular"
+        Personas, on_delete=models.CASCADE, db_column="CodigoTitular"
     )  # Field name made lowercase.
     descripciontitular = models.CharField(
         db_column="DescripcionTitular", max_length=150
@@ -2663,12 +2882,17 @@ class Verificaciones(models.Model):
     ultimorecpatente = models.CharField(
         db_column="UltimoRecPatente", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
-    idtipouso = models.IntegerField(db_column="idTipoUso")  # Field name made lowercase.
+    idtipouso = models.IntegerField(
+        db_column="idTipoUso", verbose_name="Tipo de Uso"
+    )  # Field name made lowercase.
     usuariocarga = models.CharField(
         db_column="usuarioCarga", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
-        db_column="idTipoVehiculo", blank=True, null=True
+        db_column="idTipoVehiculo",
+        blank=True,
+        null=True,
+        verbose_name="Tipo de Vehiculo",
     )  # Field name made lowercase.
     vmarca = models.CharField(
         db_column="VMarca", max_length=100, blank=True, null=True
@@ -2797,11 +3021,6 @@ class Verificaciones(models.Model):
         db_column="nroFactura", max_length=100, blank=True, null=True
     )  # Field name made lowercase.
 
-    # class Meta:
-    #     # managed = False
-    #     db_table = "verificaciones"
-    #     unique_together = (("idverificacion", "idtaller"),)
-
     def __str__(self) -> str:
         return f"Verif: {self.idverificacion}:{self.dominiovehiculo} - {self.idtaller}"
 
@@ -2830,7 +3049,7 @@ class Verificaciones(models.Model):
 class Verificacionespdf(models.Model):
     idpdf = models.IntegerField(
         db_column="idPDF", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idPDF, idTaller) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     nombrea4 = models.CharField(
         db_column="NombreA4", max_length=200
     )  # Field name made lowercase.
@@ -2841,10 +3060,10 @@ class Verificacionespdf(models.Model):
         db_column="HashA4", max_length=200
     )  # Field name made lowercase.
     idverificacion = models.ForeignKey(
-        Verificaciones, models.DO_NOTHING, db_column="idVerificacion"
+        Verificaciones, on_delete=models.CASCADE, db_column="idVerificacion"
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, models.DO_NOTHING, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     fechacarga = models.DateField(db_column="FechaCarga")  # Field name made lowercase.
     fechahorarep = models.DateTimeField(
@@ -2854,7 +3073,7 @@ class Verificacionespdf(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "verificacionesPDF"
         unique_together = (("idpdf", "idtaller"),)
 
@@ -2877,20 +3096,23 @@ class Verificacionesauditorias(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "verificacionesauditorias"
 
 
 class Verificacionesdefectos(models.Model):
     idverificacion = models.OneToOneField(
-        Verificaciones, models.DO_NOTHING, db_column="idVerificacion", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idVerificacion, idTaller, idDefecto) found, that is not supported. The first column is selected.
+        Verificaciones,
+        on_delete=models.CASCADE,
+        db_column="idVerificacion",
+        primary_key=True,
+    )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, models.DO_NOTHING, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     iddefecto = models.IntegerField(db_column="idDefecto")  # Field name made lowercase.
     idnivel = models.ForeignKey(
-        Nivelesdefectos, models.DO_NOTHING, db_column="idNivel"
+        Nivelesdefectos, on_delete=models.CASCADE, db_column="idNivel"
     )  # Field name made lowercase.
     replicado = models.IntegerField(db_column="Replicado")  # Field name made lowercase.
     fechahorarep = models.DateTimeField(
@@ -2908,7 +3130,7 @@ class Verificacionesdefectos(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "verificacionesdefectos"
         unique_together = (("idverificacion", "idtaller", "iddefecto"),)
 
@@ -2916,12 +3138,12 @@ class Verificacionesdefectos(models.Model):
 class Verificacionesservicios(models.Model):
     idverificacionesservicios = models.AutoField(
         db_column="idVerificacionesServicios", primary_key=True
-    )  # Field name made lowercase. The composite primary key (idVerificacionesServicios, idTaller, idServicio) found, that is not supported. The first column is selected.
+    )  # Field name made lowercase.
     idverificacion = models.ForeignKey(
-        Verificaciones, models.DO_NOTHING, db_column="idVerificacion"
+        Verificaciones, on_delete=models.CASCADE, db_column="idVerificacion"
     )  # Field name made lowercase.
     idtaller = models.ForeignKey(
-        Talleres, models.DO_NOTHING, db_column="idTaller"
+        Talleres, on_delete=models.CASCADE, db_column="idTaller"
     )  # Field name made lowercase.
     idservicio = models.IntegerField(
         db_column="idServicio"
@@ -2932,7 +3154,7 @@ class Verificacionesservicios(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
+
         db_table = "verificacionesservicios"
         unique_together = (("idverificacionesservicios", "idtaller", "idservicio"),)
 
@@ -2946,5 +3168,4 @@ class Vin(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        # managed = False
         db_table = "vin"
