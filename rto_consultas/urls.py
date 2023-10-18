@@ -49,7 +49,7 @@ urlpatterns += [
     path("cargaobleas/", views.CargaObleas.as_view(), name="carga_obleas"),
     path("resumenobleas/", views.resumen_obleas, name="resumen_obleas"),
     path(
-        "ververificacion/<int:idhabilitacion>/<str:dominio>",
+        "verhabilitacion/<int:idhabilitacion>/<str:dominio>",
         views.VerHabilitacion.as_view(),
         name="ver_habilitacion",
     ),
