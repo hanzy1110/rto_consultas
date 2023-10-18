@@ -2,10 +2,13 @@ import django_tables2 as tables
 from django.core.paginator import Paginator
 from django.utils.html import format_html
 from django.templatetags.static import static
+from django.contrib.auth.models import User
+
 from .models import (
     # VWVerificaciones,
     Habilitacion,
     Localidades,
+    Usuarios,
     Verificacionespdf,
     Tipovehiculo,
     Verificaciones,
@@ -315,6 +318,20 @@ class HabilitacionesTable(tables.Table):
     def render_ver_verificacion(self, record):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
+
+    def render_usuariodictamen(self, record):
+        try:
+            logger.debug(f"Checking usuario: {record}")
+            user = User.objects.get(username=record.usuariodictamen).username
+            username = f"{user.first_name} {user.lastname}"
+
+        except Exception as e:
+            logger.warning("User not found....")
+            usuario = Usuarios.objects.get(usuario=record.usuariodictamen)
+            username = f"{usuario.nomber} {usuario.apellido}"
+
+        return username
+
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
