@@ -270,7 +270,7 @@ class HabilitacionesTable(tables.Table):
     vista_previa = tables.Column(
         verbose_name="Vista Previa",
         linkify=(
-            "ver_habilitacion",
+            "ver_habilitaciones",
             {
                 "idhabilitacion": tables.A("idhabilitacion"),
                 "dominio": tables.A("dominio"),
@@ -280,12 +280,12 @@ class HabilitacionesTable(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
 
-    imprimir = CustomFileColumn(
-        verbose_name="Habilitacion",
-        orderable=False,
-        empty_values=(),
-    )  # (viewname, kwargs)
-
+    # imprimir = CustomFileColumn(
+    #     verbose_name="Habilitacion",
+    #     orderable=False,
+    #     empty_values=(),
+    # )  # (viewname, kwargs)
+    imprimir = tables.Column(verbose_name="Imprimir", default="No")
     modificar = tables.Column(verbose_name="Modificado", default="No")
 
     class Meta:
