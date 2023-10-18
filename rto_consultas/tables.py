@@ -328,10 +328,9 @@ class HabilitacionesTable(tables.Table):
         except Exception as e:
             logger.warning("User not found....")
             usuario = Usuarios.objects.get(usuario=record.usuariodictamen)
-            username = f"{usuario.nomber} {usuario.apellido}"
+            username = f"{usuario.nombre} {usuario.apellido}"
 
         return username
-
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
