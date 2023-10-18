@@ -280,6 +280,13 @@ class HabilitacionesTable(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
 
+    nrocodigobarrashab = tables.Column(verbose_name="Nro. Orden Inspección")
+    dominio = tables.Column(verbose_name="Dominio")
+    titular = tables.Column(verbose_name="Titular")
+    fechahoracreacion = tables.Column(verbose_name="Fecha y Hora Creación")
+    usuariodictamen = tables.Column(verbose_name="Emitido Por")
+    modificado = tables.Column(verbose_name="Modificado")
+
     # imprimir = CustomFileColumn(
     #     verbose_name="Habilitacion",
     #     orderable=False,
@@ -291,7 +298,7 @@ class HabilitacionesTable(tables.Table):
     class Meta:
         template_name = "tables/htmx_table.html"
         model = Habilitacion
-        fields = {
+        fields = [
             "nrocodigobarrashab",
             "dominio",
             "titular",
@@ -303,7 +310,7 @@ class HabilitacionesTable(tables.Table):
             "modificar",
             "dar_de_baja",
             "imprimir",
-        }
+        ]
 
     def render_ver_verificacion(self, record):
         image_url = static(f"img/small-logos/ver.png")
