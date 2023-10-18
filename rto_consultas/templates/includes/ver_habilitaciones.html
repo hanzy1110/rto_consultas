@@ -1,0 +1,258 @@
+{% extends 'layouts/base.html' %}
+
+{% load getattr %}
+{% block content %}
+{% load render_table from django_tables2 %}
+{% load getattr %}
+
+<div id="templatemo_main">
+    <div class="col_w900 col_w900_last">
+        <h2><a href="#"> &nbsp;&nbsp;Información de orden de inspección</a></h2>
+        <table style="width:100%;" class="tblForm">
+
+            <tbody>
+                <tr>
+                    <td colspan="4" style="border-bottom: 2px solid #0D3A5B;">
+                        <b>Datos de orden de inspección</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Número de orden:</td>
+                    <td> <input type="text" value="017902181023090000001013452144" style="width: 250px" class="txt"
+                            disabled="disabled"> </td>
+                </tr>
+                <tr>
+                    <td>Generada el :</td>
+                    <td> <input type="text" value="18/10/2023" style="width: 250px" class="txt" disabled="disabled">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Emitido por el usuario :</td>
+                    <td> <input type="text" value="RPADUA" style="width: 250px" class="txt" disabled="disabled"> </td>
+                </tr>
+                <tr>
+                    <td>
+                        ¿Fué usada la orden de inspección?
+                    </td>
+                    <td>
+                        SÍ<input type="checkbox" name="" id="" disabled="disabled"> /
+                        &nbsp; NO<input type="checkbox" name="" id="" checked="" disabled="disabled">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><br></td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="4" style="border-bottom: 2px solid #0D3A5B;">
+                        <b>Datos del Vehículo</b>
+                    </td>
+
+                </tr>
+                <tr>
+
+                    <td id="tagModM" style="width:150px">Titular:</td>
+                    <td>
+                        <input type="text" id="txtTitularM" style="width: 250px" class="txt"
+                            value="PECOM SERVICIOS ENERGIA S.A." disabled="disabled">
+                    </td>
+                </tr>
+
+
+                <tr>
+
+                </tr>
+                <tr>
+                    <td id="tagDomM">Dominio:</td>
+                    <td>
+                        <input type="text" id="txtDominioM" style="width: 250px" class="txt" value="AC-976-XE"
+                            disabled="disabled">
+                        <!--	<input type="checkbox" id="ckPatenteMer" name="ckPatenteMer" value="1" /> P. Mercosur &nbsp;&nbsp;
+			<input type="button" value="Buscar" class="btnChico" onclick="recargarConDominio();" /> -->
+                    </td>
+                </tr>
+                <tr>
+
+                    <td id="tagModM">Año de Fabricación:</td>
+                    <td>
+                        <input type="text" id="txtModeloM" style="width: 250px" class="txt" value="2018"
+                            disabled="disabled">
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="4" style="border-bottom: 2px solid #0D3A5B;">
+                        <b>Tipo de servicio</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="tagTipoServ" valign="top">Tipo Servicio:</td>
+                    <td colspan="2">
+                        <input type="checkbox" checked="" disabled="disabled" name="servicio" value="9"> Servicio Propio
+                        <br>
+                    </td>
+
+                </tr>
+
+
+
+                <tr>
+                    <td colspan="2" align="right"> <input type="button" value="Volver" class="btn"
+                            onclick="window.location='ListadoHabilitaciones.php'"></td>
+                </tr>
+
+
+
+
+
+
+            </tbody>
+        </table>
+        <!--<input type="hidden" id="CodTitular" value="" /> -->
+        <table style="width:100%;" class="tblForm">
+            <tbody>
+                <tr>
+                    <td colspan="4">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span id="respInt" style="color:#ff0000;"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="cleaner"></div>
+    </div>
+    <div id="NuevaLocalidad" style="display: none;">
+        <input type="hidden" id="hfIdProv">
+        <input type="hidden" id="hfDivLoc">
+        <input type="hidden" id="hfIdLoc">
+        <table class="tblForm">
+            <tbody>
+                <tr>
+                    <td>Provincia:</td>
+                    <td>
+                        <input type="text" style="width: 250px;" readonly="readonly" id="NProvincia" class="txt">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Localidad:</td>
+                    <td><input type="text" style="width: 250px;" id="txtNLocalidad" class="txt">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input type="button" value="Guardar" class="btn" onclick="cargarNuevaLocalidad();">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="RespuestaL">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="NuevoTipo" style="display: none;">
+        <input type="hidden" id="hfDivTV">
+        <input type="hidden" id="hfIdTV">
+        <table class="tblForm">
+            <tbody>
+                <tr>
+                    <td>Tipo Vehiculo:</td>
+                    <td><input type="text" style="width: 250px;" id="txtNTipoVe" class="txt">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input type="button" value="Guardar" class="btn" onclick="cargarNuevoTipoVehiculo();">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="RespuestaL">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="NuevoServicio" style="display: none;">
+        <input type="hidden" id="hfDivTSP">
+        <input type="hidden" id="hfIdTSP">
+        <table class="tblForm">
+            <tbody>
+                <tr>
+                    <td>Tipo Servicio:</td>
+                    <td><input type="text" style="width: 250px;" id="txtNServicioPas" class="txt">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input type="button" value="Guardar" class="btn" onclick="cargarNuevoServicioPas();">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="RespuestaP">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="NuevaClase" style="display: none;">
+        <input type="hidden" id="hfDivCSP">
+        <input type="hidden" id="hfIdCSP">
+        <table class="tblForm">
+            <tbody>
+                <tr>
+                    <td>Categoría:</td>
+                    <td><input type="text" style="width: 250px;" maxlength="40" id="txtNClasePas" class="txt"
+                            disabled="disabled">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input type="button" value="Guardar" class="btn" onclick="cargarNuevaClasePas();">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="RespuestaP">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="NuevaMarca" style="display: none;">
+        <input type="hidden" id="hfDivNMarc">
+        <input type="hidden" id="hfIdNMarc">
+        <table class="tblForm">
+            <tbody>
+                <tr>
+                    <td>Marca:</td>
+                    <td><input type="text" style="width: 250px;" maxlength="40" id="txtNMarca" class="txt">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        <input type="button" value="Guardar" class="btn" onclick="cargarNuevaMarca();">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" id="RespuestaP">
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cleaner"></div>
+</div>
+
+{% endblock %}
