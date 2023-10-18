@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 # VEHICULAR_UNC
 MYSQL_HOST = os.environ["MYSQL_HOST"]
