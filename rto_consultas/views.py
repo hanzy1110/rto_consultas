@@ -818,9 +818,9 @@ class ResumenTransporteCarga(CustomRTOView):
 
 
 SIGN_DICT = {
-    "malanis": "img/signs/malanis.png",
+    "malanis": "img/signs/malanis.jpg",
     "rpadua": "img/signs/rpadua.png",
-    "rtralamil": "img/signs/rtralamil.png",
+    "rtralamil": "img/signs/rtralamil.jpg",
 }
 
 
