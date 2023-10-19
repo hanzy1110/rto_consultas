@@ -20,10 +20,12 @@ import rto_consultas.views as views
 urlpatterns = [
     path("accounts/login/", views.UserLoginView.as_view(), name="login"),
     path("logout/", views.logout_view, name="logout"),
+    path("admin/", admin.site.urls),
+    path("", views.index, name="home"),
+    path("", views.index, name="index"),
 ]
 
 urlpatterns += [
-    path("admin/", admin.site.urls),
     # path("accounts/", include("django.contrib.auth.urls")),
     path(
         "verificaciones/resumen?_export=csv",
@@ -54,19 +56,24 @@ urlpatterns += [
         name="ver_habilitacion",
     ),
     path(
+        "pdf_habilitacion/<int:idhabilitacion>",
+        views.PDFHabilitacion.as_view(),
+        name="pdfhabilitacion",
+    ),
+    path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
     # path("", include("admin_soft.urls"), name=admin),
-    path("", views.index, name="home"),
-    path("", views.index, name="index"),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
+
 urlpatterns += [
     path("cantverificaciones", views.verificaciones_anuales),
     path("obleasportaller", views.resumen_obleas),
 ]
+
 urlpatterns += [
     path(
         "resumen/transporte",

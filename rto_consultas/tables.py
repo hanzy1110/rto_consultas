@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.utils.html import format_html
 from django.templatetags.static import static
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from .models import (
     # VWVerificaciones,
@@ -62,6 +63,46 @@ class ImageColumn(tables.Column):
         # return format_html('<img src="{% static img/small-logos/{}.png}" />', key)
         # return format_html('<img src="{% static img/small-logos/{}.png %}" />', key)
         # return format_html('<img src="img/small-logos/{}.png" />', key)
+
+
+class FileColumnHabs(tables.FileColumn):
+    def render(self, value, record):
+        url = self.get_url(value, record)
+
+        idhabilitacion = record.idhabilitacion
+
+        url = reverse(
+            "pdfhabilitacion",
+            args=[idhabilitacion],
+        )
+
+        logger.debug(f"URL => {url}")
+        cache_key = f"habilitacion:{record.idhabilitacion}"
+        cached_cert = cache.get(cache_key)
+
+        image_url = static(f"img/small-logos/pdf-flat.png")
+
+        if url:
+            atag = format_html(
+                '<a href="{}" target="_blank"><img src="{}" alt="Image"></a>',
+                url,
+                image_url,
+            )
+
+        else:
+            img_not_found = static(f"img/small-logos/cert_no_encontrado2.png")
+            atag = format_html('<img src="{}" alt="Image">', img_not_found)
+
+        logger.debug(f"atag => {atag}")
+        if cached_cert:
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            logger.info("CACHE HIT")
+            return atag
+            # return str(nro_cert)
+        else:
+            # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
+            logger.info("CACHE MISS")
+            return atag
 
 
 class CustomFileColumn(tables.FileColumn):
