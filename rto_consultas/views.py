@@ -836,9 +836,7 @@ class PDFHabilitacion(PDFTemplateView):
 
         id_habilitacion = self.kwargs["idhabilitacion"]
         # dominio = self.kwargs["dominio"]
-        habilitacion = Habilitacion.objects.get(
-            idhabilitacion=id_habilitacion, dominio=dominio
-        )
+        habilitacion = Habilitacion.objects.get(idhabilitacion=id_habilitacion)
 
         try:
             logger.debug(f"Checking usuario: {habilitacion}")
