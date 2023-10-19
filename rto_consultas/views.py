@@ -16,6 +16,8 @@ from django.contrib.auth.views import (
 )
 from django.contrib.auth.models import User
 
+from wkhtmltopdf.views import PDFTemplateView
+
 from datetime import date
 
 from django.contrib.auth import login, authenticate, logout
@@ -65,6 +67,7 @@ from .helpers import (
     handle_query,
     AuxData,
     generate_key,
+    build_barcode,
 )
 
 from .forms import ObleasPorTaller
@@ -73,6 +76,7 @@ from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
+
 
 # from .presigned_url import generate_presigned_url
 
@@ -545,10 +549,6 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
                 "titular"
             ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
 
-        # $sqlServicios="SELECT * FROM serviciostransportehab STH
-        # INNER JOIN serviciohab SH ON  STH.idServiciosTransporteHab=SH.idServiciosTransporteHab
-        # INNER JOIN habilitacion H ON SH.idHabilitacion=H.idHabilitacion
-        # WHERE H.idHabilitacion=".$idHabilitacion;
         servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
 
         descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
@@ -815,3 +815,79 @@ class ResumenTransporteCarga(CustomRTOView):
             "fecha_hasta": "date",
         },
     )
+
+SIGN_DICT = {
+    "malanis": "img/signs/malanis.png",
+    "rpadua": "img/signs/rpadua.png",
+    "rtralamil": "img/signs/rtralamil.png",
+}
+
+
+class PDFHabilitacion(PDFTemplateView):
+    filename = "HABILITACION.pdf"
+    template_name = "pdf/habilitacion.html"
+    cmd_options = {
+        "margin-top": 3,
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(PDFHabilitacion, self).get_context_data(**kwargs)
+
+        id_habilitacion = self.kwargs["idhabilitacion"]
+        dominio = self.kwargs["dominio"]
+        habilitacion = Habilitacion.objects.get(
+            idhabilitacion=id_habilitacion, dominio=dominio
+        )
+
+        try:
+            logger.debug(f"Checking usuario: {habilitacion}")
+            user = User.objects.get(username=habilitacion.usuariodictamen).username
+            username = f"{user.first_name} {user.lastname}"
+
+        except Exception as e:
+            logger.warning("User not found....")
+            usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+            username = f"{usuario.nombre} {usuario.apellido}"
+
+        if habilitacion.tipopersona in "Jj":
+            context["titular"] = habilitacion.razonsocialtitular
+        else:
+            context[
+                "titular"
+            ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+
+        servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
+
+        descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
+
+        modificado = bool(habilitacion.modificado)
+        logger.debug(f"Modificado => {modificado}")
+        context["modificado"] = modificado
+
+        cadena_id_servicio = "".join(
+            [
+                str(s.idserviciostransportehab.idserviciostransportehab).zfill(2)
+                for s in servicios
+            ]
+        )
+
+        barcode = build_barcode(
+            id_habilitacion,
+            str(habilitacion.fechahoradictamen)[0:10],
+            habilitacion.dominio,
+            cadena_id_servicio,
+        )
+
+        context["barcode"] = barcode
+        fechahora = habilitacion.fechahoracreacion
+        date_str = f"Neuquén, {fechahora.day} de {fechahora.month} de {fechahora.year}"
+        context["date_str"] = date_str
+
+        context["modelo"] = habilitacion.modelovehiculo
+        context["dominio"] = habilitacion.dominio
+        context["cccf"] = habilitacion.nrocertificadocccf
+        context["tipo_servicio"] = descripciones
+        context["username"] = username
+        context["usersign"] = SIGN_DICT[username]
+
+        return context

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "rto_consultas",
     "django_tables2",
     "django_htmx",
+    "wkhtmltopdf",
     # 'silk'
 ]
 

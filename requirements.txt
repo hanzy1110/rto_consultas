@@ -7,3 +7,4 @@ django-tables2
 django-htmx
 tablib
 boto3
+django-wkhtmltopdf

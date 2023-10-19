@@ -3,6 +3,7 @@ from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
 
+import hashlib
 import os
 import re
 from itertools import chain
@@ -432,3 +433,29 @@ def filter_vup_transporte(certs: QuerySet):
     vup_certs = len([c for c in certs if check_vup(c.nrocertificado)])
     transporte_certs = len([c for c in certs if not check_vup(c.nrocertificado)])
     return {"cant_vup": vup_certs, "cant_transporte": transporte_certs}
+
+
+def build_barcode(id, fecha, dominio, cadena_id_servicio):
+    # The idea is to create a hard-to-alter checksum that includes the number, domain, and date
+    # First, format the certificate number to 2 digits
+    cb_base = str(id).zfill(6)
+
+    # Format the date and remove hyphens
+    formatted_fecha = fecha.replace("-", "")
+    cb_base += formatted_fecha
+
+    # Combine the parts and add cadenaIdServicio
+    cb_base = cb_base[:10] + cb_base[12:13] + cadena_id_servicio
+
+    # Remove hyphens and convert the domain to uppercase
+    patente_raw = dominio.replace("-", "").upper()
+
+    # Combine all parts and hash using SHA1
+    a_hashear = cb_base + "TANGOFANS" + patente_raw
+    sha1 = hashlib.sha1(a_hashear.encode()).hexdigest()
+
+    # Extract the first 11 characters of the hash, convert to decimal, and pad to 14 digits
+    sha_nums = str(int(sha1[:11], 16)).zfill(14)[:10]
+
+    # Return the final result
+    return cb_base + sha_nums
