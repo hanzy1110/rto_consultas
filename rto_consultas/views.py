@@ -816,6 +816,7 @@ class ResumenTransporteCarga(CustomRTOView):
         },
     )
 
+
 SIGN_DICT = {
     "malanis": "img/signs/malanis.png",
     "rpadua": "img/signs/rpadua.png",
@@ -834,7 +835,7 @@ class PDFHabilitacion(PDFTemplateView):
         context = super(PDFHabilitacion, self).get_context_data(**kwargs)
 
         id_habilitacion = self.kwargs["idhabilitacion"]
-        dominio = self.kwargs["dominio"]
+        # dominio = self.kwargs["dominio"]
         habilitacion = Habilitacion.objects.get(
             idhabilitacion=id_habilitacion, dominio=dominio
         )
