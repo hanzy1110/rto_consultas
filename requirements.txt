@@ -8,3 +8,4 @@ django-htmx
 tablib
 boto3
 django-wkhtmltopdf
+python-barcode

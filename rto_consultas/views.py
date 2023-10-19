@@ -868,16 +868,16 @@ class PDFHabilitacion(PDFTemplateView):
             ]
         )
 
-        barcode = build_barcode(
+        barcode_path = build_barcode(
             id_habilitacion,
             str(habilitacion.fechahoradictamen)[0:10],
             habilitacion.dominio,
             cadena_id_servicio,
         )
 
-        logger.debug(f"BARCODE => {barcode}")
+        logger.debug(f"BARCODE => {barcode_path}")
 
-        context["barcode"] = barcode
+        context["barcode"] = barcode_path
 
         fechahora = habilitacion.fechahoracreacion
         date_str = f"Neuquén, {fechahora.day} de {fechahora.month} de {fechahora.year}"

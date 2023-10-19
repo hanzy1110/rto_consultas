@@ -11,6 +11,9 @@ from typing import Dict, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
 # from silk.profiling.profiler import silk_profile
+from io import BytesIO
+from barcode import EAN13
+from barcode.writer import SVGWriter
 
 from rto_consultas.models import (
     Certificados,
@@ -456,6 +459,12 @@ def build_barcode(id, fecha, dominio, cadena_id_servicio):
 
     # Extract the first 11 characters of the hash, convert to decimal, and pad to 14 digits
     sha_nums = str(int(sha1[:11], 16)).zfill(14)[:10]
+    final_barcode = cb_base + sha_nums
+    # Or to an actual file:
+    final_path = f"/tmp/{final_barcode}.svg"
+
+    with open(final_path, "wb") as f:
+        EAN13(final_barcode, writer=SVGWriter()).write(f)
 
     # Return the final result
-    return cb_base + sha_nums
+    return final_path
