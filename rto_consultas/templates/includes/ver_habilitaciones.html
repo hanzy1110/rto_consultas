@@ -18,17 +18,17 @@
                 </tr>
                 <tr>
                     <td>Número de orden:</td>
-                    <td> <input type="text" value="017902181023090000001013452144" style="width: 250px" class="txt"
+                    <td> <input type="text" value="{{ object.nrocodigobarrashab }}" style="width: 250px" class="txt"
                             disabled="disabled"> </td>
                 </tr>
                 <tr>
                     <td>Generada el :</td>
-                    <td> <input type="text" value="18/10/2023" style="width: 250px" class="txt" disabled="disabled">
+                    <td> <input type="text" value="{{ object.fechahoracreacion }}" style="width: 250px" class="txt" disabled="disabled">
                     </td>
                 </tr>
                 <tr>
                     <td>Emitido por el usuario :</td>
-                    <td> <input type="text" value="RPADUA" style="width: 250px" class="txt" disabled="disabled"> </td>
+                    <td> <input type="text" value="{{ usuariodictamen }}" style="width: 250px" class="txt" disabled="disabled"> </td>
                 </tr>
                 <tr>
                     <td>
@@ -56,7 +56,7 @@
                     <td id="tagModM" style="width:150px">Titular:</td>
                     <td>
                         <input type="text" id="txtTitularM" style="width: 250px" class="txt"
-                            value="PECOM SERVICIOS ENERGIA S.A." disabled="disabled">
+                            value="{{ titular }}" disabled="disabled">
                     </td>
                 </tr>
 
@@ -67,7 +67,7 @@
                 <tr>
                     <td id="tagDomM">Dominio:</td>
                     <td>
-                        <input type="text" id="txtDominioM" style="width: 250px" class="txt" value="AC-976-XE"
+                        <input type="text" id="txtDominioM" style="width: 250px" class="txt" value="{{ object.dominio }}"
                             disabled="disabled">
                         <!--	<input type="checkbox" id="ckPatenteMer" name="ckPatenteMer" value="1" /> P. Mercosur &nbsp;&nbsp;
 			<input type="button" value="Buscar" class="btnChico" onclick="recargarConDominio();" /> -->
@@ -77,7 +77,7 @@
 
                     <td id="tagModM">Año de Fabricación:</td>
                     <td>
-                        <input type="text" id="txtModeloM" style="width: 250px" class="txt" value="2018"
+                        <input type="text" id="txtModeloM" style="width: 250px" class="txt" value="{{ object.modelovehiculo }}"
                             disabled="disabled">
                     </td>
                 </tr>
@@ -96,18 +96,10 @@
                     </td>
 
                 </tr>
-
-
-
                 <tr>
                     <td colspan="2" align="right"> <input type="button" value="Volver" class="btn"
-                            onclick="window.location='ListadoHabilitaciones.php'"></td>
+                            onclick="window.location='{% url `habilitaciones` %}'"></td>
                 </tr>
-
-
-
-
-
 
             </tbody>
         </table>

@@ -14,6 +14,7 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordResetConfirmView,
 )
+from django.contrib.auth.models import User
 
 from datetime import date
 
@@ -31,7 +32,11 @@ from .models import (
     Adjuntos,
     Habilitacion,
     Localidades,
+    Personas,
     Provincias,
+    Serviciohab,
+    Serviciostransportehab,
+    Usuarios,
     Verificaciones,
     Certificadosasignadosportaller,
     Vehiculos,
@@ -515,6 +520,45 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        id_habilitacion = self.kwargs["idhabilitacion"]
+        dominio = self.kwargs["dominio"]
+        habilitacion = Habilitacion.objects.get(
+            idhabilitacion=id_habilitacion, dominio=dominio
+        )
+
+        try:
+            logger.debug(f"Checking usuario: {habilitacion}")
+            user = User.objects.get(username=habilitacion.usuariodictamen).username
+            username = f"{user.first_name} {user.lastname}"
+
+        except Exception as e:
+            logger.warning("User not found....")
+            usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+            username = f"{usuario.nombre} {usuario.apellido}"
+
+        context["usuariodictamen"] = username
+        if habilitacion.tipopersona in "Jj":
+            context["titular"] = habilitacion.razonsocialtitular
+        else:
+            context[
+                "titular"
+            ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+
+        # $sqlServicios="SELECT * FROM serviciostransportehab STH
+        # INNER JOIN serviciohab SH ON  STH.idServiciosTransporteHab=SH.idServiciosTransporteHab
+        # INNER JOIN habilitacion H ON SH.idHabilitacion=H.idHabilitacion
+        # WHERE H.idHabilitacion=".$idHabilitacion;
+        servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
+
+        descripciones = [
+            Serviciostransportehab.objects.get(
+                idserviciostransportehab=s.idserviciostransportehab
+            )
+            for s in servicios
+        ]
+
+        context["descripciones"] = descripciones
         return context
 
 
