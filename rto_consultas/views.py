@@ -886,5 +886,6 @@ class PDFHabilitacion(PDFTemplateView):
         context["tipo_servicio"] = descripciones
         context["username"] = username
         context["usersign"] = SIGN_DICT[habilitacion.usuariodictamen]
+        logger.debug(f"USERSIGN => {SIGN_DICT[habilitacion.usuariodictamen]}")
 
         return context
