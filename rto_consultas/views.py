@@ -551,12 +551,7 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
         # WHERE H.idHabilitacion=".$idHabilitacion;
         servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
 
-        descripciones = [
-            Serviciostransportehab.objects.get(
-                idserviciostransportehab=s.idserviciostransportehab
-            )
-            for s in servicios
-        ]
+        descripciones = [s.descripcion for s in servicios]
 
         context["descripciones"] = descripciones
         return context
