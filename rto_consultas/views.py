@@ -823,6 +823,21 @@ SIGN_DICT = {
     "rtralamil": "/home/code/static/img/signs/rtralamil.jpg",
 }
 
+MONTHS_DICT = {
+    1: "Enero",
+    2: "Febrero",
+    3: "Marzo",
+    4: "Abril",
+    5: "Mayo",
+    6: "Junio",
+    7: "Julio",
+    8: "Agosto",
+    9: "Septiembre",
+    10: "Octubre",
+    11: "Noviembre",
+    12: "Diciembre",
+}
+
 
 class PDFHabilitacion(PDFTemplateView):
     filename = "HABILITACION.pdf"
@@ -868,7 +883,7 @@ class PDFHabilitacion(PDFTemplateView):
             ]
         )
 
-        barcode_path = build_barcode(
+        barcode_path, barcode = build_barcode(
             id_habilitacion,
             str(habilitacion.fechahoradictamen)[0:10],
             habilitacion.dominio,
@@ -876,19 +891,20 @@ class PDFHabilitacion(PDFTemplateView):
         )
 
         logger.debug(f"BARCODE => {barcode_path}")
-
-        context["barcode"] = barcode_path
+        context["barcode_path"] = barcode_path
+        context["barcode"] = barcode
 
         fechahora = habilitacion.fechahoracreacion
-        date_str = f"Neuquén, {fechahora.day} de {fechahora.month} de {fechahora.year}"
+        date_str = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
         context["date_str"] = date_str
 
         context["modelo"] = habilitacion.modelovehiculo
         context["dominio"] = habilitacion.dominio
         context["cccf"] = habilitacion.nrocertificadocccf
+
         context["tipo_servicio"] = descripciones
+
         context["username"] = username
         context["usersign"] = SIGN_DICT[habilitacion.usuariodictamen]
-        logger.debug(f"USERSIGN => {SIGN_DICT[habilitacion.usuariodictamen]}")
 
         return context

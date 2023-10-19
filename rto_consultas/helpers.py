@@ -467,4 +467,4 @@ def build_barcode(id, fecha, dominio, cadena_id_servicio):
         EAN13(final_barcode, writer=SVGWriter()).write(f)
 
     # Return the final result
-    return final_path
+    return final_path, final_barcode
