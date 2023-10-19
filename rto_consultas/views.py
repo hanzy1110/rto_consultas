@@ -828,7 +828,7 @@ class PDFHabilitacion(PDFTemplateView):
     filename = "HABILITACION.pdf"
     template_name = "pdf/habilitacion.html"
     cmd_options = {
-        "margin-top": 3,
+        "log-level": 7,
     }
 
     def get_context_data(self, **kwargs):
