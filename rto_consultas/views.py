@@ -875,7 +875,10 @@ class PDFHabilitacion(PDFTemplateView):
             cadena_id_servicio,
         )
 
+        logger.debug(f"BARCODE => {barcode}")
+
         context["barcode"] = barcode
+
         fechahora = habilitacion.fechahoracreacion
         date_str = f"Neuquén, {fechahora.day} de {fechahora.month} de {fechahora.year}"
         context["date_str"] = date_str
