@@ -1,169 +1,182 @@
 {% load static %}
+<html>
 
-<page orientation='p' footer='page' backleft='10mm' backright='10mm' backbottom='10mm' backtop='30mm'>
-    <page_header>
+<head>
+    <meta charset="UTF-8">
+    <!-- Other head content -->
+</head>
 
-        <table align='center' cellpadding='0' width='780' cellspacing='0'>
+<body>
+    <page orientation='p' footer='page' backleft='10mm' backright='10mm' backbottom='10mm' backtop='30mm'>
+        <page_header>
+
+            <table align='center' cellpadding='0' width='780' cellspacing='0'>
+                <tr>
+
+                    <td>
+                        <img src='{% static "img/headerHabilitacion.jpg" %}' width='740' />
+                    </td>
+
+                </tr>
+            </table>
+
+        </page_header>
+        <table align="center" border="0">
+
             <tr>
+                <td width="700"></td>
+            </tr>
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
 
+            <tr>
+                <td style="text-align: right;">{{ date_str }}</td>
+            </tr>
+
+            <tr>
+                <td style="text-align:left">A las plantas de</td>
+            </tr>
+            <tr>
+                <td> <b>REVISIÓN TÉCNICA OBLIGATORIA</b> <br> <b>VERITECNICA SRL, CONTROL SRL, BOMBEROS SMA Y/O
+                        VERICENTRO
+                        SRL <br><br></b> </td>
+            </tr>
+
+
+            <tr>
                 <td>
-                    <img src='{% static "img/headerHabilitacion.jpg" %}' width='740' />
+                    Por la presente, solicito a Usted, la Revisión Técnica Mecánica de la unidad de Transporte por
+                    Automotor
+                    de Pasajeros
+                    Provinciales perteneciente/s a:<b> {{ titular }}</b> .-
+                    <br>
+
+
                 </td>
 
             </tr>
-        </table>
 
-    </page_header>
-    <table align="center" border="0">
-
-        <tr>
-            <td width="700"></td>
-        </tr>
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-
-        <tr>
-            <td style="text-align: right;">{{ date_str }}</td>
-        </tr>
-
-        <tr>
-            <td style="text-align:left">A las plantas de</td>
-        </tr>
-        <tr>
-            <td> <b>REVISIÓN TÉCNICA OBLIGATORIA</b> <br> <b>VERITECNICA SRL, CONTROL SRL, BOMBEROS SMA Y/O VERICENTRO
-                    SRL <br><br></b> </td>
-        </tr>
-
-
-        <tr>
-            <td>
-                Por la presente, solicito a Usted, la Revisión Técnica Mecánica de la unidad de Transporte por Automotor
-                de Pasajeros
-                Provinciales perteneciente/s a:<b> {{ titular }}</b> .-
-                <br>
-
-
-            </td>
-
-        </tr>
-
-        <tr>
-            <td style="text-align:left;padding-left: 200px">&nbsp; </td>
-        </tr>
-        <tr>
-            <td style="text-align:left;padding-left: 200px"><b> Dominio: {{ dominio }}</b> </td>
-        </tr>
-        <tr>
-            <td style="text-align:left;padding-left: 200px"><b> Año de Fabricación: {{ modelo }}</b> </td>
-        </tr>
-        <tr>
-            <td style="text-align:left;padding-left: 200px"><b> CCCF Nro: {{ cccf }}</b> </td>
-        </tr>
-
-
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-
-        <tr>
-            <td>
-
-                Para realizar servicio de Transporte de Pasajeros en la modalidad de :<br /> <b>
-                {% for s in tipo_servicio %}
-                {{ s }}
-                {% endfor %}
-                </b>.-
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Esta Dirección dispone que, aquellas unidades que se desee habilitar, deberán contar con la
-                identificación de la empresa,
-                N° de interno, domicilio y teléfono en las puertas del vehículo.-<br>
-                Sin otro particular, lo saludo atentamente.
-            </td>
-        </tr>
-
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-
-        <tr>
-            <td>
-
-                <table>
-                    <tr>
-                        <td valign="bottom">
-                            <barcode type="I25" value="{{ barcode }}" label="label"
-                                style="width:72mm; height:9mm; color: #000000; font-size: 3mm"></barcode>
-                        </td>
-                        <td style="padding-left: 150;text-align:center;">
-                            <img src="{% static usersign %}" width="150">
-                            <br />
-                            <b>{{ username }}</b><br />
-                        </td>
-                    </tr>
-                </table>
-            </td>
-
-        </tr>
-    </table>
-    <table>
-
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-        <tr>
-            <td> &nbsp;</td>
-        </tr>
-
-        <tr>
-            <td>
-                <br><br><br><br>
-                OBSERVACIÓN: PARA TACÓGRAFOS ELECTRÓNICOS DEBE VERIFICARSE CUMPLIMIENTO DEL
-                ANEXO N° DEL DECRETO 1716/2008 RESPECTO A LA VELOCIDAD FÍSICA Y VERIFICACIÓN DE
-                IMPRESORA.-
-                <br><br>
-                <hr style="border-style: dashed">
-                <br>
-                NOTA: Para continuar la gestión de renovación de la Habilitación correspondiente ante la
-                Dirección Provincial de Transporte - División Habilitaciones, deberá acompañar la siguiente
-                documentación:
-                <ul>
-                    <li>Certificado de R.T.O. aprobado.-</li>
-                    <li style="padding-top: 10px">Boleta de depósito Tasa Provincial - Ley 3219 - Banco Provincia del
-                        Neuquén cta. N° 106/6.-</li>
-                    <li style="padding-top: 10px">VALIDEZ DE LA PRESENTE ORDEN: 30 DÍAS CORRIDOS</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-
-    <page_footer>
-        <table align='center'>
             <tr>
-                <td style='text-align: center'>
-                    <b><i>DIRECCIÓN PROVINCIAL DE TRANSPORTE</i></b> <br><br>
-                    Ignacio Rivas N° 290 | Neuquén capital | (0299) 449 4495228 <br>
-                    www.neuquen.gov.ar<br><br>
+                <td style="text-align:left;padding-left: 200px">&nbsp; </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;padding-left: 200px"><b> Dominio: {{ dominio }}</b> </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;padding-left: 200px"><b> Año de Fabricación: {{ modelo }}</b> </td>
+            </tr>
+            <tr>
+                <td style="text-align:left;padding-left: 200px"><b> CCCF Nro: {{ cccf }}</b> </td>
+            </tr>
 
+
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+
+            <tr>
+                <td>
+
+                    Para realizar servicio de Transporte de Pasajeros en la modalidad de :<br /> <b>
+                        {% for s in tipo_servicio %}
+                        {{ s }}
+                        {% endfor %}
+                    </b>.-
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Esta Dirección dispone que, aquellas unidades que se desee habilitar, deberán contar con la
+                    identificación de la empresa,
+                    N° de interno, domicilio y teléfono en las puertas del vehículo.-<br>
+                    Sin otro particular, lo saludo atentamente.
+                </td>
+            </tr>
+
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+
+            <tr>
+                <td>
+
+                    <table>
+                        <tr>
+                            <td valign="bottom">
+                                <barcode type="I25" value="{{ barcode }}" label="label"
+                                    style="width:72mm; height:9mm; color: #000000; font-size: 3mm"></barcode>
+                            </td>
+                            <td style="padding-left: 150;text-align:center;">
+                                <img src="{% static usersign %}" width="150">
+                                <br />
+                                <b>{{ username }}</b><br />
+                            </td>
+                        </tr>
+                    </table>
                 </td>
 
             </tr>
         </table>
+        <table>
+
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+            <tr>
+                <td> &nbsp;</td>
+            </tr>
+
+            <tr>
+                <td>
+                    <br><br><br><br>
+                    OBSERVACIÓN: PARA TACÓGRAFOS ELECTRÓNICOS DEBE VERIFICARSE CUMPLIMIENTO DEL
+                    ANEXO N° DEL DECRETO 1716/2008 RESPECTO A LA VELOCIDAD FÍSICA Y VERIFICACIÓN DE
+                    IMPRESORA.-
+                    <br><br>
+                    <hr style="border-style: dashed">
+                    <br>
+                    NOTA: Para continuar la gestión de renovación de la Habilitación correspondiente ante la
+                    Dirección Provincial de Transporte - División Habilitaciones, deberá acompañar la siguiente
+                    documentación:
+                    <ul>
+                        <li>Certificado de R.T.O. aprobado.-</li>
+                        <li style="padding-top: 10px">Boleta de depósito Tasa Provincial - Ley 3219 - Banco Provincia
+                            del
+                            Neuquén cta. N° 106/6.-</li>
+                        <li style="padding-top: 10px">VALIDEZ DE LA PRESENTE ORDEN: 30 DÍAS CORRIDOS</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <page_footer>
+            <table align='center'>
+                <tr>
+                    <td style='text-align: center'>
+                        <b><i>DIRECCIÓN PROVINCIAL DE TRANSPORTE</i></b> <br><br>
+                        Ignacio Rivas N° 290 | Neuquén capital | (0299) 449 4495228 <br>
+                        www.neuquen.gov.ar<br><br>
+
+                    </td>
+
+                </tr>
+            </table>
 
 
 
-    </page_footer>
-</page>
+        </page_footer>
+    </page>
+</body>
+
+</html>
