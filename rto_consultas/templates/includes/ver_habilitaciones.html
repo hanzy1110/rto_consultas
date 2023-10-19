@@ -38,11 +38,11 @@
                     </td>
                     <td>
                         <label for="chkUsada"> SÍ </label>
-                        <input type="checkbox" name="" id="chkUsada" checked={% if modificado %} checked {% else %} ''
-                            {% endif %} disabled="disabled"> <br>
+                        <input type="checkbox" name="" id="chkUsada" {% if modificado %}checked="" {% endif %}
+                            disabled="disabled"> <br>
                         <label for="chkNoUsada"> NO </label>
-                        <input type="checkbox" name="" id="chkNoUsada" checked={% if not modificado %} checked {% else
-                            %} '' {% endif %} disabled="disabled">
+                        <input type="checkbox" name="" id="chkNoUsada" {% if not modificado %} checked="" {% endif %}
+                            disabled="disabled">
                     </td>
                 </tr>
 
