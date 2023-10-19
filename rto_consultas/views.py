@@ -845,8 +845,8 @@ class PDFHabilitacion(PDFTemplateView):
 
         except Exception as e:
             logger.warning("User not found....")
-            usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
-            username = f"{usuario.nombre} {usuario.apellido}"
+            user = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+            username = f"{user.nombre} {user.apellido}"
 
         if habilitacion.tipopersona in "Jj":
             context["titular"] = habilitacion.razonsocialtitular
@@ -887,6 +887,6 @@ class PDFHabilitacion(PDFTemplateView):
         context["cccf"] = habilitacion.nrocertificadocccf
         context["tipo_servicio"] = descripciones
         context["username"] = username
-        context["usersign"] = SIGN_DICT[username]
+        context["usersign"] = SIGN_DICT[habilitacion.usuariodictamen]
 
         return context
