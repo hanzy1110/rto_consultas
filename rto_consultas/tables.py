@@ -336,7 +336,7 @@ class HabilitacionesTable(tables.Table):
     #     orderable=False,
     #     empty_values=(),
     # )  # (viewname, kwargs)
-    imprimir = tables.Column(verbose_name="Imprimir", default="No")
+    imprimir = FileColumnHabs(verbose_name="Imprimir", orderable=False, empty_values=())
     modificar = tables.Column(verbose_name="Modificado", default="No")
 
     class Meta:
