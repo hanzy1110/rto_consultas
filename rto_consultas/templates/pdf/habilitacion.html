@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load static %}
 <html>
 
@@ -15,8 +16,8 @@
 
                     <td>
 
-                        <!-- <img src="{% static 'img/headerHabilitacion.jpg' %}" width='740' /> -->
-                        <img src="/home/code/static/img/headerHabilitacion.jpg" width='740' />
+                        <img src="{% static 'img/headerHabilitacion.jpg' %}" width='740' />
+                        <!-- <img src="/home/code/static/img/headerHabilitacion.jpg" width='740' /> -->
                     </td>
 
                 </tr>
@@ -117,7 +118,9 @@
                         <tr>
                             <td valign="bottom">
                                 <barcode type="I25" value="{{ barcode }}" label="label"
-                                    style="width:72mm; height:9mm; color: #000000; font-size: 3mm"></barcode>
+                                    style="width:72mm; height:9mm; color: #000000; font-size: 3mm">
+                                    {{ barcode }}
+                                </barcode>
                             </td>
                             <td style="padding-left: 150;text-align:center;">
                                 <img src="{{ usersign }}" width="150">
