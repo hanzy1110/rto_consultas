@@ -315,15 +315,15 @@ class HabilitacionesTable(tables.Table):
             "imprimir",
         ]
 
-    def render_ver_verificacion(self, record):
+    def render_vista_previa(self, record):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
 
     def render_usuariodictamen(self, record):
         try:
             logger.debug(f"Checking usuario: {record}")
-            user = User.objects.get(username=record.usuariodictamen).username
-            username = f"{user.first_name} {user.lastname}"
+            user = User.objects.get(username=record.usuariodictamen)
+            username = f"{user.first_name} {user.last_name}"
 
         except Exception as e:
             logger.warning("User not found....")

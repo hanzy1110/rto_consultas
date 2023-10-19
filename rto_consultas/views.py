@@ -553,6 +553,10 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
 
         descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
 
+        modificado = bool(habilitacion.modificado)
+        logger.debug(f"Modificado => {modificado}")
+        context["modificado"] = modificado
+
         context["descripciones"] = descripciones
         return context
 

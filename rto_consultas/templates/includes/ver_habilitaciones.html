@@ -23,20 +23,26 @@
                 </tr>
                 <tr>
                     <td>Generada el :</td>
-                    <td> <input type="text" value="{{ object.fechahoracreacion }}" style="width: 250px" class="txt" disabled="disabled">
+                    <td> <input type="text" value="{{ object.fechahoracreacion }}" style="width: 250px" class="txt"
+                            disabled="disabled">
                     </td>
                 </tr>
                 <tr>
                     <td>Emitido por el usuario :</td>
-                    <td> <input type="text" value="{{ usuariodictamen }}" style="width: 250px" class="txt" disabled="disabled"> </td>
+                    <td> <input type="text" value="{{ usuariodictamen }}" style="width: 250px" class="txt"
+                            disabled="disabled"> </td>
                 </tr>
                 <tr>
                     <td>
                         ¿Fué usada la orden de inspección?
                     </td>
                     <td>
-                        SÍ<input type="checkbox" name="" id="" disabled="disabled"> /
-                        &nbsp; NO<input type="checkbox" name="" id="" checked="" disabled="disabled">
+                        <label for="chkUsada"> SÍ </label>
+                        <input type="checkbox" name="" id="chkUsada" checked={% if modificado %} checked {% else %} ''
+                            {% endif %} disabled="disabled"> <br>
+                        <label for="chkNoUsada"> NO </label>
+                        <input type="checkbox" name="" id="chkNoUsada" checked={% if not modificado %} checked {% else
+                            %} '' {% endif %} disabled="disabled">
                     </td>
                 </tr>
 
@@ -55,8 +61,8 @@
 
                     <td id="tagModM" style="width:150px">Titular:</td>
                     <td>
-                        <input type="text" id="txtTitularM" style="width: 250px" class="txt"
-                            value="{{ titular }}" disabled="disabled">
+                        <input type="text" id="txtTitularM" style="width: 250px" class="txt" value="{{ titular }}"
+                            disabled="disabled">
                     </td>
                 </tr>
 
@@ -67,8 +73,8 @@
                 <tr>
                     <td id="tagDomM">Dominio:</td>
                     <td>
-                        <input type="text" id="txtDominioM" style="width: 250px" class="txt" value="{{ object.dominio }}"
-                            disabled="disabled">
+                        <input type="text" id="txtDominioM" style="width: 250px" class="txt"
+                            value="{{ object.dominio }}" disabled="disabled">
                         <!--	<input type="checkbox" id="ckPatenteMer" name="ckPatenteMer" value="1" /> P. Mercosur &nbsp;&nbsp;
 			<input type="button" value="Buscar" class="btnChico" onclick="recargarConDominio();" /> -->
                     </td>
@@ -77,8 +83,8 @@
 
                     <td id="tagModM">Año de Fabricación:</td>
                     <td>
-                        <input type="text" id="txtModeloM" style="width: 250px" class="txt" value="{{ object.modelovehiculo }}"
-                            disabled="disabled">
+                        <input type="text" id="txtModeloM" style="width: 250px" class="txt"
+                            value="{{ object.modelovehiculo }}" disabled="disabled">
                     </td>
                 </tr>
 
@@ -91,8 +97,11 @@
                 <tr>
                     <td id="tagTipoServ" valign="top">Tipo Servicio:</td>
                     <td colspan="2">
-                        <input type="checkbox" checked="" disabled="disabled" name="servicio" value="9"> Servicio Propio
-                        <br>
+                        {% for d in descripciones %}
+
+                        <input type="checkbox" checked="" disabled="disabled" name="servicio" value="9"> {{ d }}
+
+                        {% endfor %}
                     </td>
 
                 </tr>
