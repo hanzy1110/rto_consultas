@@ -827,7 +827,7 @@ SIGN_DICT = {
 class PDFHabilitacion(PDFTemplateView):
     filename = "HABILITACION.pdf"
     template_name = "pdf/habilitacion.html"
-    cmd_options = {"log-level": "info", "quiet": False}
+    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
 
     def get_context_data(self, **kwargs):
         context = super(PDFHabilitacion, self).get_context_data(**kwargs)
