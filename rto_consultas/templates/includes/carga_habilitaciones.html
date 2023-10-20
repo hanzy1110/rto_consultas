@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h2><a href="#">Orden de inspección</a></h2>
+
+    <!-- Add a div for the success message (initially hidden) -->
+    <div id="success-message" style="display: none;">
+    </div>
+
+    <form method="post" class="tblForm" hx-post="{% url 'inspection_order' %}" hx-swap="innerHTML" hx-target="#success-message">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
+
+    <!-- Add an htmx script to enable AJAX interactions -->
+    <script src="{% static 'path/to/htmx.js' %}"></script>
+</div>
+
+<script>
+    htmx.on("htmx:response", function (event) {
+        if (event.detail.elt === document.querySelector(".tblForm")) {
+            // Handle the response here if needed
+        }
+    });
+</script>
+{% endblock %}

@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "django_tables2",
     "django_htmx",
     "wkhtmltopdf",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # 'silk'
 ]
 
@@ -175,3 +177,6 @@ DJANGO_TABLES2_TABLE_ATTRS = {
     #     'class': 'table-light',
     # },
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -9,3 +9,5 @@ tablib
 boto3
 django-wkhtmltopdf
 python-barcode
+django-crispy-forms
+crispy-bootstrap5

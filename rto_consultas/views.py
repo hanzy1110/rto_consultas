@@ -14,6 +14,9 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordResetConfirmView,
 )
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
 from django.contrib.auth.models import User
 
 from wkhtmltopdf.views import PDFTemplateView
@@ -70,31 +73,12 @@ from .helpers import (
     build_barcode,
 )
 
-from .forms import ObleasPorTaller
+from .forms import ObleasPorTaller, InspectionOrderForm  # Import the form you created
 
 from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
-
-
-# from .presigned_url import generate_presigned_url
-
-
-# @login_required
-# def index(request):
-#     # Your view logic here
-#     if request.method == "POST":
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect("home")  # Redirect to your home page
-#         else:
-#             # Handle invalid login
-#             pass
-#     return render(request, "pages/index.html")
 
 
 @login_required
@@ -908,3 +892,33 @@ class PDFHabilitacion(PDFTemplateView):
         context["usersign"] = SIGN_DICT[habilitacion.usuariodictamen]
 
         return context
+
+
+def carga_habilitacion(request):
+    if request.method == "POST":
+        form = InspectionOrderForm(request.POST)
+        if form.is_valid():
+            try:
+                data = form.cleaned_data
+                new_hab = Habilitacion(**data).save()
+                logger.info(f"Habilitacion => {new_hab} SAVED!")
+                success_message = "Form submitted successfully!"
+                success_message_html = render_to_string(
+                    "includes/success_message.html",
+                    {"success_message": success_message},
+                )
+                return HttpResponse(success_message_html)
+            except Exception as e:
+                logger.error(e)
+                error_message = "An error occurred: " + str(e)
+                error_message_html = render_to_string(
+                    "includes/error_message.html", {"error_message": error_message}
+                )
+                return HttpResponse(error_message_html)
+            # Process the form data if needed
+            # For example, you can access form.cleaned_data to get the validated data
+            # Then redirect or render a success page
+    else:
+        form = InspectionOrderForm()
+
+    return render(request, "inspection_order.html", {"form": form})
