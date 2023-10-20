@@ -497,7 +497,12 @@ def handle_save_hab(cleaned_data, user):
     historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
     new_data["historialmodificacion"] = historialModificacion
 
-    cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
+    try:
+        cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
+    except Exception as e:
+        logger.warn(f"No hay CCCF => {e}")
+        cccf = None
+
     new_data["nrocertificadocccf"] = cccf.nrocertificado
 
     last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
