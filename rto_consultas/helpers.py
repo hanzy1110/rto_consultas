@@ -16,8 +16,10 @@ from barcode import EAN13
 from barcode.writer import SVGWriter
 
 from rto_consultas.models import (
+    CccfCertificados,
     Certificados,
     Certificadosasignadosportaller,
+    Habilitacion,
     Talleres,
     Verificaciones,
     Verificacionespdf,
@@ -468,3 +470,36 @@ def build_barcode(id, fecha, dominio, cadena_id_servicio):
 
     # Return the final result
     return final_path, final_barcode
+
+
+def handle_save_hab(cleaned_data, user):
+    # $sql="INSERT INTO
+    # habilitacion(nroCodigoBarrasHab,dominio,activo,
+    # fechaHoraCreacion,fechaHoraUltModificacion,historialModificacion,
+    # modeloVehiculo,usuarioDictamen,fechaHoraDictamen,razonSocialTitular,
+    # NroCertificadoCCCF) VALUES
+
+    new_data = {}
+    username = user.username
+
+    new_data["dominio"] = cleaned_data["dominio"]
+    new_data["modelovehiculo"] = cleaned_data["modelovehiculo"]
+    new_data["nrocertificadocccf"] = cleaned_data["nrocertificadocccf"]
+    new_data["nrocertificadocccf"] = cleaned_data["nrocertificadocccf"]
+    new_data["titular"] = cleaned_data["titular"]
+    new_data["usuariodictamen"] = username
+    new_data["fechahoradictamen"] = None
+
+    today = datetime.now().strftime("%d-%m-%y %H-%M-%S")
+
+    historialModificacion= f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
+    new_data["historialmodificacion"] = historialModificacion
+
+    cccf = CccfCertificados.objects.get(dominio=cleaned_data['dominio'])
+    new_data["nrocertificadocccf"] = cccf.nrocertificado
+    new_hab = Habilitacion(**new_data)
+    new_hab.save()
+
+    logger.info(f"Habilitacion => {new_hab} SAVED!")
+
+    return new_hab

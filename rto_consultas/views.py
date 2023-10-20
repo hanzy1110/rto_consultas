@@ -72,6 +72,7 @@ from .helpers import (
     AuxData,
     generate_key,
     build_barcode,
+    handle_save_hab,
 )
 
 from .forms import ObleasPorTaller, InspectionOrderForm  # Import the form you created
@@ -868,6 +869,8 @@ class PDFHabilitacion(PDFTemplateView):
             ]
         )
 
+        # TODO Checkear que la fecha que uso esta bien
+
         barcode_path, barcode = build_barcode(
             id_habilitacion,
             str(habilitacion.fechahoradictamen)[0:10],
@@ -900,9 +903,9 @@ def carga_habilitacion(request):
         form = InspectionOrderForm(request.POST)
         if form.is_valid():
             try:
-                data = form.cleaned_data
-                new_hab = Habilitacion(**data).save()
-                logger.info(f"Habilitacion => {new_hab} SAVED!")
+                hab = handle_save_hab(form.cleaned_data, request.user)
+
+                logger.info(f"Habilitacion => {hab} SAVED!")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
                     "includes/success_message.html",

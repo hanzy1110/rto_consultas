@@ -1012,9 +1012,9 @@ class Habilitacion(models.Model):
     )  # Field name made lowercase.
     activo = models.IntegerField()
     fechahoracreacion = models.DateTimeField(
-        db_column="fechaHoraCreacion"
+        db_column="fechaHoraCreacion", auto_now=True
     )  # Field name made lowercase.
-    modificado = models.IntegerField()
+    modificado = models.IntegerField(default=0)
     fechahoraultmodificacion = models.DateTimeField(
         db_column="fechaHoraUltModificacion"
     )  # Field name made lowercase.
@@ -1059,7 +1059,7 @@ class Habilitacion(models.Model):
         db_column="usuarioDictamen", max_length=50
     )  # Field name made lowercase.
     fechahoradictamen = models.DateTimeField(
-        db_column="fechaHoraDictamen"
+        db_column="fechaHoraDictamen", null=True
     )  # Field name made lowercase.
     tipodoctitular = models.CharField(
         db_column="tipoDocTitular", max_length=10
