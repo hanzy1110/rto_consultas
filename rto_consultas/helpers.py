@@ -520,14 +520,6 @@ def handle_save_hab(cleaned_data, user):
     #     $base->query($sqlServicio);
     # }
 
-    servs = [
-        Serviciohab(
-            **{"idhabilitacion": last_hab_id + 1, "idserviciostransportehab": int(s)}
-        )
-        for s in servicios
-    ]
-    Serviciohab.objects.bulk_create(servs)
-
     cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
     _, barcode = build_barcode(
         last_hab_id + 1,
@@ -558,5 +550,11 @@ def handle_save_hab(cleaned_data, user):
     new_hab.save()
 
     logger.info(f"Habilitacion => {new_hab} SAVED!")
+
+    servs = [
+        Serviciohab(**{"idhabilitacion": new_hab, "idserviciostransportehab": int(s)})
+        for s in servicios
+    ]
+    Serviciohab.objects.bulk_create(servs)
 
     return new_hab
