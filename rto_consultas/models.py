@@ -1016,7 +1016,7 @@ class Habilitacion(models.Model):
     )  # Field name made lowercase.
     modificado = models.IntegerField(default=0)
     fechahoraultmodificacion = models.DateTimeField(
-        db_column="fechaHoraUltModificacion"
+        db_column="fechaHoraUltModificacion", auto_now=True
     )  # Field name made lowercase.
     historialmodificacion = models.TextField(
         db_column="historialModificacion"
