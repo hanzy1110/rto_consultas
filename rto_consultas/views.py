@@ -30,6 +30,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from django_tables2.export.export import TableExport
+from django.contrib import messages
 
 from admin_soft.forms import LoginForm
 
