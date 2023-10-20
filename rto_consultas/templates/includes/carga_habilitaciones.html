@@ -6,10 +6,10 @@
     <h2><a href="#">Orden de inspección</a></h2>
 
     <!-- Add a div for the success message (initially hidden) -->
-    <div id="success-message" style="display: none;">
+    <div id="success-message" style="display:none;">
     </div>
 
-    <form method="post" class="tblForm" hx-post="{% url 'carga_habilitacion' %}" hx-swap="innerHTML" hx-target="#success-message">
+    <form method="post" class="tblForm" hx-post="{% url 'carga_habilitacion' %}" hx-swap="outerHTML" hx-target="#success-message">
         {% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="Submit">
