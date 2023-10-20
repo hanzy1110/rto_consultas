@@ -20,6 +20,7 @@ from rto_consultas.models import (
     Certificados,
     Certificadosasignadosportaller,
     Habilitacion,
+    Serviciohab,
     Talleres,
     Verificaciones,
     Verificacionespdf,
@@ -511,9 +512,23 @@ def handle_save_hab(cleaned_data, user):
     last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
 
     servicios = cleaned_data["servicios"]
-    assert isinstance(servicios, Iterable)
-    cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
 
+    # foreach($colServicios as $element){
+    #     $sqlServicio="INSERT INTO serviciohab(idHabilitacion,idServiciosTransporteHab) VALUES
+    #     (".$idUltimaHab.",".$element.");";
+    #     //echo $sqlServicio;
+    #     $base->query($sqlServicio);
+    # }
+
+    servs = [
+        Serviciohab(
+            **{"idhabilitacion": last_hab_id + 1, "idserviciostransportehab": int(s)}
+        )
+        for s in servicios
+    ]
+    Serviciohab.objects.bulk_create(servs)
+
+    cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
     _, barcode = build_barcode(
         last_hab_id + 1,
         str(new_data["fechahoradictamen"])[0:10],
@@ -524,6 +539,20 @@ def handle_save_hab(cleaned_data, user):
 
     new_data["nrocodigobarrashab"] = barcode
     new_data["activo"] = 1
+    new_data["idlocalidadvehiculo"] = 0
+    new_data["marcavehiculo"] = ""
+    new_data["nombretitular"] = ""
+    new_data["nrodoctitular"] = ""
+    new_data["tipodoctitular"] = ""
+    new_data["idlocalidadtitular"] = ""
+    new_data["domiciliotitular"] = ""
+    new_data["apellidotitular"] = ""
+    new_data["nombreconductor"] = ""
+    new_data["apellidoconductor"] = ""
+    new_data["domicilioconductor"] = ""
+    new_data["tipopersona"] = ""
+    new_data["cuittitular"] = ""
+    new_data["idtiposervicio"] = 0
 
     new_hab = Habilitacion(**new_data)
     new_hab.save()
