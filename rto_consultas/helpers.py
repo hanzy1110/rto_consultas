@@ -487,8 +487,7 @@ def handle_save_hab(cleaned_data, user):
 
     new_data["dominio"] = cleaned_data["dominio"]
     new_data["modelovehiculo"] = cleaned_data["modelo"]
-    new_data["nrocertificadocccf"] = cleaned_data["nrocertificadocccf"]
-    new_data["nrocertificadocccf"] = cleaned_data["nrocertificadocccf"]
+    new_data["nrocertificadocccf"] = cleaned_data["cccf"]
     new_data["titular"] = cleaned_data["titular"]
     new_data["usuariodictamen"] = username
 
