@@ -15,7 +15,7 @@
         <ul class="navbar-nav">
 
             {% admin_get_menu as app_list %}
-            {#% if app_list %#}
+            {% if app_list %}
             {% for app in app_list %}
             {% if app.has_perms and not app.pinned %}
             <li class="nav-item">
@@ -56,7 +56,6 @@
                 {% endif %}
             </li>
             {% endif %}
-            {#% endif %#}
             {% endfor %}
 
             <li class="nav-item">
