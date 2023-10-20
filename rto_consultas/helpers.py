@@ -21,6 +21,7 @@ from rto_consultas.models import (
     Certificadosasignadosportaller,
     Habilitacion,
     Serviciohab,
+    Serviciostransportehab,
     Talleres,
     Verificaciones,
     Verificacionespdf,
@@ -556,9 +557,14 @@ def handle_save_hab(cleaned_data, user):
 
     logger.info(f"Habilitacion => {new_hab} SAVED!")
 
-    servs = [
-        Serviciohab(**{"idhabilitacion": new_hab, "idserviciostransportehab": int(s)})
+    servicios_transporte_habs = [
+        Serviciostransportehab.objects.get(idserviciostransportehab=int(s))
         for s in servicios
+    ]
+
+    servs = [
+        Serviciohab(**{"idhabilitacion": new_hab, "idserviciostransportehab": s})
+        for s in servicios_transporte_habs
     ]
     Serviciohab.objects.bulk_create(servs)
 
