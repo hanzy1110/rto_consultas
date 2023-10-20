@@ -7,7 +7,7 @@ import hashlib
 import os
 import re
 from itertools import chain
-from typing import Dict, List, Tuple, Set, Union
+from typing import Dict, Iterable, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
 # from silk.profiling.profiler import silk_profile
@@ -440,7 +440,7 @@ def filter_vup_transporte(certs: QuerySet):
     return {"cant_vup": vup_certs, "cant_transporte": transporte_certs}
 
 
-def build_barcode(id, fecha, dominio, cadena_id_servicio):
+def build_barcode(id, fecha, dominio, cadena_id_servicio, build_image=True):
     # The idea is to create a hard-to-alter checksum that includes the number, domain, and date
     # First, format the certificate number to 2 digits
     cb_base = str(id).zfill(6)
@@ -465,8 +465,9 @@ def build_barcode(id, fecha, dominio, cadena_id_servicio):
     # Or to an actual file:
     final_path = f"/tmp/{final_barcode}.svg"
 
-    with open(final_path, "wb") as f:
-        EAN13(final_barcode, writer=SVGWriter()).write(f)
+    if build_image:
+        with open(final_path, "wb") as f:
+            EAN13(final_barcode, writer=SVGWriter()).write(f)
 
     # Return the final result
     return final_path, final_barcode
@@ -479,6 +480,8 @@ def handle_save_hab(cleaned_data, user):
     # modeloVehiculo,usuarioDictamen,fechaHoraDictamen,razonSocialTitular,
     # NroCertificadoCCCF) VALUES
 
+    logger.debug(f"CLEANED_DATA => {cleaned_data}")
+
     new_data = {}
     username = user.username
 
@@ -488,15 +491,38 @@ def handle_save_hab(cleaned_data, user):
     new_data["nrocertificadocccf"] = cleaned_data["nrocertificadocccf"]
     new_data["titular"] = cleaned_data["titular"]
     new_data["usuariodictamen"] = username
-    new_data["fechahoradictamen"] = None
 
     today = datetime.now().strftime("%d-%m-%y %H-%M-%S")
+    new_data["fechahoradictamen"] = today
 
-    historialModificacion= f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
+    historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
     new_data["historialmodificacion"] = historialModificacion
 
-    cccf = CccfCertificados.objects.get(dominio=cleaned_data['dominio'])
+    cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
     new_data["nrocertificadocccf"] = cccf.nrocertificado
+
+    last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
+
+    servicios = cleaned_data["servicios"]
+    assert isinstance(servicios, Iterable)
+
+    cadena_id_servicio = "".join(
+        [
+            str(s.idserviciostransportehab.idserviciostransportehab).zfill(2)
+            for s in servicios
+        ]
+    )
+
+    _, barcode = build_barcode(
+        last_hab_id + 1,
+        str(new_data["fechahoradictamen"])[0:10],
+        new_data["dominio"],
+        cadena_id_servicio,
+        False,
+    )
+
+    new_data["nrocodigobarrashab"] = barcode
+
     new_hab = Habilitacion(**new_data)
     new_hab.save()
 
