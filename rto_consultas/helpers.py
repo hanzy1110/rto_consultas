@@ -533,16 +533,18 @@ def handle_save_hab(cleaned_data, user):
     new_data["activo"] = 1
     new_data["idlocalidadvehiculo"] = 0
     new_data["marcavehiculo"] = ""
+
     new_data["nombretitular"] = ""
     new_data["nrodoctitular"] = 0
     new_data["tipodoctitular"] = ""
     new_data["idlocalidadtitular"] = 0
-    new_data["idlocalidadconductor"] = 0
     new_data["domiciliotitular"] = ""
     new_data["apellidotitular"] = ""
+
     new_data["nombreconductor"] = ""
     new_data["apellidoconductor"] = ""
     new_data["domicilioconductor"] = ""
+    new_data["idlocalidadconductor"] = 0
     new_data["tipopersona"] = ""
     new_data["cuittitular"] = ""
     new_data["idtiposervicio"] = 0
