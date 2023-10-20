@@ -46,7 +46,7 @@
           {% if request.user.is_superuser %}
           <a href="{% url 'admin:password_change' %}" class="nav-link text-body font-weight-bold px-0">
           {% else %}
-          <a href="{% url 'password_change' %}" class="nav-link text-body font-weight-bold px-0">
+          <a href="{% url 'admin:password_change' %}" class="nav-link text-body font-weight-bold px-0">
           {% endif %}
             <span class="d-sm-inline d-none me-3">Change Password</span>
           </a>
