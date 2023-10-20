@@ -10,6 +10,10 @@
             <span class="ms-1 font-weight-bold">Consultas RTO</span>
         </a>
     </div>
+
+
+    {% if request.user.is_authenticated and not request.user.is_superuser %}
+
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
@@ -94,4 +98,5 @@
         </ul>
 
     </div>
+    {% endif %}
 </aside>
