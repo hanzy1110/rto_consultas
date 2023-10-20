@@ -67,7 +67,7 @@ class InspectionOrderForm(forms.Form):
         label="Nombre",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 242px"}),
     )
-    servicio = forms.MultipleChoiceField(
+    servicios = forms.MultipleChoiceField(
         label="Seleccione uno o más servicios (máximo 4):",
         choices=[
             (
@@ -114,7 +114,7 @@ class InspectionOrderForm(forms.Form):
                 css_class="tr",
             ),
             Div(
-                Field("servicio"),
+                Field("servicios"),
                 css_class="tr",
             ),
         )
