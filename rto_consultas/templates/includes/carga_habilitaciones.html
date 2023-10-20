@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -9,7 +9,7 @@
     <div id="success-message" style="display: none;">
     </div>
 
-    <form method="post" class="tblForm" hx-post="{% url 'inspection_order' %}" hx-swap="innerHTML" hx-target="#success-message">
+    <form method="post" class="tblForm" hx-post="{% url 'carga_habilitacion' %}" hx-swap="innerHTML" hx-target="#success-message">
         {% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="Submit">
