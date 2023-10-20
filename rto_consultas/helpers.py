@@ -537,6 +537,7 @@ def handle_save_hab(cleaned_data, user):
     new_data["nrodoctitular"] = 0
     new_data["tipodoctitular"] = ""
     new_data["idlocalidadtitular"] = 0
+    new_data["idlocalidadconductor"] = 0
     new_data["domiciliotitular"] = ""
     new_data["apellidotitular"] = ""
     new_data["nombreconductor"] = ""
