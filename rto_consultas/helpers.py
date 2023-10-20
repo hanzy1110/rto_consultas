@@ -510,13 +510,7 @@ def handle_save_hab(cleaned_data, user):
 
     servicios = cleaned_data["servicios"]
     assert isinstance(servicios, Iterable)
-
-    cadena_id_servicio = "".join(
-        [
-            str(s.idserviciostransportehab.idserviciostransportehab).zfill(2)
-            for s in servicios
-        ]
-    )
+    cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
 
     _, barcode = build_barcode(
         last_hab_id + 1,
