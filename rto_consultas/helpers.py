@@ -499,11 +499,12 @@ def handle_save_hab(cleaned_data, user):
 
     try:
         cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
+        cccf = cccf.nrocertificado
     except Exception as e:
         logger.warn(f"No hay CCCF => {e}")
         cccf = None
 
-    new_data["nrocertificadocccf"] = cccf.nrocertificado
+    new_data["nrocertificadocccf"] = cccf
 
     last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
 
