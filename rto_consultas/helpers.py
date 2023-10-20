@@ -493,6 +493,8 @@ def handle_save_hab(cleaned_data, user):
 
     today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_data["fechahoradictamen"] = today
+    new_data["fechahoraultmodificacion"] = today
+    new_data["fechahoraultcreacion"] = today
 
     historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
     new_data["historialmodificacion"] = historialModificacion
@@ -521,7 +523,6 @@ def handle_save_hab(cleaned_data, user):
     )
 
     new_data["nrocodigobarrashab"] = barcode
-
     new_data["activo"] = 1
 
     new_hab = Habilitacion(**new_data)
