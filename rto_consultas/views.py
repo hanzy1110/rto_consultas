@@ -921,4 +921,4 @@ def carga_habilitacion(request):
     else:
         form = InspectionOrderForm()
 
-    return render(request, "inspection_order.html", {"form": form})
+    return render(request, "includes/carga_habilitaciones.html", {"form": form})
