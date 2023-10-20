@@ -491,7 +491,7 @@ def handle_save_hab(cleaned_data, user):
     new_data["razonsocialtitular"] = cleaned_data["titular"]
     new_data["usuariodictamen"] = username
 
-    today = datetime.now().strftime("%d-%m-%y %H-%M-%S")
+    today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_data["fechahoradictamen"] = today
 
     historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
