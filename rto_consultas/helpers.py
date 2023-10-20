@@ -522,6 +522,8 @@ def handle_save_hab(cleaned_data, user):
 
     new_data["nrocodigobarrashab"] = barcode
 
+    new_data["activo"] = 1
+
     new_hab = Habilitacion(**new_data)
     new_hab.save()
 
