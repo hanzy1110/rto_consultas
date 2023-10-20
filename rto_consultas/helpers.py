@@ -534,9 +534,9 @@ def handle_save_hab(cleaned_data, user):
     new_data["idlocalidadvehiculo"] = 0
     new_data["marcavehiculo"] = ""
     new_data["nombretitular"] = ""
-    new_data["nrodoctitular"] = ""
+    new_data["nrodoctitular"] = 0
     new_data["tipodoctitular"] = ""
-    new_data["idlocalidadtitular"] = ""
+    new_data["idlocalidadtitular"] = 0
     new_data["domiciliotitular"] = ""
     new_data["apellidotitular"] = ""
     new_data["nombreconductor"] = ""
@@ -545,6 +545,8 @@ def handle_save_hab(cleaned_data, user):
     new_data["tipopersona"] = ""
     new_data["cuittitular"] = ""
     new_data["idtiposervicio"] = 0
+
+    logger.debug(f"NEW_DATA => {new_data}")
 
     new_hab = Habilitacion(**new_data)
     new_hab.save()
