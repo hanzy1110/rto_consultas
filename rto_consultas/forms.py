@@ -45,8 +45,6 @@ class CustomRTOForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout()
 
-        # query_container = Div()
-
         for _, qf in enumerate(form_data.query_fields):
             input_type = form_data.types.get(qf, None)
             label = form_data.parsed_names.get(qf, None)
@@ -73,8 +71,12 @@ class CustomRTOForm(forms.Form):
             if field:
                 self.fields[qf] = field
 
-                self.helper.layout.append(Field(qf))
-                # self.helper.layout.append(field)
+        query_div = Div(
+            *[Field(qf) for qf in form_data.query_fields],
+            css_class="container-fluid py-4",
+        )
+        self.helper.layout.append(query_div)
+        # self.helper.layout.append(field)
 
         descriptions = map_fields(form_data, model)
         for ff in form_data.form_fields:
@@ -85,7 +87,7 @@ class CustomRTOForm(forms.Form):
 
             field = forms.ChoiceField(
                 choices=[(str(i), c) for i, c in enumerate(desc)],
-                widget=forms.RadioSelect(),
+                widget=forms.Select(),
                 initial="",  # Set the initial value if needed
             )
             self.fields[ff] = field
@@ -93,6 +95,11 @@ class CustomRTOForm(forms.Form):
             self.helper.layout.append(Field(ff))
             # self.helper.layout.append(field)
 
+        form_div = Div(
+            *[Field(ff) for ff in form_data.form_fields],
+            css_class="container-fluid py-4",
+        )
+        self.helper.layout.append(form_div)
         # Add a submit button
         self.helper.layout.append(
             ButtonHolder(Submit("submit", "Buscar", css_class="btn btn-primary"))
