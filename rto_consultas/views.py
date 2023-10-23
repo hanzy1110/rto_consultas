@@ -204,16 +204,10 @@ class ListVerificacionesView(CustomRTOView):
         render_url="verificaciones",
     )
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     cert_queries = [
-    #         Q(idtaller_id=q.idtaller_id, idverificacion_id=q.idverificacion)
-    #         for q in queryset
-    #     ]
-    #     query = reduce(lambda x, y: x and y, cert_queries)
-    #     certs = Certificados.objects.filter(query)
-    #     certs_no_anulados = Certificados.objects.filter(anulado__exact=0)
-    #     return certs.intersection(certs_no_anulados)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset.sort("-idverificacion")
+        return queryset
 
 
 @method_decorator(login_required, name="dispatch")
