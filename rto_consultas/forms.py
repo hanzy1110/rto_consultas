@@ -1,7 +1,7 @@
 import os
 from django import forms
 from django.db.models import Model
-from .helpers import LOG_FILE, AuxData, map_fields
+from .helpers import AuxData, map_fields
 from .models import Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
@@ -10,6 +10,7 @@ from dataclasses import asdict
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field, HTML, ButtonHolder, Submit
 
+LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
 
 
@@ -49,8 +50,6 @@ class CustomRTOForm(forms.Form):
             input_type = form_data.types[qf]
             label = form_data.parsed_names[qf]
             attributes = form_data.attributes[qf]
-
-
 
             if input_type == "text":
                 field = forms.CharField(
