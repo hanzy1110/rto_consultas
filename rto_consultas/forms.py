@@ -87,10 +87,15 @@ class CustomRTOForm(forms.Form):
             attributes = form_data.attributes.get(ff, None)
             ids = form_data.ids.get(ff, None)
             desc = descriptions.get(ff, None)
+            # TODO aca van las descripciopnes...
+            cs = [(str(i), c) for i, c in enumerate(desc.values())]
+
+            choices = [("", "")]
+            choices.extend(cs)
 
             field = forms.ChoiceField(
                 label=label,
-                choices=[(str(i), c) for i, c in enumerate(desc)],
+                choices=choices,
                 widget=forms.Select(),
                 initial="",  # Set the initial value if needed
             )
