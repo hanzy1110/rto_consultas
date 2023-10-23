@@ -1,6 +1,7 @@
 import os
 from django import forms
 from django.db.models import Model
+from django.forms import widgets
 from .helpers import AuxData, map_fields
 from .models import Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
@@ -59,9 +60,11 @@ class CustomRTOForm(forms.Form):
                 field = forms.DateField(label=label, widget=forms.DateField())
             elif input_type == "select":
                 # TODO add more types of select!
-                logger.debug(f"DOCS => {DOCS}")
-                logger.debug(f"FORM_DATA => {form_data}")
-                field = forms.RadioSelect(choices=DOCS)
+                field = forms.ChoiceField(
+                    choices=DOCS,
+                    widget=forms.RadioSelect(),
+                    initial="",  # Set the initial value if needed
+                )
             else:
                 field = None  # Handle other input types as needed
 
@@ -76,10 +79,12 @@ class CustomRTOForm(forms.Form):
             ids = form_data.ids.get(ff, None)
             desc = descriptions.get(ff, None)
 
-            field = forms.RadioSelect(
-                choices=[(str(i), c) for i, c in enumerate(desc)], attrs=attributes
+            field = forms.ChoiceField(
+                choices=[(str(i), c) for i, c in enumerate(desc)],
+                attrs=attributes,
+                widget=forms.RadioSelect(),
+                initial="",  # Set the initial value if needed
             )
-
             self.fields[ff] = field
             self.helper.layout.append(HTML(f"<label for={ids}> {ff} </label>"))
             self.helper.layout.append(field)
