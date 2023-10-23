@@ -47,9 +47,9 @@ class CustomRTOForm(forms.Form):
         # query_container = Div()
 
         for _, qf in enumerate(form_data.query_fields):
-            input_type = form_data.types[qf]
-            label = form_data.parsed_names[qf]
-            attributes = form_data.attributes[qf]
+            input_type = form_data.types.get(qf, None)
+            label = form_data.parsed_names.get(qf, None)
+            attributes = form_data.attributes.get(qf, None)
 
             if input_type == "text":
                 field = forms.CharField(
