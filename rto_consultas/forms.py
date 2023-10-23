@@ -56,7 +56,8 @@ class CustomRTOForm(forms.Form):
                 )
             elif input_type == "date":
                 field = forms.DateField(
-                    label=label, widget=forms.DateInput(attrs={"class": "datepicker"})
+                    label=label,
+                    widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
                 )
             elif input_type == "select":
                 # TODO add more types of select!
