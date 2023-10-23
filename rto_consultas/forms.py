@@ -69,6 +69,7 @@ class CustomRTOForm(forms.Form):
                 field = None  # Handle other input types as needed
 
             if field:
+                field.required = False
                 self.fields[qf] = field
 
         query_div = Div(
@@ -93,7 +94,9 @@ class CustomRTOForm(forms.Form):
                 widget=forms.Select(),
                 initial="",  # Set the initial value if needed
             )
-            self.fields[ff] = field
+            if field:
+                field.required = False
+                self.fields[ff] = field
             # self.helper.layout.append(Field(ff))
             # self.helper.layout.append(field)
 
