@@ -34,8 +34,14 @@ logger = configure_logger(LOG_FILE)
 # from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
-vals = {1: "Verdadero", 0: "Falso"}
-vals_anulado = {1: "anulado", 0: "vigente"}
+VALS = {1: "Verdadero", 0: "Falso"}
+VALS_ANULADO = {1: "anulado", 0: "vigente"}
+DESCRIPTIONS = {
+    1: "Particular",
+    2: "Transporte de Carga",
+    3: "Transporte Pasajeros",
+    4: "Transporte Municipal",
+}
 
 
 class ImageColumn(tables.Column):
@@ -55,7 +61,7 @@ class ImageColumn(tables.Column):
 
             cert = cert[0]
 
-        key = vals_anulado[cert["anulado"]]
+        key = VALS_ANULADO[cert["anulado"]]
         # Use the static template tag to generate the image URL
         image_url = static(f"img/small-logos/{key}.png")
         # Return the HTML with the correct image URL
@@ -265,11 +271,11 @@ class VerificacionesTables(tables.Table):
 
     def render_idtipouso(self, value):
         try:
-            descriptions = map_fields(self.aux_data, self.Meta.model)
-            logger.debug(f"DESCRIPTIONS FROM IDTIPO USO=> {descriptions}")
-            logger.debug(f"VALUE => {value}")
+            # descriptions = map_fields(self.aux_data, self.Meta.model)
+            # logger.debug(f"DESCRIPTIONS FROM IDTIPO USO=> {descriptions}")
+            # logger.debug(f"VALUE => {value}")
 
-            return descriptions["idtipouso"][value]
+            return DESCRIPTIONS[value]
 
         except Exception as e:
             print(e)
