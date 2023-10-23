@@ -156,12 +156,12 @@ class CustomFileColumn(tables.FileColumn):
 
 
 class VerificacionesTables(tables.Table):
+    dominiovehiculo = tables.Column(verbose_name="Dominio")
     certificado = tables.Column(
         verbose_name="Nro. Certificado",
-        orderable=False,
         empty_values=(),
     )
-    fecha = tables.DateColumn(verbose_name="Emision", format="d/m/Y")
+    fecha = tables.DateColumn(orderable=True, verbose_name="Emision", format="d/m/Y")
     ver_verificacion = tables.Column(
         verbose_name="Verificación",
         linkify=(
@@ -171,17 +171,15 @@ class VerificacionesTables(tables.Table):
                 "idtaller": tables.A("idtaller__idtaller"),
             },
         ),
-        orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
         verbose_name="Certificado",
-        orderable=False,
         empty_values=(),
     )  # (viewname, kwargs)
-    titular = tables.Column(orderable=False, empty_values=())
-    anulado = ImageColumn(orderable=False, empty_values=(), verbose_name="Estado")
-    vigencia = tables.Column(orderable=False, empty_values=())
+    titular = tables.Column(empty_values=())
+    anulado = ImageColumn(empty_values=(), verbose_name="Estado")
+    vigencia = tables.Column(empty_values=())
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
     aux_data = AuxData(
@@ -197,6 +195,7 @@ class VerificacionesTables(tables.Table):
 
     class Meta:
         model = Verificaciones
+        orderable = False
         fields = (
             "dominiovehiculo",
             "certificado",
