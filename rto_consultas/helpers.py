@@ -154,6 +154,9 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
     anulado = query.pop("anulado", None)
 
+    # TODO Handle dni
+    dni = query.pop("dni", None)
+
     cert_init = query.pop("cert_init", None)
     cert_end = query.pop("cert_end", None)
 
