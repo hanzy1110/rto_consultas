@@ -105,20 +105,35 @@ class CustomRTOForm(forms.Form):
                 self.fields[ff] = field
             # self.helper.layout.append(Field(ff))
             # self.helper.layout.append(field)
-
         query_div = Div(
             *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
-            # css_class="col-md-6",
+            css_class="col-md-6",  # Adjust the width for each Div
         )
+
         form_div = Div(
             *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
-            # css_class="col-md-6",
+            css_class="col-md-6",  # Adjust the width for each Div
         )
+
         side_by_side = Row(
-            Div(query_div, css_class="col-md-2"),
-            Div(form_div, css_class="col-md-2"),
+            Div(query_div, css_class="col-md-6"),  # Adjust the width for each Div
+            Div(form_div, css_class="col-md-6"),  # Adjust the width for each Div
         )
+
         self.helper.layout = Layout(side_by_side)
+        # query_div = Div(
+        #     *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
+        #     # css_class="col-md-6",
+        # )
+        # form_div = Div(
+        #     *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
+        #     # css_class="col-md-6",
+        # )
+        # side_by_side = Row(
+        #     Div(query_div, css_class="col-md-2"),
+        #     Div(form_div, css_class="col-md-2"),
+        # )
+        # self.helper.layout = Layout(side_by_side)
 
 
 class ObleasPorTaller(forms.Form):
