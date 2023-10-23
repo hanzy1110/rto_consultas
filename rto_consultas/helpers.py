@@ -156,6 +156,8 @@ def handle_query(request, model, fecha_field="fecha"):
 
     # TODO Handle dni
     dni = query.pop("dni", None)
+    # TODO better handle this....
+    _ = query.pop("csrfmiddlewaretoken", None)
 
     cert_init = query.pop("cert_init", None)
     cert_end = query.pop("cert_end", None)
