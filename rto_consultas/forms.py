@@ -9,7 +9,7 @@ from .logging import configure_logger
 from dataclasses import asdict
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Field, HTML, ButtonHolder, Submit
+from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Submit
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
@@ -39,6 +39,9 @@ def get_choices():
     return a
 
 
+# <input type="text" css_class="form-control" placeholder="Type here..." onfocus="focused(this)" onfocusout="defocused(this)">
+
+
 class CustomRTOForm(forms.Form):
     def __init__(self, form_data: AuxData, model: Model, *args, **kwargs):
         super(CustomRTOForm, self).__init__(*args, **kwargs)
@@ -52,7 +55,8 @@ class CustomRTOForm(forms.Form):
 
             if input_type == "text":
                 field = forms.CharField(
-                    label=label, widget=forms.TextInput(attrs=attributes)
+                    label=label,
+                    widget=forms.TextInput(attrs=attributes),
                 )
             elif input_type == "date":
                 field = forms.DateField(
@@ -73,10 +77,6 @@ class CustomRTOForm(forms.Form):
                 field.required = False
                 self.fields[qf] = field
 
-        query_div = Div(
-            *[Field(qf) for qf in form_data.query_fields],
-            css_class="col-md-6",
-        )
         # self.helper.layout.append(query_div)
         # self.helper.layout.append(field)
 
@@ -106,13 +106,15 @@ class CustomRTOForm(forms.Form):
             # self.helper.layout.append(Field(ff))
             # self.helper.layout.append(field)
 
-        form_div = Div(
-            *[Field(ff) for ff in form_data.form_fields],
+        query_div = Div(
+            *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
             css_class="col-md-6",
         )
-
-        # complete_div = Div(form_div, query_div, css_class="container-fluid")
-        self.helper.layout = Layout(query_div, form_div)
+        form_div = Div(
+            *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
+            css_class="col-md-6",
+        )
+        self.helper.layout = Layout(Row(query_div, form_div))
         # Add a submit button
         # self.helper.layout.append(
         #     ButtonHolder(
