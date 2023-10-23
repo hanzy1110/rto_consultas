@@ -1,0 +1,87 @@
+;; -*- mode: emacs-lisp; eval: (progn (pp-buffer) (indent-buffer)) -*-
+((def-persp "rto_consultas"
+   ((def-buffer "ver_habilitaciones.html" "/home/blueman69/git/rto_consultas/rto_consultas/templates/includes/ver_habilitaciones.html" web-mode))
+   (def-wconf
+     (((min-height . 4)
+       (min-width . 10)
+       (min-height-ignore . 3)
+       (min-width-ignore . 5)
+       (min-height-safe . 1)
+       (min-width-safe . 2)
+       (min-pixel-height . 72)
+       (min-pixel-width . 70)
+       (min-pixel-height-ignore . 54)
+       (min-pixel-width-ignore . 35)
+       (min-pixel-height-safe . 18)
+       (min-pixel-width-safe . 14))
+      leaf
+      (pixel-width . 1916)
+      (pixel-height . 1036)
+      (total-width . 273)
+      (total-height . 57)
+      (normal-height . 1.0)
+      (normal-width . 1.0)
+      (parameters
+       (better-jumper-struct . #s(better-jumper-jump-list-struct
+                                  (0 1 .
+                                     [("/home/blueman69/git/rto_consultas/rto_consultas/templates/includes/ver_habilitaciones.html" 359 "qska0c")
+                                      nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil])
+                                  -1)))
+      (buffer "ver_habilitaciones.html"
+              (selected . t)
+              (hscroll . 0)
+              (fringes 8 8 t nil)
+              (margins nil)
+              (scroll-bars nil 0 t nil 0 t nil)
+              (vscroll . 0)
+              (dedicated)
+              (point . 359)
+              (start . 1))
+      (prev-buffers
+       ("*doom*" 1 1549)
+       ("ver_habilitaciones.html" 1 359))))
+   (def-params
+     ((last-project-root . "/home/blueman69/git/rto_consultas/")))
+   nil nil nil)
+ (def-persp "rto_consultas_back" nil
+   (def-wconf
+     (((min-height . 4)
+       (min-width . 98)
+       (min-height-ignore . 3)
+       (min-width-ignore . 98)
+       (min-height-safe . 1)
+       (min-width-safe . 2)
+       (min-pixel-height . 72)
+       (min-pixel-width . 686)
+       (min-pixel-height-ignore . 54)
+       (min-pixel-width-ignore . 686)
+       (min-pixel-height-safe . 18)
+       (min-pixel-width-safe . 14))
+      leaf
+      (pixel-width . 1916)
+      (pixel-height . 1036)
+      (total-width . 273)
+      (total-height . 57)
+      (normal-height . 1.0)
+      (normal-width . 1.0)
+      (parameters
+       (better-jumper-struct . #s(better-jumper-jump-list-struct
+                                  (0 0 .
+                                     [nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil])
+                                  -1)))
+      (buffer "*doom*"
+              (selected . t)
+              (hscroll . 0)
+              (fringes 0 0 nil nil)
+              (margins 96)
+              (scroll-bars nil 0 t nil 0 t nil)
+              (vscroll . 0)
+              (dedicated)
+              (point . 1541)
+              (start . 1))
+      (prev-buffers
+       ("ver_habilitaciones.html" 1 359)
+       ("*doom*" 1 1))))
+   (def-params
+     ((last-project-root . "/home/blueman69/git/rto_consultas/")))
+   nil nil nil))

@@ -635,6 +635,7 @@ class Certificadosasignadosportaller(models.Model):
     replicado = models.IntegerField(db_column="Replicado")  # Field name made lowercase.
 
     class Meta:
+        ordering = ("-nrocertificado",)
         app_label = "rto_consultas"
         # managed = False
         db_table = "certificadosasignadosportaller"
@@ -1084,6 +1085,7 @@ class Habilitacion(models.Model):
     )  # Field name made lowercase.
 
     class Meta:
+        ordering = ("-idhabilitacion",)
         app_label = "rto_consultas"
         # managed = False
         db_table = "habilitacion"
@@ -2815,6 +2817,7 @@ class Verificaciones(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
+        ordering = ("idverificacion",)
 
         db_table = "verificaciones"
         unique_together = (("idverificacion", "idtaller"),)
