@@ -75,7 +75,11 @@ from .helpers import (
     handle_save_hab,
 )
 
-from .forms import ObleasPorTaller, InspectionOrderForm  # Import the form you created
+from .forms import (
+    CustomRTOForm,
+    ObleasPorTaller,
+    InspectionOrderForm,
+)  # Import the form you created
 
 from .logging import configure_logger
 
@@ -151,6 +155,7 @@ class ListVerificacionesView(CustomRTOView):
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[

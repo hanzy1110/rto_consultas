@@ -14,7 +14,6 @@ from dataclasses import dataclass, field
 from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
-from rto_consultas.forms import CustomRTOForm
 
 from rto_consultas.models import (
     CccfCertificados,
@@ -274,7 +273,8 @@ def map_fields(data: AuxData, model: Model):
 def handle_context(context, view):
     logger.info("Handling context!")
 
-    context["form"] = CustomRTOForm(view.aux_data, view.model)
+    # Workaround for circular import...
+    context["form"] = view.form_class(view.aux_data, view.model)
 
     # val_dict = handle_form(view.aux_data, view.model)
     # context["form_fields"] = val_dict
