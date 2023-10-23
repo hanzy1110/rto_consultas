@@ -59,7 +59,8 @@ class CustomRTOForm(forms.Form):
                 field = forms.DateField(label=label, widget=forms.DateField())
             elif input_type == "select":
                 # TODO add more types of select!
-                assert False
+                logger.debug(f"DOCS => {DOCS}")
+                logger.debug(f"FORM_DATA => {form_data}")
                 field = forms.RadioSelect(choices=DOCS)
             else:
                 field = None  # Handle other input types as needed
