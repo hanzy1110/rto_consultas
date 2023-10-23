@@ -1,13 +1,19 @@
 import os
 from django import forms
+from django.db.models import Model
 from .helpers import LOG_FILE, AuxData, map_fields
 from .models import Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
+from dataclasses import asdict
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Field, HTML
+from crispy_forms.layout import Layout, Div, Field, HTML, ButtonHolder, Submit
 
 logger = configure_logger(LOG_FILE)
+
+
+DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 
 
 def get_choices():
@@ -29,6 +35,61 @@ def get_choices():
     a = [("", "")]
     a.extend(choices)
     return a
+
+
+class CustomRTOForm(forms.Form):
+    def __init__(self, form_data: AuxData, model: Model, *args, **kwargs):
+        super(CustomRTOForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout()
+
+        # query_container = Div()
+
+        for _, qf in enumerate(form_data.query_fields):
+            input_type = form_data.types[qf]
+            label = form_data.parsed_names[qf]
+            attributes = form_data.attributes[qf]
+
+
+
+            if input_type == "text":
+                field = forms.CharField(
+                    label=label, widget=forms.TextInput(attrs=attributes)
+                )
+            elif input_type == "date":
+                field = forms.DateField(
+                    label=label, widget=forms.DateField(attrs=attributes)
+                )
+            elif input_type == "select":
+                # TODO add more types of select!
+                field = forms.Select(choices=DOCS)
+            else:
+                field = None  # Handle other input types as needed
+
+            if field:
+                self.fields[qf] = field
+                self.helper.layout.append(field)
+
+        descriptions = map_fields(form_data, model)
+        for ff in form_data.form_fields:
+            label = form_data.parsed_names[ff]
+            attributes = form_data.attributes[ff]
+            ids = form_data.ids[ff]
+
+            desc = descriptions[ff]
+
+            field = forms.RadioSelect(
+                choices=[(str(i), c) for i, c in enumerate(desc)], attrs=attributes
+            )
+
+            self.fields[ff] = field
+            self.helper.layout.append(HTML(f"<label for={ids}> {ff} </label>"))
+            self.helper.layout.append(field)
+
+        # Add a submit button
+        self.helper.layout.append(
+            ButtonHolder(Submit("submit", "Buscar", css_class="btn btn-primary"))
+        )
 
 
 class ObleasPorTaller(forms.Form):

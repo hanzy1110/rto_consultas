@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
+from rto_consultas.forms import CustomRTOForm
 
 from rto_consultas.models import (
     CccfCertificados,
@@ -39,6 +40,7 @@ class AuxData:
     form_fields: Dict[str, Tuple[Union[str, None], Union[Model, None]]]
     parsed_names: Dict[str, str]
     ids: Dict[str, str] = field(default_factory=dict)
+    attributes: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
     fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
@@ -272,18 +274,24 @@ def map_fields(data: AuxData, model: Model):
 def handle_context(context, view):
     logger.info("Handling context!")
 
-    val_dict = handle_form(view.aux_data, view.model)
-    context["form_fields"] = val_dict
-    context["descriptions"] = map_fields(view.aux_data, view.model)
-    context["parsed_fields"] = view.aux_data.parsed_names
+    context["form"] = CustomRTOForm(view.aux_data, view.model)
+
+    # val_dict = handle_form(view.aux_data, view.model)
+    # context["form_fields"] = val_dict
+    # context["descriptions"] = map_fields(view.aux_data, view.model)
+    # context["parsed_fields"] = view.aux_data.parsed_names
+
     fields = view.model._meta.fields
     context["fields"] = fields
-    # context["query_fields"] = list(filter(lambda x: x.name in view.query_fields and x.name not in view.form_fields, fields))
+
     context["query_fields"] = view.aux_data.query_fields
     context["ids"] = view.aux_data.ids
     context["types"] = view.aux_data.types
+
     context["aux"] = view.aux_data.aux
+
     context["render_url"] = view.aux_data.render_url
+
     # logger.debug(f"Context: {context}")
     return context
 
