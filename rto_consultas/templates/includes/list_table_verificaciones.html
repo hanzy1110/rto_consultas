@@ -11,7 +11,6 @@
     <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
         <div class="container-fluid py-4">
             <table width="90%" style="margin-left: 10px;">
-                {% comment %} Render the "Nueva Revisión" button {% endcomment %}
                 <tr>
                     <td><b>Buscar</b></td>
                 </tr>
@@ -25,6 +24,7 @@
                     hx-swap="static">
                     Limpiar Búsqueda
                 </button>
+            </table>
         </div>
     </form>
 </div>
