@@ -62,7 +62,7 @@ class CustomRTOForm(forms.Form):
                 # TODO add more types of select!
                 field = forms.ChoiceField(
                     choices=DOCS,
-                    widget=forms.RadioSelect(),
+                    widget=forms.Select(),
                     initial="",  # Set the initial value if needed
                 )
             else:
@@ -75,10 +75,12 @@ class CustomRTOForm(forms.Form):
             *[Field(qf) for qf in form_data.query_fields],
             css_class="container-fluid py-4",
         )
-        self.helper.layout.append(query_div)
+        # self.helper.layout.append(query_div)
         # self.helper.layout.append(field)
 
         descriptions = map_fields(form_data, model)
+        logger.debug(f"DESCRIPTIONS => {descriptions}")
+
         for ff in form_data.form_fields:
             label = form_data.parsed_names.get(ff, None)
             attributes = form_data.attributes.get(ff, None)
@@ -99,7 +101,9 @@ class CustomRTOForm(forms.Form):
             *[Field(ff) for ff in form_data.form_fields],
             css_class="container-fluid py-4",
         )
-        self.helper.layout.append(form_div)
+
+        complete_div = Div(form_div, query_div, css_class="container-fluid")
+        self.helper.layout.append(complete_div)
         # Add a submit button
         self.helper.layout.append(
             ButtonHolder(Submit("submit", "Buscar", css_class="btn btn-primary"))
