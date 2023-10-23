@@ -70,7 +70,9 @@ class CustomRTOForm(forms.Form):
 
             if field:
                 self.fields[qf] = field
-                self.helper.layout.append(field)
+
+                self.helper.layout.append(Field(qf))
+                # self.helper.layout.append(field)
 
         descriptions = map_fields(form_data, model)
         for ff in form_data.form_fields:
@@ -86,7 +88,8 @@ class CustomRTOForm(forms.Form):
             )
             self.fields[ff] = field
             self.helper.layout.append(HTML(f"<label for={ids}> {ff} </label>"))
-            self.helper.layout.append(field)
+            self.helper.layout.append(Field(ff))
+            # self.helper.layout.append(field)
 
         # Add a submit button
         self.helper.layout.append(
