@@ -103,7 +103,7 @@ class CustomRTOForm(forms.Form):
         )
 
         # complete_div = Div(form_div, query_div, css_class="container-fluid")
-        self.helper.layout.append(query_div, form_div)
+        self.helper.layout = Layout(query_div, form_div)
         # Add a submit button
         # self.helper.layout.append(
         #     ButtonHolder(
