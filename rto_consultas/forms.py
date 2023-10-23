@@ -73,7 +73,7 @@ class CustomRTOForm(forms.Form):
 
         query_div = Div(
             *[Field(qf) for qf in form_data.query_fields],
-            css_class="container-fluid py-4",
+            css_class="col-md-6",
         )
         # self.helper.layout.append(query_div)
         # self.helper.layout.append(field)
@@ -88,25 +88,27 @@ class CustomRTOForm(forms.Form):
             desc = descriptions.get(ff, None)
 
             field = forms.ChoiceField(
+                label=label,
                 choices=[(str(i), c) for i, c in enumerate(desc)],
                 widget=forms.Select(),
                 initial="",  # Set the initial value if needed
             )
             self.fields[ff] = field
-            self.helper.layout.append(HTML(f"<label for={ids}> {ff} </label>"))
-            self.helper.layout.append(Field(ff))
+            # self.helper.layout.append(Field(ff))
             # self.helper.layout.append(field)
 
         form_div = Div(
             *[Field(ff) for ff in form_data.form_fields],
-            css_class="container-fluid py-4",
+            css_class="col-md-6",
         )
 
         complete_div = Div(form_div, query_div, css_class="container-fluid")
         self.helper.layout.append(complete_div)
         # Add a submit button
         self.helper.layout.append(
-            ButtonHolder(Submit("submit", "Buscar", css_class="btn btn-primary"))
+            ButtonHolder(
+                Submit("submit", "Buscar", css_class="btn btn-primary btn-block")
+            )
         )
 
 
