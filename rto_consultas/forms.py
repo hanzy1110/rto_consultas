@@ -39,9 +39,6 @@ def get_choices():
     return a
 
 
-# <input type="text" css_class="form-control" placeholder="Type here..." onfocus="focused(this)" onfocusout="defocused(this)">
-
-
 class CustomRTOForm(forms.Form):
     def __init__(self, form_data: AuxData, model: Model, *args, **kwargs):
         super(CustomRTOForm, self).__init__(*args, **kwargs)
