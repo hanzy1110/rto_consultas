@@ -87,7 +87,7 @@
   {% endif %}
 
   {% if form.errors and not form.non_field_errors %}
-  {% if form.errors.items | length == 1 %}
+  {% if form.errors.items|length == 1 %}
   notification.warning("{% trans "Please correct the error below." %}", 'top', 'right');
   {% else %}
   notification.warning("{% trans "Please correct the errors below." %}", 'top', 'right');
