@@ -4,6 +4,8 @@
 {% block content %}
 {% load render_table from django_tables2 %}
 {% load getattr %}
+{% load crispy_forms_tags %}
+
 <h1>{{ context_object_name }}</h1>
 <div class="card-body px-0 pt-0 pb-2">
     <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
