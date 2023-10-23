@@ -88,6 +88,12 @@ logger = configure_logger(LOG_FILE)
 
 
 @login_required
+def nqn_view(request):
+    template_name = "pages/index_nqn.html"
+    return render(request, template_name, {"segment": "index"})
+
+
+@login_required
 def index(request):
     user = request.user
     # Check the user's group or any other condition

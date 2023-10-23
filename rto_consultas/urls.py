@@ -26,6 +26,14 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path(
+        "NQN/",
+        views.nqn_view,
+        name="NQN",
+    ),
+]
+
+urlpatterns += [
     # path("accounts/", include("django.contrib.auth.urls")),
     path(
         "verificaciones/resumen?_export=csv",
