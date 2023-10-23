@@ -69,11 +69,10 @@ class CustomRTOForm(forms.Form):
 
         descriptions = map_fields(form_data, model)
         for ff in form_data.form_fields:
-            label = form_data.parsed_names[ff]
-            attributes = form_data.attributes[ff]
-            ids = form_data.ids[ff]
-
-            desc = descriptions[ff]
+            label = form_data.parsed_names.get(ff, None)
+            attributes = form_data.attributes.get(ff, None)
+            ids = form_data.ids.get(ff, None)
+            desc = descriptions.get(ff, None)
 
             field = forms.RadioSelect(
                 choices=[(str(i), c) for i, c in enumerate(desc)], attrs=attributes
