@@ -266,6 +266,9 @@ class VerificacionesTables(tables.Table):
     def render_idtipouso(self, value):
         try:
             descriptions = map_fields(self.aux_data, self.Meta.model)
+            logger.debug(f"DESCRIPTIONS FROM IDTIPO USO=> {descriptions}")
+            logger.debug(f"VALUE => {value}")
+
             return descriptions["idtipouso"][value]
 
         except Exception as e:
