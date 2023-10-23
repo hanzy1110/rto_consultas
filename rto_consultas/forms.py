@@ -102,14 +102,14 @@ class CustomRTOForm(forms.Form):
             css_class="col-md-6",
         )
 
-        complete_div = Div(form_div, query_div, css_class="container-fluid")
-        self.helper.layout.append(complete_div)
+        # complete_div = Div(form_div, query_div, css_class="container-fluid")
+        self.helper.layout.append(query_div, form_div)
         # Add a submit button
-        self.helper.layout.append(
-            ButtonHolder(
-                Submit("submit", "Buscar", css_class="btn btn-primary btn-block")
-            )
-        )
+        # self.helper.layout.append(
+        #     ButtonHolder(
+        #         Submit("submit", "Buscar", css_class="btn btn-primary btn-block")
+        #     )
+        # )
 
 
 class ObleasPorTaller(forms.Form):

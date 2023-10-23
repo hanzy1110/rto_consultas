@@ -19,6 +19,8 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                 </tr>
+
+                <button type="submit" class="btn btn-primary btn-block">Buscar</button>
                 <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div"
                     hx-swap="static">
                     Limpiar Búsqueda
