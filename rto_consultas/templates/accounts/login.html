@@ -4,9 +4,20 @@
 {% load getattr %}
 {% block content %}
 
-{% include 'includes/navigation-fullscreen.html' %}
+{#% include 'includes/navigation-fullscreen.html' %#}
 
 <main class="main-content  mt-0">
+    <section>
+        <div class="container">
+            <div class="row">
+                <!-- Navigation bar -->
+                <div class="col-12">
+                    <!-- Add your navigation bar content here -->
+{% include 'includes/navigation-fullscreen.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
   <section>
     <div class="page-header min-vh-75">
       <div class="container">
