@@ -182,6 +182,7 @@ class VerificacionesTables(tables.Table):
     vigencia = tables.Column(empty_values=())
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
+    idtipouso = tables.Column(empty_values=(), verbose_name="Tipo de Uso")
     aux_data = AuxData(
         query_fields=[],
         form_fields={
