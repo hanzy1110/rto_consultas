@@ -108,15 +108,15 @@ class CustomRTOForm(forms.Form):
 
         query_div = Div(
             *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
-            css_class="col-md-6",
+            # css_class="col-md-6",
         )
         form_div = Div(
             *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
-            css_class="col-md-6",
+            # css_class="col-md-6",
         )
         side_by_side = Row(
-            Div(query_div, css_class="col"),
-            Div(form_div, css_class="col"),
+            Div(query_div, css_class="col-md-2"),
+            Div(form_div, css_class="col-md-2"),
         )
         self.helper.layout = Layout(side_by_side)
 
