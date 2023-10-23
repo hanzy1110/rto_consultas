@@ -156,6 +156,7 @@ def handle_query(request, model, fecha_field="fecha"):
 
     # TODO Handle dni
     dni = query.pop("dni", None)
+
     # TODO better handle this....
     _ = query.pop("csrfmiddlewaretoken", None)
 
@@ -177,7 +178,9 @@ def handle_query(request, model, fecha_field="fecha"):
     if sort:
         queryset = queryset.order_by(sort[0])
 
-    queryset = handle_anulado(queryset, anulado, model)
+    # TODO handling of anulado...
+    # queryset = handle_anulado(queryset, anulado, model)
+
     return queryset
 
 
