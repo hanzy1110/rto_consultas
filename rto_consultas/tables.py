@@ -42,6 +42,13 @@ DESCRIPTIONS = {
     3: "Transporte Pasajeros",
     4: "Transporte Municipal",
 }
+ESTADO_CERTIFICADO = {
+    1: "Aprobado",
+    2: "Rechazado",
+    3: "Aprobado Condicional",
+    4: "Reverificado",
+    5: "Vencido",
+}
 
 
 class ImageColumn(tables.Column):
@@ -242,8 +249,8 @@ class VerificacionesTables(tables.Table):
 
     def render_idestado(self, value):
         try:
-            descriptions = map_fields(self.aux_data, self.Meta.model)
-            return descriptions["idestado"][value.idestado]
+            # descriptions = map_fields(self.aux_data, self.Meta.model)
+            return ESTADO_CERTIFICADO[value.idestado]
             # return value.descripcion
         except Exception as e:
             print(e)
