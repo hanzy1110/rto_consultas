@@ -219,6 +219,7 @@ class CargaObleas(CustomRTOView):
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
@@ -251,6 +252,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
     context_object_name = "Certificados Asignados por taller"
     table_class = ObleasPorTaller
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
@@ -313,6 +315,7 @@ class ListCertificadosAssignView(CustomRTOView):
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
@@ -363,6 +366,7 @@ class ListHabilitaciones(CustomRTOView):
     context_object_name = "Habilitaciones"
     table_class = HabilitacionesTable
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
@@ -400,6 +404,7 @@ class ListVehiculosView(CustomRTOView):
     context_object_name = "Vehiculos"
     table_class = VehiculosTable
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=["dominio", "marca"],
@@ -427,6 +432,7 @@ class ListCertificadosView(CustomRTOView):
     context_object_name = "Certificados"
     table_class = CertificadosTable
     partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=["nrocertificado", "fecha", "anulado"],
@@ -460,6 +466,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     table_class = CertificadosTablesResumen
     export_formats = ["csv", "tsv", "xls"]
     table_name = "resumen_verificaciones"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
