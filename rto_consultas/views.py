@@ -206,7 +206,7 @@ class ListVerificacionesView(CustomRTOView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset.sort("-idverificacion")
+        queryset.order_by("-idverificacion")
         return queryset
 
 
