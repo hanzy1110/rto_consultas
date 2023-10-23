@@ -114,13 +114,11 @@ class CustomRTOForm(forms.Form):
             *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
             css_class="col-md-6",
         )
-        self.helper.layout = Layout(Row(query_div, form_div))
-        # Add a submit button
-        # self.helper.layout.append(
-        #     ButtonHolder(
-        #         Submit("submit", "Buscar", css_class="btn btn-primary btn-block")
-        #     )
-        # )
+        side_by_side = Row(
+            Div(query_div, css_class="col"),
+            Div(form_div, css_class="col"),
+        )
+        self.helper.layout = Layout(side_by_side)
 
 
 class ObleasPorTaller(forms.Form):
