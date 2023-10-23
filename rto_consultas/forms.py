@@ -81,7 +81,6 @@ class CustomRTOForm(forms.Form):
 
             field = forms.ChoiceField(
                 choices=[(str(i), c) for i, c in enumerate(desc)],
-                attrs=attributes,
                 widget=forms.RadioSelect(),
                 initial="",  # Set the initial value if needed
             )
