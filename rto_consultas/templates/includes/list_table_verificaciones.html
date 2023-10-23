@@ -6,7 +6,8 @@
 {% load getattr %}
 <h1>{{ context_object_name }}</h1>
 <div class="card-body px-0 pt-0 pb-2">
-    <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
+<form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
+    <div class="container-fluid py-4">
         <table width="90%" style="margin-left: 10px;">
             {% comment %} Render the "Nueva Revisión" button {% endcomment %}
             <tr>
@@ -15,41 +16,41 @@
             <tr>
                 {% for field in query_fields %}
                 <td>
-                    <label for={{ ffield }}>{% query_dict parsed_fields field %}</label>
-                    <input id="{% query_dict ids field %}" type="{% query_dict types field %}" name="{{ field }}"
-                        placeholder="Buscar...">
+                    <label for="{{ ffield }}">{{ query_dict parsed_fields field }}</label>
+                    <input id="{{ query_dict ids field }}" type="{{ query_dict types field }}" name="{{ field }}"
+                        placeholder="Buscar..." class="form-control">
                 </td>
                 {% endfor %}
             </tr>
             <tr>
                 {% for ffield, vals in form_fields.items %}
                 <td>
-                    <label for={{ ffield }}>{% query_dict parsed_fields ffield %}</label>
-                    <select name="{{ ffield }}" id="{{ ffield }}">
+                    <label for="{{ ffield }}">{{ query_dict parsed_fields ffield }}</label>
+                    <select name="{{ ffield }}" id="{{ ffield }}" class="form-control">
                         <option value=""></option>
                         {% for val in vals %}
-                        <option value="{{ val }}">{% query_descriptions descriptions ffield val %}</option>
+                        <option value="{{ val }}">{{ query_descriptions descriptions ffield val }}</option>
                         {% endfor %}
                     </select>
-                    {% endfor %}
                 </td>
+                {% endfor %}
             </tr>
             <tr>
                 <td>
-                    <label for="tipo_documento">Tipo Documento<label>
-                            <select name="tipo_documento" class="combo" style="width: 100px;">
-                                <option value=""></option>
-                                <option value="DNI">DNI</option>
-                                <option value="LC">LI</option>
-                                <option value="LE">LE</option>
-                                <option value="PAS">PAS</option>
-                                <option value="CUIT">CUIT</option>
-                            </select>
+                    <label for="tipo_documento">Tipo Documento</label>
+                    <select name="tipo_documento" class="form-control" style="width: 100px;">
+                        <option value=""></option>
+                        <option value="DNI">DNI</option>
+                        <option value="LC">LI</option>
+                        <option value="LE">LE</option>
+                        <option value="PAS">PAS</option>
+                        <option value="CUIT">CUIT</option>
+                    </select>
                 </td>
                 <td>
-                    <label for="numero_documento">Nro. Documento<label>
-                            <input type="text" name="numero_documento" style="width: 100px" maxlength="11"
-                                class="txt" />
+                    <label for="numero_documento">Nro. Documento</label>
+                    <input type="text" name="numero_documento" style="width: 100px" maxlength="11"
+                        class="form-control" />
                 </td>
             </tr>
             <tr>
@@ -65,11 +66,12 @@
                 <td colspan="4"></td>
             </tr>
         </table>
-        <button type="submit" class="btn btn-fill btn-sm btn-primary">Buscar</button>
-        <button type="button" class="btn btn-fill btn-sm btn-primary" hx-trigger="click" hx-target="#table_div" hx-swap="static">
-            Limpiar Busqueda
+        <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+        <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div" hx-swap="static">
+            Limpiar Búsqueda
         </button>
-    </form>
+    </div>
+</form>
 </div>
 <div class="card-body px-0 pt-0 pb-2">
     <div id="table_div" class="table-responsive p-0">
