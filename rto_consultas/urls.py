@@ -27,9 +27,14 @@ urlpatterns = [
 
 urlpatterns += [
     path(
-        "NQN/",
-        views.nqn_view,
-        name="NQN",
+        "ansv",
+        views.ansv_view,
+        name="ansv",
+    ),
+    path(
+        "dpt",
+        views.dpt_view,
+        name="dpt",
     ),
 ]
 
