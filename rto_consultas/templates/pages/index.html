@@ -6,11 +6,25 @@
     .box {
         width: 100%;
         height: auto;
-        min-width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         /* border: 2px solid #000000; */
+    }
+
+
+    /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+    @media screen and (max-width: 768px) {
+        /* Adjust the styles for mobile screens */
+
+        .box {
+            /* Define the styles you want for the 'box' class on mobile screens */
+            /* For example, you may want to change the display property to 'block' and remove width and height */
+            display: block;
+            width: auto;
+            height: auto;
+        }
+
     }
 
     .card-body {
