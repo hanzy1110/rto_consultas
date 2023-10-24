@@ -61,8 +61,7 @@
                             <span class="sidebar-icon {{ app.icon }}"></span>
                         </div>
                         <a href="{{ app.url }}">
-                            <span class="nav-link-text ms-1">{{ app.label|slice:10 }}{% if app.label|length > 10 %}..{%
-                                endif %}</span>
+                            <span class="nav-link-text ms-1">{{ app.label|slice:10 }}{% if app.label|length > 10 %}..{% endif %}</span>
                         </a>
                     </span>
                 </span>
