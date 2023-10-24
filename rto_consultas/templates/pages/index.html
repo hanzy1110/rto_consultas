@@ -12,10 +12,17 @@
         /* border: 2px solid #000000; */
     }
 
+    element-to-hide {
+        display: flex;
+    }
 
     /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
     @media screen and (max-width: 768px) {
+
         /* Adjust the styles for mobile screens */
+        .element-to-hide {
+            display: none;
+        }
 
         .box {
             /* Define the styles you want for the 'box' class on mobile screens */
@@ -64,7 +71,7 @@
                             </a>
                         </div>
 
-                        <div class="col text-end">
+                        <div class="col text-end element-to-hide">
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">Dirección de Vialidad
                                 Rionegrina<br>
                                 Secretaría de Transporte</p>
@@ -87,7 +94,7 @@
                             </a>
                         </div>
 
-                        <div class="col text-end">
+                        <div class="col text-end element-to-hide">
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">Sub Secretaría de Seguridad Vial
                                 <br>
                                 Dirección Provincial de Transporte
