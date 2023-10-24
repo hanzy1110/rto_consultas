@@ -4,10 +4,20 @@
 
 <style>
     .box {
-        width: 50%;
+        width: 75%;
         height: auto;
         border: 2px dashed #f7a239;
         margin: 0 auto;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        padding: 6rem 6rem;
+        /* Adjust the padding values as needed for size */
+        font-size: 36px;
+        /* Adjust the font size as needed */
+        /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
+        /* color: var(""); */
     }
 
     img {
@@ -25,25 +35,15 @@
         <div class="col-xl-6 col-sm-6 mb-xl-0 mb-2">
             <div class="card">
                 <div class="card-body p-2">
-
-                    <!-- <div class="row"> -->
-                    <!-- ITEM -->
-
-                    <!-- <div class="col-4 text-end"> -->
-                    <!-- <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"> -->
                     <div class="box">
-
                         <a href="{% url 'verificaciones' %}">
                             <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                             <img src="{% static 'img/logos/LOGO_RN.png' %}">
                         </a>
+                        <div class="col-8">
+                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Río Negro</p>
+                        </div>
                     </div>
-                    <!-- </div> -->
-                    <div class="col-8">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Río Negro</p>
-                    </div>
-                    <!-- </div> -->
-
                 </div>
             </div>
         </div>
@@ -64,14 +64,11 @@
                             <img src="{% static 'img/logos/LOGO_NQN.png' %}">
                             <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                         </a>
+                        <div class="col-8">
+                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Neuquén</p>
+                        </div>
                     </div>
                     <!-- </div> -->
-                    <div class="col-8">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Neuquén</p>
-                        <!-- <h5 class="font-weight-bolder mb-0">
-                                    Vista Verificaciones
-                                </h5> -->
-                    </div>
                     <!-- </div> -->
 
                 </div>
@@ -96,14 +93,11 @@
                             <img src="{% static 'img/logos/LOGO_ANSV.png' %}">
                             <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                         </a>
+                        <div class="col-8">
+                            <p class="text-sm mb-0 text-capitalize font-weight-bold">ANSV</p>
+                        </div>
                     </div>
                     <!-- </div> -->
-                    <div class="col-8">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">ANSV</p>
-                        <!-- <h5 class="font-weight-bolder mb-0">
-                                    Vista Verificaciones
-                                </h5> -->
-                    </div>
                     <!-- </div> -->
 
                 </div>
@@ -123,15 +117,10 @@
                             <img src="{% static 'img/logos/LOGO_DNRPA.png' %}">
                             <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                         </a>
-                        <!-- </div> -->
-                    </div>
-                    <div class="col-8">
-                        <div class="numbers">
+                        <div class="col-8">
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">DNRPA</p>
-                            <!-- <h5 class="font-weight-bolder mb-0">
-                                    Vista Verificaciones
-                                </h5> -->
                         </div>
+                        <!-- </div> -->
                     </div>
 
                 </div>
