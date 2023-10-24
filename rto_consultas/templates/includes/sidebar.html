@@ -44,6 +44,27 @@
                 </span>
 
             </li>
+
+                  {% if app.models %}
+                    <div class="multi-level ms-5 collapse {% if 'tables-bootstrap-' in segment or app_label == app.label or app.url in request.path|urlencode %} show {% endif %}" role="list" id="submenu-{{ app.app_label }}"                                                                                                       aria-expanded="{% if app_label == app.label or app.url in request.path|urlencode %}true{% else %}false{% endif %}">
+                      <ul class="flex-column nav">
+                        {% for model in app.models %}
+                          {% if model.url %}
+                            <li class="nav-item{% if 'bootstrap-tables' in segment or model.url in request.path|urlencode %} active {% endif %} list-unstyled">
+                              <a class="nav-link" href="{{ model.url }}">
+                                <span class="nav-link-text ms-1">{{ model.label }}</span>
+                              </a>
+                            </li>
+                          {% else %}
+                            <li class="nav-item list-unstyled">{{ model.label }}</li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                </li>
+              {% endif %}
+
             {% endif %}
             {% endfor %}
             {% endif %}
