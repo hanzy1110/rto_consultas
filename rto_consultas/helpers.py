@@ -192,13 +192,14 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
 
     # ASS PROTECTION
-    queryset_copy = queryset.copy()
+    queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
             queryset = model.objects.get(ptipodoc=tipo_dni, pcuit=nro_dni)
         else:
             queryset = model.objects.get(ptipodoc=tipo_dni, pnrodoc=nro_dni)
         return queryset
+
     except Exception as e:
         logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
         return queryset_copy
