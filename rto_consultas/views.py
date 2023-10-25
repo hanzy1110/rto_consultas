@@ -458,7 +458,10 @@ class ListCertificadosView(CustomRTOView):
 
     aux_data = AuxData(
         query_fields=["nrocertificado", "fecha", "anulado"],
-        form_fields={"idtaller": ("nombre", Talleres)},
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+            "anulado": (None, None),
+        },
         parsed_names={
             "nrocertificado": "Nro. Certificado",
             "anulado": "Anulado",
@@ -472,7 +475,6 @@ class ListCertificadosView(CustomRTOView):
         types={
             "nrocertificado": "text",
             "fecha": "date",
-            "anulado": "text",
         },
         render_url="certificados",
     )
