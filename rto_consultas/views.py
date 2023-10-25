@@ -229,7 +229,7 @@ class ListVerificacionesView(CustomRTOView):
         queryset = super().get_queryset()
         if isinstance(queryset, list):
             pass
-            queryset = reversed(queryset)
+            queryset = list(reversed(queryset))
         else:
             queryset = queryset.order_by("-idverificacion")
         logger.info("QUERYSET DONE...")
