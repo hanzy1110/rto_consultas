@@ -200,14 +200,16 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            queryset = model.objects.filter(ptipodoc=tipo_dni, pcuit=nro_dni)
+            queryset = model.objects.filter(
+                ptipodoc=tipo_dni, cuitprestserv=str(nro_dni)
+            )
         else:
             queryset = model.objects.filter(ptipodoc=tipo_dni, pnrodoc=nro_dni)
         return queryset
 
     except Exception as e:
         logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
-        raise ValueError
+        raise ValueError(f"WRONG QUERY {e}")
         # return queryset_copy
 
 
