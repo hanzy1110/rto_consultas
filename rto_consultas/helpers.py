@@ -371,8 +371,9 @@ def handle_anulado(queryset, anulado, model):
                 idverificacion__in=queryset_b.values_list("idverificacion", flat=True),
             )
 
-            logger.info("EVALUATING QUERYSET TO DEBUG...")
-            list(related_objects_in_a)
+            # logger.info("EVALUATING QUERYSET TO DEBUG...")
+            # list(related_objects_in_a)
+
             end = perf_counter()
 
             ellapsed_time = end - start
