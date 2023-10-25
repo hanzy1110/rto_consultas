@@ -359,28 +359,36 @@ def handle_anulado(queryset, anulado, model):
             return queryset
         case _:
             logger.debug(f"STARTING ANULADO QUERY...")
-            start = perf_counter()
 
-            queryset_b = Certificados.objects.filter(anulado=anulado).filter(
-                idtaller__in=queryset.values_list("idtaller", flat=True),
-                idverificacion__in=queryset.values_list("idverificacion", flat=True),
-            )
+            logger.info(f"FILTERING FOR MODEL => {model}")
+            if model == Verificaciones:
+                start = perf_counter()
+                queryset_b = Certificados.objects.filter(anulado=anulado).filter(
+                    idtaller__in=queryset.values_list("idtaller", flat=True),
+                    idverificacion__in=queryset.values_list(
+                        "idverificacion", flat=True
+                    ),
+                )
 
-            related_objects_in_a = queryset.filter(
-                idtaller__in=queryset_b.values_list("idtaller", flat=True),
-                idverificacion__in=queryset_b.values_list("idverificacion", flat=True),
-            )
+                related_objects_in_a = queryset.filter(
+                    idtaller__in=queryset_b.values_list("idtaller", flat=True),
+                    idverificacion__in=queryset_b.values_list(
+                        "idverificacion", flat=True
+                    ),
+                )
 
-            # logger.info("EVALUATING QUERYSET TO DEBUG...")
-            # list(related_objects_in_a)
+                # logger.info("EVALUATING QUERYSET TO DEBUG...")
+                # list(related_objects_in_a)
 
-            end = perf_counter()
+                end = perf_counter()
 
-            ellapsed_time = end - start
+                ellapsed_time = end - start
 
-            logger.debug(f"TIME ELAPSED => {ellapsed_time:.6f} seconds")
+                logger.debug(f"TIME ELAPSED => {ellapsed_time:.6f} seconds")
 
-            return related_objects_in_a
+                return related_objects_in_a
+            else:
+                return queryset.filter(anulado=anulado)
 
 
 def handle_nrocertificados(
