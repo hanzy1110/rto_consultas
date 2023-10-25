@@ -20,6 +20,7 @@ from rto_consultas.models import (
     Certificados,
     Certificadosasignadosportaller,
     Habilitacion,
+    Personas,
     Serviciohab,
     Serviciostransportehab,
     Talleres,
@@ -154,8 +155,8 @@ def handle_query(request, model, fecha_field="fecha"):
     nrocertificado = query.pop("nrocertificado", None)
     anulado = query.pop("anulado", None)
 
-    # TODO Handle dni
-    dni = query.pop("dni", None)
+    tipo_dni = query.pop("dni", None)
+    nro_dni = query.pop("nro_dni", None)
 
     # TODO better handle this....
     _ = query.pop("csrfmiddlewaretoken", None)
@@ -178,10 +179,29 @@ def handle_query(request, model, fecha_field="fecha"):
     if sort:
         queryset = queryset.order_by(sort[0])
 
+    if tipo_dni and nro_dni:
+        queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
+
     # TODO handling of anulado...
     # queryset = handle_anulado(queryset, anulado, model)
 
     return queryset
+
+
+def handle_dni(queryset, tipo_dni, nro_dni, model):
+    logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
+
+    # ASS PROTECTION
+    queryset_copy = queryset.copy()
+    try:
+        if tipo_dni == "CUIT":
+            queryset = model.objects.get(ptipodoc=tipo_dni, pcuit=nro_dni)
+        else:
+            queryset = model.objects.get(ptipodoc=tipo_dni, pnrodoc=nro_dni)
+        return queryset
+    except Exception as e:
+        logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
+        return queryset_copy
 
 
 def handle_cert_insert(taller_id, cert_init, cert_end):

@@ -49,6 +49,7 @@ class CustomRTOForm(forms.Form):
             input_type = form_data.types.get(qf, None)
             label = form_data.parsed_names.get(qf, None)
             attributes = form_data.attributes.get(qf, None)
+            additional_field = None
 
             if input_type == "text":
                 field = forms.CharField(
@@ -67,12 +68,19 @@ class CustomRTOForm(forms.Form):
                     widget=forms.Select(),
                     initial="",  # Set the initial value if needed
                 )
+                additional_field = forms.CharField(
+                    label=label,
+                    widget=forms.TextInput(attrs=attributes),
+                )
             else:
                 field = None  # Handle other input types as needed
 
             if field:
                 field.required = False
                 self.fields[qf] = field
+            if additional_field:
+                additional_field.required = False
+                self.fields["nro_dni"] = additional_field
 
         # self.helper.layout.append(query_div)
         # self.helper.layout.append(field)
@@ -104,37 +112,20 @@ class CustomRTOForm(forms.Form):
             # self.helper.layout.append(field)
         query_div = Div(
             *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
-            css_class=f"col-sm",  # Adjust the width for each Div
+            css_class=f"col",  # Adjust the width for each Div
         )
 
         form_div = Div(
             *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
-            css_class="col-sm",  # Adjust the width for each Div
+            css_class="col",  # Adjust the width for each Div
         )
 
         side_by_side = Row(
-            Div(
-                query_div, css_class=f"col-md-{len(form_data.query_fields)}"
-            ),  # Adjust the width for each Div
-            Div(
-                form_div, css_class="col-md-{len(form_data.query_fields)}"
-            ),  # Adjust the width for each Div
+            Div(query_div),  # Adjust the width for each Div
+            Div(form_div),  # Adjust the width for each Div
         )
 
         self.helper.layout = Layout(side_by_side)
-        # query_div = Div(
-        #     *[Field(qf, css_class="form-control") for qf in form_data.query_fields],
-        #     # css_class="col-md-6",
-        # )
-        # form_div = Div(
-        #     *[Field(ff, css_class="form-control") for ff in form_data.form_fields],
-        #     # css_class="col-md-6",
-        # )
-        # side_by_side = Row(
-        #     Div(query_div, css_class="col-md-2"),
-        #     Div(form_div, css_class="col-md-2"),
-        # )
-        # self.helper.layout = Layout(side_by_side)
 
 
 class ObleasPorTaller(forms.Form):
