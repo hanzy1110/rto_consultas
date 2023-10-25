@@ -200,9 +200,9 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            queryset = model.objects.get(ptipodoc=tipo_dni, pcuit=nro_dni)
+            queryset = model.objects.filter(ptipodoc=tipo_dni, pcuit=nro_dni)
         else:
-            queryset = model.objects.get(ptipodoc=tipo_dni, pnrodoc=nro_dni)
+            queryset = model.objects.filter(ptipodoc=tipo_dni, pnrodoc=nro_dni)
         return queryset
 
     except Exception as e:
