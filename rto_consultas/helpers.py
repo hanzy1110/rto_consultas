@@ -360,22 +360,21 @@ def handle_anulado(queryset, anulado, model):
         case _:
             logger.debug(f"STARTING ANULADO QUERY...")
             start = perf_counter()
-            queryset_b = Certificados.objects.filter(
+
+            queryset_b = Certificados.objects.filter(anulado=anulado).filter(
                 idtaller__in=queryset.values_list("idtaller", flat=True),
                 idverificacion__in=queryset.values_list("idverificacion", flat=True),
-            ).filter(anulado=anulado)
+            )
 
             related_objects_in_a = queryset.filter(
                 idtaller__in=queryset_b.values_list("idtaller", flat=True),
                 idverificacion__in=queryset_b.values_list("idverificacion", flat=True),
             )
-            # queryset = list(queryset)
 
-            # # this is supposedly cached
-            # queryset = [
-            #     q for q, c in zip(queryset, get_certs(queryset)) if c.anulado == anulado
-            # ]
+            logger.info("EVALUATING QUERYSET TO DEBUG...")
+            list(related_objects_in_a)
             end = perf_counter()
+
             ellapsed_time = end - start
 
             logger.debug(f"TIME ELAPSED => {ellapsed_time:.6f} seconds")
