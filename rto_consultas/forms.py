@@ -69,7 +69,7 @@ class CustomRTOForm(forms.Form):
                     initial="",  # Set the initial value if needed
                 )
                 additional_field = forms.CharField(
-                    label=label,
+                    label="Nro. DNI",
                     widget=forms.TextInput(attrs=attributes),
                 )
             else:
