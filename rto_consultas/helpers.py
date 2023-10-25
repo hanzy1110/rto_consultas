@@ -32,6 +32,7 @@ from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
+DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 
 
 @dataclass
@@ -189,8 +190,12 @@ def handle_query(request, model, fecha_field="fecha"):
 
 
 def handle_dni(queryset, tipo_dni, nro_dni, model):
-    logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
+    tipo_dni = handle_querydict(tipo_dni)
+    nro_dni = handle_querydict(nro_dni)
 
+    tipo_dni = next(filter(lambda t: t[0] == tipo_dni, DOCS))
+
+    logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
     # ASS PROTECTION
     queryset_copy = queryset.all()
     try:
@@ -607,3 +612,13 @@ def handle_save_hab(cleaned_data, user):
     Serviciohab.objects.bulk_create(servs)
 
     return new_hab
+
+
+def handle_querydict(value):
+    match value:
+        case [""]:
+            return value[0]
+        case None:
+            return None
+        case _:
+            return int(value[0])
