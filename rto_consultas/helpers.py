@@ -193,7 +193,7 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     tipo_dni = handle_querydict(tipo_dni)
     nro_dni = handle_querydict(nro_dni)
 
-    tipo_dni = next(filter(lambda t: t[0] == tipo_dni, DOCS))
+    tipo_dni = next(filter(lambda t: t[0] == tipo_dni, DOCS))[1]
 
     logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
     # ASS PROTECTION
