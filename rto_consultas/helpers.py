@@ -203,6 +203,8 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
             queryset = model.objects.filter(
                 ptipodoc=tipo_dni, cuitprestserv=str(nro_dni)
             )
+            logger.debug(f"CUIT QUERY => {queryset}")
+
         else:
             queryset = model.objects.filter(ptipodoc=tipo_dni, pnrodoc=nro_dni)
         return queryset
@@ -214,7 +216,8 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
 
 
 def handle_cert_insert(taller_id, cert_init, cert_end):
-    print("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
+    logger.debug("PARAMS TO HANDLE:", taller_id, cert_init, cert_end)
+
     if taller_id and cert_end and cert_init:
         # TODO Check bounds for c]ertificate numbers...
         taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
