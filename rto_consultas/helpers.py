@@ -358,18 +358,33 @@ def handle_anulado(queryset, anulado, model):
         case None:
             return queryset
         case _:
-            log.debug(f"STARTING ANULADO QUERY...")
+            logger.debug(f"STARTING ANULADO QUERY...")
             start = perf_counter()
-            queryset = list(queryset)
+            queryset_b = Certificados.objects.filter(
+                idtaller__in=queryset.values_list("idtaller", flat=True),
+                idverificacion__in=queryset.values_list("idverificacion", flat=True),
+            )
+            filtered_queryset_b = queryset_b.filter(anulado=anulado)
 
-            # this is supposedly cached
-            queryset = [
-                q for q, c in zip(queryset, get_certs(queryset)) if c.anulado == anulado
-            ]
+            # Step 4: Retrieve all objects in Queryset A that are related to the filtered objects in Queryset B
+            related_objects_in_a = queryset.filter(
+                idtaller__in=filtered_queryset_b.values_list("idtaller", flat=True),
+                idverificacion__in=filtered_queryset_b.values_list(
+                    "idverificacion", flat=True
+                ),
+            )
+            # queryset = list(queryset)
+
+            # # this is supposedly cached
+            # queryset = [
+            #     q for q, c in zip(queryset, get_certs(queryset)) if c.anulado == anulado
+            # ]
             end = perf_counter()
             ellapsed_time = end - start
 
             logger.debug(f"TIME ELAPSED => {ellapsed_time:.6f} seconds")
+
+            return related_objects_in_a
 
 
 def handle_nrocertificados(
