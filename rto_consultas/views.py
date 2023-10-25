@@ -151,9 +151,11 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         return queryset
 
     def get_context_data(self, **kwargs):
-        logger.debug("HANDLING CONTEXT...")
+        # logger.debug("HANDLING CONTEXT...")
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
+
+        logger.debug("CONTEXT HANDLED...")
         return context
 
     def get_template_names(self):
@@ -223,8 +225,10 @@ class ListVerificacionesView(CustomRTOView):
     )
 
     def get_queryset(self):
+        logger.info("CALCULATE QUERYSET...")
         queryset = super().get_queryset()
         queryset = queryset.order_by("-idverificacion")
+        logger.info("QUERYSET DONE...")
         return queryset
 
 

@@ -363,15 +363,11 @@ def handle_anulado(queryset, anulado, model):
             queryset_b = Certificados.objects.filter(
                 idtaller__in=queryset.values_list("idtaller", flat=True),
                 idverificacion__in=queryset.values_list("idverificacion", flat=True),
-            )
-            filtered_queryset_b = queryset_b.filter(anulado=anulado)
+            ).filter(anulado=anulado)
 
-            # Step 4: Retrieve all objects in Queryset A that are related to the filtered objects in Queryset B
             related_objects_in_a = queryset.filter(
-                idtaller__in=filtered_queryset_b.values_list("idtaller", flat=True),
-                idverificacion__in=filtered_queryset_b.values_list(
-                    "idverificacion", flat=True
-                ),
+                idtaller__in=queryset_b.values_list("idtaller", flat=True),
+                idverificacion__in=queryset_b.values_list("idverificacion", flat=True),
             )
             # queryset = list(queryset)
 
