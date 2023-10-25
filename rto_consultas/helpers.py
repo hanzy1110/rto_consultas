@@ -186,7 +186,6 @@ def handle_query(request, model, fecha_field="fecha"):
     if tipo_dni and nro_dni:
         queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
 
-    # TODO handling of anulado...
     queryset = handle_anulado(queryset, anulado, model)
 
     return queryset
