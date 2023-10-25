@@ -7,6 +7,7 @@ import hashlib
 import os
 import re
 from itertools import chain
+from time import perf_counter
 from typing import Dict, Iterable, List, Tuple, Set, Union
 from dataclasses import dataclass, field
 
@@ -159,8 +160,7 @@ def handle_query(request, model, fecha_field="fecha"):
     tipo_dni = query.pop("dni", None)
     nro_dni = query.pop("nro_dni", None)
 
-    # TODO better handle this....
-    _ = query.pop("csrfmiddlewaretoken", None)
+    query.pop("csrfmiddlewaretoken", None)
 
     cert_init = query.pop("cert_init", None)
     cert_end = query.pop("cert_end", None)
@@ -184,7 +184,7 @@ def handle_query(request, model, fecha_field="fecha"):
         queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
 
     # TODO handling of anulado...
-    # queryset = handle_anulado(queryset, anulado, model)
+    queryset = handle_anulado(queryset, anulado, model)
 
     return queryset
 
@@ -197,15 +197,16 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
 
     logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
     # ASS PROTECTION
-    queryset_copy = queryset.all()
+    # queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            queryset = model.objects.filter(cuitprestserv=str(nro_dni))
+            query = Q(cuitprestserv=str(nro_dni))
             logger.debug(f"CUIT QUERY => {queryset}")
 
         else:
-            queryset = model.objects.filter(ptipodoc=tipo_dni, pnrodoc=nro_dni)
-        return queryset
+            query = Q(ptipodoc=tipo_dni, pnrodoc=nro_dni)
+
+        return queryset.filter(query)
 
     except Exception as e:
         logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
@@ -334,6 +335,13 @@ def handle_context(context, view):
     return context
 
 
+def get_certs(queryset):
+    for q in queryset:
+        yield Certificados.objects.get(
+            idtaller_id__iexact=q.idtaller_id, idverificacion_id=q.idverificacion
+        )
+
+
 def handle_anulado(queryset, anulado, model):
     # _queryset = model.objects.all()
     # vals = {"Verdadero": 1, "Falso": 0}
@@ -342,23 +350,24 @@ def handle_anulado(queryset, anulado, model):
     except:
         anulado = None
 
-    print("ANULADO: ", anulado)
+    logger.debug(f"ANULADO: {anulado}")
     match anulado:
         case [""]:
             return queryset
         case None:
             return queryset
         case _:
-            certs = model.objects.filter(anulado__exact=anulado)
-            qa = Q(
-                idtaller_id__in=Subquery(certs.values("idtaller_id")),
-            )
-            qb = Q(
-                idverificacion__in=Subquery(certs.values("idverificacion_id")),
-            )
-            verifs_segun_anulado = Verificaciones.objects.filter(qa & qb)
-            final_q = queryset.intersection(verifs_segun_anulado)
-            return final_q
+            start = perf_counter()
+            queryset = list(queryset)
+
+            # this is supposedly cached
+            queryset = [
+                q for q, c in zip(queryset, get_certs(queryset)) if c.anulado == anulado
+            ]
+            end = perf_counter()
+            ellapsed_time = end - start
+
+            logger.debug(f"TIME ELAPSED => {ellapsed_time:.6f} seconds")
 
 
 def handle_nrocertificados(
