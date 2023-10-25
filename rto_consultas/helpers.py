@@ -200,9 +200,7 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            queryset = model.objects.filter(
-                ptipodoc=tipo_dni, cuitprestserv=str(nro_dni)
-            )
+            queryset = model.objects.filter(cuitprestserv=str(nro_dni))
             logger.debug(f"CUIT QUERY => {queryset}")
 
         else:
