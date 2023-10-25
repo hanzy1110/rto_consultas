@@ -86,7 +86,6 @@ class CustomRTOForm(forms.Form):
         # self.helper.layout.append(field)
 
         descriptions = map_fields(form_data, model)
-        logger.debug(f"DESCRIPTIONS => {descriptions}")
 
         for ff in form_data.form_fields:
             label = form_data.parsed_names.get(ff, None)

@@ -202,7 +202,8 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
 
     except Exception as e:
         logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
-        return queryset_copy
+        raise ValueError
+        # return queryset_copy
 
 
 def handle_cert_insert(taller_id, cert_init, cert_end):
