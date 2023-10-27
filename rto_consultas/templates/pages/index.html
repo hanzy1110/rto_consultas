@@ -3,181 +3,162 @@
 {% block content %}
 
 <style>
-    .box {
-        width: 50%;
-        height: auto;
-        display: block;
-        /* justify-content: center; */
-        align-items: center;
-        /* border: 2px solid #000000; */
-    }
 
-    element-to-hide {
-        display: flex;
-    }
-
-    /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
-    @media screen and (max-width: 768px) {
-
-        /* Adjust the styles for mobile screens */
-        .element-to-hide {
-            display: none;
-        }
-
-        .box {
-            /* Define the styles you want for the 'box' class on mobile screens */
-            /* For example, you may want to change the display property to 'block' and remove width and height */
-            display: flex;
-            width: 100%;
-            height: auto;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-fluid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-
-    .card-body {
-        flex: 1 1 auto;
-        padding: 6rem 6rem;
-        /* Adjust the padding values as needed for size */
-        font-size: 18pt;
-        /* Adjust the font size as needed */
-        /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
-        /* color: var(""); */
-    }
-
-    img {
-        width: 30%;
-        min-width: 100px;
-        height: auto;
-    }
-
+.2_3 {
+	overflow:hidden;
+}.e2_3 {
+	background-color:rgba(255, 255, 255, 1);
+	width:1920px;
+	height:1080px;
+	position:absolute;
+}.e2_5 {
+	background-color:rgba(139.51953023672104, 143.09880137443542, 175.3125, 1);
+	width:1274px;
+	height:728px;
+	position:absolute;
+	left:323px;
+	top:176px;
+}.e2_6 {
+	transform: rotate(0.11252690962461315deg);
+	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:627px;
+	height:325.3915710449219px;
+	position:absolute;
+	left:970.6390380859375px;
+	top:579.0926513671875px;
+	border-top-left-radius:80px;
+	border-top-right-radius:80px;
+	border-bottom-left-radius:80px;
+	border-bottom-right-radius:80px;
+}.e2_7 {
+	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:627px;
+	height:346px;
+	position:absolute;
+	left:323px;
+	top:176px;
+	border-top-left-radius:80px;
+	border-top-right-radius:80px;
+	border-bottom-left-radius:80px;
+	border-bottom-right-radius:80px;
+}.e3_3 {
+	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:627px;
+	height:324px;
+	position:absolute;
+	left:322px;
+	top:580px;
+	border-top-left-radius:80px;
+	border-top-right-radius:80px;
+	border-bottom-left-radius:80px;
+	border-bottom-right-radius:80px;
+}.e3_4 {
+	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
+	width:627px;
+	height:346px;
+	position:absolute;
+	left:971px;
+	top:176px;
+	border-top-left-radius:80px;
+	border-top-right-radius:80px;
+	border-bottom-left-radius:80px;
+	border-bottom-right-radius:80px;
+}.e3_99 {
+	width:312px;
+	height:81px;
+	position:absolute;
+	left:971px;
+	top:309px;
+	border-top-left-radius:32px;
+	border-top-right-radius:32px;
+	border-bottom-left-radius:32px;
+	border-bottom-right-radius:32px;
+	background-image:url({% static 'img/logos/LOGO_DPT.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}.e3_100 {
+	width:303px;
+	height:201px;
+	position:absolute;
+	left:647px;
+	top:229px;
+	border-top-left-radius:41px;
+	border-top-right-radius:41px;
+	border-bottom-left-radius:41px;
+	border-bottom-right-radius:41px;
+	background-image:url({% static 'img/logos/LOGO_DVR.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}.e3_101 {
+	width:287px;
+	height:81px;
+	position:absolute;
+	left:1303px;
+	top:309px;
+	border-top-left-radius:53px;
+	border-top-right-radius:53px;
+	border-bottom-left-radius:53px;
+	border-bottom-right-radius:53px;
+	background-image:url({% static 'img/logos/LOGO_ANSV.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}.e3_105 {
+	width:343px;
+	height:148px;
+	position:absolute;
+	left:465px;
+	top:668px;
+	border-top-left-radius:46px;
+	border-top-right-radius:46px;
+	border-bottom-left-radius:46px;
+	border-bottom-right-radius:46px;
+	background-image:url({% static 'img/logos/LOGO_ANSV.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}.e3_102 {
+	width:397px;
+	height:154px;
+	position:absolute;
+	left:1086px;
+	top:651px;
+	border-top-left-radius:25px;
+	border-top-right-radius:25px;
+	border-bottom-left-radius:25px;
+	border-bottom-right-radius:25px;
+	background-image:url({% static 'img/logos/LOGO_DNRPA.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}.e3_104 {
+	width:304px;
+	height:201px;
+	position:absolute;
+	left:323px;
+	top:229px;
+	border-top-left-radius:37px;
+	border-top-right-radius:37px;
+	border-bottom-left-radius:37px;
+	border-bottom-right-radius:37px;
+	background-image:url({% static 'img/logos/LOGO_RN.png' %});
+	background-repeat:no-repeat;
+	background-size:cover;
+}
 </style>
 
-<div class="container-fluid py-4 px-6">
-    <div class="row mb-8 mt-8 mx-auto">
+<div class=e2_3>
+    <div class="e2_5"></div>
+    <div class="e2_6"></div>
+    <div class="e2_7"></div>
+    <div class="e3_3"></div>
+    <div class="e3_4"></div>
+    <div class="e3_99"></div>
+    <div class="e3_100"></div>
+    <div class="e3_101"></div>
+    <div class="e3_105"></div>
+    <div class="e3_102"></div>
+    <div class="e3_104"></div>
+</div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12 ">
-            <div class="card">
+{% endblock %}
 
-                <div class="card-body p-3">
-                    <div class="row mb-4">
-
-                        <div class="box">
-                            <a href="{% url 'verificaciones' %}">
-                                <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                                <img src="{% static 'img/logos/LOGO_RN.png' %}">
-                            </a>
-                        </div>
-
-                        <div class="box">
-                            <a href="{% url 'verificaciones' %}">
-                                <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                                <img src="{% static 'img/logos/LOGO_DVR.png' %}">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="element-to-hide col-12">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Dirección de Vialidad
-                            Rionegrina<br>
-                            Secretaría de Transporte</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="col-lg-6 col-md-6 col-sm-12 ">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row mb-4">
-
-                        <div class=" box">
-                            <a href="{% url 'dpt' %}">
-                                <img src="{% static 'img/logos/LOGO_DPT.png' %}">
-                            </a>
-                        </div>
-
-                        <div class=" box">
-                            <a href="{% url 'ansv' %}">
-                                <img src="{% static 'img/logos/LOGO_ANSV.png' %}">
-                            </a>
-                        </div>
-
-                    </div>
-
-                    <div class=" element-to-hide col-12">
-                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Sub Secretaría de Seguridad Vial
-                            <br>
-                            Dirección Provincial de Transporte
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mb-8 mx-auto">
-
-        <!-- ITEM -->
-
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body p-2">
-
-                    <!-- <div class="row"> -->
-
-                    <!-- <div class=" text-end"> -->
-                    <!-- <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"> -->
-                    <div class="col box">
-
-                        <a href="{% url 'vehiculos' %}">
-                            <img src="{% static 'img/logos/LOGO_ANSV.png' %}">
-                            <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                        </a>
-                        <!-- <div class="col-8">
-                                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">ANSV</p>
-                                                </div> -->
-                    </div>
-                    <!-- </div> -->
-                    <!-- </div> -->
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ITEM -->
-
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body p-2">
-                    <!-- <div class=" text-end"> -->
-                    <!-- <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md"> -->
-                    <div class="col box">
-
-                        <a href="{% url 'certs_asignados' %}">
-                            <img src="{% static 'img/logos/LOGO_DNRPA.png' %}">
-                            <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                        </a>
-                        <!-- <div class="col-8">
-                                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">DNRPA</p>
-                                                </div> -->
-                        <!-- </div> -->
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- ITEM -->
-    </div>
-    {% endblock content %}
-
-    <!-- Specific JS goes HERE -->
-    {% block scripts %}
-    {% endblock scripts %}
+{% block scripts %}
+{% endblock scripts %}
