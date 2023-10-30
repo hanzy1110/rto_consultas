@@ -47,4 +47,5 @@ def query_dpt(dominio: dict) -> DPTResponse:
 
     dpt_response = json.loads(response.json()["Respuesta"])
 
-    return DPTResponse(**dpt_response)
+    # return DPTResponse(**dpt_response)
+    return dpt_response
