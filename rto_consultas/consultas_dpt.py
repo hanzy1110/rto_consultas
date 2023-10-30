@@ -11,26 +11,26 @@ logger = configure_logger(LOG_FILE)
 # COMO HAGO PARA LLAMAR A LA API?
 @dataclass
 class DPTResponse:
-    dominio: str
-    dominioprov:str
-    tipo:str
-    fechainsc:str
-    anio:str
-    interno:str
-    capacidad:str
-    marca:str
-    numchasis:str
-    modelochasis:str
-    marcachasis:str
-    motornum:str
-    empresa:str
-    domicilio:str
-    codpostal:str
-    localidad:str
-    responsable:str
-    dnirespon:str
-    domicrespon:str
-    telrespon:str
+    Dominio: str
+    DominioProv:str
+    Tipo:str
+    FechaInsc:str
+    Anio:str
+    Interno:str
+    Capacidad:str
+    Marca:str
+    NumChasis:str
+    ModeloChasis:str
+    MarcaChasis:str
+    MotorNum:str
+    Empresa:str
+    Domicilio:str
+    CodPostal:str
+    Localidad:str
+    Responsable:str
+    DNIrespon:str
+    DomicRespon:str
+    TelRespon:str
 
     dict = asdict
 
@@ -50,5 +50,5 @@ def query_dpt(dominio: dict) -> DPTResponse:
     # dpt_response = response.json()
     logger.debug(f"INFO => {dpt_response}")
 
-    # return DPTResponse(**dpt_response)
-    return dpt_response
+    return DPTResponse(**dpt_response)
+    # return dpt_response
