@@ -158,6 +158,22 @@ class ObleasPorTaller(forms.Form):
         label="Planta",
     )
 
+class ConsultaDPTForm(forms.Form):
+    dominio = forms.CharField(
+        label="Dominio",
+        widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
+    )
+    def __init__(self, *args, **kwargs):
+        super(ConsultaDPTForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = "col_w900 col_w900_last"
+        self.helper.layout = Layout(
+            Div(
+                Field("dominio"),
+                Field("ckPatenteMer"),
+                css_class="tr",
+            ),)
+
 
 class InspectionOrderForm(forms.Form):
     # Define form fields

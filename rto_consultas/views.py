@@ -53,6 +53,7 @@ from .models import (
 )
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
+    ConsultaDPTTable,
     HabilitacionesTable,
     ObleasPorTallerTable,
     ResumenTransporteCargaTable,
@@ -76,10 +77,13 @@ from .helpers import (
 )
 
 from .forms import (
+    ConsultaDPTForm,
     CustomRTOForm,
     ObleasPorTaller,
     InspectionOrderForm,
 )  # Import the form you created
+
+from .consultas_dpt import query_dpt, DPTResponse
 
 from .logging import configure_logger
 
@@ -969,3 +973,43 @@ def carga_habilitacion(request):
         form = InspectionOrderForm()
 
     return render(request, "includes/carga_habilitaciones.html", {"form": form})
+
+def consulta_habilitaciones(request):
+    if request.htmx:
+        form = ConsultaDPTForm(request.GET)
+        if form.is_valid():
+            # Query the endpoint =>
+            logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
+            response = query_dpt(form.cleaned_data)
+            logger.debug(f"RESPONSE FROM DPT => ", response)
+
+            table = ConsultaDPTTable(response.dict())
+            return render(request, "includes/table_view.html", {"table": table})
+    else:
+        form = ConsultaDPTForm()
+
+    return render(request, "includes/list_table.html", {"form": form})
+
+@method_decorator(login_required, name="dispatch")
+class ConsultaHabilitaciones(CustomRTOView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    model = Certificados
+    template_name = "includes/list_table.html"
+    paginate_by = 10
+    context_object_name = "Certificados"
+    table_class = ConsultaDPTTable
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=["dominio"],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio",
+        },
+        ids={},
+        types={
+            "dominio": "text",
+        },
+        render_url="consulta_dpt",
+    )

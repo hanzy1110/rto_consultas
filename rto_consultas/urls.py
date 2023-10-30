@@ -83,6 +83,12 @@ urlpatterns += [
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
+
+    path(
+        "consulta_dpt",
+        views.consulta_habilitaciones,
+        name="consulta_habilitaciones",
+    ),
     # path("", include("admin_soft.urls"), name=admin),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]

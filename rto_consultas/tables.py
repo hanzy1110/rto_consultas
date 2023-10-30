@@ -832,3 +832,26 @@ class ResumenTransporteCargaTable(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+class ConsultaDPTTable(tables.Table):
+
+    dominio = tables.Column()
+    dominioprov = tables.Column()
+    tipo = tables.Column()
+    fechainsc = tables.Column()
+    anio = tables.Column()
+    interno = tables.Column()
+    capacidad = tables.Column()
+    marca = tables.Column()
+    numchasis = tables.Column()
+    modelochasis = tables.Column()
+    marcachasis = tables.Column()
+    motornum = tables.Column()
+    empresa = tables.Column()
+    domicilio = tables.Column()
+    codpostal = tables.Column()
+    localidad = tables.Column()
+    responsable = tables.Column()
+    dnirespon = tables.Column()
+    domicrespon = tables.Column()
+    telrespon = tables.Column()
