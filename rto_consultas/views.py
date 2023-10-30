@@ -988,7 +988,7 @@ def consulta_habilitaciones(request):
     else:
         form = ConsultaDPTForm()
 
-    return render(request, "includes/list_table.html", {"form": form})
+    return render(request, "includes/list_table.html", {"form": form, "render_url": "consulta_habilitaciones"})
 
 @method_decorator(login_required, name="dispatch")
 class ConsultaHabilitaciones(CustomRTOView):
