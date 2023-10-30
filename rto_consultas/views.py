@@ -990,26 +990,3 @@ def consulta_habilitaciones(request):
 
     return render(request, "includes/list_table.html", {"form": form, "render_url": "consulta_habilitaciones"})
 
-@method_decorator(login_required, name="dispatch")
-class ConsultaHabilitaciones(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
-    model = Certificados
-    template_name = "includes/list_table.html"
-    paginate_by = 10
-    context_object_name = "Certificados"
-    table_class = ConsultaDPTTable
-    partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
-
-    aux_data = AuxData(
-        query_fields=["dominio"],
-        form_fields={},
-        parsed_names={
-            "dominio": "Dominio",
-        },
-        ids={},
-        types={
-            "dominio": "text",
-        },
-        render_url="consulta_dpt",
-    )

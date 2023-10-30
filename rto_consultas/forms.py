@@ -102,12 +102,10 @@ class CustomRTOForm(forms.Form):
 
         descriptions = map_fields(form_data, model)
 
-
         for ff in form_data.form_fields:
-
             if "estado" in ff:
                 aux_desc = ESTADO_CERTIFICADO
-                cs = [(str(i+1), c) for i, c in enumerate(aux_desc.values())]
+                cs = [(str(i + 1), c) for i, c in enumerate(aux_desc.values())]
             else:
                 desc = descriptions.get(ff, None)
                 # TODO aca van las descripciopnes...
@@ -158,11 +156,20 @@ class ObleasPorTaller(forms.Form):
         label="Planta",
     )
 
+
 class ConsultaDPTForm(forms.Form):
     dominio = forms.CharField(
         label="Dominio",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
     )
+
+    modo = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=[("", ""), (1, "Dominio"), (2, "Habilitación")],
+        required=False,
+        label="Planta",
+    )
+
     def __init__(self, *args, **kwargs):
         super(ConsultaDPTForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -170,9 +177,15 @@ class ConsultaDPTForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Field("dominio"),
-                Field("ckPatenteMer"),
+                Field("dominio"),
                 css_class="tr",
-            ),)
+            ),
+            Div(
+                Field("modo"),
+                Field("modo"),
+                css_class="tr",
+            ),
+        )
 
 
 class InspectionOrderForm(forms.Form):
