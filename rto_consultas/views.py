@@ -983,7 +983,7 @@ def consulta_habilitaciones(request):
             response = query_dpt(form.cleaned_data)
             logger.debug(f"RESPONSE FROM DPT => ", response)
 
-            table = ConsultaDPTTable(response.dict())
+            table = ConsultaDPTTable(response)
             return render(request, "includes/table_view.html", {"table": table})
     else:
         form = ConsultaDPTForm()
