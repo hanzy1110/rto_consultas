@@ -163,11 +163,11 @@ class ConsultaDPTForm(forms.Form):
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
     )
 
-    modo = forms.ChoiceField(
+    consulta = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=[("", ""), (1, "Dominio"), (2, "Habilitación")],
         required=False,
-        label="Planta",
+        label="Tipo de Consulta",
     )
 
     def __init__(self, *args, **kwargs):
@@ -181,8 +181,7 @@ class ConsultaDPTForm(forms.Form):
                 css_class="tr",
             ),
             Div(
-                Field("modo"),
-                Field("modo"),
+                Field("consulta"),
                 css_class="tr",
             ),
         )
