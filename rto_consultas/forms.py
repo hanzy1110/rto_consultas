@@ -106,8 +106,8 @@ class CustomRTOForm(forms.Form):
         for ff in form_data.form_fields:
 
             if "estado" in ff:
-                descriptions = ESTADO_CERTIFICADO
-                cs = [(str(i), c) for i, c in enumerate(descriptions.values())]
+                aux_desc = ESTADO_CERTIFICADO
+                cs = [(str(i), c) for i, c in enumerate(aux_desc.values())]
             else:
                 desc = descriptions.get(ff, None)
                 # TODO aca van las descripciopnes...
