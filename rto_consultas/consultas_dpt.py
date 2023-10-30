@@ -37,7 +37,7 @@ class DPTResponse:
     dict = asdict
 
 
-API_MODES = {"Dominio": "Vehiculos", "Habilitación": "Habilitaciones"}
+API_MODES = {"1": "Vehiculos", "2": "Habilitaciones"}
 
 
 def query_dpt(form_data: dict) -> DPTResponse:
