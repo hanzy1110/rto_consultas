@@ -54,6 +54,7 @@ from .models import (
 from .models import Estados, Tipousovehiculo, Talleres
 from .tables import (
     ConsultaDPTTable,
+    ConsultaHabsTable,
     HabilitacionesTable,
     ObleasPorTallerTable,
     ResumenTransporteCargaTable,
@@ -83,7 +84,7 @@ from .forms import (
     InspectionOrderForm,
 )  # Import the form you created
 
-from .consultas_dpt import query_dpt, DPTResponse
+from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
 
 from .logging import configure_logger
 
@@ -974,6 +975,7 @@ def carga_habilitacion(request):
 
     return render(request, "includes/carga_habilitaciones.html", {"form": form})
 
+
 def consulta_habilitaciones(request):
     if request.htmx:
         form = ConsultaDPTForm(request.GET)
@@ -983,10 +985,25 @@ def consulta_habilitaciones(request):
             dpt_response = query_dpt(form.cleaned_data)
             logger.debug(f"RESPONSE FROM DPT => {dpt_response}")
 
-            table = ConsultaDPTTable([dpt_response.dict(),])
+            if isinstance(dpt_response, DPTResponse):
+                table = ConsultaDPTTable(
+                    [
+                        dpt_response.dict(),
+                    ]
+                )
+            elif isinstance(dpt_response, HabsResponse):
+                table = ConsultaHabsTable(
+                    [
+                        dpt_response.dict(),
+                    ]
+                )
+
             return render(request, "includes/table_view.html", {"table": table})
     else:
         form = ConsultaDPTForm()
 
-    return render(request, "includes/list_table.html", {"form": form, "render_url": "consulta_habilitaciones"})
-
+    return render(
+        request,
+        "includes/list_table.html",
+        {"form": form, "render_url": "consulta_habilitaciones"},
+    )

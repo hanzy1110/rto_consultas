@@ -833,8 +833,8 @@ class ResumenTransporteCargaTable(tables.Table):
 
         return self
 
-class ConsultaDPTTable(tables.Table):
 
+class ConsultaDPTTable(tables.Table):
     Dominio = tables.Column(orderable=False, empty_values=())
     DominioProv = tables.Column(orderable=False, empty_values=())
     Tipo = tables.Column(orderable=False, empty_values=())
@@ -855,3 +855,16 @@ class ConsultaDPTTable(tables.Table):
     DNIRespon = tables.Column(orderable=False, empty_values=())
     DomicRespon = tables.Column(orderable=False, empty_values=())
     TelRespon = tables.Column(orderable=False, empty_values=())
+
+
+class ConsultaHabsTable(tables.Table):
+    Hoy = tables.Column(orderable=False, empty_values=())
+    InicHabilit = tables.Column(orderable=False, empty_values=())
+    NumHabilit = tables.Column(orderable=False, empty_values=())
+    VehiAnio = tables.Column(orderable=False, empty_values=())
+    VehiCapac = tables.Column(orderable=False, empty_values=())
+    VehiInt = tables.Column(orderable=False, empty_values=())
+    VehiPat = tables.Column(orderable=False, empty_values=())
+    VtoHabilit = tables.Column(orderable=False, empty_values=())
+    VtoRevTec = tables.Column(orderable=False, empty_values=())
+    VtoSeguro = tables.Column(orderable=False, empty_values=())
