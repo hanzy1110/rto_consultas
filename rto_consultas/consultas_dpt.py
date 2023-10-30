@@ -34,13 +34,13 @@ class DPTResponse:
 
     dict = asdict
 
-def query_dpt(dominio: str) -> DPTResponse:
+def query_dpt(dominio: dict) -> DPTResponse:
     logger.info(f"DOMINIO => {dominio}")
     client = requests.Session()
 
-    endpoint = "10.0.0.17:60000/dpt_request"
+    endpoint = "http://10.0.0.17:60000/dpt_request"
     client.headers.update({"Content-Type": "application/json"})
-    data = {"dominio":dominio,"mode":"Vehiculos"}
+    data = {"dominio":dominio['dominio'],"mode":"Vehiculos"}
 
     response = client.get(endpoint, data=data)
     logger.debug(f"DPT RESPONSE => {response}")
