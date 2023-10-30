@@ -14,6 +14,21 @@ from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Sub
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
 
+VALS = {1: "Verdadero", 0: "Falso"}
+VALS_ANULADO = {1: "anulado", 0: "vigente"}
+DESCRIPTIONS = {
+    1: "Particular",
+    2: "Transporte de Carga",
+    3: "Transporte Pasajeros",
+    4: "Transporte Municipal",
+}
+ESTADO_CERTIFICADO = {
+    1: "Aprobado",
+    2: "Rechazado",
+    3: "Aprobado Condicional",
+    4: "Reverificado",
+    5: "Vencido",
+}
 
 DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 
@@ -87,13 +102,19 @@ class CustomRTOForm(forms.Form):
 
         descriptions = map_fields(form_data, model)
 
+
         for ff in form_data.form_fields:
+
+            if "estado" in ff:
+                descriptions = ESTADO_CERTIFICADO
+                cs = [(str(i), c) for i, c in enumerate(descriptions.values())]
+            else:
+                desc = descriptions.get(ff, None)
+                # TODO aca van las descripciopnes...
+                cs = [(str(i), c) for i, c in enumerate(desc.values())]
             label = form_data.parsed_names.get(ff, None)
             attributes = form_data.attributes.get(ff, None)
             ids = form_data.ids.get(ff, None)
-            desc = descriptions.get(ff, None)
-            # TODO aca van las descripciopnes...
-            cs = [(str(i), c) for i, c in enumerate(desc.values())]
 
             choices = [("", "")]
             choices.extend(cs)
