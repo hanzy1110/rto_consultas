@@ -28,7 +28,7 @@ class DPTResponse:
     CodPostal:str
     Localidad:str
     Responsable:str
-    DNIrespon:str
+    DNIRespon:str
     DomicRespon:str
     TelRespon:str
 
