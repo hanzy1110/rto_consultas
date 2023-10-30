@@ -981,7 +981,7 @@ def consulta_habilitaciones(request):
             # Query the endpoint =>
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             dpt_response = query_dpt(form.cleaned_data)
-            logger.debug(f"RESPONSE FROM DPT => ", dpt_response)
+            logger.debug(f"RESPONSE FROM DPT => {dpt_response}")
 
             table = ConsultaDPTTable([dpt_response.dict(),])
             return render(request, "includes/table_view.html", {"table": table})
