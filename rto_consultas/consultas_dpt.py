@@ -45,7 +45,9 @@ def query_dpt(dominio: dict) -> DPTResponse:
     response = client.get(endpoint, data=data)
     logger.debug(f"DPT RESPONSE => {response}")
 
-    dpt_response = json.loads(response.json()["Respuesta"])
+    # dpt_response = json.loads(response.json()["Respuesta"])
+    dpt_response = json.loads(response.json())
+    logger.debug(f"INFO => {dpt_response}")
 
     # return DPTResponse(**dpt_response)
     return dpt_response
