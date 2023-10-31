@@ -49,7 +49,7 @@ function get_logfile_data() {
     echo "$modified_text" >$MYSQL_REPL_FILE
 
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
-    sudo rm -rfv "${HOME}/*.info"
+    sudo rm -rf "${HOME}/*.info"
     return 0
 }
 
@@ -96,8 +96,9 @@ done
 
 # Check the flags and execute actions accordingly
 if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
-    # echo "Getting Binary logfile and Position..."
-    # get_logfile_data ""
+    echo "Getting Binary logfile and Position..."
+    get_logfile_data ""
+    unset -xe
     echo "Copying dump..."
     copy_dump ""
     echo "Reloading database..." # Add code to copy the database dump here
