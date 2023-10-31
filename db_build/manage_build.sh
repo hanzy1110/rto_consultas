@@ -96,8 +96,8 @@ done
 
 # Check the flags and execute actions accordingly
 if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
-    echo "Getting Binary logfile and Position..."
-    get_logfile_data ""
+    # echo "Getting Binary logfile and Position..."
+    # get_logfile_data ""
     echo "Copying dump..."
     copy_dump ""
     echo "Reloading database..." # Add code to copy the database dump here
