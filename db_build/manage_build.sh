@@ -3,6 +3,7 @@ set -xe
 source .env
 
 SQL_INIT_DUMP_PATH=/home/ubuntu/git/rto_consultas/db_build/sql_init/a_vehicularunc_ultimo.sql
+MYSQL_REPL_FILE=/home/ubuntu/git/rto_consultas/db_build/sql_init/e_repl_setup.sql
 SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 REMOTE_SERVER="azuresvr"
 REMOTE_DUMP_PATH="/tmp/dump.sql"
@@ -10,7 +11,10 @@ REMOTE_DUMP_PATH="/tmp/dump.sql"
 LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
 # LOCAL_DUMP_FILE="dump.sql"
 # MySQL dump command
-MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE} > $REMOTE_DUMP_PATH"
+MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE}" >$REMOTE_DUMP_PATH
+MYSQL_MASTER_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'show master status \G'"
+MYSQL_FLUSH_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'flush tables with read lock \G'"
+MYSQL_UNLOCK_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'unlock tables\G'"
 # Define default values for flags
 RELOAD=false
 COPY=false
@@ -23,6 +27,29 @@ function copy_dump() {
     # Delete the dump file from the remote server
     ssh $REMOTE_SERVER "rm ${REMOTE_DUMP_PATH}"
     echo "Database dump copied and deleted from the remote server."
+    return 0
+}
+
+function get_logfile_data() {
+    ssh $REMOTE_SERVER "$MYSQL_MASTER_CMD" >"${HOME}/logfile.info"
+    ssh $REMOTE_SERVER "${MYSQL_FLUSH_CMD}" >"${HOME}/flush.info"
+
+    cat "${HOME}/flush.info"
+
+    mysql_out=$(cat "${HOME}/logfile.info")
+    position=$(echo "$mysql_out" | awk '/Position:/{print $2}')
+    log_file=$(echo "$mysql_out" | awk '/File:/{print $2}')
+
+    echo "Position: $position"
+    echo "Log File: $log_file"
+
+    original_text=$(cat $MYSQL_REPL_FILE)
+
+    modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
+    echo "$modified_text" >$MYSQL_REPL_FILE
+
+    ssh $REMOTE_SERVER "${MYSQL_UNLOCK_CMD}" >"${HOME}/unlock.info"
+    sudo rm -rfv "${HOME}/*.info"
     return 0
 }
 
@@ -69,6 +96,8 @@ done
 
 # Check the flags and execute actions accordingly
 if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
+    echo "Getting Binary logfile and Position..."
+    get_logfile_data ""
     echo "Copying dump..."
     copy_dump ""
     echo "Reloading database..." # Add code to copy the database dump here
