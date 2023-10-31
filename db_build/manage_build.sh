@@ -62,6 +62,8 @@ function reload_db() {
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
     sudo docker-compose --env-file .env ps -a
+    echo "Sleeping 5 min to allow db to start... then unlock!"
+    sleep 300
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     sudo rm -rf "${HOME}/*.info"
     return 0
