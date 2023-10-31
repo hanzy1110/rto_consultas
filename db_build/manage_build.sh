@@ -48,8 +48,6 @@ function get_logfile_data() {
     modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
     echo "$modified_text" >$MYSQL_REPL_FILE
 
-    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
-    sudo rm -rf "${HOME}/*.info"
     return 0
 }
 
@@ -64,6 +62,8 @@ function reload_db() {
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
     sudo docker-compose --env-file .env ps -a
+    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
+    sudo rm -rf "${HOME}/*.info"
     return 0
 }
 # Remote server details
