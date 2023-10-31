@@ -11,10 +11,10 @@ REMOTE_DUMP_PATH="/tmp/dump.sql"
 LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
 # LOCAL_DUMP_FILE="dump.sql"
 # MySQL dump command
-MYSQLDUMP_CMD="mysqldump -u ${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE}" >$REMOTE_DUMP_PATH
-MYSQL_MASTER_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'show master status \G'"
-MYSQL_FLUSH_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'flush tables with read lock \G'"
-MYSQL_UNLOCK_CMD="mysql -u ${MYSQL_DUMP_USER} -p ${MYSQL_DUMP_PASSWORD} -e 'unlock tables\G'"
+MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE}" >$REMOTE_DUMP_PATH
+MYSQL_MASTER_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'show master status \G'"
+MYSQL_FLUSH_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'flush tables with read lock \G'"
+MYSQL_UNLOCK_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'unlock tables\G'"
 # Define default values for flags
 RELOAD=false
 COPY=false
@@ -31,8 +31,8 @@ function copy_dump() {
 }
 
 function get_logfile_data() {
-    ssh $REMOTE_SERVER "$MYSQL_MASTER_CMD" >"${HOME}/logfile.info"
-    ssh $REMOTE_SERVER "${MYSQL_FLUSH_CMD}" >"${HOME}/flush.info"
+    ssh $REMOTE_SERVER $MYSQL_MASTER_CMD >"${HOME}/logfile.info"
+    ssh $REMOTE_SERVER ${MYSQL_FLUSH_CMD} >"${HOME}/flush.info"
 
     cat "${HOME}/flush.info"
 
@@ -48,7 +48,7 @@ function get_logfile_data() {
     modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
     echo "$modified_text" >$MYSQL_REPL_FILE
 
-    ssh $REMOTE_SERVER "${MYSQL_UNLOCK_CMD}" >"${HOME}/unlock.info"
+    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     sudo rm -rfv "${HOME}/*.info"
     return 0
 }
