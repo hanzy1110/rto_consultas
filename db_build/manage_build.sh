@@ -98,7 +98,8 @@ done
 if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
     echo "Getting Binary logfile and Position..."
     get_logfile_data ""
-    unset -xe
+    set +x
+    set +e
     echo "Copying dump..."
     copy_dump ""
     echo "Reloading database..." # Add code to copy the database dump here
