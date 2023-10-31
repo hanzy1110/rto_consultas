@@ -63,13 +63,13 @@ function get_logfile_data() {
 
 function reload_db() {
 
-    sudo docker-compose --env-file .env down --remove-orphans
-
     if [ "$1" = "vehicularunc" ]; then
+        sudo docker-compose --env-file .env rm -sv rto_mysql_db
         sudo rm -rf "$SQL_VOLUME"
         sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
     elif [ "$1" = "vtvrionegro" ]; then
+        sudo docker-compose --env-file .env rm -sv rto_mysql_db
         sudo rm -rf "$MYSQL_RN_VOLUME"
         sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
@@ -78,10 +78,6 @@ function reload_db() {
     sudo docker-compose --env-file .env up -d
     sudo docker-compose --env-file .env ps -a
 
-    echo "Sleeping 5 min to allow db to start... then unlock!"
-    sleep 300
-    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
-    sudo rm -rf "${HOME}/*.info"
     return 0
 }
 
@@ -130,9 +126,14 @@ if [ "$RELOAD_NQN" = true ]; then
 
     echo "Copying dump..."
     copy_dump "vehicularunc"
-    echo "Reloading database..." # Add code to copy the database dump here
-    reload_db true $MYSQL_VOLUME
-    # Add code to reload the database here
+    echo "Reloading database..."
+    reload_db "vehicularunc"
+
+    echo "Sleeping 5 min to allow db to start... then unlock!"
+    sleep 300
+    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
+    cat ${HOME}/unlock.info
+    sudo rm -rf "${HOME}/*.info"
 
 elif [ "$RELOAD_USERS" = true ]; then
     echo "Reloading user db..."
@@ -146,9 +147,14 @@ elif [ "$RELOAD_RN" = true ]; then
 
     echo "Copying dump..."
     copy_dump "vtvrionegro"
-    echo "Reloading database..." # Add code to copy the database dump here
-    reload_db true
+    echo "Reloading database..."
+    reload_db "vtvrionegro"
 
-else # Add code to copy the database dump here
+    echo "Sleeping 5 min to allow db to start... then unlock!"
+    sleep 300
+    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
+    sudo rm -rf "${HOME}/*.info"
+
+else
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
 fi
