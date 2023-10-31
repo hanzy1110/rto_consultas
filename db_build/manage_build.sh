@@ -72,7 +72,7 @@ function reload_db() {
 
 function user_db_reload() {
 
-    sudo docker-compose --env-file .env down rto_user_db
+    sudo docker-compose --env-file .env rm -sv rto_user_db
 
     if [ "$1" = true ]; then
         sudo rm -rf postgres_volume
