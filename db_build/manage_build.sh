@@ -18,6 +18,7 @@ MYSQL_UNLOCK_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'unlock 
 # Define default values for flags
 RELOAD=false
 COPY=false
+RELOAD_USERS=false
 
 function copy_dump() {
     # Create a database dump on the remote server
@@ -68,6 +69,20 @@ function reload_db() {
     sudo rm -rf "${HOME}/*.info"
     return 0
 }
+
+function user_db_reload() {
+
+    sudo docker-compose --env-file .env down rto_user_db
+
+    if [ "$1" = true ]; then
+        sudo rm -rf postgres_volume
+    fi
+    sudo docker-compose --env-file .env build rto_user_db --no-cache
+    sudo docker-compose --env-file .env up -d rto_user_db
+    sudo docker-compose --env-file .env ps -a
+
+    return 0
+}
 # Remote server details
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
@@ -89,6 +104,10 @@ while [[ $# -gt 0 ]]; do
             COPY=true
             shift
             ;;
+        -u | --reload-users)
+            RELOAD_USERS=true
+            shift
+            ;;
         *)
             echo "Unknown argument: $1"
             exit 1
@@ -107,13 +126,20 @@ if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
     echo "Reloading database..." # Add code to copy the database dump here
     reload_db true
     # Add code to reload the database here
+
 elif [ "$RELOAD" = true ]; then
     echo "Reloading database..."
     reload_db false
     # Add code to reload the database here
+
 elif [ "$COPY" = true ]; then
     echo "Copying dump..."
     copy_dump ""
+
+elif [ "$RELOAD_USERS" = true ]; then
+    echo "Reloading user db..."
+    user_db_reload true
+
 else # Add code to copy the database dump here
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
 fi
