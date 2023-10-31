@@ -22,6 +22,28 @@ services:
       timeout: 10s
       retries: 5
 
+  rto_rn_db:
+    image: mysql/mysql-server:latest
+    container_name: rto_rn_db
+    ports:
+      - "${MYSQL_RN_PORT}:3306"
+    volumes:
+      - ${MYSQL_RN_VOLUME}:/var/lib/mysql
+      - ./sql_init/rionegro:/docker-entrypoint-initdb.d
+      - ./my.cnf.rn:/etc/mysql/my.cnf
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_RN_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: mysqladmin -p${MYSQL_ROOT_PASSWORD} ping -h localhost
+      interval: 20s
+      timeout: 10s
+      retries: 5
+
   rto_user_db:
     image: postgres:latest
     container_name: rto_user_db
@@ -35,13 +57,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
-
     restart: unless-stopped
-    healthcheck:
-      test: mysqladmin -p${MYSQL_ROOT_PASSWORD} ping -h localhost
-      interval: 20s
-      timeout: 10s
-      retries: 5
 
   rto_cron_mysql_bkp:
     image: fradelg/mysql-cron-backup

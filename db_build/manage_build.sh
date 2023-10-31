@@ -4,24 +4,33 @@ source .env
 
 SQL_INIT_DUMP_PATH=/home/ubuntu/git/rto_consultas/db_build/sql_init/a_vehicularunc_ultimo.sql
 MYSQL_REPL_FILE=/home/ubuntu/git/rto_consultas/db_build/sql_init/e_repl_setup.sql
+SQL_VOLUME=/home/ubuntu/git/rto_consultas/db_build/sql_volume
+POSTGRES_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
+MYSQL_RN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
+
 SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 REMOTE_SERVER="azuresvr"
 REMOTE_DUMP_PATH="/tmp/dump.sql"
+
 # Local directory for dump file
 LOCAL_DUMP_DIR="/home/ubuntu/central_dump/dump$(date +%F%T).sql"
 # LOCAL_DUMP_FILE="dump.sql"
+
 # MySQL dump command
-MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} ${MYSQL_DATABASE}" >$REMOTE_DUMP_PATH
 MYSQL_MASTER_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'show master status \G'"
 MYSQL_FLUSH_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'flush tables with read lock \G'"
 MYSQL_UNLOCK_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'unlock tables\G'"
+
 # Define default values for flags
 RELOAD=false
 COPY=false
 RELOAD_USERS=false
+RELOAD_RN=false
 
 function copy_dump() {
+
     # Create a database dump on the remote server
+    MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} $1" >$REMOTE_DUMP_PATH
     ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}"
     # Copy the dump file to the local machine using rsync
     rsync -e "ssh" --partial --progress $REMOTE_SERVER:$REMOTE_DUMP_PATH $LOCAL_DUMP_DIR
@@ -53,16 +62,22 @@ function get_logfile_data() {
 }
 
 function reload_db() {
+
     sudo docker-compose --env-file .env down --remove-orphans
 
-    if [ "$1" = true ]; then
-        sudo rm -rf sql_volume
+    if [ "$1" = "vehicularunc" ]; then
+        sudo rm -rf "$SQL_VOLUME"
+        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
+        sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
+    elif [ "$1" = "vtvrionegro" ]; then
+        sudo rm -rf "$MYSQL_RN_VOLUME"
         sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
     fi
     sudo docker-compose --env-file .env build --no-cache
     sudo docker-compose --env-file .env up -d
     sudo docker-compose --env-file .env ps -a
+
     echo "Sleeping 5 min to allow db to start... then unlock!"
     sleep 300
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
@@ -70,42 +85,33 @@ function reload_db() {
     return 0
 }
 
-function user_db_reload() {
+function db_reload() {
 
-    sudo docker-compose --env-file .env rm -sv rto_user_db
+    sudo docker-compose --env-file .env rm -sv "$2"
 
     if [ "$1" = true ]; then
-        sudo rm -rf postgres_volume
+        sudo rm -rf "$3"
     fi
-    sudo docker-compose --env-file .env build rto_user_db --no-cache
-    sudo docker-compose --env-file .env up -d rto_user_db
-    sudo docker-compose --env-file .env ps -a
 
+    sudo docker-compose --env-file .env build "$2" --no-cache
+    sudo docker-compose --env-file .env up -d "$2"
+    sudo docker-compose --env-file .env ps -a
     return 0
 }
 # Remote server details
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -rc | --reload-copy)
-            RELOAD=true
-            COPY=true
+        -R | --reload)
+            RELOAD_NQN=true
             shift
             ;;
-        -R | --rebuild)
-            RELOAD=true
-            shift
-            ;;
-        -r | --reload)
-            RELOAD=true
-            shift
-            ;;
-        -c | --copy)
-            COPY=true
-            shift
-            ;;
-        -u | --reload-users)
+        -U | --reload-users)
             RELOAD_USERS=true
+            shift
+            ;;
+        -RN | --reload-rn)
+            RELOAD_RN=true
             shift
             ;;
         *)
@@ -116,29 +122,32 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Check the flags and execute actions accordingly
-if [ "$RELOAD" = true ] && [ "$COPY" = true ]; then
+if [ "$RELOAD_NQN" = true ]; then
     echo "Getting Binary logfile and Position..."
     get_logfile_data ""
     set +x
     set +e
+
     echo "Copying dump..."
-    copy_dump ""
+    copy_dump "vehicularunc"
     echo "Reloading database..." # Add code to copy the database dump here
-    reload_db true
+    reload_db true $MYSQL_VOLUME
     # Add code to reload the database here
-
-elif [ "$RELOAD" = true ]; then
-    echo "Reloading database..."
-    reload_db false
-    # Add code to reload the database here
-
-elif [ "$COPY" = true ]; then
-    echo "Copying dump..."
-    copy_dump ""
 
 elif [ "$RELOAD_USERS" = true ]; then
     echo "Reloading user db..."
-    user_db_reload true
+    db_reload true rto_user_db $POSTGRES_VOLUME
+
+elif [ "$RELOAD_RN" = true ]; then
+    echo "Getting Binary logfile and Position..."
+    get_logfile_data ""
+    set +x
+    set +e
+
+    echo "Copying dump..."
+    copy_dump "vtvrionegro"
+    echo "Reloading database..." # Add code to copy the database dump here
+    reload_db true
 
 else # Add code to copy the database dump here
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."

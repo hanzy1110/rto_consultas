@@ -89,7 +89,7 @@ from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
 from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
-logger = configure_logger(LOG_FILE)
+logger   = configure_logger(LOG_FILE)
 
 
 @login_required
@@ -144,8 +144,8 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     partial_template: str
 
     def get_queryset(self):
-        _export = self.request.GET.copy().pop("_export", None)
-        page = self.request.GET.copy().pop("page", None)
+        _export  = self.request.GET.copy().pop("_export", None)
+        page     = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
         if page:
@@ -174,16 +174,16 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 @method_decorator(login_required, name="dispatch")
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
-    model = Verificaciones
-    paginate_by = 10
+    model                    = Verificaciones
+    paginate_by              = 10
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
-    table_class = VerificacionesTables
+    table_class              = VerificacionesTables
     partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
+    form_class               = CustomRTOForm
 
     aux_data = AuxData(
-        query_fields=[
+        query_fields = [
             "dominiovehiculo",
             "nrocertificado",
             "fecha_desde",
@@ -197,7 +197,7 @@ class ListVerificacionesView(CustomRTOView):
             "idtaller": ("nombre", Talleres),
             "anulado": (None, None),
         },
-        parsed_names={
+        parsed_names = {
             "dominiovehiculo": "Dominio",
             "idestado": "Calificación",
             "idtipouso": "Tipo Uso Vehiculo",
@@ -219,19 +219,19 @@ class ListVerificacionesView(CustomRTOView):
             "idtaller": "#slctIdtaller",
             "anulado": "#slctAnulado",
         },
-        types={
+        types        = {
             "dominiovehiculo": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
             "dni": "select",
         },
-        render_url="verificaciones",
+        render_url   = "verificaciones",
     )
 
     def get_queryset(self):
         logger.info("CALCULATE QUERYSET...")
-        queryset = super().get_queryset()
+        queryset     = super().get_queryset()
         if isinstance(queryset, list):
             pass
             queryset = list(reversed(queryset))
@@ -241,59 +241,59 @@ class ListVerificacionesView(CustomRTOView):
         return queryset
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class CargaObleas(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
+    # authentication_classes           = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
     paginate_by = 10
     template_name = "includes/list_table.html"
-    context_object_name = "Certificados Asignados por taller"
-    table_class = CertificadosAssignTable
-    partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
+    context_object_name                = "Certificados Asignados por taller"
+    table_class                        = CertificadosAssignTable
+    partial_template                   = "includes/table_view.html"
+    form_class                         = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
             "cert_init",
             "cert_end",
         ],
-        form_fields={
+        form_fields  = {
             "idtaller": ("nombre", Talleres),
         },
-        parsed_names={
+        parsed_names = {
             "idtaller": "Nombre Taller",
             "cert_init": "Nro Oblea desde",
             "cert_end": "Nro Oblea hasta",
         },
-        ids={},
-        types={
+        ids          = {},
+        types        = {
             "cert_init": "text",
             "cert_end": "text",
         },
-        fecha_field="fechacarga",
-        render_url="carga_obleas",
+        fecha_field  = "fechacarga",
+        render_url   = "carga_obleas",
     )
 
 
 @method_decorator(login_required, name="dispatch")
 class ResumenObleas(CustomRTOView, LoginRequiredMixin):
-    model = Certificadosasignadosportaller
-    paginate_by = 10
-    template_name = "includes/list_table.html"
+    model               = Certificadosasignadosportaller
+    paginate_by         = 10
+    template_name       = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
-    table_class = ObleasPorTaller
+    table_class         = ObleasPorTaller
     partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
+    form_class          = CustomRTOForm
 
     aux_data = AuxData(
-        query_fields=[
+        query_fields = [
             "fecha_desde",
             "fecha_hasta",
         ],
         form_fields={
             "idtaller": ("nombre", Talleres),
         },
-        parsed_names={
+        parsed_names = {
             "idtaller": "Nombre Taller",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
@@ -302,30 +302,30 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
         },
-        types={
+        types        = {
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
-        fecha_field="fechacarga",
-        render_url="resumen_obleas",
+        fecha_field  = "fechacarga",
+        render_url   = "resumen_obleas",
     )
 
     def get_context_data(self):
         context = super().get_context_data()
 
-        data = []
-        talleres = Talleres.objects.all()
+        data         = []
+        talleres     = Talleres.objects.all()
         if self.request.GET:
             idtaller = self.request.GET.get("taller", None)
             talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
-                idtaller=t.idtaller, disponible__iexact=1
+                idtaller    = t.idtaller, disponible__iexact=1
             )
 
-            cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data           = filter_vup_transporte(certs_by_taller)
             cert_data["taller"] = t.nombre
 
             data.append(cert_data)
@@ -337,14 +337,14 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
         return context
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ListCertificadosAssignView(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
-    model = Certificadosasignadosportaller
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model                              = Certificadosasignadosportaller
     paginate_by = 10
-    template_name = "includes/list_table.html"
-    context_object_name = "Certificados Asignados por taller"
-    table_class = CertificadosAssignTable
+    template_name                      = "includes/list_table.html"
+    context_object_name                = "Certificados Asignados por taller"
+    table_class                        = CertificadosAssignTable
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
 
@@ -371,30 +371,30 @@ class ListCertificadosAssignView(CustomRTOView):
             # "cert_init": "Nro Oblea desde",
             # "cert_end": "Nro Oblea hasta",
         },
-        ids={
+        ids         = {
             "nrocertificado": "#txtNroCertificado",
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
         },
-        types={
+        types       = {
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
             # "cert_init": "text",
             # "cert_end": "text",
         },
-        fecha_field="fechacarga",
+        fecha_field = "fechacarga",
         render_url="certs_asignados",
     )
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ListHabilitaciones(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
+    # authentication_classes           = [authentication.TokenAuthentication]
     model = Habilitacion
-    template_name = "includes/list_table.html"
+    template_name                      = "includes/list_table.html"
     paginate_by = 10
-    context_object_name = "Habilitaciones"
+    context_object_name                = "Habilitaciones"
     table_class = HabilitacionesTable
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
@@ -407,7 +407,7 @@ class ListHabilitaciones(CustomRTOView):
             "fecha_desde",
             "fecha_hasta",
         ],
-        form_fields={},
+        form_fields = {},
         parsed_names={
             "dominio": "Dominio Vehiculo",
             "nrocodigobarrashab": "Nro. Orden de Inspección",
@@ -415,91 +415,91 @@ class ListHabilitaciones(CustomRTOView):
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
         },
-        ids={"dominiovehiculo": "#txtDominio", "nrocodigobarrashab": "#txtNro"},
-        types={
+        ids         = {"dominiovehiculo": "#txtDominio", "nrocodigobarrashab": "#txtNro"},
+        types       = {
             "dominio": "text",
             "nrocodigobarrashab": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
         },
-        render_url="habilitaciones",
+        render_url  = "habilitaciones",
     )
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ListVehiculosView(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
+    # authentication_classes           = [authentication.TokenAuthentication]
     model = Vehiculos
-    template_name = "includes/list_table.html"
+    template_name                      = "includes/list_table.html"
     paginate_by = 10
-    context_object_name = "Vehiculos"
-    table_class = VehiculosTable
+    context_object_name                = "Vehiculos"
+    table_class                        = VehiculosTable
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
 
     aux_data = AuxData(
-        query_fields=["dominio", "marca"],
-        form_fields={"idtipouso": ("descripcion", Tipousovehiculo)},
+        query_fields = ["dominio", "marca"],
+        form_fields  = {"idtipouso": ("descripcion", Tipousovehiculo)},
         parsed_names={
             "dominio": "Dominio Vehiculo",
             "marca": "Marca Vehiculo",
             "idtipouso": "Tipo Uso Vehiculo",
         },
         ids={"dominiovehiculo": "#txtDominio", "marca": "#txtMarca"},
-        types={
+        types        = {
             "marca": "text",
             "dominio": "text",
         },
-        render_url="vehiculos",
+        render_url   = "vehiculos",
     )
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ListCertificadosView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
-    model = Certificados
+    model                              = Certificados
     template_name = "includes/list_table.html"
     paginate_by = 10
     context_object_name = "Certificados"
     table_class = CertificadosTable
-    partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
+    partial_template                   = "includes/table_view.html"
+    form_class                         = CustomRTOForm
 
     aux_data = AuxData(
-        query_fields=["nrocertificado", "fecha", "anulado"],
-        form_fields={
+        query_fields = ["nrocertificado", "fecha", "anulado"],
+        form_fields  = {
             "idtaller": ("nombre", Talleres),
             "anulado": (None, None),
         },
-        parsed_names={
+        parsed_names = {
             "nrocertificado": "Nro. Certificado",
             "anulado": "Anulado",
             "fecha": "Fecha",
             "idtaller": "Nombre Taller",
         },
-        ids={
+        ids          = {
             "nrocertificado": "#txtNroCertificado",
             "fecha": "#txtFechaD",
         },
-        types={
+        types        = {
             "nrocertificado": "text",
             "fecha": "date",
         },
-        render_url="certificados",
+        render_url   = "certificados",
     )
 
 
 @method_decorator(login_required, name="dispatch")
 class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     # authentication_classes = [authentication.TokenAuthentication]
-    model = Certificados
+    model          = Certificados
     paginate_by = 10
-    template_name = "includes/list_table_verificaciones.html"
+    template_name  = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
-    table_class = CertificadosTablesResumen
+    table_class    = CertificadosTablesResumen
     export_formats = ["csv", "tsv", "xls"]
-    table_name = "resumen_verificaciones"
-    form_class = CustomRTOForm
+    table_name     = "resumen_verificaciones"
+    form_class     = CustomRTOForm
 
     aux_data = AuxData(
         query_fields=[
@@ -513,7 +513,7 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
             # "idtipouso": ("descripcion", Tipousovehiculo),
             "idtaller": ("nombre", Talleres),
         },
-        parsed_names={
+        parsed_names = {
             # "dominiovehiculo": "Dominio Vehiculo",
             "idestado": "Estado Certificado",
             # "idtipouso": "Tipo Uso Vehiculo",
@@ -522,35 +522,35 @@ class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
             "fecha_hasta": "Fecha Hasta",
             "idtaller": "Nombre Taller",
         },
-        ids={
+        ids          = {
             # "dominiovehiculo": "#txtDominio",
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
             "nrocertificado": "Nro. Certificado",
         },
-        types={
+        types        = {
             # "dominiovehiculo": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
         },
-        aux={"Button": "DESCARGAR"},
+        aux          = {"Button": "DESCARGAR"},
     )
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class VerHabilitacion(DetailView, LoginRequiredMixin):
     model: Verificaciones
-    template_name = "includes/ver_habilitaciones.html"
+    template_name                      = "includes/ver_habilitaciones.html"
     context_object_name: str
     aux_data: AuxData
 
     def get_object(self):
-        query_params = self.request.GET.copy()
-        id_habilitacion = self.kwargs["idhabilitacion"]
+        query_params       = self.request.GET.copy()
+        id_habilitacion    = self.kwargs["idhabilitacion"]
         dominio = self.kwargs["dominio"]
-        habilitacion = Habilitacion.objects.get(
-            idhabilitacion=id_habilitacion, dominio=dominio
+        habilitacion       = Habilitacion.objects.get(
+            idhabilitacion = id_habilitacion, dominio=dominio
         )
         print(habilitacion)
         self.habilitacion = habilitacion
@@ -559,10 +559,10 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        id_habilitacion = self.kwargs["idhabilitacion"]
-        dominio = self.kwargs["dominio"]
+        id_habilitacion                             = self.kwargs["idhabilitacion"]
+        dominio                                     = self.kwargs["dominio"]
         habilitacion = Habilitacion.objects.get(
-            idhabilitacion=id_habilitacion, dominio=dominio
+            idhabilitacion=id_habilitacion, dominio = dominio
         )
 
         try:
@@ -572,22 +572,22 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
 
         except Exception as e:
             logger.warning("User not found....")
-            usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
-            username = f"{usuario.nombre} {usuario.apellido}"
+            usuario = Usuarios.objects.get(usuario = habilitacion.usuariodictamen)
+            username                               = f"{usuario.nombre} {usuario.apellido}"
 
         context["usuariodictamen"] = username
         if habilitacion.tipopersona in "Jj":
-            context["titular"] = habilitacion.razonsocialtitular
+            context["titular"]     = habilitacion.razonsocialtitular
         else:
             context[
                 "titular"
-            ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+            ]                      = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
 
-        servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
+        servicios = Serviciohab.objects.filter(idhabilitacion = id_habilitacion)
 
         descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
 
-        modificado = bool(habilitacion.modificado)
+        modificado            = bool(habilitacion.modificado)
         logger.debug(f"Modificado => {modificado}")
         context["modificado"] = modificado
 
@@ -595,20 +595,20 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
         return context
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class VerVerificacion(DetailView, LoginRequiredMixin):
     model: Verificaciones
-    template_name = "includes/ver_verificaciones.html"
+    template_name                      = "includes/ver_verificaciones.html"
     context_object_name: str
     aux_data: AuxData
 
     def get_object(self):
-        query_params = self.request.GET.copy()
-        id_taller = self.kwargs["idtaller"]
-        id_verificacion = self.kwargs["idverificacion"]
-        verificacion = Verificaciones.objects.select_related(
+        query_params         = self.request.GET.copy()
+        id_taller            = self.kwargs["idtaller"]
+        id_verificacion      = self.kwargs["idverificacion"]
+        verificacion         = Verificaciones.objects.select_related(
             "dominiovehiculo", "idestado", "codigotitular", "idtaller"
-        ).get(idverificacion=id_verificacion, idtaller=id_taller)
+        ).get(idverificacion = id_verificacion, idtaller=id_taller)
 
         print(verificacion)
         self.verificacion = verificacion
@@ -628,7 +628,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_tara,
             ]
         )
-        MToFI = sum_appropriatelly(
+        MToFI   = sum_appropriatelly(
             [
                 self.verificacion.eje1_fzaizq,
                 self.verificacion.eje2_fzaizq,
@@ -636,7 +636,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_fzaizq,
             ]
         )
-        MToFD = sum_appropriatelly(
+        MToFD   = sum_appropriatelly(
             [
                 self.verificacion.eje1_fzader,
                 self.verificacion.eje2_fzader,
@@ -644,67 +644,67 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_fzader,
             ]
         )
-        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2)
+        MToEf   = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2)
         return MToTara, MToFI, MToFD, MToEf
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        cert = (
+        context                          = super().get_context_data(**kwargs)
+        cert                             = (
             Certificados.objects
             # .select_related("idcategoria")
             .filter(
-                idverificacion_id__exact=self.kwargs["idverificacion"],
-                idtaller_id__exact=self.kwargs["idtaller"],
+                idverificacion_id__exact = self.kwargs["idverificacion"],
+                idtaller_id__exact       = self.kwargs["idtaller"],
             ).values()
         )
-        categoria = Categorias.objects.get(
-            idcategoria__exact=cert[0]["idcategoria"]
+        categoria                        = Categorias.objects.get(
+            idcategoria__exact           = cert[0]["idcategoria"]
         ).descripcion
 
-        estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
+        estado = Estados.objects.get(idestado__exact = cert[0]["idestado"]).descripcion
 
-        localidad = Localidades.objects.get(
-            idlocalidad__exact=self.verificacion.pidlocalidad
+        localidad              = Localidades.objects.get(
+            idlocalidad__exact = self.verificacion.pidlocalidad
         )
 
         adjuntos = Adjuntos.objects.filter(
-            idtaller__exact=cert[0]["idtaller_id"],
-            idverificacion__exact=cert[0]["idverificacion_id"],
+            idtaller__exact       = cert[0]["idtaller_id"],
+            idverificacion__exact = cert[0]["idverificacion_id"],
         )
 
         defectos = Verificacionesdefectos.objects.prefetch_related("idnivel").filter(
             idtaller_id__exact=cert[0]["idtaller_id"],
-            idverificacion_id__exact=cert[0]["idverificacion_id"],
+            idverificacion_id__exact = cert[0]["idverificacion_id"],
         )
 
-        pdf_certificado = Verificacionespdf.objects.filter(
-            idtaller_id__exact=cert[0]["idtaller_id"],
-            idverificacion_id__exact=cert[0]["idverificacion_id"],
+        pdf_certificado              = Verificacionespdf.objects.filter(
+            idtaller_id__exact       = cert[0]["idtaller_id"],
+            idverificacion_id__exact = cert[0]["idverificacion_id"],
         )
 
         print(defectos)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
-        context["observaciones"] = cert[0]["observaciones"]
-        context["vigenciahasta"] = cert[0]["vigenciahasta"]
-        context["estado"] = estado
-        context["categoria"] = categoria
-        context["provincia"] = localidad.idprovincia.descripcion
-        context["localidad"] = localidad.descripcion
+        context["observaciones"]  = cert[0]["observaciones"]
+        context["vigenciahasta"]  = cert[0]["vigenciahasta"]
+        context["estado"]         = estado
+        context["categoria"]      = categoria
+        context["provincia"]      = localidad.idprovincia.descripcion
+        context["localidad"]      = localidad.descripcion
 
         adjuntos = [generate_key(a) for a in adjuntos]
         context["certificado"] = cert[0]
         context["url_certificado"] = generate_key_certificado(pdf_certificado)
-        context["adjuntos"] = adjuntos
+        context["adjuntos"]        = adjuntos
         context["defectos"] = defectos
-        context["mostrarJu"] = ""
-        context["mostrarFi"] = ""
+        context["mostrarJu"]       = ""
+        context["mostrarFi"]       = ""
 
         MToTara, MToFI, MToFD, MToEf = self.get_total_values()
-        context["mto_tara"] = MToTara
+        context["mto_tara"]          = MToTara
         context["mto_fi"] = MToFI
-        context["mto_der"] = MToFD
-        context["mto_eficiencia"] = MToEf
+        context["mto_der"]           = MToFD
+        context["mto_eficiencia"]    = MToEf
 
         # context = handle_context(context, self)
         return context
@@ -714,19 +714,19 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
 def resumen_obleas(request):
     if request.htmx:
         logger.info("RENDERING HTMX!")
-        data = []
-        talleres = Talleres.objects.filter(activo__iexact=1)
-        idtaller = request.GET.get("taller_id", None)
+        data         = []
+        talleres     = Talleres.objects.filter(activo__iexact=1)
+        idtaller     = request.GET.get("taller_id", None)
         logger.debug(request.GET)
         if idtaller:
             talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
 
         for t in talleres:
             certs_by_taller = Certificadosasignadosportaller.objects.filter(
-                idtaller=t.idtaller, disponible__iexact=1
+                idtaller    = t.idtaller, disponible__iexact=1
             )
 
-            cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data           = filter_vup_transporte(certs_by_taller)
             cert_data["taller"] = t.nombre
 
             data.append(cert_data)
@@ -745,29 +745,29 @@ def resumen_obleas(request):
 
 
 def verificaciones_anuales(request):
-    data = []
+    data                               = []
     for year in range(2015, 2023):
-        current = {}
-        start_date = date(year, 1, 1)
-        end_date = date(year, 12, 31)
+        current                        = {}
+        start_date                     = date(year, 1, 1)
+        end_date                       = date(year, 12, 31)
         current["year"] = year
         current["cant_verificaciones"] = Verificaciones.objects.filter(
-            fecha__range=(start_date, end_date)
+            fecha__range               = (start_date, end_date)
         ).count()
 
         current["cant_aprobados"] = Certificados.objects.filter(
-            fecha__range=(start_date, end_date), idestado__exact=1
+            fecha__range = (start_date, end_date), idestado__exact=1
         ).count()
 
         current["cant_aprobados_condicionales"] = Certificados.objects.filter(
-            fecha__range=(start_date, end_date), idestado__exact=2
+            fecha__range=(start_date, end_date), idestado__exact = 2
         ).count()
 
         current["cant_rechazados"] = Certificados.objects.filter(
-            fecha__range=(start_date, end_date), idestado__exact=3
+            fecha__range           = (start_date, end_date), idestado__exact=3
         ).count()
         data.append(current)
-    table = VerificacionesAnuales(data)
+    table                          = VerificacionesAnuales(data)
 
     export_format = request.GET.get("_export", None)
     if TableExport.is_valid_format(export_format):
@@ -777,14 +777,14 @@ def verificaciones_anuales(request):
     return render(request, "includes/table_view.html", {"table": table})
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ResumenTransportePasajeros(CustomRTOView):
-    # authentication_classes = [authentication.TokenAuthentication]
+    # authentication_classes           = [authentication.TokenAuthentication]
     model = Verificaciones
-    paginate_by = 10
-    template_name = "includes/list_table_verificaciones.html"
-    context_object_name = "Verificaciones"
-    table_class = ResumenTransporteTable
+    paginate_by                        = 10
+    template_name                      = "includes/list_table_verificaciones.html"
+    context_object_name                = "Verificaciones"
+    table_class                        = ResumenTransporteTable
 
     aux_data = AuxData(
         query_fields=[
@@ -796,14 +796,14 @@ class ResumenTransportePasajeros(CustomRTOView):
             "idtipouso": ("descripcion", Tipousovehiculo),
             "idtaller": ("nombre", Talleres),
         },
-        parsed_names={
+        parsed_names = {
             "idestado": "Estado Certificado",
             "idtipouso": "Tipo Uso Vehiculo",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
             "idtaller": "Nombre Taller",
         },
-        ids={
+        ids          = {
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
         },
@@ -814,33 +814,33 @@ class ResumenTransportePasajeros(CustomRTOView):
     )
 
 
-@method_decorator(login_required, name="dispatch")
+@method_decorator(login_required, name = "dispatch")
 class ResumenTransporteCarga(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
     paginate_by = 10
     template_name = "includes/list_table_verificaciones.html"
-    context_object_name = "Verificaciones"
-    table_class = ResumenTransporteCargaTable
+    context_object_name                = "Verificaciones"
+    table_class                        = ResumenTransporteCargaTable
 
     aux_data = AuxData(
-        query_fields=[
+        query_fields = [
             "fecha_desde",
             "fecha_hasta",
         ],
-        form_fields={
+        form_fields  = {
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
             "idtaller": ("nombre", Talleres),
         },
-        parsed_names={
+        parsed_names = {
             "idestado": "Estado Certificado",
             "idtipouso": "Tipo Uso Vehiculo",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
             "idtaller": "Nombre Taller",
         },
-        ids={
+        ids          = {
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
         },
@@ -874,15 +874,15 @@ MONTHS_DICT = {
 
 
 class PDFHabilitacion(PDFTemplateView):
-    filename = "HABILITACION.pdf"
+    filename      = "HABILITACION.pdf"
     template_name = "pdf/habilitacion.html"
-    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
+    cmd_options   = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
 
     def get_context_data(self, **kwargs):
         context = super(PDFHabilitacion, self).get_context_data(**kwargs)
 
         id_habilitacion = self.kwargs["idhabilitacion"]
-        # dominio = self.kwargs["dominio"]
+        # dominio       = self.kwargs["dominio"]
         habilitacion = Habilitacion.objects.get(idhabilitacion=id_habilitacion)
 
         try:
@@ -892,7 +892,7 @@ class PDFHabilitacion(PDFTemplateView):
 
         except Exception as e:
             logger.warning("User not found....")
-            user = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+            user     = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
             username = f"{user.nombre} {user.apellido}"
 
         if habilitacion.tipopersona in "Jj":
@@ -900,13 +900,13 @@ class PDFHabilitacion(PDFTemplateView):
         else:
             context[
                 "titular"
-            ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+            ]                  = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
 
         servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
 
         descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
 
-        modificado = bool(habilitacion.modificado)
+        modificado            = bool(habilitacion.modificado)
         logger.debug(f"Modificado => {modificado}")
         context["modificado"] = modificado
 
@@ -928,15 +928,15 @@ class PDFHabilitacion(PDFTemplateView):
 
         logger.debug(f"BARCODE => {barcode_path}")
         context["barcode_path"] = barcode_path
-        context["barcode"] = barcode
+        context["barcode"]      = barcode
 
         fechahora = habilitacion.fechahoracreacion
-        date_str = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
+        date_str  = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
         context["date_str"] = date_str
 
-        context["modelo"] = habilitacion.modelovehiculo
+        context["modelo"]  = habilitacion.modelovehiculo
         context["dominio"] = habilitacion.dominio
-        context["cccf"] = habilitacion.nrocertificadocccf
+        context["cccf"]    = habilitacion.nrocertificadocccf
 
         context["tipo_servicio"] = descripciones
 
@@ -948,13 +948,13 @@ class PDFHabilitacion(PDFTemplateView):
 
 def carga_habilitacion(request):
     if request.method == "POST":
-        form = InspectionOrderForm(request.POST)
+        form        = InspectionOrderForm(request.POST)
         if form.is_valid():
             try:
                 hab = handle_save_hab(form.cleaned_data, request.user)
 
                 logger.info(f"Habilitacion => {hab} SAVED!")
-                success_message = "Form submitted successfully!"
+                success_message      = "Form submitted successfully!"
                 success_message_html = render_to_string(
                     "includes/success_message.html",
                     {"success_message": success_message},
@@ -962,8 +962,8 @@ def carga_habilitacion(request):
                 return HttpResponse(success_message_html)
             except Exception as e:
                 logger.error(e)
-                error_message = "An error occurred: " + str(e)
-                error_message_html = render_to_string(
+                error_message        = "An error occurred: " + str(e)
+                error_message_html   = render_to_string(
                     "includes/error_message.html", {"error_message": error_message}
                 )
                 return HttpResponse(error_message_html)
@@ -971,14 +971,14 @@ def carga_habilitacion(request):
             # For example, you can access form.cleaned_data to get the validated data
             # Then redirect or render a success page
     else:
-        form = InspectionOrderForm()
+        form                         = InspectionOrderForm()
 
     return render(request, "includes/carga_habilitaciones.html", {"form": form})
 
 
 def consulta_habilitaciones(request):
     if request.htmx:
-        form = ConsultaDPTForm(request.GET)
+        form             = ConsultaDPTForm(request.GET)
         if form.is_valid():
             # Query the endpoint =>
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")

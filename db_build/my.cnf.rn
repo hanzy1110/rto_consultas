@@ -1,5 +1,5 @@
 [mysqld]
-server-id=2
+server-id=3
 log-bin=mysql-bin
 relay-log=relay-log
 log-slave-updates=1
