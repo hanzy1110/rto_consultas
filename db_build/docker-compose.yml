@@ -22,6 +22,27 @@ services:
       timeout: 10s
       retries: 5
 
+  rto_user_db:
+    image: postgres:latest
+    container_name: rto_user_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data/
+      # - ./sql_init:/docker-entrypoint-initdb.d
+      # - ./my.cnf:/etc/mysql/my.cnf
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+
+    restart: unless-stopped
+    healthcheck:
+      test: mysqladmin -p${MYSQL_ROOT_PASSWORD} ping -h localhost
+      interval: 20s
+      timeout: 10s
+      retries: 5
+
   rto_cron_mysql_bkp:
     image: fradelg/mysql-cron-backup
     container_name: rto_cron_mysql_bkp
