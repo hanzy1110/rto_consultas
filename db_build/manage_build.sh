@@ -29,8 +29,8 @@ RELOAD_ALL=false
 function copy_dump() {
 
     # Create a database dump on the remote server
-    MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} $1" >$REMOTE_DUMP_PATH
-    ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}"
+    MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} $1 >$REMOTE_DUMP_PATH"
+    ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}" >/dev/null
     # Copy the dump file to the local machine using rsync
     rsync -e "ssh" --partial --progress $REMOTE_SERVER:$REMOTE_DUMP_PATH $LOCAL_DUMP_DIR
     # Delete the dump file from the remote server
