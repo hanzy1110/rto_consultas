@@ -212,8 +212,8 @@ elif [ "$RELOAD_ALL" = true ]; then
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
-    check_replication "vtvrionegro"
-    check_replication "vehicularunc"
+    check_repl_status "vtvrionegro"
+    check_repl_status "vehicularunc"
 
 else
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
