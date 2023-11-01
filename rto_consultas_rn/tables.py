@@ -230,36 +230,15 @@ class VerificacionesTables(tables.Table):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
 
-    # def render_ver_certificado(self, record, value):
-    #     cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
-    #     cached_cert = cache.get(cache_key)
-
-    #     image_url = static(f"img/small-logos/printer.png")
-    #     img_tag = format_html('<img src="{}" />', image_url)
-    #     if cached_cert:
-    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-    #         return img_tag
-    #         # return str(nro_cert)
-    #     else:
-    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-    #         return img_tag
-    #         # return str(nro_cert)
-    # return "No disponible"
-
     def render_idestado(self, value):
         try:
-            # descriptions = map_fields(self.aux_data, self.Meta.model)
             return ESTADO_CERTIFICADO[value.idestado]
-            # return value.descripcion
         except Exception as e:
             print(e)
             return "Unknown!"
 
     def render_idtipovehiculo(self, record):
         try:
-            # descriptions = map_fields(self.aux_data, self.Meta.model)
-            # return descriptions["idtipovehiculo"][record.idtipovehiculo]
-            # return value.descripcion
             idtipovehiculo = record.idtipovehiculo
             return Tipovehiculo.objects.get(
                 idtipovehiculo__exact=idtipovehiculo
@@ -268,19 +247,8 @@ class VerificacionesTables(tables.Table):
             print(e)
             return "N/E"
 
-    # def render_anulado(self, record):
-    #     cert = Certificados.objects.filter(
-    #         idverificacion_id__exact=record.idverificacion,
-    #         idtaller_id__exact=record.idtaller,
-    #     ).values()
-    #     return vals_anulado[cert[0]["anulado"]]
-
     def render_idtipouso(self, value):
         try:
-            # descriptions = map_fields(self.aux_data, self.Meta.model)
-            # logger.debug(f"DESCRIPTIONS FROM IDTIPO USO=> {descriptions}")
-            # logger.debug(f"VALUE => {value}")
-
             return DESCRIPTIONS[value]
 
         except Exception as e:
@@ -308,85 +276,6 @@ class VerificacionesTables(tables.Table):
                 return persona.razonsocial
             case _:
                 return f"{persona.nombre} {persona.apellido}"
-
-    def paginate(
-        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
-    ):
-        per_page = per_page or self._meta.per_page
-        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
-        self.page = self.paginator.page(page)
-
-        return self
-
-
-class HabilitacionesTable(tables.Table):
-    aux_data = AuxData(
-        query_fields=[],
-        form_fields={},
-        parsed_names={"name": "name"},
-    )
-
-    vista_previa = tables.Column(
-        verbose_name="Vista Previa",
-        linkify=(
-            "ver_habilitacion",
-            {
-                "idhabilitacion": tables.A("idhabilitacion"),
-                "dominio": tables.A("dominio"),
-            },
-        ),
-        orderable=False,
-        empty_values=(),
-    )  # (viewname, kwargs)
-
-    nrocodigobarrashab = tables.Column(verbose_name="Nro. Orden Inspección")
-    dominio = tables.Column(verbose_name="Dominio")
-    titular = tables.Column(verbose_name="Titular")
-    fechahoracreacion = tables.Column(verbose_name="Fecha y Hora Creación")
-    usuariodictamen = tables.Column(verbose_name="Emitido Por")
-    modificado = tables.Column(verbose_name="Modificado")
-
-    # imprimir = CustomFileColumn(
-    #     verbose_name="Habilitacion",
-    #     orderable=False,
-    #     empty_values=(),
-    # )  # (viewname, kwargs)
-    imprimir = FileColumnHabs(verbose_name="Imprimir", orderable=False, empty_values=())
-    modificar = tables.Column(verbose_name="Modificado", default="No")
-
-    class Meta:
-        template_name = "tables/htmx_table.html"
-        model = Habilitacion
-        fields = [
-            "nrocodigobarrashab",
-            "dominio",
-            "titular",
-            "fechahoracreacion",
-            "usuariodictamen",
-            "modificado",
-            # HYPERLINKS:
-            "vista_previa",
-            "modificar",
-            "dar_de_baja",
-            "imprimir",
-        ]
-
-    def render_vista_previa(self, record):
-        image_url = static(f"img/small-logos/ver.png")
-        return format_html('<img src="{}" />', image_url)
-
-    def render_usuariodictamen(self, record):
-        try:
-            logger.debug(f"Checking usuario: {record}")
-            user = User.objects.get(username=record.usuariodictamen)
-            username = f"{user.first_name} {user.last_name}"
-
-        except Exception as e:
-            logger.warning("User not found....")
-            usuario = Usuarios.objects.get(usuario=record.usuariodictamen)
-            username = f"{usuario.nombre} {usuario.apellido}"
-
-        return username
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
@@ -833,37 +722,3 @@ class ResumenTransporteCargaTable(tables.Table):
         return self
 
 
-class ConsultaDPTTable(tables.Table):
-    Dominio = tables.Column(orderable=False, empty_values=())
-    DominioProv = tables.Column(orderable=False, empty_values=())
-    Tipo = tables.Column(orderable=False, empty_values=())
-    FechaInsc = tables.Column(orderable=False, empty_values=())
-    Anio = tables.Column(orderable=False, empty_values=())
-    Interno = tables.Column(orderable=False, empty_values=())
-    Capacidad = tables.Column(orderable=False, empty_values=())
-    Marca = tables.Column(orderable=False, empty_values=())
-    NumChasis = tables.Column(orderable=False, empty_values=())
-    ModeloChasis = tables.Column(orderable=False, empty_values=())
-    MarcaChasis = tables.Column(orderable=False, empty_values=())
-    MotorNum = tables.Column(orderable=False, empty_values=())
-    Empresa = tables.Column(orderable=False, empty_values=())
-    Domicilio = tables.Column(orderable=False, empty_values=())
-    CodPostal = tables.Column(orderable=False, empty_values=())
-    Localidad = tables.Column(orderable=False, empty_values=())
-    Responsable = tables.Column(orderable=False, empty_values=())
-    DNIRespon = tables.Column(orderable=False, empty_values=())
-    DomicRespon = tables.Column(orderable=False, empty_values=())
-    TelRespon = tables.Column(orderable=False, empty_values=())
-
-
-class ConsultaHabsTable(tables.Table):
-    Hoy = tables.Column(orderable=False, empty_values=())
-    InicHabilit = tables.Column(orderable=False, empty_values=())
-    NumHabilit = tables.Column(orderable=False, empty_values=())
-    VehiAnio = tables.Column(orderable=False, empty_values=())
-    VehiCapac = tables.Column(orderable=False, empty_values=())
-    VehiInt = tables.Column(orderable=False, empty_values=())
-    VehiPat = tables.Column(orderable=False, empty_values=())
-    VtoHabilit = tables.Column(orderable=False, empty_values=())
-    VtoRevTec = tables.Column(orderable=False, empty_values=())
-    VtoSeguro = tables.Column(orderable=False, empty_values=())
