@@ -145,9 +145,9 @@ function reload_NQN() {
 function check_repl_status() {
 
     if [ "$1" = "vehicularunc" ]; then
-        sudo docker exec rto_mysql_db "mysql -uroot -p123 -e'show slave status \G'" 2>&1 | sudo tee NQN.repl
+        sudo docker exec -it rto_mysql_db mysql -uroot -p123 -e'show slave status \G' 2>&1 | sudo tee NQN.repl
     elif [ "$1" = "vtvrionegro" ]; then
-        sudo docker exec rto_rn_db "mysql -uroot -p123 -e'show slave status \G'" 2>&1 | sudo tee RN.repl
+        sudo docker exec -it rto_rn_db mysql -uroot -p123 -e'show slave status \G' 2>&1 | sudo tee RN.repl
     fi
 
     return 0
