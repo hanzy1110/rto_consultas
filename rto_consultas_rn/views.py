@@ -49,7 +49,7 @@ from .models import (
     Verificacionespdf,
 )
 from .models import Estados, Tipousovehiculo, Talleres
-from ..rto_consultas.tables import (
+from rto_consultas.tables import (
     ConsultaDPTTable,
     ConsultaHabsTable,
     HabilitacionesTable,
@@ -63,7 +63,7 @@ from ..rto_consultas.tables import (
     CertificadosTablesResumen,
     VerificacionesAnuales,
 )
-from ..rto_consultas.helpers import (
+from rto_consultas.helpers import (
     filter_vup_transporte,
     generate_key_certificado,
     handle_context,
@@ -74,14 +74,14 @@ from ..rto_consultas.helpers import (
     handle_save_hab,
 )
 
-from ..rto_consultas.forms import (
+from rto_consultas.forms import (
     ConsultaDPTForm,
     CustomRTOForm,
     ObleasPorTaller,
     InspectionOrderForm,
 )  # Import the form you created
 
-from ..rto_consultas.logging import configure_logger
+from rto_consultas.logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
