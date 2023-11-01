@@ -49,7 +49,7 @@ from .models import (
     Verificacionespdf,
 )
 from rto_consultas_rn.models import Estados, Tipousovehiculo, Talleres
-from rto_consultas.tables import (
+from rto_consultas_rn.tables import (
     ConsultaDPTTable,
     ConsultaHabsTable,
     HabilitacionesTable,
