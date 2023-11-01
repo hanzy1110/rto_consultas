@@ -21,7 +21,7 @@ class UserRouter:
     def db_for_write(self, model, **hints):
         logger.debug(f"READING FOR MODEL => {model}")
         logger.debug(f"APP_LABEL => {model._meta.app_label}")
-        logger.debug(f"CURRENT_STACK => {print_stack()}")
+        # logger.debug(f"CURRENT_STACK => {print_stack()}")
 
         if model._meta.app_label in DJANGO_TABLES:
             return 'users'
