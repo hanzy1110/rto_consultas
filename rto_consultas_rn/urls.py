@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+import rto_consultas_rn.views
 
 urlpatters = [
     path("/verificaciones_rn", views.ListVerificacionesView.as_view(), name="verificaciones_rn"),
