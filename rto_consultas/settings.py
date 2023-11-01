@@ -35,7 +35,8 @@ POSTGRES_HOST     = os.environ["POSTGRES_HOST"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-APP_DIR = Path(__file__).resolve().parent
+RTO_CONSULTAS_DIR = Path(__file__).resolve().parent
+RTO_CONSULTAS_RN_DIR = BASE_DIR / 'rto_consultas_rn'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -101,9 +102,9 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             # BASE_DIR / 'templates',
-            APP_DIR
+            RTO_CONSULTAS_DIR
             / "templates",
-            BASE_DIR / 'rto_consultas_rn'/ 'templates',
+            RTO_CONSULTAS_RN_DIR / 'templates',
         ],
         "APP_DIRS": True,
         "OPTIONS": {
