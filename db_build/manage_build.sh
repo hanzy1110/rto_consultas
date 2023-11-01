@@ -2,9 +2,17 @@
 set -xe
 source .env
 
-SQL_INIT_DUMP_PATH=/home/ubuntu/git/rto_consultas/db_build/sql_init/a_vehicularunc_ultimo.sql
-MYSQL_REPL_FILE=/home/ubuntu/git/rto_consultas/db_build/sql_init/e_repl_setup.sql
-SQL_VOLUME=/home/ubuntu/git/rto_consultas/db_build/sql_volume
+SQL_INIT_RN=/home/ubuntu/git/rto_consultas/db_build/sql_init/rionegro
+SQL_INIT_NQN=/home/ubuntu/git/rto_consultas/db_build/sql_init
+
+SQL_INIT_DUMP_NQN=$SQL_INIT_NQN/a_vehicularunc_ultimo.sql
+SQL_INIT_DUMP_RN=$SQL_INIT_RN/a_vtvrionegro_ultimo.sql
+
+MYSQL_REPL_NQN=$SQL_INIT_NQN/e_repl_setup.sql
+MYSQL_REPL_RN=$SQL_INIT_RN/e_repl_setup.sql
+
+# DATABASE VOLUMES
+MYSQL_NQN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/sql_volume
 POSTGRES_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
 MYSQL_RN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
 
@@ -28,14 +36,16 @@ RELOAD_ALL=false
 
 function copy_dump() {
 
-    # Create a database dump on the remote server
     MYSQLDUMP_CMD="mysqldump -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} $1 >$REMOTE_DUMP_PATH"
-    ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}" >/dev/null
-    # Copy the dump file to the local machine using rsync
+    ssh $REMOTE_SERVER "${MYSQLDUMP_CMD}"
     rsync -e "ssh" --partial --progress $REMOTE_SERVER:$REMOTE_DUMP_PATH $LOCAL_DUMP_DIR
-    # Delete the dump file from the remote server
     ssh $REMOTE_SERVER "rm ${REMOTE_DUMP_PATH}"
-    echo "Database dump copied and deleted from the remote server."
+
+    # Kinda meaningless
+    if [ $? = 0 ]; then
+        echo "Database dump copied and deleted from the remote server."
+    fi
+
     return 0
 }
 
@@ -55,7 +65,12 @@ function get_logfile_data() {
     original_text=$(cat $MYSQL_REPL_FILE)
 
     modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
-    echo "$modified_text" >$MYSQL_REPL_FILE
+
+    if [ "$1" = "vehicularunc" ]; then
+        echo "$modified_text" >$MYSQL_REPL_NQN
+    elif [ "$1" = "vtvrionegro" ]; then
+        echo "$modified_text" >$MYSQL_REPL_RN
+    fi
 
     return 0
 }
@@ -64,13 +79,13 @@ function reload_db() {
 
     if [ "$1" = "vehicularunc" ]; then
         sudo docker-compose --env-file .env rm -sv --force rto_mysql_db
-        sudo rm -rf "$SQL_VOLUME"
-        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
+        sudo rm -rf "$MYSQL_NQN_VOLUME"
+        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_NQN
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
     elif [ "$1" = "vtvrionegro" ]; then
-        sudo docker-compose --env-file .env rm -sv rto_mysql_db
+        sudo docker-compose --env-file .env rm -sv --force rto_rn_db
         sudo rm -rf "$MYSQL_RN_VOLUME"
-        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
+        sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_RN
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
     fi
     sudo docker-compose --env-file .env build --no-cache
@@ -124,6 +139,17 @@ function reload_NQN() {
 
     return 0
 }
+
+function check_repl_status() {
+
+    if [ "$1" = "vehicularunc" ]; then
+        sudo docker exec rto_mysql_db "mysql -uroot -p123 -e'show slave status \G'" 2>&1 | sudo tee NQN.repl
+    elif [ "$1" = "vtvrionegro" ]; then
+        sudo docker exec rto_rn_db "mysql -uroot -p123 -e'show slave status \G'" 2>&1 | sudo tee RN.repl
+    fi
+
+    return 0
+}
 # Remote server details
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
@@ -153,36 +179,41 @@ done
 
 # Check the flags and execute actions accordingly
 if [ "$RELOAD_NQN" = true ]; then
-    reload_NQN "" 2>&1 | tee ./NQN.log
+    reload_NQN "" 2>&1 | sudo tee ./NQN.log
 
     echo "Sleeping 5 min to allow db to start... then unlock!"
     sleep 300
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
+
+    check_replication "vehicularunc"
 
 elif [ "$RELOAD_USERS" = true ]; then
     echo "Reloading user db..."
     db_reload true rto_user_db $POSTGRES_VOLUME
 
 elif [ "$RELOAD_RN" = true ]; then
-    reload_RN "" 2>&1 | tee ./RN.log
+    reload_RN "" 2>&1 | sudo tee ./RN.log
 
     echo "Sleeping 5 min to allow db to start... then unlock!"
     sleep 300
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
+    check_replication "vtvrionegro"
 
 elif [ "$RELOAD_ALL" = true ]; then
-    reload_NQN "" 2>&1 | tee ./NQN.log
-    reload_RN "" 2>&1 | tee ./RN.log
+    reload_NQN "" 2>&1 | sudo tee ./NQN.log
+    reload_RN "" 2>&1 | sudo tee ./RN.log
 
     echo "Sleeping 7 min to allow db to start... then unlock!"
     sleep 420
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
+    check_replication "vtvrionegro"
+    check_replication "vehicularunc"
 
 else
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
