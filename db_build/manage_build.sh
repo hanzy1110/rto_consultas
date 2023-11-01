@@ -33,6 +33,7 @@ MYSQL_UNLOCK_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'unlock 
 RELOAD_USERS=false
 RELOAD_RN=false
 RELOAD_ALL=false
+REPLICATION_STATUS=false
 
 function copy_dump() {
 
@@ -172,6 +173,10 @@ while [[ $# -gt 0 ]]; do
             RELOAD_ALL=true
             shift
             ;;
+        -r | --replication)
+            REPLICATION_STATUS=true
+            shift
+            ;;
         *)
             echo "Unknown argument: $1"
             exit 1
@@ -217,7 +222,9 @@ elif [ "$RELOAD_ALL" = true ]; then
     sudo rm -rf "${HOME}/*.info"
     check_repl_status "vtvrionegro"
     check_repl_status "vehicularunc"
-
+elif [ "$REPLICATION_STATUS" = true ]; then
+    check_repl_status "vtvrionegro"
+    check_repl_status "vehicularunc"
 else
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
 fi
