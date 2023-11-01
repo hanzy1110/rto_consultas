@@ -223,7 +223,9 @@ elif [ "$RELOAD_ALL" = true ]; then
     check_repl_status "vtvrionegro"
     check_repl_status "vehicularunc"
 elif [ "$REPLICATION_STATUS" = true ]; then
+    echo "REPLICATION FOR VTVRIONEGRO..."
     check_repl_status "vtvrionegro"
+    echo "REPLICATION FOR VEHICULARUNC..."
     check_repl_status "vehicularunc"
 else
     echo "No flags provided. Use -r or --reload to reload the database, -c or --copy to copy the dump, or both."
