@@ -18,7 +18,7 @@ def configure_logger(log_filename, filename=__name__):
         "version": 1,
         "formatters": {
             "verbose": {
-                "format": "[{levelname}]--[{asctime}] -- [{module}-{lineno}--{funcname}] => {message}",
+                "format": "[{levelname}]--[{asctime}] -- [{module}-{lineno}--{funcName}] => {message}",
                 "style": "{",
             },
         },
