@@ -110,3 +110,4 @@ urlpatterns += [
         name="resumen_dpt_carga",
     ),
 ]
+urlpatterns += [path("", include("rto_consultas_rn.urls")),]

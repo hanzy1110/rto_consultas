@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rto_consultas",
+    "rto_consultas_rn",
     "django_tables2",
     "django_htmx",
     "wkhtmltopdf",
