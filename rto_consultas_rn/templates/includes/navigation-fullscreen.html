@@ -1,0 +1,69 @@
+  <!-- Navbar -->
+{% load static %}
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .image-container {
+    text-align: center;
+  }
+
+  .top-image {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .bottom-images {
+    display: flex;
+    justify-content: center;
+  }
+
+  .image {
+    margin: 0 10px; /* Adjust the horizontal spacing between images */
+  }
+  img {
+    max-width: 50%;
+    height: auto;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+
+  <div class="container-fluid pe-0">
+
+    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </span>
+    </button>
+
+    <div class="container" id="navigation">
+  <div class="image-container">
+    <!-- <div class="top-image">
+
+         <img src="{% static 'img/logos/banner_logo1RTO.png' %}" class="h-9" alt="">
+         <div class="image">
+         <img src="{% static 'img/logos/banner_logo5Fain.png' %}"  alt="">
+         </div>
+
+         </div> -->
+    <div class="bottom-images">
+      <div class="image">
+        <img src="{% static 'img/logos/logo_inicio.png' %}"  alt="">
+      </div>
+      <!-- <div class="image">
+           <img src="{% static 'img/logos/banner_logo_5_Fain.png' %}"  alt="">
+           </div> -->
+      <!-- <div class="image">
+           <img src="{% static 'img/logos/Seguridad_Vial.png' %}"  alt="">
+           </div> -->
+    </div>
+  </div>
+    </div>
+  </div>
+</nav>
+<!-- End Navbar -->

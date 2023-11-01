@@ -102,7 +102,8 @@ TEMPLATES = [
         "DIRS": [
             # BASE_DIR / 'templates',
             APP_DIR
-            / "templates"
+            / "templates",
+            BASE_DIR / 'rto_consultas_rn'/ 'templates',
         ],
         "APP_DIRS": True,
         "OPTIONS": {

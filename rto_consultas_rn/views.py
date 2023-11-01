@@ -141,13 +141,13 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 @method_decorator(login_required, name="dispatch")
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
-    model                    = Verificaciones
-    paginate_by              = 10
-    template_name = "includes/list_table_verificaciones.html"
+    model               = Verificaciones
+    paginate_by         = 10
+    template_name       = "rto_consultas_rn/includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
-    table_class              = VerificacionesTables
-    partial_template = "includes/table_view.html"
-    form_class               = CustomRTOForm
+    table_class         = VerificacionesTables
+    partial_template    = "rto_consultas_rn/includes/table_view.html"
+    form_class          = CustomRTOForm
 
     aux_data = AuxData(
         query_fields = [

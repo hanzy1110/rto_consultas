@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .box {
+        width: 50%;
+        height: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px dashed #000000; */
+        margin: auto;
+    }
+
+    element-to-hide {
+        display: flex;
+    }
+
+    .title-special {
+
+        width: 50%;
+        height: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid #000000; */
+        margin: 0 auto;
+    }
+
+    /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+    @media screen and (max-width: 768px) {
+
+        /* Adjust the styles for mobile screens */
+        .element-to-hide {
+            display: none;
+        }
+
+        .box {
+            /* Define the styles you want for the 'box' class on mobile screens */
+            /* For example, you may want to change the display property to 'block' and remove width and height */
+            display: flex;
+            width: 100%;
+            height: auto;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        padding: 6rem 6rem;
+        /* Adjust the padding values as needed for size */
+        font-size: 18pt;
+        /* Adjust the font size as needed */
+        /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
+        /* color: var(""); */
+    }
+
+    img {
+        width: 30%;
+        min-width: 100px;
+        height: auto;
+        margin: auto;
+    }
+
+</style>
+
+<div class="container-fluid py-4 px-6">
+    <div class="row mb-8 mt-8 mx-auto">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 ">
+            <div class="card">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 title-special element-to-hide">
+                    <h2 style="text-align: center;">Auditoría</h2>
+                </div>
+
+                <div class="card-body p-3">
+
+                    <div class="row mb-4 mt-4">
+
+                        <div class="col box">
+                            <a href="{% url 'dpt' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_DPT.png' %}">
+                            </a>
+                        </div>
+
+                        <div class="col box">
+                            <a href="{% url 'ansv' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_ANSV.png' %}">
+                            </a>
+                        </div>
+
+                        <!-- </div> -->
+
+                        <!-- <div class="box element-to-hide col-12">
+                                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Sub Secretaría de Seguridad Vial
+                                                        <br>
+                                                        Dirección Provincial de Transporte
+                                                    </p>
+                                                </div> -->
+
+                        <!-- <div class="row mb-4"> -->
+
+                        <div class="col box">
+                            <a href="{% url 'sec_transporte' %}">
+                                <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
+                                <img class="d-block" src="{% static 'img/logos/LOGO_RN.png' %}">
+                            </a>
+                        </div>
+
+                        <div class="col box">
+                            <a href="{% url 'dvr' %}">
+                                <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
+                                <img class="d-block" src="{% static 'img/logos/LOGO_DVR.png' %}">
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- <div class="box element-to-hide col-12">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Dirección de Vialidad
+                                        Rionegrina<br>
+                                        Secretaría de Transporte</p>
+                                </div> -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-8 mx-auto">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+            <div class="col-lg-12 col-md-12 col-sm-12 title-special element-to-hide">
+                <h2 style="text-align: center;">Consultas Externas</h2>
+            </div>
+
+            <div class="row mb-4 mt-4">
+
+                <div class="col box">
+                    <a href="https://rto.seguridadvial.gob.ar/">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_ANSV.png' %}">
+                    </a>
+                </div>
+                <!-- <div class="card-body p-2">
+
+                                </div> -->
+
+                <div class="col box">
+                    <a href="{% url 'consulta_habilitaciones' %}">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_DNRPA.png' %}">
+                    </a>
+                </div>
+                <!-- <div class="card-body p-2">
+                                </div> -->
+
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+    <!-- Specific JS goes HERE -->
+    {% block scripts %}
+    {% endblock scripts %}
