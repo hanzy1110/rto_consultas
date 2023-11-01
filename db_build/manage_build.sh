@@ -98,7 +98,7 @@ function db_reload() {
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -R | --reload)
+        -R | --reload-nqn)
             RELOAD_NQN=true
             shift
             ;;
