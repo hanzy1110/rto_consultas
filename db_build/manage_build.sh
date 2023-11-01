@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+# set -xe
 source .env
 
 SQL_INIT_RN=/home/ubuntu/git/rto_consultas/db_build/sql_init/rionegro
@@ -194,7 +194,7 @@ if [ "$RELOAD_NQN" = true ]; then
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
 
-    check_replication "vehicularunc"
+    check_repl_status "vehicularunc"
 
 elif [ "$RELOAD_USERS" = true ]; then
     echo "Reloading user db..."
@@ -208,7 +208,7 @@ elif [ "$RELOAD_RN" = true ]; then
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
-    check_replication "vtvrionegro"
+    check_repl_status "vtvrionegro"
 
 elif [ "$RELOAD_ALL" = true ]; then
     reload_NQN "" 2>&1 | sudo tee ./NQN.log
