@@ -3,9 +3,9 @@ echo "Entrypoint..."
 # source .env.prod
 echo "Setting up database..."
 python manage.py makemigrations rto_consultas --noinput
-python manage.py migrate --fake-initial
+python manage.py migrate --database users --no-input
 python manage.py collectstatic --noinput
-python manage.py createsuperuser --no-input --database users
+python manage.py createsuperuser --database users --no-input
 
 sleep 10
 echo "Starting Server..."
