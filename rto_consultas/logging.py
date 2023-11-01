@@ -1,38 +1,49 @@
+import os
 import logging
 import logging.config
 
+import inspect
+import traceback
 
-def configure_logger(log_filename):
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
+
+def print_stack():
+   frame = inspect.currentframe()
+   stack_trace = traceback.format_stack(frame)
+   return ''.join(stack_trace)
+
+
+def configure_logger(log_filename, filename=__name__):
     log_config = {
         "version": 1,
         "formatters": {
             "verbose": {
-                "format": "[{levelname}]--[{asctime}] => {message}",
+                "format": "[{levelname}]--[{asctime}] -- [{module}-{lineno}--{funcname}] => {message}",
                 "style": "{",
             },
         },
         "handlers": {
             "file": {
-                "level": "INFO",
+                "level": LOG_LEVEL,
                 "class": "logging.FileHandler",
                 "filename": log_filename,
                 "formatter": "verbose",
             },
             "console": {
-                "level": "DEBUG",
+                "level": LOG_LEVEL,
                 "class": "logging.StreamHandler",
                 "formatter": "verbose",
             },
         },
         "root": {
             "handlers": ["file", "console"],
-            "level": "DEBUG",
+            "level": LOG_LEVEL,
         },
     }
 
     logging.config.dictConfig(log_config)
 
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(filename)
     return logger
 
 
