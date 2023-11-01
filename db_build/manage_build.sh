@@ -188,8 +188,8 @@ done
 if [ "$RELOAD_NQN" = true ]; then
     reload_NQN "" 2>&1 | sudo tee ./NQN.log
 
-    echo "Sleeping 5 min to allow db to start... then unlock!"
-    sleep 300
+    echo "Sleeping 8 min to allow db to start... then unlock!"
+    sleep 480
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
@@ -203,8 +203,8 @@ elif [ "$RELOAD_USERS" = true ]; then
 elif [ "$RELOAD_RN" = true ]; then
     reload_RN "" 2>&1 | sudo tee ./RN.log
 
-    echo "Sleeping 5 min to allow db to start... then unlock!"
-    sleep 300
+    echo "Sleeping 8 min to allow db to start... then unlock!"
+    sleep 480
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
@@ -215,8 +215,8 @@ elif [ "$RELOAD_ALL" = true ]; then
     sleep 300
     reload_RN "" 2>&1 | sudo tee ./RN.log
 
-    echo "Sleeping 7 min to allow db to start... then unlock!"
-    sleep 420
+    echo "Sleeping 8 min to allow db to start... then unlock!"
+    sleep 480
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
     cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
