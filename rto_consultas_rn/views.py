@@ -48,12 +48,8 @@ from .models import (
     Verificacionesdefectos,
     Verificacionespdf,
 )
-from rto_consultas_rn.models import Estados, Tipousovehiculo, Talleres
-from rto_consultas_rn.tables import (
-    ConsultaDPTTable,
-    ConsultaHabsTable,
-    HabilitacionesTable,
-    ObleasPorTallerTable,
+from .models import Estados, Tipousovehiculo, Talleres
+from .tables import (
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
