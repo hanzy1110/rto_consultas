@@ -112,7 +112,7 @@ function db_reload() {
 function reload_RN() {
 
     echo "Getting Binary logfile and Position..."
-    get_logfile_data ""
+    get_logfile_data "vtvrionegro"
     set +x
     set +e
 
@@ -128,7 +128,7 @@ function reload_RN() {
 function reload_NQN() {
 
     echo "Getting Binary logfile and Position..."
-    get_logfile_data ""
+    get_logfile_data "vehicularunc"
     # set +x
     # set +e
 
