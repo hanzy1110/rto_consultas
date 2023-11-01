@@ -111,15 +111,16 @@ function db_reload() {
 
 function reload_RN() {
 
+    DATABASE=vtvrionegro
     echo "Getting Binary logfile and Position..."
-    get_logfile_data "vtvrionegro"
+    get_logfile_data "$DATABASE"
     set +x
     set +e
 
     echo "Copying dump..."
-    copy_dump "vtvrionegro"
+    copy_dump "$DATABASE"
     echo "Reloading database..."
-    reload_db "vtvrionegro"
+    reload_db "$DATABASE"
 
     return 0
 }
@@ -127,15 +128,16 @@ function reload_RN() {
 
 function reload_NQN() {
 
+    DATABASE=vehicularunc
     echo "Getting Binary logfile and Position..."
-    get_logfile_data "vehicularunc"
+    get_logfile_data "$DATABASE"
     # set +x
     # set +e
 
     echo "Copying dump..."
-    copy_dump "vehicularunc"
+    copy_dump "$DATABASE"
     echo "Reloading database..."
-    reload_db "vehicularunc"
+    reload_db "$DATABASE"
 
     return 0
 }
@@ -205,6 +207,7 @@ elif [ "$RELOAD_RN" = true ]; then
 
 elif [ "$RELOAD_ALL" = true ]; then
     reload_NQN "" 2>&1 | sudo tee ./NQN.log
+    sleep 300
     reload_RN "" 2>&1 | sudo tee ./RN.log
 
     echo "Sleeping 7 min to allow db to start... then unlock!"
