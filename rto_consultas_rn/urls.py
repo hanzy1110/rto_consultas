@@ -5,10 +5,16 @@ from django.urls import path, include
 import rto_consultas_rn.views as views
 
 urlpatterns = [
-    path("verificaciones_rn", views.ListVerificacionesView.as_view(), name="verificaciones_rn"),
+    path("dvr", views.dvr_view, name="dvr"),
+    path("sec_transporte",
+         views.secretaria_transporte_view,
+         name="sec_transp"),
     path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
+    path("verificaciones_rn",
+         views.ListVerificacionesView.as_view(),
+         name="verificaciones_rn"),
 ]

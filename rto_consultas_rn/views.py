@@ -86,6 +86,25 @@ from rto_consultas.logging import configure_logger
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
 
+
+@login_required
+def rn_view(request):
+    template_name = "pages/RN/index_rn.html"
+    return render(request, template_name, {"segment": "index"})
+
+
+@login_required
+def dvr_view(request):
+    template_name = "pages/RN/dvr_index.html"
+    return render(request, template_name, {"segment": "index"})
+
+
+@login_required
+def secretaria_transporte_view(request):
+    template_name = "pages/RN/index_rn_transporte.html"
+    return render(request, template_name, {"segment": "index"})
+
+
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     model: Model
     paginate_by: int
