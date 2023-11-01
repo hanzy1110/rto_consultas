@@ -62,13 +62,13 @@ function get_logfile_data() {
     echo "Position: $position"
     echo "Log File: $log_file"
 
-    original_text=$(cat $MYSQL_REPL_FILE)
-
-    modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
-
     if [ "$1" = "vehicularunc" ]; then
+        original_text=$(cat $MYSQL_REPL_NQN)
+        modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
         echo "$modified_text" >$MYSQL_REPL_NQN
     elif [ "$1" = "vtvrionegro" ]; then
+        original_text=$(cat $MYSQL_REPL_RN)
+        modified_text=$(echo "$original_text" | sed -e "s/MASTER_LOG_FILE='[^']*'/MASTER_LOG_FILE='$log_file'/" -e "s/MASTER_LOG_POS=[0-9]*/MASTER_LOG_POS=$position/")
         echo "$modified_text" >$MYSQL_REPL_RN
     fi
 
