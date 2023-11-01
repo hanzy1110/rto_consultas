@@ -5,7 +5,7 @@ from django.templatetags.static import static
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from .models import (
+from rto_consultas_rn.models import (
     # VWVerificaciones,
     Localidades,
     Usuarios,
@@ -18,7 +18,7 @@ from .models import (
     Certificadosasignadosportaller,
     Serviciostransporte,
 )
-from .models import Estados, Tipousovehiculo, Talleres
+from rto_consultas_rn.models import Estados, Tipousovehiculo, Talleres
 from rto_consultas.helpers import (
     LOG_FILE,
     AuxData,

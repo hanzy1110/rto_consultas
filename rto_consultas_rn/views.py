@@ -48,8 +48,8 @@ from .models import (
     Verificacionesdefectos,
     Verificacionespdf,
 )
-from .models import Estados, Tipousovehiculo, Talleres
-from .tables import (
+from rto_consultas_rn.models import Estados, Tipousovehiculo, Talleres
+from rto_consultas_rn.tables import (
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
