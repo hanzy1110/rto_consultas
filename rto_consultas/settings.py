@@ -21,6 +21,13 @@ MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
 MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
+MYSQL_RN_HOST = os.environ["MYSQL_HOST"]
+MYSQL_RN_USER = os.environ["MYSQL_USER"]
+MYSQL_RN_PORT = os.environ["MYSQL_RN_PORT"]
+MYSQL_RN_DATABASE = os.environ["MYSQL_RN_DATABASE"]
+MYSQL_RN_PASSWORD = os.environ["MYSQL_PASSWORD"]
+MYSQL_RN_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
+
 POSTGRES_DB = os.environ["POSTGRES_DB"]
 POSTGRES_USER = os.environ["POSTGRES_USER"]
 POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
@@ -122,6 +129,14 @@ DATABASES = {
         "PASSWORD": MYSQL_PASSWORD,
         "HOST": MYSQL_HOST,
         "PORT": MYSQL_PORT,
+    },
+    "rio_negro": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": MYSQL_RN_DATABASE,
+        "USER": MYSQL_RN_USER,
+        "PASSWORD": MYSQL_RN_PASSWORD,
+        "HOST": MYSQL_RN_HOST,
+        "PORT": MYSQL_RN_PORT,
     },
     "users": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
