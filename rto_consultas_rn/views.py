@@ -81,7 +81,7 @@ from rto_consultas.forms import (
     InspectionOrderForm,
 )  # Import the form you created
 
-from .rto_consultas.logging import configure_logger
+from rto_consultas.logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
