@@ -8,7 +8,7 @@ urlpatterns = [
     path("dvr", views.dvr_view, name="dvr"),
     path("sec_transporte",
          views.secretaria_transporte_view,
-         name="sec_transp"),
+         name="sec_transporte"),
     path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
         views.VerVerificacion.as_view(),
