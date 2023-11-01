@@ -17,7 +17,7 @@ class Adjuntos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'adjuntos'
         unique_together = (('idarchivo', 'idtaller'),)
 
@@ -31,7 +31,7 @@ class Adjuntosauditoria(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'adjuntosauditoria'
 
 
@@ -46,7 +46,7 @@ class Adjuntosexcepcion(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'adjuntosexcepcion'
         unique_together = (('idadjuntosexcepcion', 'idtaller'),)
 
@@ -59,7 +59,7 @@ class Adjuntosmantenimientos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'adjuntosmantenimientos'
 
 
@@ -74,7 +74,7 @@ class Adjuntospendientes(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'adjuntospendientes'
         unique_together = (('idarchivo', 'idtaller'),)
 
@@ -90,7 +90,7 @@ class Adjuntosprorroga(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'adjuntosprorroga'
 
 
@@ -110,7 +110,7 @@ class Administrativos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'administrativos'
         unique_together = (('idadministrativo', 'idtaller'),)
 
@@ -124,7 +124,7 @@ class Auditorias(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'auditorias'
         unique_together = (('idauditoria', 'idtaller'),)
 
@@ -139,7 +139,7 @@ class Auditoriasequipos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'auditoriasequipos'
         unique_together = (('idauditoria', 'idtaller', 'idequipo'),)
 
@@ -155,7 +155,7 @@ class Categorias(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'categorias'
 
 
@@ -167,7 +167,7 @@ class Categoriastalleres(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'categoriastalleres'
         unique_together = (('idcategoria', 'idtaller'),)
 
@@ -196,7 +196,7 @@ class Certificados(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'certificados'
         unique_together = (('idcertificado', 'idtaller'),)
 
@@ -210,7 +210,7 @@ class Certificadosasignadosportaller(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'certificadosasignadosportaller'
 
 
@@ -220,7 +220,7 @@ class Clasesservicios(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'clasesservicios'
 
 
@@ -236,7 +236,7 @@ class Convenios(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'convenios'
 
 
@@ -249,7 +249,7 @@ class Defectos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'defectos'
 
 
@@ -271,7 +271,7 @@ class Direcotrestecnicos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'direcotrestecnicos'
         unique_together = (('iddirector', 'idtaller'),)
 
@@ -293,7 +293,7 @@ class Equipos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'equipos'
         unique_together = (('idequipo', 'idtaller'),)
 
@@ -304,7 +304,7 @@ class Estados(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'estados'
 
     def __str__(self) -> str:
@@ -316,7 +316,7 @@ class Estadosequipo(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'estadosequipo'
 
 
@@ -378,7 +378,7 @@ class Excepcion(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'excepcion'
         unique_together = (('idexcepcion', 'idtaller'),)
 
@@ -397,7 +397,7 @@ class Fotovalidacionpatente(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'fotovalidacionPatente'
         unique_together = (('idfotovalidacion', 'idtaller'),)
 
@@ -420,7 +420,7 @@ class Inspectores(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'inspectores'
         unique_together = (('idinspector', 'idtaller'),)
 
@@ -436,7 +436,7 @@ class Lineasequipos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'lineasequipos'
         unique_together = (('idequipo', 'idtaller', 'nrolinea', 'fechadesde'),)
 
@@ -449,7 +449,7 @@ class Lineastaller(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'lineastaller'
         unique_together = (('nrolinea', 'idtaller'),)
 
@@ -461,7 +461,7 @@ class Localidades(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'localidades'
 
 
@@ -475,7 +475,7 @@ class Mantenimientos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'mantenimientos'
         unique_together = (('idmantenimiento', 'idtaller'),)
 
@@ -488,7 +488,7 @@ class Marcasautos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'marcasautos'
 
 
@@ -498,7 +498,7 @@ class Nivelesdefectos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'nivelesdefectos'
 
 
@@ -538,7 +538,7 @@ class Oits(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'oits'
 
 
@@ -550,7 +550,7 @@ class Parametros(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'parametros'
 
 
@@ -686,7 +686,7 @@ class Pendientes(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'pendientes'
         unique_together = (('idpendiente', 'idtaller'),)
 
@@ -704,7 +704,7 @@ class Pendientesdefectos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'pendientesdefectos'
         unique_together = (('idpendiente', 'idtaller', 'iddefecto'),)
 
@@ -715,7 +715,7 @@ class Perfiles(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'perfiles'
 
 
@@ -737,7 +737,7 @@ class Personas(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'personas'
         unique_together = (('tipodoc', 'nrodoc'),)
 
@@ -763,7 +763,7 @@ class Prorroga(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'prorroga'
         unique_together = (('idprorroga', 'idtaller'),)
 
@@ -774,7 +774,7 @@ class Provincias(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'provincias'
 
 
@@ -786,7 +786,7 @@ class RepTablasparametricas(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'rep_tablasparametricas'
 
 
@@ -800,7 +800,7 @@ class Replicacionlogs(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'replicacionlogs'
 
 
@@ -812,7 +812,7 @@ class Rubrosdefectos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'rubrosdefectos'
 
 
@@ -825,7 +825,7 @@ class Serviciostransporte(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'serviciostransporte'
 
 
@@ -849,7 +849,7 @@ class Talleres(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'talleres'
 
 
@@ -863,7 +863,7 @@ class Tipousovehiculo(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'tipousovehiculo'
 
 
@@ -876,7 +876,7 @@ class Tipovehiculo(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'tipovehiculo'
 
 
@@ -887,7 +887,7 @@ class UmEmpresas(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'um_empresas'
 
 
@@ -897,7 +897,7 @@ class UmEstados(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'um_estados'
 
 
@@ -915,7 +915,7 @@ class UmMunicipios(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'um_municipios'
 
 
@@ -949,7 +949,7 @@ class UmOrdenesinspeccion(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'um_ordenesinspeccion'
 
 
@@ -959,7 +959,7 @@ class UmServiciostransporte(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'um_serviciostransporte'
 
 
@@ -980,7 +980,7 @@ class UmUsuarios(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'um_usuarios'
 
 
@@ -997,7 +997,7 @@ class Usuarios(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'usuarios'
 
 
@@ -1018,7 +1018,7 @@ class Valoresadm(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'valoresAdm'
 
 
@@ -1103,7 +1103,7 @@ class Vehiculos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table = 'vehiculos'
 
 
@@ -1247,7 +1247,7 @@ class Verificaciones(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'verificaciones'
         unique_together = (('idverificacion', 'idtaller'),)
 
@@ -1265,7 +1265,7 @@ class Verificacionespdf(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'verificacionesPDF'
         unique_together = (('idpdf', 'idtaller'),)
 
@@ -1280,7 +1280,7 @@ class Verificacionesauditorias(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'verificacionesauditorias'
 
 
@@ -1296,7 +1296,7 @@ class Verificacionesdefectos(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table        = 'verificacionesdefectos'
         unique_together = (('idverificacion', 'idtaller', 'iddefecto'),)
 
@@ -1308,5 +1308,5 @@ class Vin(models.Model):
 
     class Meta:
         # managed = False
-        app_label="rto_consultas_rn"
+        app_label = "rto_consultas_rn"
         db_table  = 'vin'

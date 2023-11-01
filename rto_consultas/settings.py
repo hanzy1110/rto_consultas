@@ -14,24 +14,24 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 # VEHICULAR_UNC
-MYSQL_HOST = os.environ["MYSQL_HOST"]
-MYSQL_USER = os.environ["MYSQL_USER"]
-MYSQL_PORT = os.environ["MYSQL_PORT"]
-MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
-MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
+MYSQL_HOST          = os.environ["MYSQL_HOST"]
+MYSQL_USER          = os.environ["MYSQL_USER"]
+MYSQL_PORT          = os.environ["MYSQL_PORT"]
+MYSQL_DATABASE      = os.environ["MYSQL_DATABASE"]
+MYSQL_PASSWORD      = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
 MYSQL_RN_HOST = os.environ["MYSQL_HOST"]
-MYSQL_RN_USER = os.environ["MYSQL_USER"]
-MYSQL_RN_PORT = os.environ["MYSQL_RN_PORT"]
-MYSQL_RN_DATABASE = os.environ["MYSQL_RN_DATABASE"]
-MYSQL_RN_PASSWORD = os.environ["MYSQL_PASSWORD"]
+MYSQL_RN_USER          = os.environ["MYSQL_USER"]
+MYSQL_RN_PORT          = os.environ["MYSQL_RN_PORT"]
+MYSQL_RN_DATABASE      = os.environ["MYSQL_RN_DATABASE"]
+MYSQL_RN_PASSWORD      = os.environ["MYSQL_PASSWORD"]
 MYSQL_RN_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
-POSTGRES_DB = os.environ["POSTGRES_DB"]
-POSTGRES_USER = os.environ["POSTGRES_USER"]
+POSTGRES_DB       = os.environ["POSTGRES_DB"]
+POSTGRES_USER     = os.environ["POSTGRES_USER"]
 POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
-POSTGRES_HOST = os.environ["POSTGRES_HOST"]
+POSTGRES_HOST     = os.environ["POSTGRES_HOST"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,8 +86,8 @@ ROOT_URLCONF = "rto_consultas.urls"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGIN_URL = "accounts/login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_URL           = "accounts/login"
+LOGIN_REDIRECT_URL  = "/"
 LOGOUT_REDIRECT_URL = "/logout"
 
 STATIC_ROOT = BASE_DIR / "static"
