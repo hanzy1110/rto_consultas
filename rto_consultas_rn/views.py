@@ -1,3 +1,4 @@
+import os
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
@@ -35,12 +36,9 @@ from admin_soft.forms import LoginForm
 
 from .models import (
     Adjuntos,
-    Habilitacion,
     Localidades,
     Personas,
     Provincias,
-    Serviciohab,
-    Serviciostransportehab,
     Usuarios,
     Verificaciones,
     Certificadosasignadosportaller,
@@ -51,7 +49,7 @@ from .models import (
     Verificacionespdf,
 )
 from .models import Estados, Tipousovehiculo, Talleres
-from .tables import (
+from ..rto_consultas.tables import (
     ConsultaDPTTable,
     ConsultaHabsTable,
     HabilitacionesTable,
@@ -65,7 +63,7 @@ from .tables import (
     CertificadosTablesResumen,
     VerificacionesAnuales,
 )
-from .helpers import (
+from ..rto_consultas.helpers import (
     filter_vup_transporte,
     generate_key_certificado,
     handle_context,
@@ -76,16 +74,14 @@ from .helpers import (
     handle_save_hab,
 )
 
-from .forms import (
+from ..rto_consultas.forms import (
     ConsultaDPTForm,
     CustomRTOForm,
     ObleasPorTaller,
     InspectionOrderForm,
 )  # Import the form you created
 
-from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
-
-from .logging import configure_logger
+from ..rto_consultas.logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
