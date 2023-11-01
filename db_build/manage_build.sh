@@ -63,7 +63,7 @@ function get_logfile_data() {
 function reload_db() {
 
     if [ "$1" = "vehicularunc" ]; then
-        sudo docker-compose --env-file .env rm -sv -y rto_mysql_db
+        sudo docker-compose --env-file .env rm -sv --force rto_mysql_db
         sudo rm -rf "$SQL_VOLUME"
         sudo cp $SQL_AZURE_DUMP_PATH/* $SQL_INIT_DUMP_PATH
         sudo rm ${SQL_AZURE_DUMP_PATH:?}/*
@@ -82,7 +82,7 @@ function reload_db() {
 
 function db_reload() {
 
-    sudo docker-compose --env-file .env rm -sv -y "$2"
+    sudo docker-compose --env-file .env rm -sv --force "$2"
 
     if [ "$1" = true ]; then
         sudo rm -rf "$3"
