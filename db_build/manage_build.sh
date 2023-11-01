@@ -22,10 +22,9 @@ MYSQL_FLUSH_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'flush ta
 MYSQL_UNLOCK_CMD="mysql -u${MYSQL_DUMP_USER} -p${MYSQL_DUMP_PASSWORD} -e'unlock tables\G'"
 
 # Define default values for flags
-RELOAD=false
-COPY=false
 RELOAD_USERS=false
 RELOAD_RN=false
+RELOAD_ALL=false
 
 function copy_dump() {
 
@@ -94,6 +93,37 @@ function db_reload() {
     sudo docker-compose --env-file .env ps -a
     return 0
 }
+
+function reload_RN() {
+
+    echo "Getting Binary logfile and Position..."
+    get_logfile_data ""
+    set +x
+    set +e
+
+    echo "Copying dump..."
+    copy_dump "vtvrionegro"
+    echo "Reloading database..."
+    reload_db "vtvrionegro"
+
+    return 0
+}
+#
+
+function reload_NQN() {
+
+    echo "Getting Binary logfile and Position..."
+    get_logfile_data ""
+    set +x
+    set +e
+
+    echo "Copying dump..."
+    copy_dump "vehicularunc"
+    echo "Reloading database..."
+    reload_db "vehicularunc"
+
+    return 0
+}
 # Remote server details
 # Parse command-line arguments
 while [[ $# -gt 0 ]]; do
@@ -110,6 +140,10 @@ while [[ $# -gt 0 ]]; do
             RELOAD_RN=true
             shift
             ;;
+        -RA | --reload-all)
+            RELOAD_ALL=true
+            shift
+            ;;
         *)
             echo "Unknown argument: $1"
             exit 1
@@ -119,15 +153,7 @@ done
 
 # Check the flags and execute actions accordingly
 if [ "$RELOAD_NQN" = true ]; then
-    echo "Getting Binary logfile and Position..."
-    get_logfile_data ""
-    set +x
-    set +e
-
-    echo "Copying dump..."
-    copy_dump "vehicularunc"
-    echo "Reloading database..."
-    reload_db "vehicularunc"
+    reload_NQN "" 2>&1 | tee ./NQN.log
 
     echo "Sleeping 5 min to allow db to start... then unlock!"
     sleep 300
@@ -140,19 +166,22 @@ elif [ "$RELOAD_USERS" = true ]; then
     db_reload true rto_user_db $POSTGRES_VOLUME
 
 elif [ "$RELOAD_RN" = true ]; then
-    echo "Getting Binary logfile and Position..."
-    get_logfile_data ""
-    set +x
-    set +e
-
-    echo "Copying dump..."
-    copy_dump "vtvrionegro"
-    echo "Reloading database..."
-    reload_db "vtvrionegro"
+    reload_RN "" 2>&1 | tee ./RN.log
 
     echo "Sleeping 5 min to allow db to start... then unlock!"
     sleep 300
     ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
+    cat ${HOME}/unlock.info
+    sudo rm -rf "${HOME}/*.info"
+
+elif [ "$RELOAD_ALL" = true ]; then
+    reload_NQN "" 2>&1 | tee ./NQN.log
+    reload_RN "" 2>&1 | tee ./RN.log
+
+    echo "Sleeping 7 min to allow db to start... then unlock!"
+    sleep 420
+    ssh $REMOTE_SERVER ${MYSQL_UNLOCK_CMD} >"${HOME}/unlock.info"
+    cat ${HOME}/unlock.info
     sudo rm -rf "${HOME}/*.info"
 
 else
