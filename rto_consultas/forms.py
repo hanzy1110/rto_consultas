@@ -16,7 +16,7 @@ logger = configure_logger(LOG_FILE)
 
 VALS = {1: "Verdadero", 0: "Falso"}
 VALS_ANULADO = {1: "anulado", 0: "vigente"}
-DESCRIPTIONS = {
+TIPO_USO_VEHICULO = {
     1: "Particular",
     2: "Transporte de Carga",
     3: "Transporte Pasajeros",
@@ -104,12 +104,14 @@ class CustomRTOForm(forms.Form):
 
         for ff in form_data.form_fields:
             if "estado" in ff:
-                aux_desc = ESTADO_CERTIFICADO
-                cs = [(str(i + 1), c) for i, c in enumerate(aux_desc.values())]
+                cs = [(str(i + 1), c) for i, c in enumerate(ESTADO_CERTIFICADO.values())]
+            elif "uso" in ff:
+                cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
             else:
                 desc = descriptions.get(ff, None)
                 # TODO aca van las descripciopnes...
                 cs = [(str(i), c) for i, c in enumerate(desc.values())]
+
             label = form_data.parsed_names.get(ff, None)
             attributes = form_data.attributes.get(ff, None)
             ids = form_data.ids.get(ff, None)

@@ -3,7 +3,7 @@ import boto3
 from dotenv import dotenv_values
 
 
-def generate_presigned_url(object_key, expiration=3600):
+def generate_presigned_url(object_key, bucket_name=None, expiration=3600):
     """
     Generate a presigned URL for a specific resource in an S3 bucket.
 
@@ -17,7 +17,9 @@ def generate_presigned_url(object_key, expiration=3600):
     # env_config = dotenv_values('.env')
     aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
     aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    bucket_name = os.environ.get("AWS_BUCKET_NAME")
+
+    if not bucket_name:
+        bucket_name = os.environ.get("AWS_BUCKET_NAME")
 
     session = boto3.Session(
         aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key

@@ -1,0 +1,59 @@
+<!-- myapp/mymodel_list.html -->
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+{% load getattr %}
+<h1>{{ context_object_name }}</h1>
+<div class="card-body px-0 pt-0 pb-2">
+    <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
+        <div class="container-fluid py-4">
+            {% comment %} Render the "Nueva Revisión" button {% endcomment %}
+            {% for ffield, vals in form_fields.items %}
+            <div class="form-group">
+                <label for="{{ ffield }}">{{ query_dict parsed_fields ffield }}</label>
+                <select name="{{ ffield }}" id="{{ ffield }}" class="form-control">
+                    <option value=""></option>
+                    {% for val in vals %}
+                    <option value="{{ val }}">{{ query_descriptions descriptions ffield val }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <label for="buscar"><b>Buscar</b></label>
+                <button type="submit" class="btn btn-primary btn-block">Buscar</button>
+            </div>
+            {% for field in query_fields %}
+            <div class="form-group">
+                <label for="{{ field }}">{{ query_dict parsed_fields field }}</label>
+                <input id="{{ query_dict ids field }}" type="{{ query_dict types field }}" name="{{ field }}"
+                    placeholder="Buscar..." class="form-control">
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div"
+                    hx-swap="static">
+                    Limpiar Búsqueda
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid py-4 card-body px-0 pt-0 pb-2">
+    <div id="table_div" class="table-responsive p-0">
+        {#% render_table table %#}
+    </div>
+</div>
+<script>
+    // Define the static HTML content you want to use for swapping
+    const staticContent = '';
+
+    // Add an event listener to the button
+    const button = document.querySelector('button[hx-swap="static"]');
+    button.addEventListener('click', function () {
+        const target = document.querySelector(button.getAttribute('hx-target'));
+        target.innerHTML = staticContent;
+    });
+</script>
+{% endblock %}

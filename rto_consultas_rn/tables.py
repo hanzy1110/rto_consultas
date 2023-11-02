@@ -131,7 +131,7 @@ class CustomFileColumn(tables.FileColumn):
             )
             cache.set(cache_key, certificado)
             url = generate_key_from_params(
-                certificado.idtaller_id, certificado.nombrea4
+                certificado.idtaller_id, certificado.nombrea4, bucket_name='rto-rn-files'
             )
             return url
         return value
@@ -224,7 +224,7 @@ class VerificacionesTables(tables.Table):
             "anulado",
         )
         extra_columns = ("certificado",)
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
 
     def render_ver_verificacion(self, record):
         image_url = static(f"img/small-logos/ver.png")
@@ -295,7 +295,7 @@ class VehiculosTable(tables.Table):
     )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Vehiculos
         fields = {"dominio", "idtipouso", "marca"}
 
@@ -326,7 +326,7 @@ class CertificadosTable(tables.Table):
     )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Certificados
         fields = {"nrocertificado", "idtaller", "fecha", "anulado"}
 
@@ -351,7 +351,7 @@ class CertificadosAssignTable(tables.Table):
     # )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Certificadosasignadosportaller
         query_fields = {"nrocertificado", "idtaller", "disponible", "replicado"}
 
@@ -381,7 +381,7 @@ class CertificadosTablesResumen(tables.Table):
     )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Certificados
         fields = (
             "nrocertificado",
@@ -460,7 +460,7 @@ class ObleasPorTallerTable(tables.Table):
     cant_transporte = tables.Column(verbose_name="DPT")
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
 
 
 class ResumenTransporteTable(tables.Table):
@@ -486,7 +486,7 @@ class ResumenTransporteTable(tables.Table):
     )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Verificaciones
         fields = (
             "certificado",
@@ -607,7 +607,7 @@ class ResumenTransporteCargaTable(tables.Table):
     )
 
     class Meta:
-        template_name = "tables/htmx_table.html"
+        template_name = "tables/htmx_table_RN.html"
         model = Verificaciones
         fields = (
             "certificado",

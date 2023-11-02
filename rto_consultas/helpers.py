@@ -480,9 +480,9 @@ def generate_key_certificado(certificado):
     return None
 
 
-def generate_key_from_params(idtaller, nombrea4):
+def generate_key_from_params(idtaller, nombrea4, bucket_name=None):
     key = f"{idtaller}/var/www/html/taller/uploads/pdf/{nombrea4}.pdf"
-    return generate_presigned_url(key)
+    return generate_presigned_url(key, bucket_name=bucket_name)
 
 
 def check_for_anulado(verif):
