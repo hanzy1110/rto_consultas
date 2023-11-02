@@ -86,7 +86,7 @@ from .forms import (
 
 from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
 
-from .logging import configure_logger
+from .logging import configure_logger, print_stack
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
@@ -167,6 +167,9 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         logger.debug("Checking for template...")
         if self.request.htmx:
             logger.debug("HTMX REQUEST!!")
+
+            logger.debug(f"CURRENT_STACK =>{print_stack()}")
+            assert False
             return [self.partial_template]
         return [self.template_name]
 

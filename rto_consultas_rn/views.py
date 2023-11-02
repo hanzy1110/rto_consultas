@@ -131,9 +131,9 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
         return context
 
     def get_template_names(self):
-        logger.debug("Checking for template...")
         if self.request.htmx:
-            logger.debug("HTMX REQUEST!!")
+            logger.debug("RIO NEGRO HTMX REQUEST!!")
+            logger.info(f"CURRENT STACK =>{print_stack()}")
             return [self.partial_template]
         return [self.template_name]
 
@@ -209,8 +209,6 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
         return queryset
 
     def dispatch(self, request, *args, **kwargs):
-        logger.info(f"CURRENT STACK =>{print_stack()}")
-        assert False
         return super().dispatch(request, *args, **kwargs)
 
 @method_decorator(login_required, name = "dispatch")
