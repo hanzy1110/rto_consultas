@@ -164,12 +164,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         return context
 
     def get_template_names(self):
-        logger.debug("Checking for template...")
         if self.request.htmx:
-            logger.debug("HTMX REQUEST!!")
-
-            logger.debug(f"CURRENT_STACK =>{print_stack()}")
-            assert False
             return [self.partial_template]
         return [self.template_name]
 

@@ -132,8 +132,8 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
 
     def get_template_names(self):
         if self.request.htmx:
-            logger.debug("RIO NEGRO HTMX REQUEST!!")
-            logger.info(f"CURRENT STACK =>{print_stack()}")
+            # logger.debug("RIO NEGRO HTMX REQUEST!!")
+            # logger.info(f"CURRENT STACK =>{print_stack()}")
             return [self.partial_template]
         return [self.template_name]
 
@@ -193,7 +193,7 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
             "nrocertificado": "text",
             "dni": "select",
         },
-        render_url   = "verificaciones",
+        render_url   = "verificaciones_rn",
     )
 
     def get_queryset(self):
