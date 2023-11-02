@@ -7,7 +7,7 @@ import rto_consultas_rn.views as views_RN
 urlpatterns = [
     path("dvr", views_RN.dvr_view, name="dvr"),
     path("sec_transporte",
-         views.secretaria_transporte_view,
+         views_RN.secretaria_transporte_view,
          name="sec_transporte"),
     path(
         "ververificacion/<int:idverificacion>/<int:idtaller>",
