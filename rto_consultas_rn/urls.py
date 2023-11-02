@@ -10,7 +10,7 @@ urlpatterns = [
          views_RN.secretaria_transporte_view,
          name="sec_transporte"),
     path(
-        "ververificacion/<int:idverificacion>/<int:idtaller>",
+        "ververificacion_rn/<int:idverificacion>/<int:idtaller>",
         views_RN.VerVerificacion_RN.as_view(),
         name="ver_verificacion_rn",
     ),
