@@ -208,6 +208,11 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
         logger.info("QUERYSET DONE...")
         return queryset
 
+    def dispatch(self, request, *args, **kwargs):
+        logger.info(f"CURRENT STACK =>{print_stack()}")
+        assert False
+        return super().dispatch(request, *args, **kwargs)
+
 @method_decorator(login_required, name = "dispatch")
 class VerVerificacion_RN(DetailView, LoginRequiredMixin):
     model: Verificaciones
