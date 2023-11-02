@@ -77,7 +77,7 @@ from rto_consultas.forms import (
     InspectionOrderForm,
 )  # Import the form you created
 
-from rto_consultas.logging import configure_logger
+from rto_consultas.logging import configure_logger, print_stack
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
@@ -199,6 +199,8 @@ class ListVerificacionesView(CustomRTOView):
     def get_queryset(self):
         logger.info("CALCULATE QUERYSET...")
         queryset     = super().get_queryset()
+
+        logger.debug(f"CURRENT TRACE => {print_stack()}")
         if isinstance(queryset, list):
             pass
             queryset = list(reversed(queryset))
