@@ -101,7 +101,7 @@ def secretaria_transporte_view(request):
     return render(request, template_name, {"segment": "index"})
 
 
-class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
+class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
     model: Model
     paginate_by: int
     template_name: str
@@ -139,7 +139,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 
 
 @method_decorator(login_required, name="dispatch")
-class ListVerificacionesView(CustomRTOView):
+class ListVerificacionesView_RN(CustomRTOView_RN):
     # authentication_classes = [authentication.TokenAuthentication]
     model               = Verificaciones
     paginate_by         = 10
@@ -200,7 +200,6 @@ class ListVerificacionesView(CustomRTOView):
         logger.info("CALCULATE QUERYSET...")
         queryset     = super().get_queryset()
 
-        logger.debug(f"CURRENT TRACE => {print_stack()}")
         if isinstance(queryset, list):
             pass
             queryset = list(reversed(queryset))
@@ -210,7 +209,7 @@ class ListVerificacionesView(CustomRTOView):
         return queryset
 
 @method_decorator(login_required, name = "dispatch")
-class VerVerificacion(DetailView, LoginRequiredMixin):
+class VerVerificacion_RN(DetailView, LoginRequiredMixin):
     model: Verificaciones
     template_name                      = "includes/ver_verificaciones.html"
     context_object_name: str
