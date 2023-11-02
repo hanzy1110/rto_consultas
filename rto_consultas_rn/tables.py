@@ -177,7 +177,7 @@ class VerificacionesTables(tables.Table):
     ver_verificacion = tables.Column(
         verbose_name="Verificación",
         linkify=(
-            "ver_verificacion",
+            "ver_verificacion_rn",
             {
                 "idverificacion": tables.A("idverificacion"),
                 "idtaller": tables.A("idtaller__idtaller"),
