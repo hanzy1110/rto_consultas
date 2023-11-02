@@ -466,17 +466,17 @@ def daterange(start_date, end_date):
         yield (start_date + timedelta(n), start_date + timedelta(n + 1))
 
 
-def generate_key(adjunto):
+def generate_key(adjunto, bucket_name=None):
     key = f"{adjunto.idtaller}/var/www/html/taller/uploads/{adjunto.nombre}"
-    return generate_presigned_url(key)
+    return generate_presigned_url(key, bucket_name=bucket_name)
 
 
-def generate_key_certificado(certificado):
+def generate_key_certificado(certificado, bucket_name=None):
     if certificado:
         print(certificado)
         certificado = certificado[0]
         key = f"{certificado.idtaller_id}/var/www/html/taller/uploads/pdf/{certificado.nombrea4}.pdf"
-        return generate_presigned_url(key)
+        return generate_presigned_url(key, bucket_name=bucket_name)
     return None
 
 

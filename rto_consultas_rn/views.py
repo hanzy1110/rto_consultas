@@ -308,9 +308,9 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
         context["provincia"]      = localidad.idprovincia.descripcion
         context["localidad"]      = localidad.descripcion
 
-        adjuntos = [generate_key(a) for a in adjuntos]
+        adjuntos = [generate_key(a, bucket_name='rto-rn-files') for a in adjuntos]
         context["certificado"] = cert[0]
-        context["url_certificado"] = generate_key_certificado(pdf_certificado)
+        context["url_certificado"] = generate_key_certificado(pdf_certificado, bucket_name='rto-rn-files')
         context["adjuntos"]        = adjuntos
         context["defectos"] = defectos
         context["mostrarJu"]       = ""
