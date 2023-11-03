@@ -34,22 +34,7 @@ logger = configure_logger(LOG_FILE)
 # from silk.profiling.profiler import silk_profile
 from django.core.cache import cache
 
-VALS = {1: "Verdadero", 0: "Falso"}
-VALS_ANULADO = {1: "anulado", 0: "vigente"}
-DESCRIPTIONS = {
-    1: "Particular",
-    2: "Transporte de Carga",
-    3: "Transporte Pasajeros",
-    4: "Transporte Municipal",
-}
-ESTADO_CERTIFICADO = {
-    1: "Aprobado",
-    2: "Rechazado",
-    3: "Aprobado Condicional",
-    4: "Reverificado",
-    5: "Vencido",
-}
-
+from rto_consultas.name_schemas import *
 
 class ImageColumn(tables.Column):
     def render(self, record):
@@ -184,17 +169,15 @@ class VerificacionesTables(tables.Table):
                 "idtaller": tables.A("idtaller__idtaller"),
             },
         ),
-        empty_values=(), attrs={'th': {'colspan': '2'}}
+        empty_values=(), attrs={'th': {'colspan': '3'}}
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
         verbose_name="",
         empty_values=(),
-        attrs={'th': {'hidden': True}}
-
-    )  # (viewname, kwargs)
+        attrs={'th': {'hidden': True}})  # (viewname, kwargs)
 
     titular = tables.Column(empty_values=())
-    anulado = ImageColumn(empty_values=(), verbose_name="Estado")
+    anulado = ImageColumn(empty_values=(), verbose_name="", attrs={'th': {'hidden': True}})
     vigencia = tables.Column(empty_values=())
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
@@ -229,12 +212,10 @@ class VerificacionesTables(tables.Table):
             "idestado",
             "idtipouso",
             "titular",
-            'consulta',
             "ver_verificacion",
             "ver_certificado",
-            # "idtipovehiculo",
-            "idtaller",
             "anulado",
+            "idtaller",
         )
         extra_columns = ("certificado",)
         template_name = "tables/htmx_table.html"
@@ -242,22 +223,6 @@ class VerificacionesTables(tables.Table):
     def render_ver_verificacion(self, record):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
-
-    # def render_ver_certificado(self, record, value):
-    #     cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
-    #     cached_cert = cache.get(cache_key)
-
-    #     image_url = static(f"img/small-logos/printer.png")
-    #     img_tag = format_html('<img src="{}" />', image_url)
-    #     if cached_cert:
-    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-    #         return img_tag
-    #         # return str(nro_cert)
-    #     else:
-    #         # nro_cert = Certificados.objects.get(idverificacion_id=record.idverificacion)
-    #         return img_tag
-    #         # return str(nro_cert)
-    # return "No disponible"
 
     def render_idestado(self, value):
         try:

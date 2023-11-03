@@ -14,21 +14,8 @@ from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Sub
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
 
-VALS = {1: "Verdadero", 0: "Falso"}
-VALS_ANULADO = {1: "anulado", 0: "vigente"}
-TIPO_USO_VEHICULO = {
-    1: "Particular",
-    2: "Transporte de Carga",
-    3: "Transporte Pasajeros",
-    4: "Transporte Municipal",
-}
-ESTADO_CERTIFICADO = {
-    1: "Aprobado",
-    2: "Rechazado",
-    3: "Aprobado Condicional",
-    4: "Reverificado",
-    5: "Vencido",
-}
+from .name_schemas import *
+
 
 DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 

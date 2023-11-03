@@ -87,6 +87,7 @@ from .forms import (
 from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
 
 from .logging import configure_logger, print_stack
+from .name_schemas import *
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger   = configure_logger(LOG_FILE)
@@ -847,28 +848,6 @@ class ResumenTransporteCarga(CustomRTOView):
             "fecha_hasta": "date",
         },
     )
-
-
-SIGN_DICT = {
-    "malanis": "/home/code/static/img/signs/malanis.jpg",
-    "rpadua": "/home/code/static/img/signs/rpadua.png",
-    "rtralamil": "/home/code/static/img/signs/rtralamil.jpg",
-}
-
-MONTHS_DICT = {
-    1: "Enero",
-    2: "Febrero",
-    3: "Marzo",
-    4: "Abril",
-    5: "Mayo",
-    6: "Junio",
-    7: "Julio",
-    8: "Agosto",
-    9: "Septiembre",
-    10: "Octubre",
-    11: "Noviembre",
-    12: "Diciembre",
-}
 
 
 class PDFHabilitacion(PDFTemplateView):
