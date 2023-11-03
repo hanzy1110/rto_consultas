@@ -47,6 +47,7 @@ class AuxData:
     fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
     render_url: str = ""
+    render_form: str = ""
 
 
 def convert_date(input_date):
@@ -329,6 +330,7 @@ def handle_context(context, view):
     context["aux"] = view.aux_data.aux
 
     context["render_url"] = view.aux_data.render_url
+    context["render_form"] = view.aux_data.render_form
 
     # logger.debug(f"Context: {context}")
     return context
@@ -655,8 +657,10 @@ def handle_querydict(value):
         case _:
             return int(value[0])
 
+
 def truncate_name(value):
     return " ".join(list(value.split(" "))[:1])
+
 
 def parse_name_length(value, ptype):
     match ptype:

@@ -62,6 +62,7 @@ class CustomRTOForm(forms.Form):
             elif input_type == "select":
                 # TODO add more types of select!
                 field = forms.ChoiceField(
+                    label="Tipo Doc.",
                     choices=DOCS,
                     widget=forms.Select(),
                     initial="",  # Set the initial value if needed
@@ -112,11 +113,29 @@ class CustomRTOForm(forms.Form):
                 field.required = False
                 self.fields[ff] = field
 
-        query_div = Row(
+        # if "dominio" in form_data.query_fields:
+        #     form_data.query_fields.pop(form_data.query_fields.index("dominio"))
+        #     dom_div = Div(Field("dominio", css_class="form-control input-sm"))
+
+        #     aux_div = Div(
+        #         *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
+        #         css_class='field-group',
+        #         style='display: none;'
+        #     )
+        #     query_div=Div(
+        #         dom_div,
+        #         aux_div
+        #     )
+        # else:
+
+        #     query_div = Div(
+        #         *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
+        #     )
+
+        query_div = Div(
             *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
         )
-
-        form_div = Row(
+        form_div = Div(
             *[Field(ff, css_class="form-control input-sm") for ff in form_data.form_fields],
         )
 

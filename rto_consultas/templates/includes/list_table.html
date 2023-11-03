@@ -7,7 +7,7 @@
 {% load crispy_forms_tags %}
 
 <h1>{{ context_object_name }}</h1>
-<div class="card-body px-0 pt-0 pb-2">
+<div id="form_div" class="card-body px-0 pt-0 pb-2">
     <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
         <div class="container-fluid py-4">
 
@@ -26,6 +26,10 @@
                 <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div"
                     hx-swap="static">
                     Limpiar Búsqueda
+                </button>
+                <button type="button" hx-get="{% url render_form %}" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#form_div"
+                    hx-swap="static">
+                    Búsqueda Avanzada
                 </button>
             </div>
         </div>

@@ -55,6 +55,11 @@ urlpatterns += [
         "verificaciones/", views.ListVerificacionesView.as_view(), name="verificaciones"
     ),
     path(
+        "verificaciones_form/",
+        views.RenderVerificacionForm.as_view(),
+        name="verificaciones_form",
+    ),
+    path(
         "certs_assignados/",
         views.ListCertificadosAssignView.as_view(),
         name="certs_asignados",
@@ -83,7 +88,6 @@ urlpatterns += [
         views.VerVerificacion.as_view(),
         name="ver_verificacion",
     ),
-
     path(
         "consulta_dpt",
         views.consulta_habilitaciones,
@@ -110,4 +114,6 @@ urlpatterns += [
         name="resumen_dpt_carga",
     ),
 ]
-urlpatterns += [path("", include("rto_consultas_rn.urls")),]
+urlpatterns += [
+    path("", include("rto_consultas_rn.urls")),
+]
