@@ -1,12 +1,14 @@
-
 VALS = {1: "Verdadero", 0: "Falso"}
+
 VALS_ANULADO = {1: "anulado", 0: "vigente"}
+
 DESCRIPTIONS = {
     1: "Particular",
     2: "Transporte de Carga",
     3: "Transporte Pasajeros",
     4: "Transporte Municipal",
 }
+
 ESTADO_CERTIFICADO = {
     1: "Aprobado",
     2: "Rechazado",
