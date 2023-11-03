@@ -656,11 +656,11 @@ def handle_querydict(value):
             return int(value[0])
 
 def truncate_name(value):
-    return "".join(list(value.split(" "))[:2])
+    return " ".join(list(value.split(" "))[:2])
 
 def parse_name_length(value, ptype):
     match ptype:
         case "J":
             return truncate_name(value)
         case _:
-            return "".join([truncate_name(value[0]), truncate_name(value[1])])
+            return " ".join([truncate_name(value[0]), truncate_name(value[1])])
