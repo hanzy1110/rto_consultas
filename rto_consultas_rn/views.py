@@ -317,10 +317,10 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
         context["mostrarFi"]       = ""
 
         MToTara, MToFI, MToFD, MToEf = self.get_total_values()
-        context["mto_tara"]          = MToTara
-        context["mto_fi"] = MToFI
-        context["mto_der"]           = MToFD
-        context["mto_eficiencia"]    = MToEf
+        context["mto_tara"]       = MToTara
+        context["mto_fi"]         = MToFI
+        context["mto_der"]        = MToFD
+        context["mto_eficiencia"] = MToEf
 
         # context = handle_context(context, self)
         return context

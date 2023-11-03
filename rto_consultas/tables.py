@@ -190,6 +190,8 @@ class VerificacionesTables(tables.Table):
         verbose_name="Certificado",
         empty_values=(),
     )  # (viewname, kwargs)
+
+    consulta = tables.TemplateColumn(template_code="{{ record.ver_certificado }} - {{ record.ver_verificacion }}")
     titular = tables.Column(empty_values=())
     anulado = ImageColumn(empty_values=(), verbose_name="Estado")
     vigencia = tables.Column(empty_values=())
@@ -218,8 +220,9 @@ class VerificacionesTables(tables.Table):
             "idestado",
             "idtipouso",
             "titular",
-            "ver_verificacion",
-            "ver_certificado",
+            'consulta',
+            # "ver_verificacion",
+            # "ver_certificado",
             # "idtipovehiculo",
             "idtaller",
             "anulado",
