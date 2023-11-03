@@ -2,7 +2,7 @@ import os
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
-from django.views.generic.base import RedirectView
+from django.views.generic.base import RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
 from django_tables2.export.views import ExportMixin
@@ -80,7 +80,7 @@ from rto_consultas.forms import (
 from rto_consultas.logging import configure_logger, print_stack
 
 LOG_FILE = os.environ["LOG_FILE"]
-logger   = configure_logger(LOG_FILE)
+logger = configure_logger(LOG_FILE)
 
 
 @login_required
@@ -111,8 +111,8 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
     partial_template: str
 
     def get_queryset(self):
-        _export  = self.request.GET.copy().pop("_export", None)
-        page     = self.request.GET.copy().pop("page", None)
+        _export = self.request.GET.copy().pop("_export", None)
+        page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
         if page:
@@ -141,16 +141,50 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
 @method_decorator(login_required, name="dispatch")
 class ListVerificacionesView_RN(CustomRTOView_RN):
     # authentication_classes = [authentication.TokenAuthentication]
-    model               = Verificaciones
-    paginate_by         = 10
-    template_name       = "includes/list_table_verificaciones_RN.html"
+    model = Verificaciones
+    paginate_by = 10
+    template_name = "includes/list_table.html"
     context_object_name = "Verificaciones"
-    table_class         = VerificacionesTables
-    partial_template    = "includes/table_view_RN.html"
-    form_class          = CustomRTOForm
+    table_class = VerificacionesTables
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
 
     aux_data = AuxData(
-        query_fields = [
+        query_fields=[
+            "dominiovehiculo",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominiovehiculo": "Dominio",
+        },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+        },
+        types={
+            "dominiovehiculo": "text",
+        },
+        render_url="verificaciones",
+        render_form="verificaciones_form",
+    )
+
+    def get_queryset(self):
+        logger.info("CALCULATE QUERYSET...")
+        queryset = super().get_queryset()
+        if isinstance(queryset, list):
+            pass
+            queryset = list(reversed(queryset))
+        else:
+            queryset = queryset.order_by("-idverificacion")
+        logger.info("QUERYSET DONE...")
+        return queryset
+
+
+@method_decorator(login_required, name="dispatch")
+class RenderVerificacionForm_RN(TemplateView):
+    template_name = "includes/form_render.html"
+
+    aux_data = AuxData(
+        query_fields=[
             "dominiovehiculo",
             "nrocertificado",
             "fecha_desde",
@@ -164,7 +198,7 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
             "idtaller": ("nombre", Talleres),
             "anulado": (None, None),
         },
-        parsed_names = {
+        parsed_names={
             "dominiovehiculo": "Dominio",
             "idestado": "Calificación",
             "idtipouso": "Tipo Uso Vehiculo",
@@ -186,45 +220,39 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
             "idtaller": "#slctIdtaller",
             "anulado": "#slctAnulado",
         },
-        types        = {
+        types={
             "dominiovehiculo": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
             "dni": "select",
         },
-        render_url   = "verificaciones_rn",
+        render_url="verificaciones",
     )
 
-    def get_queryset(self):
-        logger.info("CALCULATE QUERYSET...")
-        queryset     = super().get_queryset()
+    form_class = CustomRTOForm
+    model = Verificaciones
 
-        if isinstance(queryset, list):
-            pass
-            queryset = list(reversed(queryset))
-        else:
-            queryset = queryset.order_by("-idverificacion")
-        logger.info("QUERYSET DONE...")
-        return queryset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context = handle_context(context, self)
+        return context
 
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
-@method_decorator(login_required, name = "dispatch")
+@method_decorator(login_required, name="dispatch")
 class VerVerificacion_RN(DetailView, LoginRequiredMixin):
     model: Verificaciones
-    template_name                      = "includes/ver_verificaciones.html"
+    template_name = "includes/ver_verificaciones.html"
     context_object_name: str
     aux_data: AuxData
 
     def get_object(self):
-        query_params         = self.request.GET.copy()
-        id_taller            = self.kwargs["idtaller"]
-        id_verificacion      = self.kwargs["idverificacion"]
-        verificacion         = Verificaciones.objects.select_related(
+        query_params = self.request.GET.copy()
+        id_taller = self.kwargs["idtaller"]
+        id_verificacion = self.kwargs["idverificacion"]
+        verificacion = Verificaciones.objects.select_related(
             "dominiovehiculo", "idestado", "codigotitular", "idtaller"
-        ).get(idverificacion = id_verificacion, idtaller=id_taller)
+        ).get(idverificacion=id_verificacion, idtaller=id_taller)
 
         print(verificacion)
         self.verificacion = verificacion
@@ -244,7 +272,7 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_tara,
             ]
         )
-        MToFI   = sum_appropriatelly(
+        MToFI = sum_appropriatelly(
             [
                 self.verificacion.eje1_fzaizq,
                 self.verificacion.eje2_fzaizq,
@@ -252,7 +280,7 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_fzaizq,
             ]
         )
-        MToFD   = sum_appropriatelly(
+        MToFD = sum_appropriatelly(
             [
                 self.verificacion.eje1_fzader,
                 self.verificacion.eje2_fzader,
@@ -260,66 +288,68 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
                 self.verificacion.eje4_fzader,
             ]
         )
-        MToEf   = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2)
+        MToEf = round((((MToFI + MToFD) / (MToTara * 9.81)) * 100), 2)
         return MToTara, MToFI, MToFD, MToEf
 
     def get_context_data(self, **kwargs):
-        context                          = super().get_context_data(**kwargs)
-        cert                             = (
+        context = super().get_context_data(**kwargs)
+        cert = (
             Certificados.objects
             # .select_related("idcategoria")
             .filter(
-                idverificacion_id__exact = self.kwargs["idverificacion"],
-                idtaller_id__exact       = self.kwargs["idtaller"],
+                idverificacion_id__exact=self.kwargs["idverificacion"],
+                idtaller_id__exact=self.kwargs["idtaller"],
             ).values()
         )
-        categoria                        = Categorias.objects.get(
-            idcategoria__exact           = cert[0]["idcategoria"]
+        categoria = Categorias.objects.get(
+            idcategoria__exact=cert[0]["idcategoria"]
         ).descripcion
 
-        estado = Estados.objects.get(idestado__exact = cert[0]["idestado"]).descripcion
+        estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
-        localidad              = Localidades.objects.get(
-            idlocalidad__exact = self.verificacion.pidlocalidad
+        localidad = Localidades.objects.get(
+            idlocalidad__exact=self.verificacion.pidlocalidad
         )
 
         adjuntos = Adjuntos.objects.filter(
-            idtaller__exact       = cert[0]["idtaller_id"],
-            idverificacion__exact = cert[0]["idverificacion_id"],
+            idtaller__exact=cert[0]["idtaller_id"],
+            idverificacion__exact=cert[0]["idverificacion_id"],
         )
 
         defectos = Verificacionesdefectos.objects.prefetch_related("idnivel").filter(
             idtaller_id__exact=cert[0]["idtaller_id"],
-            idverificacion_id__exact = cert[0]["idverificacion_id"],
+            idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
 
-        pdf_certificado              = Verificacionespdf.objects.filter(
-            idtaller_id__exact       = cert[0]["idtaller_id"],
-            idverificacion_id__exact = cert[0]["idverificacion_id"],
+        pdf_certificado = Verificacionespdf.objects.filter(
+            idtaller_id__exact=cert[0]["idtaller_id"],
+            idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
 
         print(defectos)
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
-        context["observaciones"]  = cert[0]["observaciones"]
-        context["vigenciahasta"]  = cert[0]["vigenciahasta"]
-        context["estado"]         = estado
-        context["categoria"]      = categoria
-        context["provincia"]      = localidad.idprovincia.descripcion
-        context["localidad"]      = localidad.descripcion
+        context["observaciones"] = cert[0]["observaciones"]
+        context["vigenciahasta"] = cert[0]["vigenciahasta"]
+        context["estado"] = estado
+        context["categoria"] = categoria
+        context["provincia"] = localidad.idprovincia.descripcion
+        context["localidad"] = localidad.descripcion
 
-        adjuntos = [generate_key(a, bucket_name='rto-rn-files') for a in adjuntos]
+        adjuntos = [generate_key(a, bucket_name="rto-rn-files") for a in adjuntos]
         context["certificado"] = cert[0]
-        context["url_certificado"] = generate_key_certificado(pdf_certificado, bucket_name='rto-rn-files')
-        context["adjuntos"]        = adjuntos
+        context["url_certificado"] = generate_key_certificado(
+            pdf_certificado, bucket_name="rto-rn-files"
+        )
+        context["adjuntos"] = adjuntos
         context["defectos"] = defectos
-        context["mostrarJu"]       = ""
-        context["mostrarFi"]       = ""
+        context["mostrarJu"] = ""
+        context["mostrarFi"] = ""
 
         MToTara, MToFI, MToFD, MToEf = self.get_total_values()
-        context["mto_tara"]       = MToTara
-        context["mto_fi"]         = MToFI
-        context["mto_der"]        = MToFD
+        context["mto_tara"] = MToTara
+        context["mto_fi"] = MToFI
+        context["mto_der"] = MToFD
         context["mto_eficiencia"] = MToEf
 
         # context = handle_context(context, self)
