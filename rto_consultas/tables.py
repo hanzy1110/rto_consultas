@@ -191,7 +191,6 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
 
-    consulta = tables.TemplateColumn(template_name="tables/combined_colums.html")
     titular = tables.Column(empty_values=())
     anulado = ImageColumn(empty_values=(), verbose_name="Estado")
     vigencia = tables.Column(empty_values=())
@@ -208,6 +207,16 @@ class VerificacionesTables(tables.Table):
         },
         parsed_names={"name": "name"},
     )
+
+    def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None, row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None, page_field=None, per_page_field=None, template_name=None, default=None, request=None, show_header=None, show_footer=True, extra_columns=None):
+        super().__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs, pinned_row_attrs, sequence, prefix, order_by_field, page_field, per_page_field, template_name, default, request, show_header, show_footer, extra_columns)
+
+        self.columns['ver_verificacion'].verbose_name = "Consulta"
+        self.columns['ver_certificado'].verbose_name = None
+
+        self.columns['ver_verificacion'].attrs ={'th': {'colspan': '2'}}
+        self.columns['ver_certificado'].attrs =  {'hidden': True}
+
 
     class Meta:
         model = Verificaciones
