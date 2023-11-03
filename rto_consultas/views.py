@@ -135,6 +135,11 @@ def logout_view(request):
     return redirect("login")
 
 
+def empty_view(request):
+    if request.method == "GET":
+        return HttpResponse("")
+
+
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     model: Model
     paginate_by: int

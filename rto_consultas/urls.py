@@ -36,6 +36,7 @@ urlpatterns += [
         views.dpt_view,
         name="dpt",
     ),
+    path("empty", views.empty_view, name="empty"),
 ]
 
 urlpatterns += [
