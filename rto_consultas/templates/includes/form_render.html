@@ -12,8 +12,8 @@
 
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Buscar</button>
-            <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div"
-                hx-swap="static">
+            <button type="button" class="btn btn-primary btn-block" hx-get="{% url 'empty' %}" hx-trigger="click" hx-target="#table_div"
+                hx-swap="innerHTML">
                 Limpiar Búsqueda
             </button>
         </div>
