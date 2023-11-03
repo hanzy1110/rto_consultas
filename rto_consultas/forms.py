@@ -16,10 +16,6 @@ logger = configure_logger(LOG_FILE)
 
 from .name_schemas import *
 
-
-DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
-
-
 def get_choices():
     aux_data = AuxData(
         query_fields=[],

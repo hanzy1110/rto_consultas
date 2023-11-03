@@ -37,3 +37,12 @@ MONTHS_DICT = {
     11: "Noviembre",
     12: "Diciembre",
 }
+
+TIPO_USO_VEHICULO = {
+    1: "Particular",
+    2: "Transporte de Carga",
+    3: "Transporte Pasajeros",
+    4: "Transporte Municipal",
+}
+
+DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
