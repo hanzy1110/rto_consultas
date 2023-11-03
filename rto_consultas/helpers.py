@@ -656,7 +656,7 @@ def handle_querydict(value):
             return int(value[0])
 
 def truncate_name(value):
-    return " ".join(list(value.split(" "))[:2])
+    return " ".join(list(value.split(" "))[:1])
 
 def parse_name_length(value, ptype):
     match ptype:
