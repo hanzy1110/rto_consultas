@@ -227,7 +227,7 @@ class RenderVerificacionForm_RN(TemplateView):
             "nrocertificado": "text",
             "dni": "select",
         },
-        render_url="verificaciones",
+        render_url="verificaciones_rn",
     )
 
     form_class = CustomRTOForm
