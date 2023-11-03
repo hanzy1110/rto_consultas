@@ -216,7 +216,6 @@ class VerificacionesTables(tables.Table):
         # self.columns['ver_verificacion'].verbose_name = "Consulta"
         # self.columns['ver_certificado'].verbose_name = None
 
-        self.columns['ver_certificado'].attrs =  {'hidden': True}
 
 
     class Meta:
