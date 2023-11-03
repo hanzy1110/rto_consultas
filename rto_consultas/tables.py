@@ -191,7 +191,7 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
 
-    consulta = tables.TemplateColumn(template_code="{{ record.ver_certificado }} - {{ record.ver_verificacion }}")
+    consulta = tables.TemplateColumn(template_name="tables/combined_colums.html")
     titular = tables.Column(empty_values=())
     anulado = ImageColumn(empty_values=(), verbose_name="Estado")
     vigencia = tables.Column(empty_values=())
