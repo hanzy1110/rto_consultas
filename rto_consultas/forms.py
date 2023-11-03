@@ -112,11 +112,11 @@ class CustomRTOForm(forms.Form):
                 field.required = False
                 self.fields[ff] = field
 
-        query_div = Div(
+        query_div = Row(
             *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
         )
 
-        form_div = Div(
+        form_div = Row(
             *[Field(ff, css_class="form-control input-sm") for ff in form_data.form_fields],
         )
 
