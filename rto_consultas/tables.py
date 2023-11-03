@@ -176,7 +176,7 @@ class VerificacionesTables(tables.Table):
     )
     fecha = tables.DateColumn(orderable=True, verbose_name="Emision", format="d/m/Y")
     ver_verificacion = tables.Column(
-        verbose_name="Verificación",
+        verbose_name="Consulta",
         linkify=(
             "ver_verificacion",
             {
@@ -187,7 +187,7 @@ class VerificacionesTables(tables.Table):
         empty_values=(),
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
-        verbose_name="Certificado",
+        verbose_name="",
         empty_values=(),
     )  # (viewname, kwargs)
 
@@ -211,8 +211,8 @@ class VerificacionesTables(tables.Table):
     def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None, row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None, page_field=None, per_page_field=None, template_name=None, default=None, request=None, show_header=None, show_footer=True, extra_columns=None):
         super().__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs, pinned_row_attrs, sequence, prefix, order_by_field, page_field, per_page_field, template_name, default, request, show_header, show_footer, extra_columns)
 
-        self.columns['ver_verificacion'].verbose_name = "Consulta"
-        self.columns['ver_certificado'].verbose_name = None
+        # self.columns['ver_verificacion'].verbose_name = "Consulta"
+        # self.columns['ver_certificado'].verbose_name = None
 
         self.columns['ver_verificacion'].attrs ={'th': {'colspan': '2'}}
         self.columns['ver_certificado'].attrs =  {'hidden': True}
@@ -230,8 +230,8 @@ class VerificacionesTables(tables.Table):
             "idtipouso",
             "titular",
             'consulta',
-            # "ver_verificacion",
-            # "ver_certificado",
+            "ver_verificacion",
+            "ver_certificado",
             # "idtipovehiculo",
             "idtaller",
             "anulado",
