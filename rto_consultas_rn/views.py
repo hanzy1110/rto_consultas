@@ -163,7 +163,7 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
         types={
             "dominiovehiculo": "text",
         },
-        render_url="verificaciones",
+        render_url="verificaciones_rn",
         render_form="verificaciones_form",
     )
 
