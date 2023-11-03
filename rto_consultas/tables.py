@@ -184,11 +184,13 @@ class VerificacionesTables(tables.Table):
                 "idtaller": tables.A("idtaller__idtaller"),
             },
         ),
-        empty_values=(),
+        empty_values=(), attrs={'th': {'colspan': '2'}}
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
         verbose_name="",
         empty_values=(),
+        attrs={'th': {'hidden': True}}
+
     )  # (viewname, kwargs)
 
     titular = tables.Column(empty_values=())
@@ -214,7 +216,6 @@ class VerificacionesTables(tables.Table):
         # self.columns['ver_verificacion'].verbose_name = "Consulta"
         # self.columns['ver_certificado'].verbose_name = None
 
-        self.columns['ver_verificacion'].attrs ={'th': {'colspan': '2'}}
         self.columns['ver_certificado'].attrs =  {'hidden': True}
 
 
