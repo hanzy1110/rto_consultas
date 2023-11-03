@@ -7,14 +7,11 @@
 {% load crispy_forms_tags %}
 
 <h1>{{ context_object_name }}</h1>
-<div class="card-body px-0 pt-0 pb-2">
+<div id="form_div" class="card-body px-0 pt-0 pb-2">
     <form hx-get="{% url render_url %}" hx-swap="afterbegin" hx-target="#table_div" hx-trigger="submit">
         <div class="container-fluid py-4">
 
             <table width="90%" style="margin-left: 10px;">
-                <tr>
-                    <td><b>Buscar</b></td>
-                </tr>
                 <tr>
                     {% csrf_token %}
                     {{ form|crispy }}
@@ -23,9 +20,13 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Buscar</button>
-                <button type="button" class="btn btn-primary btn-block" hx-trigger="click" hx-target="#table_div"
-                    hx-swap="static">
+                <button type="button" class="btn btn-primary btn-block" hx-get="{% url 'empty' %}" hx-trigger="click"
+                    hx-target="#table_div" hx-swap="innerHTML">
                     Limpiar Búsqueda
+                </button>
+                <button type="button" hx-get="{% url render_form %}" class="btn btn-primary btn-block"
+                    hx-trigger="click" hx-target="#form_div" hx-swap="static">
+                    Búsqueda Avanzada
                 </button>
             </div>
         </div>
@@ -36,15 +37,4 @@
         {#% render_table table %#}
     </div>
 </div>
-<script>
-    // Define the static HTML content you want to use for swapping
-    const staticContent = '';
-
-    // Add an event listener to the button
-    const button = document.querySelector('button[hx-swap="static"]');
-    button.addEventListener('click', function () {
-        const target = document.querySelector(button.getAttribute('hx-target'));
-        target.innerHTML = staticContent;
-    });
-</script>
 {% endblock %}
