@@ -12,7 +12,7 @@ DESCRIPTIONS = {
 ESTADO_CERTIFICADO = {
     1: "Aprobado",
     2: "Rechazado",
-    3: "Aprobado Condicional",
+    3: "Condicional",
     4: "Reverificado",
     5: "Vencido",
 }
@@ -40,9 +40,9 @@ MONTHS_DICT = {
 
 TIPO_USO_VEHICULO = {
     1: "Particular",
-    2: "Transporte de Carga",
-    3: "Transporte Pasajeros",
-    4: "Transporte Municipal",
+    2: "Carga",
+    3: "Pasajeros",
+    4: "Municipal",
 }
 
 DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]

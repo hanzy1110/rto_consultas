@@ -156,10 +156,10 @@ class CustomFileColumn(tables.FileColumn):
 class VerificacionesTables(tables.Table):
     dominiovehiculo = tables.Column(verbose_name="Dominio")
     certificado = tables.Column(
-        verbose_name="Nro. Certificado",
+        verbose_name="Certificado",
         empty_values=(),
     )
-    fecha = tables.DateColumn(orderable=True, verbose_name="Emision", format="d/m/Y")
+    fecha = tables.DateColumn(orderable=True, verbose_name="Desde", format="d/m/Y")
     ver_verificacion = tables.Column(
         verbose_name="Consulta",
         linkify=(
@@ -178,7 +178,7 @@ class VerificacionesTables(tables.Table):
 
     titular = tables.Column(empty_values=())
     anulado = ImageColumn(empty_values=(), verbose_name="", attrs={'th': {'hidden': True}})
-    vigencia = tables.Column(empty_values=())
+    vigencia = tables.Column(empty_values=(), verbose_name="Hasta")
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
     idtipouso = tables.Column(empty_values=(), verbose_name="Tipo de Uso")
