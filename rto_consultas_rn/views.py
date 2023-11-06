@@ -71,13 +71,11 @@ from rto_consultas.helpers import (
 )
 
 from rto_consultas.forms import (
-    ConsultaDPTForm,
     CustomRTOForm,
-    ObleasPorTaller,
-    InspectionOrderForm,
 )  # Import the form you created
 
 from rto_consultas.logging import configure_logger, print_stack
+from rto_consultas.views import IndexView
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
@@ -89,16 +87,18 @@ def rn_view(request):
     return render(request, template_name, {"segment": "index"})
 
 
-@login_required
-def dvr_view(request):
-    template_name = "pages/RN/dvr_index.html"
-    return render(request, template_name, {"segment": "index"})
+class DVRiew(IndexView):
+    urls = {
+        "verificaciones_rn": "Verificaciones",
+        "carga_obleas": "Carga Obleas",
+        "resumen_obleas": "Consulta Disponibilidad Obleas",
+    }
 
 
-@login_required
-def secretaria_transporte_view(request):
-    template_name = "pages/RN/index_rn_transporte.html"
-    return render(request, template_name, {"segment": "index"})
+class SecTranspView(IndexView):
+    urls = {
+        "verificaciones_rn": "Verificaciones",
+    }
 
 
 class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
