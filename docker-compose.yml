@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     env_file: ./envfiles/.env.prod
-    ports:
-      - "${WEB_PORT}:8000"  #Web port 
+    # ports:
+    #   - "${WEB_PORT}:8000"  #Web port
     # volumes:
     #   - .:/home/code
     restart: unless-stopped
