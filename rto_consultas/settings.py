@@ -47,9 +47,11 @@ SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
+ALLOWED_HOSTS = ["*"]
 
 if not DEBUG:
     # SSL/TLS settings
+    ALLOWED_HOSTS = ["rto_consultas_prod"]
     SECURE_SSL_REDIRECT = True
     # SECURE_SSL_HOST = "localhost"
     SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
@@ -62,7 +64,6 @@ if not DEBUG:
     SECURE_SSL_CERT = BASE_DIR / "certificates/localhost.crt"
     SECURE_SSL_KEY = BASE_DIR / "certificates/localhost.key"
 
-ALLOWED_HOSTS = ["*"]
 # SILKY_PYTHON_PROFILER = True
 
 # Application definition
