@@ -12,6 +12,7 @@ function build_dev() {
 function build_prod() {
     # sudo docker-compose --env-file envfiles/.env.prod down --remove-orphans
     sudo docker-compose --env-file envfiles/.env.prod rm -sv --force rto_consultas_prod
+    sudo docker-compose --env-file envfiles/.env.prod rm -sv --force rto_consultas_web_server
     sudo docker-compose --env-file envfiles/.env.prod build
     sudo docker-compose --env-file envfiles/.env.prod up -d
     return 0
