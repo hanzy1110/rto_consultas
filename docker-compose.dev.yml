@@ -1,5 +1,5 @@
 services:
-  rto_consultas:
+  rto_consultas_dev:
     container_name: rto_consultas_dev
     build: 
       context: .
