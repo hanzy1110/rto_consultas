@@ -44,21 +44,23 @@ RTO_CONSULTAS_RN_DIR = BASE_DIR / "rto_consultas_rn"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@"
 
-# SSL/TLS settings
-SECURE_SSL_REDIRECT = True
-SECURE_SSL_HOST = "localhost"
-SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # For HSTS (if needed)
-SECURE_HSTS_PRELOAD = True  # For HSTS (if needed)
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
-# SSL Certificate paths
-SECURE_SSL_CERT = BASE_DIR / "certificates/localhost.crt"
-SECURE_SSL_KEY = BASE_DIR / "certificates/localhost.key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
+
+if not DEBUG:
+    # SSL/TLS settings
+    SECURE_SSL_REDIRECT = True
+    # SECURE_SSL_HOST = "localhost"
+    SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # For HSTS (if needed)
+    SECURE_HSTS_PRELOAD = True  # For HSTS (if needed)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # SSL Certificate paths
+    SECURE_SSL_CERT = BASE_DIR / "certificates/localhost.crt"
+    SECURE_SSL_KEY = BASE_DIR / "certificates/localhost.key"
 
 ALLOWED_HOSTS = ["*"]
 # SILKY_PYTHON_PROFILER = True
