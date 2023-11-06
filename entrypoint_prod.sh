@@ -9,6 +9,5 @@ python manage.py createsuperuser --database users --no-input
 
 sleep 10
 echo "Starting Server..."
-
 # python manage.py runserver 0.0.0.0:${WEB_PORT}
-python -m gunicorn rto_consultas.wsgi:application
+python -m gunicorn -b "0.0.0.0:${WEB_PORT}" rto_consultas.wsgi:application
