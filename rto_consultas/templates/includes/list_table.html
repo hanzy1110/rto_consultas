@@ -24,10 +24,12 @@
                     hx-target="#table_div" hx-swap="innerHTML">
                     Limpiar Búsqueda
                 </button>
+                {% if render_form %}
                 <button type="button" hx-get="{% url render_form %}" class="btn btn-primary btn-block"
                     hx-trigger="click" hx-target="#form_div" hx-swap="static">
                     Búsqueda Avanzada
                 </button>
+                {% endif %}
             </div>
         </div>
     </form>
