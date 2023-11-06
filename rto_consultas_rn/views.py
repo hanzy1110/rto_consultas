@@ -87,7 +87,7 @@ def rn_view(request):
     return render(request, template_name, {"segment": "index"})
 
 
-class DVRiew(IndexView):
+class DVRView(IndexView):
     urls = {
         "verificaciones_rn": "Verificaciones",
         "carga_obleas": "Carga Obleas",
