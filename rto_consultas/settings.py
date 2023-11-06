@@ -51,7 +51,7 @@ ALLOWED_HOSTS = ["*"]
 
 if not DEBUG:
     # SSL/TLS settings
-    ALLOWED_HOSTS = ["rto_consultas_prod"]
+    ALLOWED_HOSTS = ["52.72.115.11", "rto_consultas_prod", "10.0.0.4", "10.0.0.3"]
     SECURE_SSL_REDIRECT = True
     # SECURE_SSL_HOST = "localhost"
     SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
