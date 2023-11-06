@@ -5,7 +5,7 @@ from django.urls import path, include
 import rto_consultas_rn.views as views_RN
 
 urlpatterns = [
-    path("DVR", views_RN.DVRView.as_view(), name="DVR"),
+    path("dvr", views_RN.DVRView.as_view(), name="dvr"),
     path("sec_transporte", views_RN.SecTranspView.as_view(), name="sec_transporte"),
     path(
         "ververificacion_rn/<int:idverificacion>/<int:idtaller>",
