@@ -101,18 +101,6 @@ def nqn_view(request):
 
 
 @login_required
-def dpt_view(request):
-    template_name = "pages/dpt_index.html"
-    return render(request, template_name, {"segment": "index"})
-
-
-@login_required
-def ansv_view(request):
-    template_name = "pages/index_nqn_ansv.html"
-    return render(request, template_name, {"segment": "index"})
-
-
-@login_required
 def index(request):
     user = request.user
     # Check the user's group or any other condition
@@ -173,12 +161,6 @@ class DocumentView(IndexView):
         "carga_obleas": "Carga Obleas",
         "resumen_obleas": "Consulta Disponibilidad Obleas",
     }
-
-
-@login_required
-def ansv_view(request):
-    template_name = "pages/index_nqn_ansv.html"
-    return render(request, template_name, {"segment": "index"})
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
@@ -478,6 +460,29 @@ class ListHabilitaciones(CustomRTOView):
     aux_data = AuxData(
         query_fields=[
             "dominio",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+        },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+        },
+        types={
+            "dominio": "text",
+        },
+        render_url="habilitaciones",
+        render_form="habilitaciones_form",
+    )
+
+
+@method_decorator(login_required, name="dispatch")
+class RenderHabilitacionForm(TemplateView):
+    template_name = "includes/form_render.html"
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
             "nrocodigobarrashab",
             "usuario",
             "fecha_desde",
@@ -500,6 +505,14 @@ class ListHabilitaciones(CustomRTOView):
         },
         render_url="habilitaciones",
     )
+
+    form_class = CustomRTOForm
+    model = Verificaciones
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context = handle_context(context, self)
+        return context
 
 
 @method_decorator(login_required, name="dispatch")

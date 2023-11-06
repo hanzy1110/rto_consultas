@@ -61,6 +61,11 @@ urlpatterns += [
         "verificaciones/", views.ListVerificacionesView.as_view(), name="verificaciones"
     ),
     path(
+        "habilitaciones_form/",
+        views.RenderHabilitacionForm.as_view(),
+        name="habilitaciones_form",
+    ),
+    path(
         "verificaciones_form/",
         views.RenderVerificacionForm.as_view(),
         name="verificaciones_form",
