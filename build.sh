@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -x
 git pull
 
 function build_dev() {
