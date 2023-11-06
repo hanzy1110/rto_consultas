@@ -12,8 +12,7 @@ services:
     restart: unless-stopped
     command: ["/home/code/entrypoint_prod.sh"]
 
-  nginx:
-
+  rto_consultas_web_server:
     container_name: rto_consultas_web_server
     depends_on:
       - rto_consultas_prod
