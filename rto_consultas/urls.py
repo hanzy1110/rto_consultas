@@ -27,14 +27,19 @@ urlpatterns = [
 
 urlpatterns += [
     path(
-        "ansv",
-        views.ansv_view,
-        name="ansv",
+        "seg_vial",
+        views.SVView.as_view(),
+        name="seg_vial",
     ),
     path(
         "dpt",
-        views.dpt_view,
+        views.DPTView.as_view(),
         name="dpt",
+    ),
+    path(
+        "consulta_documentacion",
+        views.DocumentView.as_view(),
+        name="consulta_documentacion",
     ),
     path("empty", views.empty_view, name="empty"),
 ]

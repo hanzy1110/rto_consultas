@@ -1,4 +1,5 @@
 import os
+from typing import List
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
@@ -138,6 +139,46 @@ def logout_view(request):
 def empty_view(request):
     if request.method == "GET":
         return HttpResponse("")
+
+
+@method_decorator(login_required, name="dispatch")
+class IndexView(TemplateView):
+    urls: dict[str, str]
+    template_name = "includes/generic_index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["urls"] = self.urls
+        return context
+
+
+class DPTView(IndexView):
+    urls = {
+        "verificaciones": "Verificaciones",
+        "carga_habilitacion": "Carga Habilitaciones",
+        "habilitaciones": "Consulta Habilitaciones",
+    }
+
+
+class SVView(IndexView):
+    urls = {
+        "verificaciones": "Verificaciones",
+        "consulta_documentacion": "Consulta Documentacion",
+    }
+
+
+class DocumentView(IndexView):
+    urls = {
+        "certs_asignados": "Certificados Asignados",
+        "carga_obleas": "Carga Obleas",
+        "resumen_obleas": "Consulta Disponibilidad Obleas",
+    }
+
+
+@login_required
+def ansv_view(request):
+    template_name = "pages/index_nqn_ansv.html"
+    return render(request, template_name, {"segment": "index"})
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
