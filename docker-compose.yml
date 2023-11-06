@@ -13,7 +13,8 @@ services:
     command: ["/home/code/entrypoint_prod.sh"]
 
   nginx:
-    depends_on: rto_consultas_prod
+    depends_on:
+      - rto_consultas_prod
     image: nginx
     ports:
       - "80:80"

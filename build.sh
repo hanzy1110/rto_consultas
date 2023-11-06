@@ -3,7 +3,7 @@ set -x
 git pull
 
 function build_dev() {
-    sudo docker-compose --env-file envfiles/.env rm -sv --force rto_consultas_dev
+    sudo docker-compose -f docker-compose.dev.yml --env-file envfiles/.env rm -sv --force rto_consultas_dev
     sudo docker-compose -f docker-compose.dev.yml --env-file envfiles/.env build
     sudo docker-compose -f docker-compose.dev.yml --env-file envfiles/.env up -d
     return 0
