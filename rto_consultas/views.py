@@ -145,7 +145,7 @@ class DPTView(IndexView):
         "verificaciones": "Verificaciones",
         "carga_habilitacion": "Carga Habilitaciones",
         "habilitaciones": "Consulta Habilitaciones",
-        "consulta_dpt": "Consulta DPT",
+        "consulta_habilitaciones": "Consulta DPT",
     }
 
 
