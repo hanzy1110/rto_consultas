@@ -1,6 +1,6 @@
 services:
   rto_consultas_prod:
-    container_name: rto_consultas
+    container_name: rto_consultas_prod
     build: 
       context: .
       dockerfile: Dockerfile
