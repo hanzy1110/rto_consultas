@@ -1,14 +1,14 @@
 services:
   rto_consultas:
-    container_name: rto_consultas
+    container_name: rto_consultas_dev
     build: 
       context: .
       dockerfile: Dockerfile
-    env_file: ./envfiles/.env.prod
+    env_file: ./envfiles/.env
     ports:
       - "${WEB_PORT}:8000"  #Web port 
-    # volumes:
-    #   - .:/home/code
+    volumes: 
+      - .:/home/code
     restart: unless-stopped
     command: ["/home/code/entrypoint.sh"]
 

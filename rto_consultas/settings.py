@@ -14,29 +14,29 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
 # VEHICULAR_UNC
-MYSQL_HOST          = os.environ["MYSQL_HOST"]
-MYSQL_USER          = os.environ["MYSQL_USER"]
-MYSQL_PORT          = os.environ["MYSQL_PORT"]
-MYSQL_DATABASE      = os.environ["MYSQL_DATABASE"]
-MYSQL_PASSWORD      = os.environ["MYSQL_PASSWORD"]
+MYSQL_HOST = os.environ["MYSQL_HOST"]
+MYSQL_USER = os.environ["MYSQL_USER"]
+MYSQL_PORT = os.environ["MYSQL_PORT"]
+MYSQL_DATABASE = os.environ["MYSQL_DATABASE"]
+MYSQL_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
 MYSQL_RN_HOST = os.environ["MYSQL_HOST"]
-MYSQL_RN_USER          = os.environ["MYSQL_USER"]
-MYSQL_RN_PORT          = os.environ["MYSQL_RN_PORT"]
-MYSQL_RN_DATABASE      = os.environ["MYSQL_RN_DATABASE"]
-MYSQL_RN_PASSWORD      = os.environ["MYSQL_PASSWORD"]
+MYSQL_RN_USER = os.environ["MYSQL_USER"]
+MYSQL_RN_PORT = os.environ["MYSQL_RN_PORT"]
+MYSQL_RN_DATABASE = os.environ["MYSQL_RN_DATABASE"]
+MYSQL_RN_PASSWORD = os.environ["MYSQL_PASSWORD"]
 MYSQL_RN_ROOT_PASSWORD = os.environ["MYSQL_ROOT_PASSWORD"]
 
-POSTGRES_DB       = os.environ["POSTGRES_DB"]
-POSTGRES_USER     = os.environ["POSTGRES_USER"]
+POSTGRES_DB = os.environ["POSTGRES_DB"]
+POSTGRES_USER = os.environ["POSTGRES_USER"]
 POSTGRES_PASSWORD = os.environ["POSTGRES_PASSWORD"]
-POSTGRES_HOST     = os.environ["POSTGRES_HOST"]
+POSTGRES_HOST = os.environ["POSTGRES_HOST"]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 RTO_CONSULTAS_DIR = Path(__file__).resolve().parent
-RTO_CONSULTAS_RN_DIR = BASE_DIR / 'rto_consultas_rn'
+RTO_CONSULTAS_RN_DIR = BASE_DIR / "rto_consultas_rn"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -44,8 +44,21 @@ RTO_CONSULTAS_RN_DIR = BASE_DIR / 'rto_consultas_rn'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@"
 
+# SSL/TLS settings
+SECURE_SSL_REDIRECT = True
+SECURE_SSL_HOST = "localhost"
+SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # For HSTS (if needed)
+SECURE_HSTS_PRELOAD = True  # For HSTS (if needed)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# SSL Certificate paths
+SECURE_SSL_CERT = BASE_DIR / "certificates/localhost.crt"
+SECURE_SSL_KEY = BASE_DIR / "certificates/localhost.key"
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", False)
 
 ALLOWED_HOSTS = ["*"]
 # SILKY_PYTHON_PROFILER = True
@@ -87,8 +100,8 @@ ROOT_URLCONF = "rto_consultas.urls"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGIN_URL           = "accounts/login"
-LOGIN_REDIRECT_URL  = "/"
+LOGIN_URL = "accounts/login"
+LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/logout"
 
 STATIC_ROOT = BASE_DIR / "static"
@@ -102,9 +115,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             # BASE_DIR / 'templates',
-            RTO_CONSULTAS_DIR
-            / "templates",
-            RTO_CONSULTAS_RN_DIR / 'templates',
+            RTO_CONSULTAS_DIR / "templates",
+            RTO_CONSULTAS_RN_DIR / "templates",
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -148,11 +160,11 @@ DATABASES = {
         "PASSWORD": POSTGRES_PASSWORD,
         "HOST": POSTGRES_HOST,
         "PORT": "5432",
-    }
+    },
 }
 # ROLE_GROUPS = ["admin", "employee"]
 
-DATABASE_ROUTERS = ['rto_consultas.routers.UserRouter']
+DATABASE_ROUTERS = ["rto_consultas.routers.UserRouter"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
