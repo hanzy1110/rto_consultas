@@ -281,7 +281,9 @@ def map_fields(data: AuxData, model: Model):
             dfield = vals[0]
             dmodel: Model = vals[1]
 
-            cache_key = f"unique_values_{model._meta.db_table}_{field}"
+            cache_key = (
+                f"unique_values_{model._meta.db_table}{model._meta.app_label}_{field}"
+            )
             cached_values = cache.get(cache_key)
 
             if cached_values is None:

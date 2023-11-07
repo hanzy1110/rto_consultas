@@ -1,3 +1,7 @@
+# from rto_consultas.models import Talleres as TalleresNQN
+# from rto_consultas_rn.models import Talleres as TalleresRN
+# from rto_consultas.helpers import map_fields
+
 VALS = {1: "Verdadero", 0: "Falso"}
 
 VALS_ANULADO = {1: "anulado", 0: "vigente"}
@@ -46,3 +50,6 @@ TIPO_USO_VEHICULO = {
 }
 
 DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
+
+# TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
+# TALLERES_RN_CHOICES = map_fields([], TalleresRN)
