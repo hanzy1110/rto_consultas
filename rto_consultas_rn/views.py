@@ -48,7 +48,9 @@ from .models import (
     Verificacionesdefectos,
     Verificacionespdf,
 )
-from rto_consultas_rn.models import Estados, Tipousovehiculo, Talleres
+from rto_consultas_rn.models import Estados, Tipousovehiculo
+from rto_consultas_rn.models import Talleres as TalleresRN
+
 from rto_consultas_rn.tables import (
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
@@ -125,6 +127,7 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         # logger.debug("HANDLING CONTEXT...")
         context = super().get_context_data(**kwargs)
+
         context = handle_context(context, self)
 
         logger.debug("CONTEXT HANDLED...")
@@ -195,7 +198,7 @@ class RenderVerificacionForm_RN(TemplateView):
         form_fields={
             "idestado": ("descripcion", Estados),
             "idtipouso": ("descripcion", Tipousovehiculo),
-            "idtaller": ("nombre", Talleres),
+            "idtaller": ("nombre", TalleresRN),
             "anulado": (None, None),
         },
         parsed_names={
@@ -235,6 +238,8 @@ class RenderVerificacionForm_RN(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        logger.debug(f"TALLERES MODEL => {self.aux_data.form_fields['idtaller']}")
         context = handle_context(context, self)
         return context
 
