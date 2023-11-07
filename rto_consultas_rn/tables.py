@@ -25,6 +25,7 @@ from rto_consultas.helpers import (
     map_fields,
     generate_key_from_params,
     convert_date,
+    parse_name_length,
 )
 from rto_consultas.logging import configure_logger
 
@@ -274,11 +275,12 @@ class VerificacionesTables(tables.Table):
 
     def render_titular(self, record):
         persona = record.codigotitular
+
         match persona.tipopersona:
             case "J":
-                return persona.razonsocial
+                return parse_name_length(persona.razonsocial, "J")
             case _:
-                return f"{persona.nombre} {persona.apellido}"
+                return parse_name_length([persona.nombre, persona.apellido], "P")
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
