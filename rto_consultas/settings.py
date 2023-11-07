@@ -42,16 +42,21 @@ RTO_CONSULTAS_RN_DIR = BASE_DIR / "rto_consultas_rn"
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@"
 
+SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 ALLOWED_HOSTS = ["*"]
 
 if not DEBUG:
+    try:
+        SECRET_KEY = os.environ["SECRET_KEY"]
+    except KeyError as e:
+        raise RuntimeError("Could not find a SECRET_KEY in environment") from e
     # SSL/TLS settings
     ALLOWED_HOSTS = ["52.72.115.11", "rto_consultas_prod", "10.0.0.4", "10.0.0.3"]
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     # SECURE_SSL_HOST = "localhost"
     SECURE_HSTS_SECONDS = 31536000  # For HSTS (if needed)
