@@ -131,7 +131,9 @@ class CustomFileColumn(tables.FileColumn):
             )
             cache.set(cache_key, certificado)
             url = generate_key_from_params(
-                certificado.idtaller_id, certificado.nombrea4, bucket_name='rto-rn-files'
+                certificado.idtaller_id,
+                certificado.nombrea4,
+                bucket_name="rto-rn-files",
             )
             return url
         return value
@@ -184,13 +186,15 @@ class VerificacionesTables(tables.Table):
             },
         ),
         empty_values=(),
+        attrs={"th": {"colspan": "3"}},
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
-        verbose_name="Certificado",
-        empty_values=(),
+        verbose_name="Certificado", empty_values=(), attrs={"th": {"hidden": True}}
     )  # (viewname, kwargs)
     titular = tables.Column(empty_values=())
-    anulado = ImageColumn(empty_values=(), verbose_name="Estado")
+    anulado = ImageColumn(
+        empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
+    )
     vigencia = tables.Column(empty_values=())
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
@@ -219,9 +223,8 @@ class VerificacionesTables(tables.Table):
             "titular",
             "ver_verificacion",
             "ver_certificado",
-            # "idtipovehiculo",
-            "idtaller",
             "anulado",
+            "idtaller",
         )
         extra_columns = ("certificado",)
         template_name = "tables/htmx_table_RN.html"
@@ -720,5 +723,3 @@ class ResumenTransporteCargaTable(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
-
-
