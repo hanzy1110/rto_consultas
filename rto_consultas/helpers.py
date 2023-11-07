@@ -303,6 +303,7 @@ def map_fields(data: AuxData, model: Model):
 
                 cache.set(cache_key, vals)
             else:
+                logger.info(f"CACHE HIT => {cached_values}")
                 values[field] = cached_values
 
         else:
