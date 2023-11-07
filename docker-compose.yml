@@ -23,4 +23,4 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./certificates:/etc/nginx/certificates
-      - ./staticfiles:/home/code/staticfiles
+      - ./staticfiles:/home/code/staticfiles:ro
