@@ -55,7 +55,7 @@ if not DEBUG:
     except KeyError as e:
         raise RuntimeError("Could not find a SECRET_KEY in environment") from e
     # SSL/TLS settings
-    ALLOWED_HOSTS = ["52.72.115.11", "rto_consultas_prod", "10.0.0.4", "10.0.0.3"]
+    ALLOWED_HOSTS = [".52.72.115.11", ".rto_consultas_prod", "10.0.0.4", "10.0.0.3"]
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     # SECURE_SSL_HOST = "localhost"

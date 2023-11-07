@@ -29,7 +29,7 @@ COPY . .
 RUN chmod +x entrypoint.sh
 
 # Expose port
-EXPOSE 8000
+# EXPOSE 8000
 
 # make sure all messages always reach console
 ENV PYTHONUNBUFFERED=1
