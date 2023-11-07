@@ -66,8 +66,8 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
 
     # SSL Certificate paths
-    SECURE_SSL_CERT = BASE_DIR / "certificates/localhost.crt"
-    SECURE_SSL_KEY = BASE_DIR / "certificates/localhost.key"
+    # SECURE_SSL_CERT = BASE_DIR / "certificates/rto_consultas_prod.crt"
+    # SECURE_SSL_KEY = BASE_DIR / "certificates/rto_consultas_prod.key"
 
 # SILKY_PYTHON_PROFILER = True
 
