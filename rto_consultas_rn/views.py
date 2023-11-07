@@ -167,7 +167,7 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
             "dominiovehiculo": "text",
         },
         render_url="verificaciones_rn",
-        render_form="verificaciones_form",
+        render_form="verificaciones_form_rn",
     )
 
     def get_queryset(self):
@@ -239,7 +239,6 @@ class RenderVerificacionForm_RN(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        logger.debug(f"TALLERES MODEL => {self.aux_data.form_fields['idtaller']}")
         context = handle_context(context, self)
         return context
 
