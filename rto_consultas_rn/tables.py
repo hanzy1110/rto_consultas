@@ -177,7 +177,7 @@ class VerificacionesTables(tables.Table):
     )
     fecha = tables.DateColumn(orderable=True, verbose_name="Emision", format="d/m/Y")
     ver_verificacion = tables.Column(
-        verbose_name="Verificación",
+        verbose_name="Consulta",
         linkify=(
             "ver_verificacion_rn",
             {

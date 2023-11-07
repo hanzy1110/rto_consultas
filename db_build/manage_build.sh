@@ -14,7 +14,7 @@ MYSQL_REPL_RN=$SQL_INIT_RN/e_repl_setup.sql
 # DATABASE VOLUMES
 MYSQL_NQN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/sql_volume
 POSTGRES_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
-MYSQL_RN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/postgres_volume
+MYSQL_RN_VOLUME=/home/ubuntu/git/rto_consultas/db_build/sql_rn_volume
 
 SQL_AZURE_DUMP_PATH=/home/ubuntu/central_dump
 REMOTE_SERVER="azuresvr"
