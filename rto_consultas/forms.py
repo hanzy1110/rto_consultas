@@ -16,6 +16,7 @@ logger = configure_logger(LOG_FILE)
 
 from .name_schemas import *
 
+
 def get_choices():
     aux_data = AuxData(
         query_fields=[],
@@ -88,9 +89,14 @@ class CustomRTOForm(forms.Form):
 
         for ff in form_data.form_fields:
             if "estado" in ff:
-                cs = [(str(i + 1), c) for i, c in enumerate(ESTADO_CERTIFICADO.values())]
+                cs = [
+                    (str(i + 1), c) for i, c in enumerate(ESTADO_CERTIFICADO.values())
+                ]
             elif "uso" in ff:
                 cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
+            elif "taller" in ff:
+                desc = descriptions.get(ff, None)
+                cs = list(desc.items())
             else:
                 desc = descriptions.get(ff, None)
                 # TODO aca van las descripciopnes...
@@ -133,10 +139,16 @@ class CustomRTOForm(forms.Form):
         #     )
 
         query_div = Div(
-            *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
+            *[
+                Field(qf, css_class="form-control input-sm")
+                for qf in form_data.query_fields
+            ],
         )
         form_div = Div(
-            *[Field(ff, css_class="form-control input-sm") for ff in form_data.form_fields],
+            *[
+                Field(ff, css_class="form-control input-sm")
+                for ff in form_data.form_fields
+            ],
         )
 
         side_by_side = Row(
