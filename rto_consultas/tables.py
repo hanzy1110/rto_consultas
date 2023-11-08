@@ -332,7 +332,9 @@ class HabilitacionesTable(tables.Table):
         default="No",
         attrs={"th": {"hidden": True}},
     )
-    dar_de_baja = tables.Column(verbose_name="", attrs={"th": {"hidden": True}})
+    dar_de_baja = tables.Column(
+        verbose_name="", default="SI", attrs={"th": {"hidden": True}}
+    )
 
     nrocodigobarrashab = tables.Column(verbose_name="Nro. Orden Inspección")
     dominio = tables.Column(verbose_name="Dominio")
@@ -359,15 +361,15 @@ class HabilitacionesTable(tables.Table):
 
     def render_vista_previa(self, record):
         image_url = static(f"img/small-logos/lupa.png")
-        return format_html('<img src="{}" />', image_url)
+        return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_modificar(self, record):
         image_url = static(f"img/small-logos/modificar3.png")
-        return format_html('<img src="{}" />', image_url)
+        return format_html('<img src="{}" width="25px" />', image_url)
 
     def render_dar_de_baja(self, record):
         image_url = static(f"img/small-logos/delete.png")
-        return format_html('<img src="{}" />', image_url)
+        return format_html('<img src="{}" width="25px" />', image_url)
 
     def render_usuariodictamen(self, record):
         try:
