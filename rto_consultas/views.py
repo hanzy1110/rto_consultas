@@ -1079,5 +1079,5 @@ def consulta_habilitaciones(request):
     return render(
         request,
         "includes/list_table.html",
-        {"form": form, "render_url": "consulta_habilitaciones"},
+        {"form": form, "render_url": "consulta_habilitaciones_finales"},
     )
