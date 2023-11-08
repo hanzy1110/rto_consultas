@@ -41,9 +41,9 @@ urlpatterns += [
         name="dpt",
     ),
     path(
-        "consulta_habilitaciones",
+        "consulta_ordenes_insp",
         views.HabsView.as_view(),
-        name="consulta_habilitaciones",
+        name="consulta_ordenes_insp",
     ),
     path(
         "consulta_documentacion",
@@ -111,7 +111,7 @@ urlpatterns += [
     path(
         "consulta_dpt",
         views.consulta_habilitaciones,
-        name="consulta_habilitaciones",
+        name="consulta_habilitaciones_finales",
     ),
     # path("", include("admin_soft.urls"), name=admin),
 ]
