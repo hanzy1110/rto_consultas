@@ -253,7 +253,11 @@ class InspectionOrderForm(forms.Form):
 
         if initial:
             for k, v in initial.items():
-                self.fields[k].initial = v
+                try:
+                    self.fields[k].initial = v
+                except Exception as e:
+                    logger.warn(f"ERROR FOUND => {e}")
+                    pass
 
         self.helper = FormHelper()
         self.helper.form_class = "col_w900 col_w900_last"
