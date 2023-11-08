@@ -364,6 +364,9 @@ class HabilitacionesTable(tables.Table):
 
         return username
 
+    def render_modificado(self, value):
+        return MODIFICADOS[value]
+
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
     ):
