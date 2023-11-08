@@ -37,6 +37,7 @@ from django.core.cache import cache
 
 from rto_consultas.name_schemas import *
 
+
 class ImageColumn(tables.Column):
     def render(self, record):
         cache_key = f"certificado:{record.idtaller}-{record.idverificacion}"
@@ -170,15 +171,17 @@ class VerificacionesTables(tables.Table):
                 "idtaller": tables.A("idtaller__idtaller"),
             },
         ),
-        empty_values=(), attrs={'th': {'colspan': '3'}}
+        empty_values=(),
+        attrs={"th": {"colspan": "3"}},
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
-        verbose_name="",
-        empty_values=(),
-        attrs={'th': {'hidden': True}})  # (viewname, kwargs)
+        verbose_name="", empty_values=(), attrs={"th": {"hidden": True}}
+    )  # (viewname, kwargs)
 
     titular = tables.Column(empty_values=())
-    anulado = ImageColumn(empty_values=(), verbose_name="", attrs={'th': {'hidden': True}})
+    anulado = ImageColumn(
+        empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
+    )
     vigencia = tables.Column(empty_values=(), verbose_name="Hasta")
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
@@ -193,14 +196,6 @@ class VerificacionesTables(tables.Table):
         },
         parsed_names={"name": "name"},
     )
-
-    def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None, row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None, page_field=None, per_page_field=None, template_name=None, default=None, request=None, show_header=None, show_footer=True, extra_columns=None):
-        super().__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs, pinned_row_attrs, sequence, prefix, order_by_field, page_field, per_page_field, template_name, default, request, show_header, show_footer, extra_columns)
-
-        # self.columns['ver_verificacion'].verbose_name = "Consulta"
-        # self.columns['ver_certificado'].verbose_name = None
-
-
 
     class Meta:
         model = Verificaciones
@@ -317,22 +312,24 @@ class HabilitacionesTable(tables.Table):
         ),
         orderable=False,
         empty_values=(),
+        attrs={"th": {"colspan": "4"}},
     )  # (viewname, kwargs)
+    imprimir = FileColumnHabs(
+        verbose_name="Imprimir",
+        orderable=False,
+        empty_values=(),
+        attrs={"th": {"hidden": True}},
+    )
+    modificar = tables.Column(
+        verbose_name="", default="No", attrs={"th": {"hidden": True}}
+    )
+    dar_de_baja = tables.Column(verbose_name="", attrs={"th": {"hidden": True}})
 
     nrocodigobarrashab = tables.Column(verbose_name="Nro. Orden Inspección")
     dominio = tables.Column(verbose_name="Dominio")
     titular = tables.Column(verbose_name="Titular")
     fechahoracreacion = tables.Column(verbose_name="Fecha y Hora Creación")
     usuariodictamen = tables.Column(verbose_name="Emitido Por")
-    modificado = tables.Column(verbose_name="Modificado")
-
-    # imprimir = CustomFileColumn(
-    #     verbose_name="Habilitacion",
-    #     orderable=False,
-    #     empty_values=(),
-    # )  # (viewname, kwargs)
-    imprimir = FileColumnHabs(verbose_name="Imprimir", orderable=False, empty_values=())
-    modificar = tables.Column(verbose_name="Modificado", default="No")
 
     class Meta:
         template_name = "tables/htmx_table.html"
