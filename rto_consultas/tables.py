@@ -320,7 +320,7 @@ class HabilitacionesTable(tables.Table):
         empty_values=(),
         attrs={"th": {"hidden": True}},
     )
-    modificar = tables.Column(
+    modificado = tables.Column(
         verbose_name="", default="No", attrs={"th": {"hidden": True}}
     )
     dar_de_baja = tables.Column(verbose_name="", attrs={"th": {"hidden": True}})
@@ -340,10 +340,9 @@ class HabilitacionesTable(tables.Table):
             "titular",
             "fechahoracreacion",
             "usuariodictamen",
-            "modificado",
             # HYPERLINKS:
             "vista_previa",
-            "modificar",
+            "modificado",
             "dar_de_baja",
             "imprimir",
         ]
