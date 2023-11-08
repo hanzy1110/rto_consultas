@@ -222,6 +222,10 @@ class InspectionOrderForm(forms.Form):
         label="CCCF Nro",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 242px"}),
     )
+    usuariodictamen = forms.CharField(
+        label="Emitido por",
+        widget=forms.TextInput(attrs={"class": "txt", "style": "width: 242px"}),
+    )
     titular = forms.CharField(
         label="Nombre",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 242px"}),
