@@ -686,6 +686,11 @@ def handle_initial_hab(id_habilitacion, dominio):
     context["modificado"] = modificado
 
     context["descripciones"] = descripciones
+
+    context["dominio"] = dominio
+
+    context["modelo"] = habilitacion.modelovehiculo
+
     return context
 
 
