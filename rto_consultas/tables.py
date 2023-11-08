@@ -302,7 +302,7 @@ class HabilitacionesTable(tables.Table):
     )
 
     vista_previa = tables.Column(
-        verbose_name="Vista Previa",
+        verbose_name="Consulta",
         linkify=(
             "ver_habilitacion",
             {
