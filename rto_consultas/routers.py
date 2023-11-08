@@ -1,5 +1,6 @@
 import os
-from .logging import configure_  # logger, print_stack
+
+# from .logging import configure_logger, print_stack
 
 LOG_FILE = os.environ["LOG_FILE"]
 DJANGO_TABLES = ["auth", "admin", "contenttypes", "sessions"]
