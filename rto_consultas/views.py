@@ -1020,11 +1020,8 @@ class PDFHabilitacion(PDFTemplateView):
         return context
 
 
-def carga_habilitacion(request):
+def carga_habilitacion(request, id_hab=None, dominio=None):
     if request.method == "POST":
-        id_hab = request.kwargs.get("idhabilitacion", None)
-        dominio = request.kwargs.get("dominio", None)
-
         if id_hab and dominio:
             initial = handle_initial_hab(id_hab, dominio)
         else:
