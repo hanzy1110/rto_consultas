@@ -1022,18 +1022,18 @@ class PDFHabilitacion(PDFTemplateView):
 
 def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwargs):
     if request.method == "POST":
-        if kwargs:
-            idhabilitacion = kwargs.pop("idhabilitacion", None)
-            dominio = kwargs.pop("dominio", None)
+        # if kwargs:
+        #     idhabilitacion = kwargs.pop("idhabilitacion", None)
+        #     dominio = kwargs.pop("dominio", None)
 
-        logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
-        if idhabilitacion and dominio:
-            initial = handle_initial_hab(idhabilitacion, dominio)
-        else:
-            initial = {}
+        # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+        # if idhabilitacion and dominio:
+        #     initial = handle_initial_hab(idhabilitacion, dominio)
+        # else:
+        #     initial = {}
 
-        logger.debug(f"INITIAL_DATA => {initial}")
-        form = InspectionOrderForm(request.POST, initial=initial)
+        # logger.debug(f"INITIAL_DATA => {initial}")
+        form = InspectionOrderForm(request.POST)
 
         if form.is_valid():
             try:
@@ -1057,7 +1057,19 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
             # For example, you can access form.cleaned_data to get the validated data
             # Then redirect or render a success page
     else:
-        form = InspectionOrderForm()
+        if kwargs:
+            idhabilitacion = kwargs.pop("idhabilitacion", None)
+            dominio = kwargs.pop("dominio", None)
+
+        logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+        if idhabilitacion and dominio:
+            initial = handle_initial_hab(idhabilitacion, dominio)
+        else:
+            initial = {}
+
+        logger.debug(f"INITIAL_DATA => {initial}")
+        form = InspectionOrderForm(initial=initial)
+        # form = InspectionOrderForm()
 
     return render(request, "includes/carga_habilitaciones.html", {"form": form})
 
