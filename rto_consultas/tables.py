@@ -329,12 +329,10 @@ class HabilitacionesTable(tables.Table):
                 "dominio": tables.A("dominio"),
             },
         ),
-        default="No",
+        # default="No",
         attrs={"th": {"hidden": True}},
     )
-    dar_de_baja = tables.Column(
-        verbose_name="", default="SI", attrs={"th": {"hidden": True}}
-    )
+    dar_de_baja = tables.Column(verbose_name="", attrs={"th": {"hidden": True}})
 
     nrocodigobarrashab = tables.Column(verbose_name="Nro. Orden Inspección")
     dominio = tables.Column(verbose_name="Dominio")
