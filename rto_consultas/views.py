@@ -143,7 +143,7 @@ class IndexView(TemplateView):
 class DPTView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
-        "habs_view": "Consulta Órdenes de Inspección",
+        "consulta_habilitaciones": "Consulta Órdenes de Inspección",
     }
 
 
@@ -151,7 +151,7 @@ class HabsView(IndexView):
     urls = {
         "carga_habilitacion": "Carga Habilitaciones",
         "habilitaciones": "Consulta Habilitaciones",
-        "consulta_habilitaciones": "Consulta DPT",
+        "consulta_habilitaciones_finales": "Consulta DPT",
     }
 
 
