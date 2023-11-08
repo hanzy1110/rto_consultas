@@ -41,6 +41,11 @@ urlpatterns += [
         name="dpt",
     ),
     path(
+        "consulta_habilitaciones",
+        views.HabsView.as_view(),
+        name="consulta_habilitaciones",
+    ),
+    path(
         "consulta_documentacion",
         views.DocumentView.as_view(),
         name="consulta_documentacion",
