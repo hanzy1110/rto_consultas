@@ -1,42 +1,43 @@
 import os
-from .logging import configure_logger, print_stack
+from .logging import configure_  # logger, print_stack
 
-LOG_FILE      = os.environ["LOG_FILE"]
+LOG_FILE = os.environ["LOG_FILE"]
 DJANGO_TABLES = ["auth", "admin", "contenttypes", "sessions"]
-logger        = configure_logger(LOG_FILE, __name__)
+# logger        = configure_logger(LOG_FILE, __name__)
+
 
 class UserRouter:
     def db_for_read(self, model, **hints):
-        logger.debug(f"READING FOR MODEL => {model}")
-        logger.debug(f"APP_LABEL => {model._meta.app_label}")
-        # logger.debug(f"CURRENT_STACK => {print_stack()}")
+        # logger.debug(f"READING FOR MODEL => {model}")
+        # logger.debug(f"APP_LABEL => {model._meta.app_label}")
+        # # logger.debug(f"CURRENT_STACK => {print_stack()}")
 
         if model._meta.app_label in DJANGO_TABLES:
-            return 'users'
+            return "users"
         elif model._meta.app_label == "rto_consultas_rn":
-            logger.debug(f"ROUTED TO => rio_negro")
+            # logger.debug(f"ROUTED TO => rio_negro")
             return "rio_negro"
-        return 'default'
+        return "default"
 
     def db_for_write(self, model, **hints):
-        logger.debug(f"READING FOR MODEL => {model}")
-        logger.debug(f"APP_LABEL => {model._meta.app_label}")
-        # logger.debug(f"CURRENT_STACK => {print_stack()}")
+        # logger.debug(f"READING FOR MODEL => {model}")
+        # logger.debug(f"APP_LABEL => {model._meta.app_label}")
+        # # logger.debug(f"CURRENT_STACK => {print_stack()}")
 
         if model._meta.app_label in DJANGO_TABLES:
-            return 'users'
+            return "users"
         elif model._meta.app_label == "rto_consultas_rn":
-            logger.debug(f"ROUTED TO => rio_negro")
+            # logger.debug(f"ROUTED TO => rio_negro")
             return "rio_negro"
-        return 'default'
+        return "default"
 
     def allow_relation(self, obj1, obj2, **hints):
         return True
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         if app_label in DJANGO_TABLES:
-            return db == 'users'
+            return db == "users"
         elif app_label == "rto_consultas_rn":
             return db == "rio_negro"
 
-        return db == 'default'
+        return db == "default"

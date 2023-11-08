@@ -1026,11 +1026,13 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
             idhabilitacion = kwargs.pop("idhabilitacion", None)
             dominio = kwargs.pop("dominio", None)
 
+        logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
         if idhabilitacion and dominio:
             initial = handle_initial_hab(idhabilitacion, dominio)
         else:
             initial = {}
 
+        logger.debug(f"INITIAL_DATA => {initial}")
         form = InspectionOrderForm(request.POST, initial=initial)
 
         if form.is_valid():
