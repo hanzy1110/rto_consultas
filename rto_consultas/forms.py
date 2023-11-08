@@ -1,4 +1,5 @@
 import os
+from typing import Union
 from django import forms
 from django.db.models import Model
 from django.forms import widgets
@@ -243,8 +244,13 @@ class InspectionOrderForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(),
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, initial: Union[None, dict[str, str]] = None, *args, **kwargs):
         super(InspectionOrderForm, self).__init__(*args, **kwargs)
+
+        if initial:
+            for k, v in initial.items():
+                self.fields[k].initial = v
+
         self.helper = FormHelper()
         self.helper.form_class = "col_w900 col_w900_last"
         self.helper.layout = Layout(
