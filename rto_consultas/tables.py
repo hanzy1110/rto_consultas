@@ -320,8 +320,17 @@ class HabilitacionesTable(tables.Table):
         empty_values=(),
         attrs={"th": {"hidden": True}},
     )
-    modificado = tables.Column(
-        verbose_name="", default="No", attrs={"th": {"hidden": True}}
+    modificar = tables.Column(
+        verbose_name="",
+        linkify=(
+            "carga_habilitacion",
+            {
+                "idhabilitacion": tables.A("idhabilitacion"),
+                "dominio": tables.A("dominio"),
+            },
+        ),
+        default="No",
+        attrs={"th": {"hidden": True}},
     )
     dar_de_baja = tables.Column(verbose_name="", attrs={"th": {"hidden": True}})
 
@@ -340,15 +349,24 @@ class HabilitacionesTable(tables.Table):
             "titular",
             "fechahoracreacion",
             "usuariodictamen",
+            "modificado",
             # HYPERLINKS:
             "vista_previa",
-            "modificado",
             "dar_de_baja",
+            "modificar",
             "imprimir",
         ]
 
     def render_vista_previa(self, record):
-        image_url = static(f"img/small-logos/ver.png")
+        image_url = static(f"img/small-logos/lupa.png")
+        return format_html('<img src="{}" />', image_url)
+
+    def render_modificar(self, record):
+        image_url = static(f"img/small-logos/modificar3.png")
+        return format_html('<img src="{}" />', image_url)
+
+    def render_dar_de_baja(self, record):
+        image_url = static(f"img/small-logos/delete.png")
         return format_html('<img src="{}" />', image_url)
 
     def render_usuariodictamen(self, record):

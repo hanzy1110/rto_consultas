@@ -2,6 +2,7 @@ from django.db.models import Q, QuerySet, Subquery
 from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
+from django.contrib.auth.models import User
 
 import hashlib
 import os
@@ -27,6 +28,7 @@ from rto_consultas.models import (
     Talleres,
     Verificaciones,
     Verificacionespdf,
+    Usuarios,
 )
 from .presigned_url import generate_presigned_url
 from .logging import configure_logger
@@ -650,6 +652,41 @@ def handle_save_hab(cleaned_data, user):
     Serviciohab.objects.bulk_create(servs)
 
     return new_hab
+
+
+def handle_initial_hab(id_habilitacion, dominio):
+    context = {}
+    habilitacion = Habilitacion.objects.get(
+        idhabilitacion=id_habilitacion, dominio=dominio
+    )
+
+    try:
+        logger.debug(f"Checking usuario: {habilitacion}")
+        user = User.objects.get(username=habilitacion.usuariodictamen).username
+        username = f"{user.first_name} {user.lastname}"
+
+    except Exception as e:
+        logger.warning("User not found....")
+        usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+        username = f"{usuario.nombre} {usuario.apellido}"
+
+    context["usuariodictamen"] = username
+    if habilitacion.tipopersona in "Jj":
+        context["titular"] = habilitacion.razonsocialtitular
+    else:
+        context[
+            "titular"
+        ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+
+    servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
+
+    descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
+
+    modificado = bool(habilitacion.modificado)
+    context["modificado"] = modificado
+
+    context["descripciones"] = descripciones
+    return context
 
 
 def handle_querydict(value):

@@ -76,6 +76,7 @@ from .helpers import (
     generate_key,
     build_barcode,
     handle_save_hab,
+    handle_initial_hab,
 )
 
 from .forms import (
@@ -684,7 +685,6 @@ class VerHabilitacion(DetailView, LoginRequiredMixin):
         descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
 
         modificado = bool(habilitacion.modificado)
-        logger.debug(f"Modificado => {modificado}")
         context["modificado"] = modificado
 
         context["descripciones"] = descripciones
@@ -1022,7 +1022,16 @@ class PDFHabilitacion(PDFTemplateView):
 
 def carga_habilitacion(request):
     if request.method == "POST":
-        form = InspectionOrderForm(request.POST)
+        id_hab = request.kwargs.get("idhabilitacion", None)
+        dominio = request.kwargs.get("dominio", None)
+
+        if id_hab and dominio:
+            initial = handle_initial_hab(id_hab, dominio)
+        else:
+            initial = {}
+
+        form = InspectionOrderForm(request.POST, initial=initial)
+
         if form.is_valid():
             try:
                 hab = handle_save_hab(form.cleaned_data, request.user)
