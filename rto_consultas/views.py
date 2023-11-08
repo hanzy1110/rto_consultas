@@ -1020,10 +1020,10 @@ class PDFHabilitacion(PDFTemplateView):
         return context
 
 
-def carga_habilitacion(request, id_hab=None, dominio=None):
+def carga_habilitacion(request, idhabilitacion=None, dominio=None):
     if request.method == "POST":
-        if id_hab and dominio:
-            initial = handle_initial_hab(id_hab, dominio)
+        if idhabilitacion and dominio:
+            initial = handle_initial_hab(idhabilitacion, dominio)
         else:
             initial = {}
 
