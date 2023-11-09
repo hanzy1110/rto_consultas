@@ -754,6 +754,8 @@ class OitsTable_RN(tables.Table):
     dominio = tables.Column(verbose_name="Dominio")
     # razonsocial = tables.Column(verbose_name="Titular")
     fecha = tables.Column(verbose_name="Fecha Desde")
+    vista_previa = tables.Column(verbose_name="Vista Previa")
+
     vigencia = tables.Column(
         verbose_name="Fecha Hasta", orderable=False, empty_values=()
     )
@@ -771,13 +773,15 @@ class OitsTable_RN(tables.Table):
             "vista_previa",
         ]
 
-    def render_vista_previa(self, record):
-        image_url = static(f"img/small-logos/lupa.png")
-        return format_html('<img src="{}" width="25px"/>', image_url)
+    # def render_vista_previa(self, record):
+    #     image_url = static(f"img/small-logos/lupa.png")
+    #     return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_vigencia(self, record):
         fecha = record.fecha
-        return fecha + timedelta(days=15.0)
+        logger.debug(f"FECHA => {fecha}")
+        vigencia = fecha + timedelta(days=15.0)
+        return vigencia
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
