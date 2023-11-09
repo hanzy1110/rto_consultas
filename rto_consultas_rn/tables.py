@@ -4,7 +4,7 @@ from django.utils.html import format_html
 from django.templatetags.static import static
 from django.contrib.auth.models import User
 from django.urls import reverse
-from pandas.core.dtypes.dtypes import timedelta
+from datetime import timedelta
 
 from rto_consultas_rn.models import (
     # VWVerificaciones,
