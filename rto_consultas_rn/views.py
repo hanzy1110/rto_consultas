@@ -392,6 +392,16 @@ class ListOits_RN(CustomRTOView_RN):
         render_form="oits_form",
     )
 
+    def get_queryset(self):
+        logger.info("CALCULATE QUERYSET...")
+        queryset = super().get_queryset()
+        if isinstance(queryset, list):
+            queryset = list(reversed(queryset))
+        else:
+            queryset = queryset.order_by("-numero")
+        logger.info("QUERYSET DONE...")
+        return queryset
+
 
 @method_decorator(login_required, name="dispatch")
 class RenderOitsForm_RN(TemplateView):
