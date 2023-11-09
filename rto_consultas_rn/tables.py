@@ -4,6 +4,7 @@ from django.utils.html import format_html
 from django.templatetags.static import static
 from django.contrib.auth.models import User
 from django.urls import reverse
+from pandas.core.dtypes.dtypes import timedelta
 
 from rto_consultas_rn.models import (
     # VWVerificaciones,
@@ -751,8 +752,11 @@ class OitsTable_RN(tables.Table):
 
     numero = tables.Column(verbose_name="Nro. Orden Inspección")
     dominio = tables.Column(verbose_name="Dominio")
-    razonsocial = tables.Column(verbose_name="Titular")
-    fecha = tables.Column(verbose_name="Fecha y Hora Creación")
+    # razonsocial = tables.Column(verbose_name="Titular")
+    fecha = tables.Column(verbose_name="Fecha Desde")
+    vigencia = tables.Column(
+        verbose_name="Fecha Hasta", orderable=False, empty_values=()
+    )
 
     class Meta:
         template_name = "tables/htmx_table.html"
@@ -760,8 +764,9 @@ class OitsTable_RN(tables.Table):
         fields = [
             "numero",
             "dominio",
-            "razonsocial",
+            # "razonsocial",
             "fecha",
+            "vigencia"
             # HYPERLINKS:
             "vista_previa",
         ]
@@ -769,6 +774,10 @@ class OitsTable_RN(tables.Table):
     def render_vista_previa(self, record):
         image_url = static(f"img/small-logos/lupa.png")
         return format_html('<img src="{}" width="25px"/>', image_url)
+
+    def render_vigencia(self, record):
+        fecha = record.fecha
+        return fecha + timedelta(days=15.0)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
