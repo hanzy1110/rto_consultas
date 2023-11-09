@@ -43,6 +43,7 @@ from .models import (
     Verificaciones,
     Certificadosasignadosportaller,
     Vehiculos,
+    Oits,
     Certificados,
     Categorias,
     Verificacionesdefectos,
@@ -52,6 +53,7 @@ from rto_consultas_rn.models import Estados, Tipousovehiculo
 from rto_consultas_rn.models import Talleres as TalleresRN
 
 from rto_consultas_rn.tables import (
+    OitsTable_RN,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
@@ -99,6 +101,7 @@ class DVRView(IndexView):
 
 class SecTranspView(IndexView):
     urls = {
+        "oits": "Consulta Órdenes de Inspección",
         "verificaciones_rn": "Verificaciones",
     }
 
@@ -357,4 +360,126 @@ class VerVerificacion_RN(DetailView, LoginRequiredMixin):
         context["mto_eficiencia"] = MToEf
 
         # context = handle_context(context, self)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class ListOits_RN(CustomRTOView_RN):
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model = Oits
+    template_name = "includes/list_table.html"
+    paginate_by = 10
+    context_object_name = "Oits"
+    table_class = OitsTable_RN
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+        },
+        ids={
+            "dominiovehiculo": "#txtDominio",
+        },
+        types={
+            "dominio": "text",
+        },
+        render_url="oits",
+        render_form="oits_form",
+    )
+
+
+@method_decorator(login_required, name="dispatch")
+class RenderOitsForm_RN(TemplateView):
+    template_name = "includes/form_render.html"
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
+            "numero",
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+        },
+        ids={"dominiovehiculo": "#txtDominio"},
+        types={
+            "dominio": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+        },
+        render_url="oits",
+        fecha_field="fecha",
+    )
+
+    form_class = CustomRTOForm
+    model = Oits
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context = handle_context(context, self)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class VerHabilitacion_RN(DetailView, LoginRequiredMixin):
+    model: Verificaciones
+    template_name = "includes/ver_habilitaciones.html"
+    context_object_name: str
+    aux_data: AuxData
+
+    def get_object(self):
+        query_params = self.request.GET.copy()
+        id_habilitacion = self.kwargs["idhabilitacion"]
+        dominio = self.kwargs["dominio"]
+        habilitacion = Habilitacion.objects.get(
+            idhabilitacion=id_habilitacion, dominio=dominio
+        )
+        print(habilitacion)
+        self.habilitacion = habilitacion
+        return habilitacion
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        id_habilitacion = self.kwargs["idhabilitacion"]
+        dominio = self.kwargs["dominio"]
+        habilitacion = Habilitacion.objects.get(
+            idhabilitacion=id_habilitacion, dominio=dominio
+        )
+
+        try:
+            logger.debug(f"Checking usuario: {habilitacion}")
+            user = User.objects.get(username=habilitacion.usuariodictamen).username
+            username = f"{user.first_name} {user.lastname}"
+
+        except Exception as e:
+            logger.warning("User not found....")
+            usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+            username = f"{usuario.nombre} {usuario.apellido}"
+
+        context["usuariodictamen"] = username
+        if habilitacion.tipopersona in "Jj":
+            context["titular"] = habilitacion.razonsocialtitular
+        else:
+            context[
+                "titular"
+            ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+
+        servicios = Serviciohab.objects.filter(idhabilitacion=id_habilitacion)
+
+        descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
+
+        modificado = bool(habilitacion.modificado)
+        context["modificado"] = modificado
+
+        context["descripciones"] = descripciones
         return context

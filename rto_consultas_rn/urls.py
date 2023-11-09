@@ -8,6 +8,16 @@ urlpatterns = [
     path("dvr", views_RN.DVRView.as_view(), name="dvr"),
     path("sec_transporte", views_RN.SecTranspView.as_view(), name="sec_transporte"),
     path(
+        "oits_form/",
+        views_RN.RenderOitsForm_RN.as_view(),
+        name="oits_form",
+    ),
+    path(
+        "oits/",
+        views_RN.ListOits_RN.as_view(),
+        name="oits",
+    ),
+    path(
         "verificaciones_form_rn/",
         views_RN.RenderVerificacionForm_RN.as_view(),
         name="verificaciones_form_rn",

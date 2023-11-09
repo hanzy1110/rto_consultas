@@ -8,6 +8,7 @@ from django.urls import reverse
 from rto_consultas_rn.models import (
     # VWVerificaciones,
     Localidades,
+    Oits,
     Usuarios,
     Verificacionespdf,
     Tipovehiculo,
@@ -716,6 +717,58 @@ class ResumenTransporteCargaTable(tables.Table):
             return localidad if localidad else "N/E"
         except:
             return "N/E"
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
+class OitsTable_RN(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={},
+        parsed_names={"name": "name"},
+    )
+
+    vista_previa = tables.Column(
+        verbose_name="Consulta",
+        linkify=(
+            "ver_habilitacion",
+            {
+                "idhabilitacion": tables.A("idhabilitacion"),
+                "dominio": tables.A("dominio"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+        # attrs={"th": {"colspan": "4"}},
+    )  # (viewname, kwargs)
+
+    numero = tables.Column(verbose_name="Nro. Orden Inspección")
+    dominio = tables.Column(verbose_name="Dominio")
+    razonsocial = tables.Column(verbose_name="Titular")
+    fecha = tables.Column(verbose_name="Fecha y Hora Creación")
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = Oits
+        fields = [
+            "numero",
+            "dominio",
+            "razonsocial",
+            "fecha",
+            # HYPERLINKS:
+            "vista_previa",
+        ]
+
+    def render_vista_previa(self, record):
+        image_url = static(f"img/small-logos/lupa.png")
+        return format_html('<img src="{}" width="25px"/>', image_url)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
