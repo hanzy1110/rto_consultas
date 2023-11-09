@@ -770,7 +770,7 @@ class OitsTable_RN(tables.Table):
             "fecha",
             "vigencia",
             # HYPERLINKS:
-            "vista_previa",
+            # "vista_previa",
         ]
 
     # def render_vista_previa(self, record):
