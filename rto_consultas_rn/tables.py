@@ -768,7 +768,7 @@ class OitsTable_RN(tables.Table):
             "dominio",
             # "razonsocial",
             "fecha",
-            "vigencia"
+            "vigencia",
             # HYPERLINKS:
             "vista_previa",
         ]
