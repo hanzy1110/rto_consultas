@@ -735,19 +735,19 @@ class OitsTable_RN(tables.Table):
         parsed_names={"name": "name"},
     )
 
-    vista_previa = tables.Column(
-        verbose_name="Consulta",
-        linkify=(
-            "ver_habilitacion",
-            {
-                "idhabilitacion": tables.A("idhabilitacion"),
-                "dominio": tables.A("dominio"),
-            },
-        ),
-        orderable=False,
-        empty_values=(),
-        # attrs={"th": {"colspan": "4"}},
-    )  # (viewname, kwargs)
+    # vista_previa = tables.Column(
+    #     verbose_name="Consulta",
+    #     linkify=(
+    #         "ver_habilitacion",
+    #         {
+    #             "idhabilitacion": tables.A("idhabilitacion"),
+    #             "dominio": tables.A("dominio"),
+    #         },
+    #     ),
+    #     orderable=False,
+    #     empty_values=(),
+    #     # attrs={"th": {"colspan": "4"}},
+    # )  # (viewname, kwargs)
 
     numero = tables.Column(verbose_name="Nro. Orden Inspección")
     dominio = tables.Column(verbose_name="Dominio")
