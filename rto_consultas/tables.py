@@ -186,7 +186,7 @@ class VerificacionesTables(tables.Table):
     vigencia = tables.Column(
         empty_values=(),
         verbose_name="Hasta",
-        attrs={"td": {"background-color": lambda record: check_vigencia(record)}},
+        attrs={"td": {"class": lambda record: check_vigencia(record)}},
     )
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")

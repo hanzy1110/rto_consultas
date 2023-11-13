@@ -4,6 +4,13 @@
 {% load django_tables2 %}
 {% load i18n %}
 
+<style>
+/* Include the CSS class in your style */
+.red-background {
+    background-color: red;
+}
+</style>
+
 {% block table.thead %}
   {% if table.show_header %}
       <thead {{ table.attrs.thead.as_html }}>
