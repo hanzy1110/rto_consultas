@@ -186,7 +186,7 @@ class VerificacionesTables(tables.Table):
     vigencia = tables.Column(
         empty_values=(),
         verbose_name="Hasta",
-        attrs={"td": {"class": lambda record: check_vigencia(record)}},
+        # attrs={"td": {"class": lambda record: check_vigencia(record)}},
     )
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
@@ -205,7 +205,7 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         orderable = False
-        # row_attrs = {"style": lambda record: check_vigencia(record)}
+        row_attrs = {"style": lambda record: check_vigencia(record)}
         fields = (
             "dominiovehiculo",
             "certificado",
