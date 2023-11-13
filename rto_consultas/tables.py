@@ -183,7 +183,8 @@ class VerificacionesTables(tables.Table):
     anulado = ImageColumn(
         empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
     )
-    vigencia = tables.Column(empty_values=(), verbose_name="Hasta")
+    vigencia = tables.Column(empty_values=(), verbose_name="Hasta",
+                             attrs={"td": {"bgcolor": lambda record: check_vigencia(record)}})
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
     idtipouso = tables.Column(empty_values=(), verbose_name="Tipo de Uso")
@@ -201,7 +202,7 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         orderable = False
-        row_attrs = {"style": lambda record: check_vigencia(record)}
+        # row_attrs = {"style": lambda record: check_vigencia(record)}
         fields = (
             "dominiovehiculo",
             "certificado",

@@ -730,5 +730,5 @@ def check_vigencia(verificacion):
 
     if vigencia < datetime.date(datetime.today()):
         logger.debug("RESULT => VENCIDO!")
-        return "bgcolor=#FA8072"
-    return "bgcolor=#FFFFFF"
+        return "#FA8072"
+    return "#FFFFFF"
