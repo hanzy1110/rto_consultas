@@ -183,8 +183,11 @@ class VerificacionesTables(tables.Table):
     anulado = ImageColumn(
         empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
     )
-    vigencia = tables.Column(empty_values=(), verbose_name="Hasta",
-                             attrs={"td": {"bgcolor": lambda record: check_vigencia(record)}})
+    vigencia = tables.Column(
+        empty_values=(),
+        verbose_name="Hasta",
+        attrs={"td": {"background-color": lambda record: check_vigencia(record)}},
+    )
     idtaller = tables.Column(empty_values=(), verbose_name="Planta")
     idestado = tables.Column(empty_values=(), verbose_name="Calificación")
     idtipouso = tables.Column(empty_values=(), verbose_name="Tipo de Uso")
