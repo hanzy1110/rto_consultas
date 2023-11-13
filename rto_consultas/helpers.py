@@ -726,7 +726,7 @@ def check_vigencia(verificacion):
             idtaller_id__exact=verificacion.idtaller,
         ).values()
 
-    vigencia = convert_date(cert[0]["vigenciahasta"])
+    vigencia = cert[0]["vigenciahasta"]
 
     if vigencia < datetime.now():
         return "#fa8072"
