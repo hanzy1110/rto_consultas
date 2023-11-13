@@ -729,5 +729,5 @@ def check_vigencia(verificacion):
     vigencia = cert[0]["vigenciahasta"]
 
     if vigencia < datetime.date(datetime.today()):
-        return "#fa8072"
-    return "#ffffff"
+        return "background-color=#FA8072"
+    return "background-color=#FFFFFF"

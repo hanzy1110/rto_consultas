@@ -201,7 +201,7 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         orderable = False
-        row_attrs = {"background-color": lambda record: check_vigencia(record)}
+        row_attrs = {"style": lambda record: check_vigencia(record)}
         fields = (
             "dominiovehiculo",
             "certificado",
