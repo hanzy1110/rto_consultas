@@ -180,6 +180,9 @@ class VerificacionesTables(tables.Table):
     )  # (viewname, kwargs)
 
     titular = tables.Column(empty_values=())
+    auditado = ImageColumn(
+        empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
+    )
     anulado = ImageColumn(
         empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
     )
@@ -217,6 +220,7 @@ class VerificacionesTables(tables.Table):
             "ver_verificacion",
             "ver_certificado",
             "anulado",
+            "auditado",
             "idtaller",
         )
         extra_columns = ("certificado",)
@@ -224,6 +228,10 @@ class VerificacionesTables(tables.Table):
 
     def render_ver_verificacion(self, record):
         image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
+
+    def render_anulado(self, record):
+        image_url = static(f"img/small-logos/auditoria.png")
         return format_html('<img src="{}" />', image_url)
 
     def render_idestado(self, value):
