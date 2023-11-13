@@ -173,7 +173,7 @@ class VerificacionesTables(tables.Table):
             },
         ),
         empty_values=(),
-        attrs={"th": {"colspan": "3"}},
+        attrs={"th": {"colspan": "4"}},
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
         verbose_name="", empty_values=(), attrs={"th": {"hidden": True}}
@@ -230,7 +230,7 @@ class VerificacionesTables(tables.Table):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
 
-    def render_anulado(self, record):
+    def render_auditado(self, record):
         image_url = static(f"img/small-logos/auditoria.png")
         return format_html('<img src="{}" />', image_url)
 

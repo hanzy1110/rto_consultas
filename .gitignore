@@ -133,3 +133,4 @@ dataset/
 data_analysis/dataset
 traslado/
 log/
+*.pem
