@@ -729,5 +729,6 @@ def check_vigencia(verificacion):
     vigencia = cert[0]["vigenciahasta"]
 
     if vigencia < datetime.date(datetime.today()):
+        logger.debug("RESULT => VENCIDO!")
         return "background-color=#FA8072"
     return "background-color=#FFFFFF"
