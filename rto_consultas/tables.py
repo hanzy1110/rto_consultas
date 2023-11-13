@@ -27,6 +27,7 @@ from .helpers import (
     generate_key_from_params,
     convert_date,
     parse_name_length,
+    check_vigencia,
 )
 from .logging import configure_logger
 
