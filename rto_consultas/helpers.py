@@ -728,6 +728,6 @@ def check_vigencia(verificacion):
 
     vigencia = cert[0]["vigenciahasta"]
 
-    if vigencia < datetime.now():
+    if vigencia < datetime.date(datetime.today()):
         return "#fa8072"
     return "#ffffff"
