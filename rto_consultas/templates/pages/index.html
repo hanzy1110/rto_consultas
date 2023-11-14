@@ -1,5 +1,8 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
+
+{% block content %}
+
 <style>
     .box {
         width: 50%;
@@ -83,8 +86,6 @@
     }
 
 </style>
-
-{% block content %}
 <div id="template-container" hx-get="/get-template/" hx-trigger="load" hx-target="#template-container"
     hx-vals="js{width:window.screen.width}">
     <!-- The fetched template will be loaded here -->
