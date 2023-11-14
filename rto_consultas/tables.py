@@ -232,7 +232,7 @@ class VerificacionesTables(tables.Table):
 
     def render_auditado(self, record):
         image_url = static(f"img/small-logos/auditoria.png")
-        return format_html('<img src="{}" />', image_url)
+        return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_idestado(self, value):
         try:
