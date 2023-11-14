@@ -51,7 +51,7 @@ urlpatterns += [
         name="consulta_documentacion",
     ),
     path("empty", views.empty_view, name="empty"),
-    path("get-template/<int:width>", views.get_template_name, name="get_template"),
+    path("get-template", views.get_template_name, name="get_template"),
 ]
 
 urlpatterns += [
