@@ -15,7 +15,7 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordResetConfirmView,
 )
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 
 from django.contrib.auth.models import User
@@ -112,6 +112,22 @@ def index(request):
     elif user.groups.filter(name="SVGroup").exists():
         template_name = "pages/sv_index.html"
 
+    return render(request, template_name, {"segment": "index"})
+
+
+def get_template_name(request):
+    # TODO Change the default!
+    width = int(request.GET.get("width", 0))
+
+    template_name = "index_large.html"
+    if width <= 768:
+        template_name = "index_small.html"
+    # elif width >= 768 and width < 1024:
+    #     template_name = "index_medium.html"
+    # else:
+    #     template_name = "index_large.html"
+
+    # return JsonResponse({"template_name": template_name})
     return render(request, template_name, {"segment": "index"})
 
 

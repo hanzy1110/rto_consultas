@@ -1,0 +1,127 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .box {
+        width: 30%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px dashed #000000; */
+        /* margin: auto; */
+    }
+
+    element-to-hide {
+        display: flex;
+    }
+
+    link-row {
+        margin: mb-8 mt-8 mx-auto;
+    }
+
+    .title-special {
+
+        width: 50%;
+        height: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+        /* border: 1px solid #000000; */
+        margin: 0 auto;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        padding: 4rem 4rem;
+        /* Adjust the padding values as needed for size */
+        font-size: 18pt;
+        /* Adjust the font size as needed */
+        /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
+        /* color: var(""); */
+    }
+
+    img {
+        width: 30%;
+        min-width: 100px;
+        height: auto;
+        margin: auto;
+    }
+
+</style>
+
+<div class="container-fluid py-2 px-3">
+    <div class="row link-row">
+
+        <div class="card">
+            <div class="card-body p-1">
+                <div class="col-lg-2 col-md-2 col-sm-2 box">
+                    <a href="{% url 'seg_vial' %}">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_SVPROV.png' %}">
+                    </a>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2 box">
+                    <a href="{% url 'dvr' %}">
+                        <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
+                        <img class="d-block" src="{% static 'img/logos/LOGO_DVR.png' %}">
+                    </a>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-2 box">
+                    <a href="{% url 'dpt' %}">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_DPT.png' %}">
+                    </a>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-2 box">
+                    <a href="{% url 'sec_transporte' %}">
+                        <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
+                        <img class="d-block" src="{% static 'img/logos/LOGO_RN.png' %}">
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div class="row link-row">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+
+        <div class="card mb-4 element-to-hide">
+            <div class="col-lg-12 col-md-12 col-sm-12 title-special ">
+                <h2 style="text-align: center;">Consultas Externas</h2>
+            </div>
+        </div>
+        <div class="card">
+            <div class="row mb-4 mt-4">
+                <div class="col box">
+                    <a href="https://rto.seguridadvial.gob.ar/">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_ANSV.png' %}">
+                    </a>
+                </div>
+                <!-- <div class="card-body p-2">
+
+                                </div> -->
+
+                <div class="col box">
+                    <a href="{% url 'consulta_habilitaciones_finales' %}">
+                        <img class="d-block" src="{% static 'img/logos/LOGO_DNRPA.png' %}">
+                    </a>
+                </div>
+                <!-- <div class="card-body p-2">
+                                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block scripts %}
+{% endblock scripts %}
