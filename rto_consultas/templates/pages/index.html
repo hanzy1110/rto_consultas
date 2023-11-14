@@ -95,20 +95,21 @@
 <!-- Specific JS goes HERE -->
 {% block scripts %}
 <script>
-    // document.addEventListener('DOMContentLoaded', function () {
-//     // Trigger the htmx request on page load to get the template based on screen size
-//     var screenWidth = window.screen.width;
-//     // Update the hx-get attribute with the proper URL including the screen width
-//     var templateContainer = document.getElementById('template-container');
-//
-//     var endpoint = '/get-template/?width=' + screenWidth
-//
-//     console.log({ endpoint })
-//
-//     templateContainer.setAttribute('hx-get', endpoint);
-//     // Trigger the htmx request with the updated URL
-//     templateContainer.click();
-//     // document.querySelector('[hx-trigger="load"]').click();
-// });
+    document.addEventListener('DOMContentLoaded',
+        function () {
+            // Trigger the htmx request on page load to get the template based on screen size
+            var screenWidth = window.screen.width;
+            // Update the hx-get attribute with the proper URL including the screen width
+            var templateContainer = document.getElementById('template-container');
+
+            // var endpoint = '/get-template/?width=' + screenWidth
+            //
+            // console.log({ endpoint })
+            //
+            // templateContainer.setAttribute('hx-get', endpoint);
+            // Trigger the htmx request with the updated URL
+            templateContainer.click();
+            // document.querySelector('[hx-trigger="load"]').click();
+        });
 </script>
 {% endblock scripts %}
