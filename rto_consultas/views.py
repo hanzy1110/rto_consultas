@@ -117,11 +117,13 @@ def index(request):
 
 def get_template_name(request):
     # TODO Change the default!
-    width = int(request.GET.get("width", 0))
+    width = int(request.GET.get("width", -1))
 
-    template_name = "index_large.html"
-    if width <= 768:
-        template_name = "index_small.html"
+    logger.debug(f"WIDTH WAS => {width}")
+
+    template_name = "pages/index_large.html"
+    if width <= 768 and width > -1:
+        template_name = "pages/index_small.html"
     # elif width >= 768 and width < 1024:
     #     template_name = "index_medium.html"
     # else:
