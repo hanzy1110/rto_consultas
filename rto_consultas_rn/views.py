@@ -22,6 +22,7 @@ from django.contrib.auth.models import User
 from wkhtmltopdf.views import PDFTemplateView
 
 from datetime import date
+from django.conf import settings
 
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
@@ -148,7 +149,7 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
 class ListVerificacionesView_RN(CustomRTOView_RN):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table_RN.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
@@ -368,7 +369,7 @@ class ListOits_RN(CustomRTOView_RN):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Oits
     template_name = "includes/list_table.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     context_object_name = "Oits"
     table_class = OitsTable_RN
     partial_template = "includes/table_view.html"

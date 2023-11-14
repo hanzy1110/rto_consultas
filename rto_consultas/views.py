@@ -24,6 +24,7 @@ from wkhtmltopdf.views import PDFTemplateView
 
 from datetime import date
 
+from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 
@@ -210,7 +211,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 class ListVerificacionesView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
     context_object_name = "Verificaciones"
     table_class = VerificacionesTables
@@ -311,7 +312,7 @@ class RenderVerificacionForm(TemplateView):
 class CargaObleas(CustomRTOView):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
@@ -344,7 +345,7 @@ class CargaObleas(CustomRTOView):
 @method_decorator(login_required, name="dispatch")
 class ResumenObleas(CustomRTOView, LoginRequiredMixin):
     model = Certificadosasignadosportaller
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = ObleasPorTaller
@@ -407,7 +408,7 @@ class ResumenObleas(CustomRTOView, LoginRequiredMixin):
 class ListCertificadosAssignView(CustomRTOView):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Certificadosasignadosportaller
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
     table_class = CertificadosAssignTable
@@ -459,7 +460,7 @@ class ListHabilitaciones(CustomRTOView):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Habilitacion
     template_name = "includes/list_table.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     context_object_name = "Habilitaciones"
     table_class = HabilitacionesTable
     partial_template = "includes/table_view.html"
@@ -528,7 +529,7 @@ class ListVehiculosView(CustomRTOView):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Vehiculos
     template_name = "includes/list_table.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     context_object_name = "Vehiculos"
     table_class = VehiculosTable
     partial_template = "includes/table_view.html"
@@ -556,7 +557,7 @@ class ListCertificadosView(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
     template_name = "includes/list_table.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     context_object_name = "Certificados"
     table_class = CertificadosTable
     partial_template = "includes/table_view.html"
@@ -590,7 +591,7 @@ class ListCertificadosView(CustomRTOView):
 class ListarVerificacionesTotales(CustomRTOView, ExportMixin):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Certificados
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = CertificadosTablesResumen
@@ -877,7 +878,7 @@ def verificaciones_anuales(request):
 class ResumenTransportePasajeros(CustomRTOView):
     # authentication_classes           = [authentication.TokenAuthentication]
     model = Verificaciones
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = ResumenTransporteTable
@@ -914,7 +915,7 @@ class ResumenTransportePasajeros(CustomRTOView):
 class ResumenTransporteCarga(CustomRTOView):
     # authentication_classes = [authentication.TokenAuthentication]
     model = Verificaciones
-    paginate_by = 10
+    paginate_by = settings.PAGINATION
     template_name = "includes/list_table_verificaciones.html"
     context_object_name = "Verificaciones"
     table_class = ResumenTransporteCargaTable
