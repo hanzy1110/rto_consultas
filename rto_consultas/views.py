@@ -117,20 +117,21 @@ def index(request):
 
 def get_template_name(request):
     # TODO Change the default!
-    width = int(request.GET.get("width", -1))
+    if request.htmx:
+        width = int(request.GET.get("width", -1))
 
-    logger.debug(f"WIDTH WAS => {width}")
+        logger.debug(f"WIDTH WAS => {width}")
 
-    template_name = "pages/index_large.html"
-    if width <= 768 and width > -1:
-        template_name = "pages/index_small.html"
-    # elif width >= 768 and width < 1024:
-    #     template_name = "index_medium.html"
-    # else:
-    #     template_name = "index_large.html"
+        template_name = "pages/index_large.html"
+        if width <= 768 and width > -1:
+            template_name = "pages/index_small.html"
+        # elif width >= 768 and width < 1024:
+        #     template_name = "index_medium.html"
+        # else:
+        #     template_name = "index_large.html"
 
-    # return JsonResponse({"template_name": template_name})
-    return render(request, template_name, {"segment": "index"})
+        # return JsonResponse({"template_name": template_name})
+        return render(request, template_name, {"segment": "index"})
 
 
 # Authentication
