@@ -2,92 +2,10 @@
 {% load static %}
 {#% block content %#}
 
-<style>
-    .box {
-        width: 50%;
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* border: 1px dashed #000000; */
-        /* margin: auto; */
-    }
-
-    element-to-hide {
-        display: flex;
-    }
-
-    link-row {
-        margin: mb-8 mt-8 mx-auto;
-    }
-
-    .title-special {
-
-        width: 50%;
-        height: auto;
-        display: block;
-        justify-content: center;
-        align-items: center;
-        /* border: 1px solid #000000; */
-        margin: 0 auto;
-    }
-
-    /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
-    @media screen and (max-width: 768px) {
-
-        /* Adjust the styles for mobile screens */
-        .element-to-hide {
-            display: none;
-        }
-
-        .box {
-            /* Define the styles you want for the 'box' class on mobile screens */
-            /* For example, you may want to change the display property to 'block' and remove width and height */
-            display: flex;
-            width: 50%;
-            height: auto;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container-fluid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card-body {
-            flex: 1 1 auto;
-            padding: 1rem 1rem;
-            /* Adjust the padding values as needed for size */
-            font-size: 12pt;
-            /* Adjust the font size as needed */
-            /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
-            /* color: var(""); */
-        }
-    }
-
-    .card-body {
-        flex: 1 1 auto;
-        padding: 4rem 4rem;
-        /* Adjust the padding values as needed for size */
-        font-size: 18pt;
-        /* Adjust the font size as needed */
-        /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
-        /* color: var(""); */
-    }
-
-    img {
-        width: 30%;
-        min-width: 100px;
-        height: auto;
-        margin: auto;
-    }
-
 </style>
 
 <div class="container-fluid py-2 px-3">
-    <div class="row link-row">
+    <div class="row mb-6 mt-4 link-row">
 
         <div class="col-lg-12 col-md-12 col-sm-12 ">
             <div class="card my-4 element-to-hide">
@@ -138,7 +56,7 @@
         </div>
 
     </div>
-    <div class="row link-row">
+    <div class="row mt-4 mb-4 link-row">
 
         <div class="col-lg-12 col-md-12 col-sm-12">
 
