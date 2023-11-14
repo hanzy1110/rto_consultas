@@ -97,7 +97,13 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Trigger the htmx request on page load to get the template based on screen size
-        document.querySelector('[hx-trigger="load"]').click();
+        var screenWidth = window.screen.width;
+        // Update the hx-get attribute with the proper URL including the screen width
+        var templateContainer = document.getElementById('template-container');
+        templateContainer.setAttribute('hx-get', '/get-template/?width=' + screenWidth);
+        // Trigger the htmx request with the updated URL
+        templateContainer.click();
+        // document.querySelector('[hx-trigger="load"]').click();
     });
 </script>
 {% endblock scripts %}
