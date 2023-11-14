@@ -86,8 +86,8 @@
     }
 
 </style>
-<div id="template-container" hx-get="/get-template/" hx-trigger="load" hx-target="#template-container"
-    hx-vals="js{'width':window.screen.width}">
+<div id="template-container" hx-get="/get-template/?width=${window.screen.width}" hx-trigger="load"
+    hx-target="#template-container">
     <!-- The fetched template will be loaded here -->
 </div>
 {% endblock content %}
