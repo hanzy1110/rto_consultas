@@ -78,7 +78,8 @@
         <div class="col-lg-12 col-md-12 col-sm-12 ">
             <div class="card my-4">
                 <div class="col-lg-12 col-md-12 col-sm-12 title-special element-to-hide">
-                    <img class="d-block" src="{% static 'img/logos/LOGO_UNCOMA.png' %}">
+                    <img class="d-block" style="width: 50%; height: auto;"
+                        src="{% static 'img/logos/LOGO_UNCOMA.png' %}">
                 </div>
             </div>
             <div class="card">
@@ -89,31 +90,29 @@
                     <div class="row mb-2 mt-4">
 
                         <div class="col-lg-2 col-md-2 col-sm-2 box">
-                            <a href="{% url 'dpt' %}">
-                                <img class="d-block" src="{% static 'img/logos/LOGO_DPT.png' %}">
+                            <a href="{% url 'seg_vial' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_SVPROV.png' %}">
                             </a>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-2 box">
-                            <a href="{% url 'sec_transporte' %}">
+                            <a href="{% url 'dvr' %}">
                                 <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                                <img class="d-block" src="{% static 'img/logos/LOGO_RN.png' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_DVR.png' %}">
                             </a>
                         </div>
                     </div>
                     <div class="row mb-2 mt-4">
 
                         <div class="col-lg-2 col-md-2 col-sm-2 box">
-                            <a href="{% url 'seg_vial' %}">
-                                <img class="d-block" src="{% static 'img/logos/LOGO_SVPROV.png' %}">
+                            <a href="{% url 'dpt' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_DPT.png' %}">
                             </a>
                         </div>
 
-
-
                         <div class="col-lg-2 col-md-2 col-sm-2 box">
-                            <a href="{% url 'dvr' %}">
+                            <a href="{% url 'sec_transporte' %}">
                                 <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
-                                <img class="d-block" src="{% static 'img/logos/LOGO_DVR.png' %}">
+                                <img class="d-block" src="{% static 'img/logos/LOGO_RN.png' %}">
                             </a>
                         </div>
 
