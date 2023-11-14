@@ -86,7 +86,7 @@
     }
 
 </style>
-<div id="template-container" hx-get="get-template/" hx-trigger="click" hx-target="#template-container">
+<div id="template-container" hx-get="" hx-trigger="click" hx-target="#template-container">
     <!-- The fetched template will be loaded here -->
 </div>
 {% endblock content %}
@@ -99,7 +99,12 @@
         var screenWidth = window.screen.width;
         // Update the hx-get attribute with the proper URL including the screen width
         var templateContainer = document.getElementById('template-container');
-        templateContainer.setAttribute('hx-get', '/get-template/?width=' + screenWidth);
+
+        var endpoint = '/get-template/?width=' + screenWidth
+
+        console.log({ endpoint })
+
+        templateContainer.setAttribute('hx-get', endpoint);
         // Trigger the htmx request with the updated URL
         templateContainer.click();
         // document.querySelector('[hx-trigger="load"]').click();
