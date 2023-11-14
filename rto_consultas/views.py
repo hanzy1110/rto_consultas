@@ -115,10 +115,14 @@ def index(request):
     return render(request, template_name, {"segment": "index"})
 
 
-def get_template_name(request):
+def get_template_name(request, *args, **kwargs):
     # TODO Change the default!
     if request.htmx:
-        width = int(request.GET.get("width", -1))
+        width = request.GET.get("width", None)
+
+        if not width:
+            width = kwargs.pop("width", -1)
+        width = int(width)
 
         logger.debug(f"WIDTH WAS => {width}")
 
