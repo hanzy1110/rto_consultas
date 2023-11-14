@@ -55,7 +55,7 @@
 
     .card-body {
         flex: 1 1 auto;
-        padding: 3rem 3rem;
+        padding: 4rem 4rem;
         /* Adjust the padding values as needed for size */
         font-size: 18pt;
         /* Adjust the font size as needed */
@@ -72,7 +72,7 @@
 
 </style>
 
-<div class="container-fluid py-4 px-6">
+<div class="container-fluid py-2 px-3">
     <div class="row mb-8 mt-8 mx-auto">
 
         <div class="col-lg-12 col-md-12 col-sm-12 ">
@@ -88,27 +88,27 @@
 
                     <div class="row mb-2 mt-4">
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 box">
+                        <div class="col-lg-3 col-md-3 col-sm-3 box">
                             <a href="{% url 'dpt' %}">
                                 <img class="d-block" src="{% static 'img/logos/LOGO_DPT.png' %}">
                             </a>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 box">
+                        <div class="col-lg-3 col-md-3 col-sm-3 box">
                             <a href="{% url 'seg_vial' %}">
                                 <img class="d-block" src="{% static 'img/logos/LOGO_SVPROV.png' %}">
                             </a>
                         </div>
 
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 box">
+                        <div class="col-lg-3 col-md-3 col-sm-3 box">
                             <a href="{% url 'sec_transporte' %}">
                                 <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                                 <img class="d-block" src="{% static 'img/logos/LOGO_RN.png' %}">
                             </a>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 box">
+                        <div class="col-lg-3 col-md-3 col-sm-3 box">
                             <a href="{% url 'dvr' %}">
                                 <!-- <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i> -->
                                 <img class="d-block" src="{% static 'img/logos/LOGO_DVR.png' %}">
@@ -123,43 +123,44 @@
         </div>
 
     </div>
-</div>
+    <div class="row mb-8 mx-auto">
 
-<div class="row mb-8 mx-auto">
+        <div class="col-lg-12 col-md-12 col-sm-12">
 
-    <div class="col-lg-12 col-md-12 col-sm-12">
-
-        <div class="card mb-4">
-            <div class="col-lg-12 col-md-12 col-sm-12 title-special element-to-hide">
-                <h2 style="text-align: center;">Consultas Externas</h2>
+            <div class="card mb-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 title-special element-to-hide">
+                    <h2 style="text-align: center;">Consultas Externas</h2>
+                </div>
             </div>
-        </div>
-        <div class="card">
+            <div class="card">
 
-            <div class="row mb-4 mt-4">
+                <div class="row mb-4 mt-4">
 
-                <div class="col box">
-                    <a href="https://rto.seguridadvial.gob.ar/">
-                        <img class="d-block" src="{% static 'img/logos/LOGO_ANSV.png' %}">
-                    </a>
-                </div>
-                <!-- <div class="card-body p-2">
+                    <div class="col box">
+                        <a href="https://rto.seguridadvial.gob.ar/">
+                            <img class="d-block" src="{% static 'img/logos/LOGO_ANSV.png' %}">
+                        </a>
+                    </div>
+                    <!-- <div class="card-body p-2">
 
                                 </div> -->
 
-                <div class="col box">
-                    <a href="{% url 'consulta_habilitaciones_finales' %}">
-                        <img class="d-block" src="{% static 'img/logos/LOGO_DNRPA.png' %}">
-                    </a>
-                </div>
-                <!-- <div class="card-body p-2">
+                    <div class="col box">
+                        <a href="{% url 'consulta_habilitaciones_finales' %}">
+                            <img class="d-block" src="{% static 'img/logos/LOGO_DNRPA.png' %}">
+                        </a>
+                    </div>
+                    <!-- <div class="card-body p-2">
                                 </div> -->
 
+                </div>
             </div>
         </div>
     </div>
-    {% endblock content %}
+</div>
 
-    <!-- Specific JS goes HERE -->
-    {% block scripts %}
-    {% endblock scripts %}
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block scripts %}
+{% endblock scripts %}
