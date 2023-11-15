@@ -216,7 +216,7 @@ class VerificacionesTables(tables.Table):
             "vigencia",
             "idestado",
             "idtipouso",
-            "titular",
+            # "titular",
             "ver_verificacion",
             "ver_certificado",
             "anulado",
