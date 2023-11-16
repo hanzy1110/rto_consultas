@@ -1,8 +1,10 @@
+from collections.abc import Callable
 import os
 from typing import List
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.views import View
 from django.views.generic.base import RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django_tables2 import SingleTableView, Table
@@ -26,10 +28,11 @@ from datetime import date
 
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 from django_tables2.export.export import TableExport
 from django.contrib import messages
@@ -152,6 +155,51 @@ def logout_view(request):
 def empty_view(request):
     if request.method == "GET":
         return HttpResponse("")
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class DeleteModelView(View):
+    model: Model
+    id_param: str
+    delete_msg: str
+    msg_estado: str
+    table_view: str
+    operation: Callable
+
+    def post(self, request, *args, **kwargs):
+        model_id = request.POST.get(
+            self.id_param, None
+        )  # Assuming the ID is sent through a POST request
+
+        if not model_id:
+            model_id = kwargs.get(self.id_param)
+
+        # Fetch the related model instance
+        model_instance = get_object_or_404(self.model, id=model_id)
+
+        # Delete the model instance
+        self.operation(model_instance)
+
+        # Set success message
+        messages.success(request, f"{self.delete_msg} {model_id} fue {self.msg_estado}")
+
+        # Return JSON response with HTMX to refresh the page and display the message
+        response = {
+            "hx-get": reverse_lazy(
+                self.table_view
+            ),  # Replace 'refresh-view' with your actual view name
+            "message": str(messages.get_messages(request)),
+        }
+        return JsonResponse(response)
+
+
+@method_decorator(login_required, name="dispatch")
+class DeleteView(TemplateView):
+    model: Model
+    template_name = "includes/delete_msg.html"
+
+    def get(self, *args, **kwargs):
+        pass
 
 
 @method_decorator(login_required, name="dispatch")

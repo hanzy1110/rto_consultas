@@ -32,7 +32,7 @@ from .forms import (
     CustomRTOForm,
 )  # Import the form you created
 
-from .views import CustomRTOView, IndexView
+from .views import CustomRTOView, DeleteModelView, IndexView
 
 from .logging import configure_logger, print_stack
 from .name_schemas import *
@@ -174,3 +174,16 @@ class VerCCCF(DetailView, LoginRequiredMixin):
         context["ADJUNTOS"] = list(zip(cccf_adjuntos, cccf_urls))
 
         return context
+
+
+def anular_certificado(certificado):
+    pass
+
+
+class AnularCCCF(DeleteModelView):
+    model = CccfCertificados
+    msg_estado = "Fue anulado"
+    operation = anular_certificado
+    id_param = "nrocertificado"
+    delete_msg = "El CCCF Numero:"
+    table_view = "cccf_list"
