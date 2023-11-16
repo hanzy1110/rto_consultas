@@ -950,7 +950,7 @@ class CCCFTable(tables.Table):
         return format_html('<img src="{}" />', image_url)
 
     def render_idtaller(self, value):
-        return parse_name_length(value, "J")
+        return parse_name_length(value.nombre, "J")
 
     def render_idempresa(self, record):
         return parse_name_length(record.idempresa.razonsocial, "J")
