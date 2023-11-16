@@ -144,9 +144,9 @@ urlpatterns += [
 
 # URLS RIO NEGRO
 urlpatterns += [
-    path("cccf", CCCFView.as_view(), "cccf"),
-    path("cccf_list/", ListCCCFView.as_view(), "cccf_list"),
-    path("cccf_form/", CCCFRenderForm.as_view(), "cccf_form"),
+    path("cccf", CCCFView.as_view(), name="cccf"),
+    path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
+    path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
 ]
 
 # URLS RIO NEGRO
