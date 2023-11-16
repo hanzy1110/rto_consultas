@@ -970,7 +970,7 @@ class CCCFTable(tables.Table):
     def render_idestado(self, value):
         try:
             # descriptions = map_fields(self.aux_data, self.Meta.model)
-            return ESTADOS_CCCF[value.idestado]
+            return ESTADOS_CCCF[value]
             # return value.descripcion
         except Exception as e:
             print(e)
