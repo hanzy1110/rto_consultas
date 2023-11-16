@@ -488,6 +488,13 @@ def generate_key_certificado(certificado, bucket_name=None):
     return None
 
 
+def generate_cccf_key(certificado_adjunto, idtaller, bucket_name="rto-nqn-cccf"):
+    if certificado_adjunto:
+        key = f"{idtaller}/{certificado_adjunto.nombrearchivo}"
+        return generate_presigned_url(key, bucket_name=bucket_name)
+    return ""
+
+
 def generate_key_from_params(idtaller, nombrea4, bucket_name=None):
     key = f"{idtaller}/var/www/html/taller/uploads/pdf/{nombrea4}.pdf"
     return generate_presigned_url(key, bucket_name=bucket_name)

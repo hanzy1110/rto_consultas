@@ -1,8 +1,10 @@
 import os
 from django.shortcuts import render
 from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
@@ -12,12 +14,16 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import (
+    CccfAdjuntoscertificados,
+    CccfCertificadoexcesos,
     CccfCertificados,
 )
 from .tables import (
     CCCFTable,
 )
 from .helpers import (
+    convert_date,
+    generate_cccf_key,
     handle_context,
     AuxData,
 )
@@ -129,4 +135,42 @@ class CCCFRenderForm(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class VerCCCF(DetailView, LoginRequiredMixin):
+    model: CccfCertificados
+    template_name = "includes/ver_cccf.html"
+    context_object_name = "certificado"
+    aux_data: AuxData
+
+    def get_object(self):
+        query_params = self.request.GET.copy()
+        nrocertificado = self.kwargs["nrocertificado"]
+
+        cccf = CccfCertificados.objects.select_related("idempresa", "idtaller").get(
+            nrocertificado__iexact=nrocertificado
+        )
+        logger.debug(cccf)
+        self.cccf = cccf
+        return cccf
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["cccf_excesos"] = CccfCertificadoexcesos.objects.filter(
+            idcertificado=self.cccf.idcertificado
+        )
+        cccf_adjuntos = CccfAdjuntoscertificados.objects.filter(
+            idcertificado=self.cccf.idcertificado
+        )
+
+        # cccf_urls = [
+        #     generate_cccf_key(ad, self.cccf.idtaller_id) for ad in cccf_adjuntos
+        # ]
+        # TODO No tocar hasta no tener los archivos trasladados
+
+        cccf_urls = ["" for _ in cccf_adjuntos]
+        context["ADJUNTOS"] = list(zip(cccf_adjuntos, cccf_urls))
+
         return context

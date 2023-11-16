@@ -1,0 +1,403 @@
+{% extends 'layouts/base.html' %}
+
+{% load getattr %}
+{% block content %}
+
+{% load render_table from django_tables2 %}
+{% load getattr %}
+<div class="container">
+
+    <div class="row" id="lblMensaje" style="display: none;">
+        <div class="col-md-12">
+            <div class="alert alert-dismissible alert-warning">
+                <p>El ceritificado se encuentra: <a href="#" id="alEstado" class="alert-link"></a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p><strong>Certificado Nro: </strong>
+                <span id="txNroCert">{{ certificado.nrocertificado }}</span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p><strong>Fecha de Calibraci&oacute;n: </strong> <span id="txFcCal">{{ certificado.fechahoracarga }}</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <p><strong>Fecha de Vencimiento: </strong> <span id="txFcVen">{{ certificado.fechavencimiento }}</span></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p><strong>Servicio Tecnico Oficial: </strong>
+                <span id="txtTaller">
+                    {{ certificado.idtaller.nombre }}
+                </span>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-component">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Datos del Propietario</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p><strong>Cuit: </strong>
+                                    <span id="txtCuit">
+                                        {{ certificado.idempresa.cuit }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p><strong>Raz&oacute;n Social/Empresa: </strong>
+                                    <span id="txRazonSocial">
+                                        {{ certificado.idempresa.razonsocial }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <p><strong>Usuario: </strong>
+                                    <span id="txPropUsuario">
+                                        {{ certificado.usuario }}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-component">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Identificaci&oacute;n del Veh&iacute;culo</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Dominio: </strong> <span id="txtDominio">{{ certificado.dominio }}</span></p>
+                                <p><strong>Kilometraje: </strong> <span id="txtKm">{{ certificado.kilometraje }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>N&deg; de Interno: </strong>
+                                    <span id="txtInterno">{{ certificado.nrointerno }}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-component">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Datos del Tac&oacute;grafo</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Marca: </strong> <span id="txtMarca">{{ certificado.tacmarca }}</span> </p>
+                                <p><strong>Modelo: </strong> <span id="txtModelo">{{ certificado.tacmodelo }}</span>
+                                </p>
+                                <p><strong>Relaci&oacute;n W: </strong> <span id="txtRelW">{{ certificado.relw }}</span>
+                                </p>
+                                <p><strong>Impresora: </strong> <span id="txtImpresora">{{ certificado.impresora}}
+                                    </span> </p>
+                                <div id="rodados"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Tipo: </strong> <span id="txtTipo">
+                                        {{ certificado.tactipo }}
+                                    </span> </p>
+                                <p><strong>N&deg; de Serie: </strong> <span id="txtSerie">
+                                        {{ certificado.tacnroserie}}
+                                    </span> </p>
+                                <p><strong>Valor Constante K: </strong> <span id="txtConstK">
+                                        {{ certificado.constantek}}
+                                    </span> </p>
+                                <p><strong>N&deg; de Precinto: </strong> <span id="txtPrecinto">
+                                        {{ certificado.precinto }}
+                                    </span> </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-component">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Observaciones</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><span id="txtObservaciones">
+                                        {{ certificado.observaciones }}
+                                    </span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bs-component">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4>Información</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" colspan="2"
+                                            style="text-align: center;border-bottom: 1px solid #dddddd">
+                                            Desconexiones
+                                        </th>
+                                        <th class="text-center" rowspan="2" style="text-align: center">
+                                            Apertura Equipo
+                                        </th>
+                                        <th class="text-center" rowspan="2" style="text-align: center">
+                                            Retiro Elemento Grabación
+                                        </th>
+                                        <th class="text-center" rowspan="2" style="text-align: center">
+                                            Fallas Dispositivo
+                                        </th>
+                                        <th class="text-center" rowspan="2" style="text-align: center">
+                                            Falta Información
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" style="text-align: center;">
+                                            Cantidad
+                                        </th>
+                                        <th class="text-center" style="text-align: center;border-right: 1px solid">
+                                            Horas
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbdoy>
+                                    <tr>
+                                        <td class="desconexioncantidad" style="text-align: center;">
+                                            <span id="txtDesconexionCantidad">
+                                                {{ certificado.desconexioncantidad }}
+                                            </span>
+                                        </td>
+                                        <td class="desconexionhora" style="text-align: center;">
+                                            <span id="txtDesconexionHora">
+                                                {{ certificado.desconexionhora }}
+                                            </span>
+                                        </td>
+                                        <td class="aperturaequipo" style="text-align: center;">
+                                            <span id="txtAperturaEquipo">
+                                                {{ certificado.aperturaequipo }}
+                                            </span>
+                                        </td>
+                                        <td class="retiroelementograbacion">
+                                            <span id="txtRetiroElementoGrabacion">
+                                                {{ certificado.retiroelementograbacion }}
+                                            </span>
+                                        </td>
+                                        <td class="fallasdispositivo">
+                                            <span id="txtFallaDispositivo">
+                                                {{ certificado.fallasdispositivo }}
+                                            </span>
+                                        </td>
+                                        <td class="faltainformacion">
+                                            <span id="txtFaltaInformacion">
+                                                {{ certificado.faltainformacion }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbdoy>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <table class="table table-bordered table-hover" id="tab_logic">-->
+                                    <div style="margin: auto ; padding: 5px">
+                                        <h4>Excesos de velocidad</h4>
+                                    </div>
+                                    <table class="table table-bordered" id="tab_logic" cellspacing="0" cellpadding="0"
+                                        style="border: 1px solid #dddddd; margin: auto;">
+                                        <thead style="text-align: center;">
+
+                                            <tr style="text-align: center">
+                                                <th class="text-center" rowspan="1" style="text-align: center;">
+                                                    #
+                                                </th>
+                                                <!-- <th class="text-center" colspan="2" style="text-align: center;border-bottom: 1px solid #dddddd" change-width>
+                                                        Partida
+                                                    </th>-->
+                                                <th class="text-center" rowspan="1" style="text-align: center"
+                                                    change-width>
+                                                    Fecha
+                                                </th>
+                                                <th class="text-center" rowspan="1" style="text-align: center"
+                                                    change-width>
+                                                    Hora
+                                                </th>
+                                                <th class="text-center" rowspan="1" style="text-align: center"
+                                                    change-width>
+                                                    Vel. Sobrepaso
+                                                </th>
+                                                <th class="text-center" rowspan="1" style="text-align: center"
+                                                    change-width>
+                                                    Tiempo Vel. Exceso (min)
+                                                </th>
+                                            </tr>
+                                            <!-- <tr>
+                                                    <th class="text-center" style="text-align: center;">
+                                                        Fecha
+                                                    </th>
+                                                    <th class="text-center" style="text-align: center;border-right: 1px solid #dddddd;">
+                                                        Hora
+                                                    </th>
+                                                </tr>-->
+                                        </thead>
+                                        <tbody>
+                                            <tr id="rowempty">
+                                                <td colspan="11">
+                                                    No hay Excesos de velocidad
+                                                </td>
+                                            </tr>
+                                            {% for exceso in cccf_excesos %}
+                                            <tr id='addr0'>
+                                                <td class="numero">
+                                                    <span>
+                                                        {{ exceso.numero }}
+                                                    </span>
+                                                </td>
+                                                <td class="fecha" style="text-align: center;">
+                                                    <span>
+                                                        {{ exceso.fecha }}
+                                                    </span>
+                                                </td>
+                                                <td class="hora" style="text-align: center;">
+                                                    <span>
+                                                        {{ exceso.hora }}
+                                                    </span>
+                                                </td>
+                                                <td class="velocidadsobrepaso" style="text-align: center;">
+                                                    <span>
+
+                                                        {{ exceso.velocidadsobrepaso }}
+                                                    </span>
+                                                </td>
+                                                <td class="tiempovelocidadexceso" style="text-align: center;">
+                                                    <span>
+                                                        {{ exceso.tiempovelocidadexceso }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr id="addr1"></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bs-component">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Informes</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Nro Informe: </strong> <span id="txtNroInforme">
+                                            {{ certificado.nroinforme }}
+                                        </span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Cant. Hojas/Discos: </strong> <span id="txtCantHojas">
+                                            {{ certificado.canthojas }}
+                                        </span></p>
+                                </div>
+                                <!--                            <div class="col-md-4">
+                               <p><strong>Usuario: </strong> <span id="txtUsuario"></span></p>
+                            </div> -->
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul id="listAdjuntos"></ul>
+                                    {% for ad, url in ADJUNTOS %}
+
+                                    <li>
+                                        <a href='{{ url }}'>
+                                            {{ ad.nombrearchivo }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endblock content %}
