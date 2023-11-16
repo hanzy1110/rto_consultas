@@ -885,3 +885,95 @@ class ConsultaHabsTable(tables.Table):
     VtoHabilit = tables.Column(orderable=False, empty_values=())
     VtoRevTec = tables.Column(orderable=False, empty_values=())
     VtoSeguro = tables.Column(orderable=False, empty_values=())
+
+
+class CCCFTable(tables.Table):
+    dominiovehiculo = tables.Column(verbose_name="Dominio")
+    nrocertificado = tables.Column(
+        verbose_name="Nro. Certificado",
+        empty_values=(),
+    )
+    fechahoracarga = tables.DateColumn(
+        orderable=True, verbose_name="Emision", format="d/m/Y"
+    )
+    ver_cccf = tables.Column(
+        verbose_name="Consulta",
+        linkify=(
+            "ver_cccf",
+            {
+                "nrocertificado": tables.A("nrocertificado"),
+            },
+        ),
+        empty_values=(),
+        attrs={"th": {"colspan": "3"}},
+    )  # (viewname, kwargs)
+
+    dar_de_baja = tables.Column(
+        verbose_name="",
+        orderable=False,
+        empty_values=(),
+        attrs={"th": {"hidden": True}},
+    )
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={
+            "idestado": ("descripcion", Estados),
+            "idtipouso": ("descripcion", Tipousovehiculo),
+            "idtipovehiculo": ("descripcion", Tipovehiculo),
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={"name": "name"},
+    )
+
+    class Meta:
+        model = Verificaciones
+        orderable = False
+        fields = (
+            "nrocertificado",
+            "fechahoracarga",
+            "vigencia",
+            "dominio",
+            "propietario",
+            "estado",
+            "idtaller",
+            "ver_cccf",
+            "dar_de_baja",
+        )
+        template_name = "tables/htmx_table.html"
+
+    def render_ver_cccf(self, record):
+        image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
+
+    def render_vigencia(self, record):
+        cert = Certificados.objects.filter(
+            idverificacion_id__exact=record.idverificacion,
+            idtaller_id__exact=record.idtaller,
+        ).values()
+        return convert_date(cert[0]["vigenciahasta"])
+
+    # def render_nrocertificado(self, record):
+    #     query = self.Meta.model.get_nro_certificado(record)
+    #     return query
+
+    def render_propietario(self, record):
+        persona = record.codigotitular
+
+        match persona.tipopersona:
+            case "J":
+                return parse_name_length(persona.razonsocial, "J")
+            case _:
+                return parse_name_length([persona.nombre, persona.apellido], "P")
+
+    def render_dar_de_baja(self, record):
+        image_url = static(f"img/small-logos/delete.png")
+        return format_html('<img src="{}" width="25px" />', image_url)
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self

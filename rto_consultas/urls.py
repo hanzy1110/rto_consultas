@@ -18,6 +18,7 @@ from django.conf import settings
 from django.urls import path, include
 from django.views.static import serve
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from rto_consultas.cccf_views import CCCFView, ListCCCFView, CCCFRenderForm
 
 import rto_consultas.views as views
 
@@ -139,6 +140,13 @@ urlpatterns += [
         views.ResumenTransporteCarga.as_view(),
         name="resumen_dpt_carga",
     ),
+]
+
+# URLS RIO NEGRO
+urlpatterns += [
+    path("cccf", CCCFView.as_view(), "cccf"),
+    path("cccf_list/", ListCCCFView.as_view(), "cccf_list"),
+    path("cccf_form/", CCCFRenderForm.as_view(), "cccf_form"),
 ]
 
 # URLS RIO NEGRO
