@@ -900,10 +900,9 @@ class CCCFTable(tables.Table):
         verbose_name="Consulta",
         linkify=(
             "ver_cccf",
-            tables.A("nrocertificado"),
-            # {
-            #     "nrocertificado": tables.A("nrocertificado"),
-            # },
+            {
+                "nrocertificado": tables.A("nrocertificado")["nrocertificado"],
+            },
         ),
         empty_values=(),
         attrs={"th": {"colspan": "3"}},
