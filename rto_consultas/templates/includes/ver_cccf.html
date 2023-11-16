@@ -307,11 +307,7 @@
                                                 </tr>-->
                                         </thead>
                                         <tbody>
-                                            <tr id="rowempty">
-                                                <td colspan="11">
-                                                    No hay Excesos de velocidad
-                                                </td>
-                                            </tr>
+                                            {% if cccf_excesos %}
                                             {% for exceso in cccf_excesos %}
                                             <tr id='addr0'>
                                                 <td class="numero">
@@ -342,7 +338,14 @@
                                                 </td>
                                             </tr>
                                             {% endfor %}
+                                            {% else %}
+                                            <tr id="rowempty">
+                                                <td colspan="11">
+                                                    No hay Excesos de velocidad
+                                                </td>
+                                            </tr>
                                             <tr id="addr1"></tr>
+                                            {% endif %}
                                         </tbody>
                                     </table>
                                 </div>
