@@ -901,7 +901,8 @@ class CCCFTable(tables.Table):
         linkify=(
             "ver_cccf",
             {
-                "nrocertificado": tables.A("nrocertificado")["nrocertificado"],
+                "nrocertificado": tables.A("nrocertificado"),
+                "dominio": tables.A("dominio"),
             },
         ),
         empty_values=(),
