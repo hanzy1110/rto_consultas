@@ -888,6 +888,18 @@ class ConsultaHabsTable(tables.Table):
 
 
 class CCCFTable(tables.Table):
+    idempresa = tables.Column(
+        verbose_name="Propietario",
+        empty_values=(),
+    )
+    idtaller = tables.Column(
+        verbose_name="Taller",
+        empty_values=(),
+    )
+    idestado = tables.Column(
+        verbose_name="Estado",
+        empty_values=(),
+    )
     nrocertificado = tables.Column(
         verbose_name="Nro. Certificado",
         empty_values=(),
