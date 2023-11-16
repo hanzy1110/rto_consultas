@@ -894,7 +894,10 @@ class CCCFTable(tables.Table):
         empty_values=(),
     )
     fechahoracarga = tables.DateColumn(
-        orderable=True, verbose_name="Emision", format="d/m/Y"
+        orderable=True, verbose_name="Fecha Desde", format="d/m/Y"
+    )
+    fechahoravencimiento = tables.DateColumn(
+        orderable=True, verbose_name="Fecha Hasta", format="d/m/Y"
     )
     ver_cccf = tables.Column(
         verbose_name="Consulta",
@@ -931,10 +934,10 @@ class CCCFTable(tables.Table):
         orderable = False
         fields = (
             "nrocertificado",
-            "fechahoracarga",
-            "vigencia",
+            "fechahoracalibracion",
+            "fechavencimiento",
             "dominio",
-            "propietario",
+            "idempresa",
             "estado",
             "idtaller",
             "ver_cccf",
@@ -946,16 +949,11 @@ class CCCFTable(tables.Table):
         image_url = static(f"img/small-logos/ver.png")
         return format_html('<img src="{}" />', image_url)
 
-    def render_vigencia(self, record):
-        cert = Certificados.objects.filter(
-            idverificacion_id__exact=record.idverificacion,
-            idtaller_id__exact=record.idtaller,
-        ).values()
-        return convert_date(cert[0]["vigenciahasta"])
+    def render_idtaller(self, value):
+        return parse_name_length(value, "J")
 
-    # def render_nrocertificado(self, record):
-    #     query = self.Meta.model.get_nro_certificado(record)
-    #     return query
+    def render_idempresa(self, record):
+        return parse_name_length(record.idempresa.razonsocial, "J")
 
     def render_propietario(self, record):
         persona = record.codigotitular
