@@ -888,7 +888,6 @@ class ConsultaHabsTable(tables.Table):
 
 
 class CCCFTable(tables.Table):
-    dominiovehiculo = tables.Column(verbose_name="Dominio")
     nrocertificado = tables.Column(
         verbose_name="Nro. Certificado",
         empty_values=(),
@@ -938,7 +937,7 @@ class CCCFTable(tables.Table):
             "fechavencimiento",
             "dominio",
             "idempresa",
-            "estado",
+            "idestado",
             "idtaller",
             "ver_cccf",
             "dar_de_baja",
@@ -967,6 +966,15 @@ class CCCFTable(tables.Table):
     def render_dar_de_baja(self, record):
         image_url = static(f"img/small-logos/delete.png")
         return format_html('<img src="{}" width="25px" />', image_url)
+
+    def render_idestado(self, value):
+        try:
+            # descriptions = map_fields(self.aux_data, self.Meta.model)
+            return ESTADOS_CCCF[value.idestado]
+            # return value.descripcion
+        except Exception as e:
+            print(e)
+            return "Unknown!"
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs

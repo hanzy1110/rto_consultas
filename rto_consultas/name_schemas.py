@@ -49,6 +49,8 @@ TIPO_USO_VEHICULO = {
     4: "Municipal",
 }
 
+ESTADOS_CCCF = {1: "Vigente", 2: "Vencido", 3: "Anulado"}
+
 DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 
 MODIFICADOS = {0: "No", 1: "Si"}
