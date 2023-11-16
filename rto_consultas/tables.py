@@ -893,10 +893,10 @@ class CCCFTable(tables.Table):
         verbose_name="Nro. Certificado",
         empty_values=(),
     )
-    fechahoracarga = tables.DateColumn(
+    fechacalibracion = tables.DateColumn(
         orderable=True, verbose_name="Fecha Desde", format="d/m/Y"
     )
-    fechahoravencimiento = tables.DateColumn(
+    fechavencimiento = tables.DateColumn(
         orderable=True, verbose_name="Fecha Hasta", format="d/m/Y"
     )
     ver_cccf = tables.Column(
@@ -934,7 +934,7 @@ class CCCFTable(tables.Table):
         orderable = False
         fields = (
             "nrocertificado",
-            "fechahoracalibracion",
+            "fechacalibracion",
             "fechavencimiento",
             "dominio",
             "idempresa",
