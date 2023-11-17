@@ -926,13 +926,6 @@ class CCCFTable(tables.Table):
     dar_de_baja = tables.Column(
         verbose_name="",
         orderable=False,
-        linkify=(
-            "cccf_anular",
-            {
-                "nrocertificado": tables.A("nrocertificado"),
-                "dominio": tables.A("dominio"),
-            },
-        ),
         empty_values=(),
         attrs={"th": {"hidden": True},},
     )
@@ -986,7 +979,6 @@ class CCCFTable(tables.Table):
         image_url = static(f"img/small-logos/delete.png")
         img_tag = format_html('<img src="{}" width="25px" />', image_url)
         a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML" hx-headers="{ \'X-CSRFToken\': \'{{ csrf_token }}\' }">{}</a>'
-
         url = reverse('cccf_anular', args=[record.nrocertificado, record.dominio])
         link = format_html(a_tag, url, url, img_tag)
 
