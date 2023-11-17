@@ -158,7 +158,7 @@ def empty_view(request):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class DeleteModelView(View):
+class ChangeModelView(View):
     model: Model
     id_param: str
     delete_msg: str
@@ -178,28 +178,20 @@ class DeleteModelView(View):
         model_instance = get_object_or_404(self.model, id=model_id)
 
         # Delete the model instance
-        self.operation(model_instance)
+        res = self.operation(model_instance)
 
-        # Set success message
-        messages.success(request, f"{self.delete_msg} {model_id} fue {self.msg_estado}")
+        if res:
+            messages.success(request, f"{self.delete_msg} {model_id} fue {self.msg_estado}")
+        else:
+            messages.error(request, "Error al Anular certificado")
 
-        # Return JSON response with HTMX to refresh the page and display the message
         response = {
             "hx-get": reverse_lazy(
                 self.table_view
-            ),  # Replace 'refresh-view' with your actual view name
+            ),
             "message": str(messages.get_messages(request)),
         }
         return JsonResponse(response)
-
-
-@method_decorator(login_required, name="dispatch")
-class DeleteView(TemplateView):
-    model: Model
-    template_name = "includes/delete_msg.html"
-
-    def get(self, *args, **kwargs):
-        pass
 
 
 @method_decorator(login_required, name="dispatch")

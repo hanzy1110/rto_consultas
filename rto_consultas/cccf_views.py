@@ -32,7 +32,7 @@ from .forms import (
     CustomRTOForm,
 )  # Import the form you created
 
-from .views import CustomRTOView, DeleteModelView, IndexView
+from .views import CustomRTOView, ChangeModelView, IndexView
 
 from .logging import configure_logger, print_stack
 from .name_schemas import *
@@ -176,11 +176,27 @@ class VerCCCF(DetailView, LoginRequiredMixin):
         return context
 
 
-def anular_certificado(certificado):
-    pass
+def anular_certificado(certificado, observaciones=None):
+    # $sqlUpCert = "UPDATE cccf_certificados SET idEstado = 3, FechaAnulacion='".date("Y-m-d")."',ObservacionesAnulacion='$observaciones' WHERE idCertificado = $idCertifcado "
+    #                     . " AND idTaller = $idTaller";
+
+    try:
+
+        certificado.idestado = 3
+        certificado.fechaanulacion = datetime.today()
+
+        if observaciones:
+            certificado.observaciones = observaciones
+
+        certificado.save()
+        return True
+
+    except Exception as e:
+        logger.error(f"UPDATING FAILED => {e}")
+        return False
 
 
-class AnularCCCF(DeleteModelView):
+class AnularCCCF(ChangeModelView):
     model = CccfCertificados
     msg_estado = "Fue anulado"
     operation = anular_certificado
