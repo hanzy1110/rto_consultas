@@ -4,7 +4,7 @@ from django import forms
 from django.db.models import Model
 from django.forms import widgets
 from .helpers import AuxData, map_fields
-from .models import Estados, Tipovehiculo, Tipousovehiculo, Talleres
+from .models import CccfCertificados, Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
 from dataclasses import asdict
@@ -290,3 +290,31 @@ class InspectionOrderForm(forms.Form):
                 css_class="tr",
             ),
         )
+
+
+class CCCFForm(forms.ModelForm):
+    class Meta:
+        model = CccfCertificados
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(CCCFForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = "formCargaCert"
+        self.helper.form_method = "post"
+        self.helper.form_class = "form-horizontal"
+        # self.helper.form_enctype = "multipart/form-data"
+
+        # self.helper.layout = Layout(
+        #     HTML("<h2>Datos del Certificado</h2>"),
+        #     Div(
+        #         Field("nrocertificado"),
+        #         Field("fechacalibracion"),
+        #         Field("fechavencimiento"),
+        #         # template="forms/cccf_layout.html",
+        #     ),
+        #     HTML("<h2>Datos del Propietario</h2>"),
+        #     Div(Field("cuit"), Field("razonsocial"), Field("usuario")),
+        #     HTML("<h2>Datos del Vehiculo</h2>"),
+        #     Div(Field("dominio"), Field("nrointerno"), Field("kilometraje")),
+        # )

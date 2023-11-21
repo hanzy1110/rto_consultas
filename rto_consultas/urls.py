@@ -24,6 +24,7 @@ from rto_consultas.cccf_views import (
     ListCCCFView,
     CCCFRenderForm,
     VerCCCF,
+    carga_cccf,
     get_cccf_modal,
 )
 
@@ -153,6 +154,10 @@ urlpatterns += [
 urlpatterns += [
     path("cccf", CCCFView.as_view(), name="cccf"),
     path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
+    path(
+        "cccf_carga/<int:nrocertificado>/<str:dominio>", carga_cccf, name="cccf_carga"
+    ),
+    path("cccf_carga/", carga_cccf, name="cccf_carga"),
     path(
         "cccf_anular/<int:nrocertificado>/<str:dominio>",
         AnularCCCF.as_view(),

@@ -1,5 +1,6 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import HttpResponse, render
+from django.template.loader import render_to_string
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,9 +27,12 @@ from .helpers import (
     generate_cccf_key,
     handle_context,
     AuxData,
+    handle_initial_cccf,
+    handle_save_cccf,
 )
 
 from .forms import (
+    CCCFForm,
     CustomRTOForm,
 )  # Import the form you created
 
@@ -211,3 +215,45 @@ class AnularCCCF(ChangeModelView):
     id_param = "nrocertificado"
     delete_msg = "El CCCF Numero:"
     table_view = "cccf_list"
+
+
+def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
+    if request.method == "POST":
+        form = CCCFForm(request.POST)
+
+        if form.is_valid():
+            try:
+                cccf = handle_save_cccf(form.cleaned_data, request.user)
+                logger.info(f"Habilitacion => {cccf} SAVED!")
+                success_message = "Form submitted successfully!"
+                success_message_html = render_to_string(
+                    "includes/success_message.html",
+                    {"success_message": success_message},
+                )
+                return HttpResponse(success_message_html)
+            except Exception as e:
+                logger.error(e)
+                error_message = "An error occurred: " + str(e)
+                error_message_html = render_to_string(
+                    "includes/error_message.html", {"error_message": error_message}
+                )
+                return HttpResponse(error_message_html)
+            # Process the form data if needed
+            # For example, you can access form.cleaned_data to get the validated data
+            # Then redirect or render a success page
+    else:
+        if kwargs:
+            idhabilitacion = kwargs.pop("idhabilitacion", None)
+            dominio = kwargs.pop("dominio", None)
+
+        # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+        if nrocertificado and dominio:
+            initial = handle_initial_cccf(nrocertificado, dominio)
+        else:
+            initial = {}
+
+        logger.debug(f"INITIAL_DATA => {initial}")
+        form = CCCFForm(initial=initial)
+        # form = InspectionOrderForm()
+
+    return render(request, "includes/carga_habilitaciones.html", {"form": form})

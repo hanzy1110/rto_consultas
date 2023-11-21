@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h2><a href="#">Carga CCCF</a></h2>
+
+    <div id="success-message" style="display:none;">
+    </div>
+
+    <form method="post" class="tblForm" hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
+
+</div>
+
+<script>
+    htmx.on("htmx:response", function (event) {
+        if (event.detail.elt === document.querySelector(".tblForm")) {
+            // Handle the response here if needed
+        }
+    });
+</script>
+{% endblock %}

@@ -739,3 +739,133 @@ def check_vigencia(verificacion):
         logger.debug("RESULT => VENCIDO!")
         return "background-color: #FF9999"
     return "background-color: #FFFFFF"
+
+
+def handle_save_cccf(cleaned_data, user):
+    logger.debug(f"CLEANED_DATA => {cleaned_data}")
+
+    new_data = {}
+    username = user.username
+
+    new_data["dominio"] = cleaned_data["dominio"]
+    new_data["modelovehiculo"] = cleaned_data["modelo"]
+    new_data["nrocertificadocccf"] = cleaned_data["cccf"]
+    new_data["razonsocialtitular"] = cleaned_data["titular"]
+    new_data["usuariodictamen"] = username
+
+    today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    new_data["fechahoradictamen"] = today
+    new_data["fechahoraultmodificacion"] = today
+    new_data["fechahoracreacion"] = today
+
+    historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
+    new_data["historialmodificacion"] = historialModificacion
+
+    try:
+        cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
+        cccf = cccf.nrocertificado
+    except Exception as e:
+        logger.warn(f"No hay CCCF => {e}")
+        cccf = None
+
+    new_data["nrocertificadocccf"] = cccf
+
+    last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
+
+    servicios = cleaned_data["servicios"]
+
+    # foreach($colServicios as $element){
+    #     $sqlServicio="INSERT INTO serviciohab(idHabilitacion,idServiciosTransporteHab) VALUES
+    #     (".$idUltimaHab.",".$element.");";
+    #     //echo $sqlServicio;
+    #     $base->query($sqlServicio);
+    # }
+
+    cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
+    _, barcode = build_barcode(
+        last_hab_id + 1,
+        str(new_data["fechahoradictamen"])[0:10],
+        new_data["dominio"],
+        cadena_id_servicio,
+        False,
+    )
+
+    new_data["nrocodigobarrashab"] = barcode
+    new_data["activo"] = 1
+    new_data["idlocalidadvehiculo"] = 0
+    new_data["marcavehiculo"] = ""
+
+    new_data["nombretitular"] = ""
+    new_data["nrodoctitular"] = 0
+    new_data["tipodoctitular"] = ""
+    new_data["idlocalidadtitular"] = 0
+    new_data["domiciliotitular"] = ""
+    new_data["apellidotitular"] = ""
+
+    new_data["nombreconductor"] = ""
+    new_data["apellidoconductor"] = ""
+    new_data["domicilioconductor"] = ""
+    new_data["idlocalidadconductor"] = 0
+    new_data["tipopersona"] = ""
+    new_data["cuittitular"] = ""
+    new_data["idtiposervicio"] = 0
+
+    logger.debug(f"NEW_DATA => {new_data}")
+
+    new_hab = Habilitacion(**new_data)
+    new_hab.save()
+
+    logger.info(f"Habilitacion => {new_hab} SAVED!")
+
+    servicios_transporte_habs = [
+        Serviciostransportehab.objects.get(idserviciostransportehab=int(s))
+        for s in servicios
+    ]
+
+    servs = [
+        Serviciohab(**{"idhabilitacion": new_hab, "idserviciostransportehab": s})
+        for s in servicios_transporte_habs
+    ]
+    Serviciohab.objects.bulk_create(servs)
+
+    return new_hab
+
+
+def handle_initial_cccf(nrocertificado, dominio):
+    context = {}
+    habilitacion = CccfCertificados.objects.get(
+        nrocertificado=nrocertificado, dominio=dominio
+    )
+
+    try:
+        logger.debug(f"Checking usuario: {habilitacion}")
+        user = User.objects.get(username=habilitacion.usuariodictamen).username
+        username = f"{user.first_name} {user.lastname}"
+
+    except Exception as e:
+        logger.warning("User not found....")
+        usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+        username = f"{usuario.nombre} {usuario.apellido}"
+
+    context["usuariodictamen"] = username
+    if habilitacion.tipopersona in "Jj":
+        context["titular"] = habilitacion.razonsocialtitular
+    else:
+        context[
+            "titular"
+        ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+
+    servicios = Serviciohab.objects.filter(idhabilitacion=nrocertificado)
+
+    descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
+
+    modificado = bool(habilitacion.modificado)
+    context["modificado"] = modificado
+
+    context["descripciones"] = descripciones
+
+    context["dominio"] = dominio
+
+    context["modelo"] = habilitacion.modelovehiculo
+
+    return context
