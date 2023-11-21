@@ -175,7 +175,7 @@ class ChangeModelView(View):
             model_id = kwargs.get(self.id_param)
 
         # Fetch the related model instance
-        model_instance = get_object_or_404(self.model, id=model_id)
+        model_instance = get_object_or_404(self.model, **{self.id_param: model_id})
 
         # Delete the model instance
         res = self.operation(model_instance)
