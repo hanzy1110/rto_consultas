@@ -34,6 +34,7 @@ from .helpers import (
 from .forms import (
     CCCFForm,
     CustomRTOForm,
+    InformesForm,
 )  # Import the form you created
 
 from .views import CustomRTOView, ChangeModelView, IndexView
@@ -221,10 +222,13 @@ class AnularCCCF(ChangeModelView):
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
     if request.method == "POST":
         form = CCCFForm(request.POST)
+        form_informes = InformesForm(request.FORM)
 
         if form.is_valid():
             try:
-                cccf = handle_save_cccf(form.cleaned_data, request.user)
+                cccf = handle_save_cccf(
+                    form.cleaned_data, form_informes.cleaned_data, request.user
+                )
                 logger.info(f"Habilitacion => {cccf} SAVED!")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
@@ -241,7 +245,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                 return HttpResponse(error_message_html)
     else:
         if kwargs:
-            nrocertificado = kwargs.pop("idhabilitacion", None)
+            nrocertificado = kwargs.pop("nrocertificado", None)
             dominio = kwargs.pop("dominio", None)
 
         # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
@@ -252,5 +256,10 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = CCCFForm(initial=initial)
+        form_informes = InformesForm(initial=initial)
 
-    return render(request, "includes/carga_cccf.html", {"form": form})
+    return render(
+        request,
+        "includes/carga_cccf.html",
+        {"form": form, "form_informes": form_informes},
+    )

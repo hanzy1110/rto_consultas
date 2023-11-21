@@ -741,7 +741,7 @@ def check_vigencia(verificacion):
     return "background-color: #FFFFFF"
 
 
-def handle_save_cccf(cleaned_data, user):
+def handle_save_cccf(cleaned_data, cleaned_informes_data, user):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
 
     new_data = {}
@@ -833,39 +833,35 @@ def handle_save_cccf(cleaned_data, user):
 
 def handle_initial_cccf(nrocertificado, dominio):
     context = {}
-    habilitacion = CccfCertificados.objects.get(
-        nrocertificado=nrocertificado, dominio=dominio
-    )
+    cccf = CccfCertificados.objects.get(nrocertificado=nrocertificado, dominio=dominio)
 
     try:
-        logger.debug(f"Checking usuario: {habilitacion}")
-        user = User.objects.get(username=habilitacion.usuariodictamen).username
+        logger.debug(f"Checking usuario: {cccf}")
+        user = User.objects.get(username=cccf.usuariodictamen).username
         username = f"{user.first_name} {user.lastname}"
 
     except Exception as e:
         logger.warning("User not found....")
-        usuario = Usuarios.objects.get(usuario=habilitacion.usuariodictamen)
+        usuario = Usuarios.objects.get(usuario=cccf.usuariodictamen)
         username = f"{usuario.nombre} {usuario.apellido}"
 
     context["usuariodictamen"] = username
-    if habilitacion.tipopersona in "Jj":
-        context["titular"] = habilitacion.razonsocialtitular
+    if cccf.tipopersona in "Jj":
+        context["titular"] = cccf.razonsocialtitular
     else:
-        context[
-            "titular"
-        ] = f"{habilitacion.nombretitular} {habilitacion.apellidotitular}"
+        context["titular"] = f"{cccf.nombretitular} {cccf.apellidotitular}"
 
     servicios = Serviciohab.objects.filter(idhabilitacion=nrocertificado)
 
     descripciones = [s.idserviciostransportehab.descripcion for s in servicios]
 
-    modificado = bool(habilitacion.modificado)
+    modificado = bool(cccf.modificado)
     context["modificado"] = modificado
 
     context["descripciones"] = descripciones
 
     context["dominio"] = dominio
 
-    context["modelo"] = habilitacion.modelovehiculo
+    context["modelo"] = cccf.modelovehiculo
 
     return context

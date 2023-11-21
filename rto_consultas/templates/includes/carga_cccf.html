@@ -11,6 +11,8 @@
     <form method="post" class="tblForm" hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
         {% csrf_token %}
         {% crispy form %}
+
+        {% crispy form_informes %}
         <input type="submit" value="Cargar Certificado">
     </form>
 
