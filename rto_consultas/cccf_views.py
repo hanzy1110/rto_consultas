@@ -239,12 +239,9 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/error_message.html", {"error_message": error_message}
                 )
                 return HttpResponse(error_message_html)
-            # Process the form data if needed
-            # For example, you can access form.cleaned_data to get the validated data
-            # Then redirect or render a success page
     else:
         if kwargs:
-            idhabilitacion = kwargs.pop("idhabilitacion", None)
+            nrocertificado = kwargs.pop("idhabilitacion", None)
             dominio = kwargs.pop("dominio", None)
 
         # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
@@ -255,6 +252,5 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = CCCFForm(initial=initial)
-        # form = InspectionOrderForm()
 
     return render(request, "includes/carga_cccf.html", {"form": form})

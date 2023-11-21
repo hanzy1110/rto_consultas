@@ -334,17 +334,25 @@ class CCCFForm(forms.ModelForm):
         # self.helper.form_enctype = "multipart/form-data"
 
         self.helper.layout = Layout(
-            HTML("<h2>Datos del Certificado</h2>"),
             Div(
+                HTML("<h2>Datos del Certificado</h2>"),
                 Field("nrocertificado"),
                 Field("fechacalibracion"),
                 Field("fechavencimiento"),
                 # template="forms/cccf_layout.html",
             ),
-            HTML("<h2>Datos del Propietario</h2>"),
-            Div(Field("cuit"), Field("razonsocial"), Field("usuario")),
-            HTML("<h2>Datos del Vehiculo</h2>"),
-            Div(Field("dominio"), Field("nrointerno"), Field("kilometraje")),
+            Div(
+                HTML("<h2>Datos del Propietario</h2>"),
+                Field("cuit"),
+                Field("razonsocial"),
+                Field("usuario"),
+            ),
+            Div(
+                HTML("<h2>Datos del Vehiculo</h2>"),
+                Field("dominio"),
+                Field("nrointerno"),
+                Field("kilometraje"),
+            ),
             HTML("<h2>Datos del Tacografo</h2>"),
             Div(
                 "tacmarca",
