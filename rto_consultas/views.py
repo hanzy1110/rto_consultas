@@ -181,9 +181,7 @@ class ChangeModelView(View):
         res = self.operation(model_instance)
 
         if res:
-            messages.success(
-                request, f"{self.delete_msg} {model_id} fue {self.msg_estado}"
-            )
+            messages.success(request, f"{self.delete_msg} {model_id} {self.msg_estado}")
         else:
             messages.error(request, "Error al Anular certificado")
         response = {
