@@ -927,7 +927,9 @@ class CCCFTable(tables.Table):
         verbose_name="",
         orderable=False,
         empty_values=(),
-        attrs={"th": {"hidden": True},},
+        attrs={
+            "th": {"hidden": True},
+        },
     )
     aux_data = AuxData(
         query_fields=[],
@@ -978,8 +980,9 @@ class CCCFTable(tables.Table):
     def render_dar_de_baja(self, record):
         image_url = static(f"img/small-logos/delete.png")
         img_tag = format_html('<img src="{}" width="25px" />', image_url)
-        a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML" hx-headers="{ \'X-CSRFToken\': \'{{ csrf_token }}\' }">{}</a>'
-        url = reverse('cccf_anular', args=[record.nrocertificado, record.dominio])
+        # a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML" hx-headers="{ \'X-CSRFToken\': \'{{ csrf_token }}\' }">{}</a>'
+        a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML"}">{}</a>'
+        url = reverse("cccf_anular", args=[record.nrocertificado, record.dominio])
         link = format_html(a_tag, url, url, img_tag)
 
         return link
