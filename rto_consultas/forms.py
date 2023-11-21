@@ -339,6 +339,7 @@ class CCCFForm(forms.ModelForm):
                 Field("nrocertificado"),
                 Field("fechacalibracion"),
                 Field("fechavencimiento"),
+                css_class="card-body"
                 # template="forms/cccf_layout.html",
             ),
             Div(
@@ -346,12 +347,14 @@ class CCCFForm(forms.ModelForm):
                 Field("cuit"),
                 Field("razonsocial"),
                 Field("usuario"),
+                css_class="card-body",
             ),
             Div(
                 HTML("<h2>Datos del Vehiculo</h2>"),
                 Field("dominio"),
                 Field("nrointerno"),
                 Field("kilometraje"),
+                css_class="card-body",
             ),
             HTML("<h2>Datos del Tacografo</h2>"),
             Div(
@@ -365,5 +368,6 @@ class CCCFForm(forms.ModelForm):
                 "precinto",
                 "impresora",
                 "observaciones",
+                css_class="card-body",
             ),
         )
