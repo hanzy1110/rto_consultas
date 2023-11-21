@@ -20,7 +20,7 @@
             <table width="90%" style="margin-left: 10px;">
                 <tr>
                     {% csrf_token %}
-                    {{ form|crispy }}
+                    {% crispy form %}
                 </tr>
             </table>
 
