@@ -293,9 +293,37 @@ class InspectionOrderForm(forms.Form):
 
 
 class CCCFForm(forms.ModelForm):
+    cuit = forms.CharField(label="CUIT")
+    razon_social = forms.CharField(label="Razon Social")
+
     class Meta:
         model = CccfCertificados
-        fields = "__all__"
+        # fields = "__all__"
+        fields = (
+            # Primero
+            "nrocertificado",
+            "fechacalibracion",
+            "fechavencimiento",
+            # Segundo
+            "cuit",
+            "razon_social",
+            "usuario",
+            # Tercero
+            "dominio",
+            "nrointerno",
+            "kilometraje",
+            # Cuarto
+            "tacmarca",
+            "tactipo",
+            "tacmodelo",
+            "tacnroserie",
+            "relw",
+            "constantek",
+            "rodado",
+            "precinto",
+            "impresora",
+            "observaciones",
+        )
 
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
