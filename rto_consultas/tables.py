@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template.loader import render_to_string
 import django_tables2 as tables
 from django.core.paginator import Paginator
 from django.utils.html import format_html
@@ -987,8 +988,13 @@ class CCCFTable(tables.Table):
         # url = reverse("cccf_anular", args=[record.nrocertificado, record.dominio])
         # link = format_html(a_tag, url, url, img_tag)
 
-        return render(
+        return render_to_string(
             template_name="tables/delete_table.html",
+            context={
+                "delete_url": "cccf_anular",
+                "nrocertificado": record.nrocertificado,
+                "dominio": record.dominio,
+            },
         )
 
     def render_idestado(self, value):
