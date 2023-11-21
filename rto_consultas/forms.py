@@ -420,7 +420,6 @@ class InformesForm(forms.Form):
                         '   <span id="status"></span>'
                         '   <ul style="list-style: none;" id="files"></ul>'
                         '   <span id="resultado"></span>'
-                        "   {% crispy form %}"  # Render hidden field
                         "</div>"
                     ),
                     css_class="form-group",
