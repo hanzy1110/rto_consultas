@@ -1,5 +1,5 @@
 {% load static %}
-<a hx-get="{% url "cccf_modal" %}"
+<a hx-get="{% url "cccf_modal nrocertificado=nrocertificado dominio=dominio" %}"
    hx-target="body"
    hx-headers="X-CSRFToken: '{{ csrf_token }}'"
    hx-swap="beforeend"

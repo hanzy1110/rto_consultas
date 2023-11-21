@@ -197,7 +197,11 @@ def anular_certificado(certificado, observaciones=None):
 
 
 def get_cccf_modal(request, *args, **kwargs):
-    return render(request, template_name="tables/confirm_delete.html", context={})
+    context = {}
+    context["nrocertificado"] = kwargs.get("nrocertificado", None)
+    context["dominio"] = kwargs.get("dominio", None)
+
+    return render(request, template_name="tables/confirm_delete.html", context=context)
 
 
 class AnularCCCF(ChangeModelView):

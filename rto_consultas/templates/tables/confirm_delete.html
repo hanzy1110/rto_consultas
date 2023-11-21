@@ -2,12 +2,18 @@
 <div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
 	<div class="modal-underlay" _="on click trigger closeModal"></div>
 	<div class="modal-content">
-		<h1>Modal Dialog</h1>
-		This is the modal content.
-		You can put anything here, like text, or a form, or an image.
+		<h1>Anular Certificado</h1>
+		Confirmar anulación
 		<br>
 		<br>
+
+		<a hx-post="{% url delete_url nrocertificado=nrocertificado dominio=dominio %}" hx-target="#message-container"
+			hx-swap="innerHTML" hx-headers="X-CSRFToken: '{{ csrf_token }}'" style="display: block">
+			Confirmar
+		</a>
 		<button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML"
-			hx-trigger="click">Close</button>
+			hx-trigger="click">Confirmar</button>
+		<button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML"
+			hx-trigger="click">Cerrar</button>
 	</div>
 </div>
