@@ -3,18 +3,23 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h2><a href="#">Carga CCCF</a></h2>
+<h2><a href="#">Carga CCCF</a></h2>
 
-    <div id="success-message" style="display:none;">
-    </div>
+<div id="success-message" style="display:none;">
+</div>
 
-    <form method="post" class="tblForm" hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
+<form method="post" class="tblForm" hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
+    <div class="card-body p-1">
         {% csrf_token %}
         {% crispy form %}
+    </div>
 
+    <div class="card-body p-1">
+        <h2>Informes</h2>
         {% crispy form_informes %}
         <input type="submit" value="Cargar Certificado">
-    </form>
+    </div>
+</form>
 
 </div>
 
