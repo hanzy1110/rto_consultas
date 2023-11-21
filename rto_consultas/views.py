@@ -186,9 +186,8 @@ class ChangeModelView(View):
             )
         else:
             messages.error(request, "Error al Anular certificado")
-
         response = {
-            "messages": str(messages.get_messages(request)),
+            "messages": [m.message for m in messages.get_messages(request)],
         }
 
         res = HttpResponse(
