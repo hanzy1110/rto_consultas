@@ -48,6 +48,7 @@ logger = configure_logger(LOG_FILE)
 class CCCFView(IndexView):
     urls = {
         "cccf_list": "Listar CCCF",
+        "cccf_carga": "Cargar CCCF",
         # "carga_certificados": "Cargar CCCF",
     }
 
