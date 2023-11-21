@@ -181,14 +181,14 @@ def anular_certificado(certificado, observaciones=None):
     #                     . " AND idTaller = $idTaller";
 
     try:
+        logger.info("ANULANDO CERTIFICADO!")
+        # certificado.idestado = 3
+        # certificado.fechaanulacion = datetime.today()
 
-        certificado.idestado = 3
-        certificado.fechaanulacion = datetime.today()
+        # if observaciones:
+        #     certificado.observaciones = observaciones
 
-        if observaciones:
-            certificado.observaciones = observaciones
-
-        certificado.save()
+        # certificado.save()
         return True
 
     except Exception as e:

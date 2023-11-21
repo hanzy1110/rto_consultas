@@ -157,7 +157,7 @@ def empty_view(request):
         return HttpResponse("")
 
 
-# @method_decorator(csrf_exempt, name="dispatch")
+@method_decorator(csrf_exempt, name="dispatch")
 class ChangeModelView(View):
     model: Model
     id_param: str

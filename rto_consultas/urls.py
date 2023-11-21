@@ -18,7 +18,13 @@ from django.conf import settings
 from django.urls import path, include
 from django.views.static import serve
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from rto_consultas.cccf_views import CCCFView, ListCCCFView, CCCFRenderForm, VerCCCF
+from rto_consultas.cccf_views import (
+    AnularCCCF,
+    CCCFView,
+    ListCCCFView,
+    CCCFRenderForm,
+    VerCCCF,
+)
 
 import rto_consultas.views as views
 
@@ -146,6 +152,7 @@ urlpatterns += [
 urlpatterns += [
     path("cccf", CCCFView.as_view(), name="cccf"),
     path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
+    path("cccf_anular/", AnularCCCF.as_view(), name="cccf_anular"),
     path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
     path(
         "ver_cccf/<int:nrocertificado>/<str:dominio>",
