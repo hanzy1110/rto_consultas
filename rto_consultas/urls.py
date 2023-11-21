@@ -152,7 +152,11 @@ urlpatterns += [
 urlpatterns += [
     path("cccf", CCCFView.as_view(), name="cccf"),
     path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
-    path("cccf_anular/", AnularCCCF.as_view(), name="cccf_anular"),
+    path(
+        "cccf_anular/<int:nrocertificado>/<str:dominio>",
+        AnularCCCF.as_view(),
+        name="cccf_anular",
+    ),
     path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
     path(
         "ver_cccf/<int:nrocertificado>/<str:dominio>",
