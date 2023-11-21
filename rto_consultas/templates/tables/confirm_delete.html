@@ -1,3 +1,4 @@
+<div id="modalCloser" hx-get="empty/" hx-target="#modal" hx-swap="outerHTML" hx-trigger="closeModal"></div>
 <div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
 	<div class="modal-underlay" _="on click trigger closeModal"></div>
 	<div class="modal-content">
