@@ -427,5 +427,5 @@ class InformesForm(forms.Form):
                 ),
                 css_class="panel-body",
             ),
-            css_class="panel panel-default",
+            # css_class="panel panel-default",
         )
