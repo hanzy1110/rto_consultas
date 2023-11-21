@@ -257,4 +257,4 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
         form = CCCFForm(initial=initial)
         # form = InspectionOrderForm()
 
-    return render(request, "includes/carga_habilitaciones.html", {"form": form})
+    return render(request, "includes/carga_cccf.html", {"form": form})
