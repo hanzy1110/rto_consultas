@@ -157,7 +157,7 @@ def empty_view(request):
         return HttpResponse("")
 
 
-@method_decorator(csrf_exempt, name="dispatch")
+# @method_decorator(csrf_exempt, name="dispatch")
 class ChangeModelView(View):
     model: Model
     id_param: str
@@ -181,14 +181,14 @@ class ChangeModelView(View):
         res = self.operation(model_instance)
 
         if res:
-            messages.success(request, f"{self.delete_msg} {model_id} fue {self.msg_estado}")
+            messages.success(
+                request, f"{self.delete_msg} {model_id} fue {self.msg_estado}"
+            )
         else:
             messages.error(request, "Error al Anular certificado")
 
         response = {
-            "hx-get": reverse_lazy(
-                self.table_view
-            ),
+            "hx-get": reverse_lazy(self.table_view),
             "message": str(messages.get_messages(request)),
         }
         return JsonResponse(response)
