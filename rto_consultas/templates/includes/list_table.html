@@ -9,13 +9,11 @@
 <h1>{{ context_object_name }}</h1>
 <div id="form_div" class="card-body px-0 pt-0 pb-2">
     <div id="message-container">
-        {% for message in messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
     </div>
+
+    <div hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="reloadTable">
+    </div>
+
     <form hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="submit">
         <div class="container-fluid py-4">
 

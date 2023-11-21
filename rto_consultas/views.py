@@ -188,10 +188,16 @@ class ChangeModelView(View):
             messages.error(request, "Error al Anular certificado")
 
         response = {
-            "hx-get": reverse_lazy(self.table_view),
-            "message": str(messages.get_messages(request)),
+            "messages": str(messages.get_messages(request)),
         }
-        return JsonResponse(response)
+
+        res = HttpResponse(
+            render_to_string(
+                template_name="tables/table_messages.html", context=response
+            )
+        )
+        res.headers["HX-Trigger"] = "reloadTable"
+        return res
 
 
 @method_decorator(login_required, name="dispatch")
