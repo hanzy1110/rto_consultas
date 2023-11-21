@@ -6,17 +6,17 @@
 {% load django_htmx %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<html lang="{{ LANGUAGE_CODE|default:" en-us" }}">
 
 <head>
-  <!-- <script src="{% static 'js/htmx.min.js'  %}"></script> -->
-  <script src="https://unpkg.com/htmx.org@1.9.8"
-          integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
-          crossorigin="anonymous"></script>
+    <!-- <script src="{% static 'js/htmx.min.js'  %}"></script> -->
+    <script src="https://unpkg.com/htmx.org@1.9.8"
+        integrity="sha384-rgjA7mptc2ETQqXoYC3/zJvkU7K/aP44Y+z7xQuJiVnB/422P/Ak+F/AqFR7E4Wr"
+        crossorigin="anonymous"></script>
     {% django_htmx_script %}
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>
-      RTO Consultas - {% block title %}{% endblock %}
+        RTO Consultas - {% block title %}{% endblock %}
     </title>
 
     <!-- Favicon -->
@@ -37,59 +37,170 @@
     <link id="pagestyle_dark" href="{% static 'css/dark-theme-core.css' %}" rel="stylesheet" />
 
     <style>
-      .navbar-main .card {
-        width: auto;
-      }
-
-      @media (min-width: 768px) {
         .navbar-main .card {
-          margin-top:auto;
-          margin-bottom:auto;
-          text-align:center;
-          width: auto;
-          align-items:center;
-          display:flex;
+            width: auto;
         }
-      }
+
+        @media (min-width: 768px) {
+            .navbar-main .card {
+                margin-top: auto;
+                margin-bottom: auto;
+                text-align: center;
+                width: auto;
+                align-items: center;
+                display: flex;
+            }
+        }
+
+    </style>
+    <style>
+        #modal {
+            /* Underlay covers entire screen. */
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+
+            /* Flexbox centers the .modal-content vertically and horizontally */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            /* Animate when opening */
+            animation-name: fadeIn;
+            animation-duration: 150ms;
+            animation-timing-function: ease;
+        }
+
+        #modal>.modal-underlay {
+            /* underlay takes up the entire viewport. This is only
+	required if you want to click to dismiss the popup */
+            position: absolute;
+            z-index: -1;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }
+
+        #modal>.modal-content {
+            /* Position visible dialog near the top of the window */
+            margin-top: 10vh;
+
+            /* Sizing for visible dialog */
+            width: 80%;
+            max-width: 600px;
+
+            /* Display properties for visible dialog*/
+            border: solid 1px #999;
+            border-radius: 8px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+            background-color: white;
+            padding: 20px;
+
+            /* Animate when opening */
+            animation-name: zoomIn;
+            animation-duration: 150ms;
+            animation-timing-function: ease;
+        }
+
+        #modal.closing {
+            /* Animate when closing */
+            animation-name: fadeOut;
+            animation-duration: 150ms;
+            animation-timing-function: ease;
+        }
+
+        #modal.closing>.modal-content {
+            /* Animate when closing */
+            animation-name: zoomOut;
+            animation-duration: 150ms;
+            animation-timing-function: ease;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes zoomOut {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(0.9);
+            }
+        }
+
     </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
 
-  {% include "includes/sidebar.html" %}
+    {% include "includes/sidebar.html" %}
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-        {% include "includes/navigation.html" %} 
+        {% include "includes/navigation.html" %}
         {% block content %}{% endblock content %}
     </main>
 
     <!-- APP Configurator -->
-    {% include "includes/fixed-plugin.html" %} 
+    {% include "includes/fixed-plugin.html" %}
 
-<!--   Core JS Files   -->
-{% include 'includes/scripts.html' %}
+    <!--   Core JS Files   -->
+    {% include 'includes/scripts.html' %}
 
 
-{% block scripts %}{% endblock scripts %}
+    {% block scripts %}{% endblock scripts %}
 
-<script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-</script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
 
-<!-- Github buttons -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
-<script>
-    document.body.addEventListener("htmx:configRequest", (event) => {
-        event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
-    });
-</script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script>
+        document.body.addEventListener("htmx:configRequest", (event) => {
+            event.detail.headers["X-CSRFToken"] = "{{ csrf_token }}";
+        });
+    </script>
 </body>
+
 </html>

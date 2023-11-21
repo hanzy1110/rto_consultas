@@ -196,6 +196,10 @@ def anular_certificado(certificado, observaciones=None):
         return False
 
 
+def get_cccf_modal(request, *args, **kwargs):
+    return render(request, template_name="tables/confirm_delete.html", context={})
+
+
 class AnularCCCF(ChangeModelView):
     model = CccfCertificados
     msg_estado = "Fue anulado"
