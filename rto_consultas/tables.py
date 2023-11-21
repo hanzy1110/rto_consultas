@@ -1,9 +1,11 @@
+from django.shortcuts import render
 import django_tables2 as tables
 from django.core.paginator import Paginator
 from django.utils.html import format_html
 from django.templatetags.static import static
 from django.contrib.auth.models import User
 from django.urls import reverse
+
 
 from .models import (
     # VWVerificaciones,
@@ -978,14 +980,16 @@ class CCCFTable(tables.Table):
                 return parse_name_length([persona.nombre, persona.apellido], "P")
 
     def render_dar_de_baja(self, record):
-        image_url = static(f"img/small-logos/delete.png")
-        img_tag = format_html('<img src="{}" width="25px" />', image_url)
-        # a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML" hx-headers="{ \'X-CSRFToken\': \'{{ csrf_token }}\' }">{}</a>'
-        a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML">{}</a>'
-        url = reverse("cccf_anular", args=[record.nrocertificado, record.dominio])
-        link = format_html(a_tag, url, url, img_tag)
+        # image_url = static(f"img/small-logos/delete.png")
+        # img_tag = format_html('<img src="{}" width="25px" />', image_url)
+        # # a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML" hx-headers="{ \'X-CSRFToken\': \'{{ csrf_token }}\' }">{}</a>'
+        # a_tag = '<a href="{}" hx-post="{}" hx-target="#message-container" hx-swap="outerHTML">{}</a>'
+        # url = reverse("cccf_anular", args=[record.nrocertificado, record.dominio])
+        # link = format_html(a_tag, url, url, img_tag)
 
-        return link
+        return render(
+            template_name="tables/delete_table.html",
+        )
 
     def render_idestado(self, value):
         try:
