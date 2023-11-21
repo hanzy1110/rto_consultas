@@ -1,7 +1,9 @@
+{% load static %}
+
 <a hx-post="{% url delete_url nrocertificado=nrocertificado dominio=dominio %}"
    hx-target="#message-container"
    hx-swap="innerHTML"
    hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-style="display: block">
-    <img src="{'img/small-logos/delete.png'}" width="25px" />
+   style="display: block">
+    <img src="{% static 'img/small-logos/delete.png' %}" width="25px" />
 </a>
