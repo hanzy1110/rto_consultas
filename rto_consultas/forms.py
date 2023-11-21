@@ -371,3 +371,61 @@ class CCCFForm(forms.ModelForm):
                 css_class="card-body",
             ),
         )
+
+
+class InformesForm(forms.Form):
+    txtNroInforme = forms.CharField(
+        label="Nro Informe",
+        widget=forms.TextInput(
+            attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
+        ),
+        required=True,
+    )
+
+    txtCantHojas = forms.CharField(
+        label="Cant. Hojas/Discos",
+        widget=forms.TextInput(
+            attrs={"class": "form-control input-sm", "id": "txtCantHojas"}
+        ),
+        required=True,
+    )
+
+    hfAdjuntos = forms.CharField(
+        widget=forms.HiddenInput(attrs={"id": "hfAdjuntos"}),
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(InformesForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Field("txtNroInforme", wrapper_class="col-md-4"),
+                    css_class="form-group",
+                ),
+                Div(
+                    Field("txtCantHojas", wrapper_class="col-md-4"),
+                    css_class="form-group",
+                ),
+                Div(
+                    HTML(
+                        '<label class="col-md-3 control-label">&nbsp;</label>'
+                        '<div class="col-md-8">'
+                        '   <span class="btn btn-success fileinput-button">'
+                        '       <i class="glyphicon glyphicon-plus"></i>'
+                        '       <span id="upload">Adjuntar Archivos...</span>'
+                        "   </span><br/><br/>"
+                        '   <span id="status"></span>'
+                        '   <ul style="list-style: none;" id="files"></ul>'
+                        '   <span id="resultado"></span>'
+                        "   {% crispy form %}"  # Render hidden field
+                        "</div>"
+                    ),
+                    css_class="form-group",
+                ),
+                css_class="panel-body",
+            ),
+            css_class="panel panel-default",
+        )
