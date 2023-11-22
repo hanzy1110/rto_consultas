@@ -281,6 +281,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
 def add_cccf_exceso(request, *args, **kwargs):
     nrocertificado = kwargs.pop("nrocertificado", None)
+    nrocertificado = request.GET.pop("nrocertificado", None)
     logger.debug(f"CCCF NRO => {nrocertificado}")
 
     if nrocertificado:
