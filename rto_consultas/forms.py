@@ -404,6 +404,7 @@ class CCCFForm(forms.ModelForm):
                 Field("nrocertificado"),
                 Field("fechacalibracion"),
                 Field("fechavencimiento"),
+                wrapper_class="col-md-4",
                 css_class="card-body"
                 # template="forms/cccf_layout.html",
             ),
@@ -420,6 +421,7 @@ class CCCFForm(forms.ModelForm):
                 Field("nrointerno"),
                 Field("kilometraje"),
                 css_class="card-body",
+                wrapper_class="col-md-4",
             ),
             HTML("<h2>Datos del Tacografo</h2>"),
             Div(
@@ -434,6 +436,7 @@ class CCCFForm(forms.ModelForm):
                 "impresora",
                 "observaciones",
                 css_class="card-body",
+                wrapper_class="col-md-4",
             ),
         )
 
