@@ -13,21 +13,16 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="DlgFecha" class="control-label">Fecha:</label>
-                        <!-- de gonzalo una cagada o anda en ff o anda en chrome pero no en los dos
-                                <input type="date" name="DlgFecha" placeholder="Fecha" class="form-control fecha validate[required]"/>-->
                         <input
                             class="form-control fecha input-sm validate[required,custom[date],funcCall[valFechaExceso]], datepicker"
-                            id="DlgFecha" name="DlgFecha" type="text">
+                            id="DlgFecha" name="DlgFecha" type="datetime">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="DlgHora" class="control-label">Hora (00:00 a 23:59)</label>
-                        <!-- de gonzalo una cagada no anda
-                                  <input type="time" name="DlgHora"  placeholder="Hora" class="form-control hora validate[required]"/>-->
                         <input class="form-control hora input-sm validate[required,funcCall[valFechaExceso]]"
-                            id="DlgHora" name="DlgHora" type="text">
-
+                            id="DlgHora" name="DlgHora" type="time">
                     </div>
                 </div>
             </div>
@@ -51,8 +46,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML"
-                hx-trigger="click">Cancelar</button>
+            <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
+                class="btn btn-primary">Cancelar</button>
             <!-- TODO HTMX Request here... -->
             <button type="button" id="add_row" class="btn btn-primary">Agregar</button>
         </div>
