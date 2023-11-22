@@ -282,19 +282,15 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 def add_cccf_exceso(request, *args, **kwargs):
     nrocertificado = kwargs.pop("nrocertificado", None)
 
-    count_ = CccfCertificadoexcesos.objects.filter(
-        nrocertificado__iexact=nrocertificado
-    ).count()
-
-    numero = count_ if count_ > 0 else 1
-
-    context = {}
-
     if nrocertificado:
+        cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
+        count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
+
+        numero = count_ if count_ > 0 else 1
         data = {}
         data["fecha"] = request.POST.get("fecha", None)
-        data["numero"] = request.POST.get("numero", None)
-        data["nrocertificado"] = request.POST.get("nrocertificado", None)
+        data["numero"] = numero
+        data["idcertificado"] = cccf
         data["hora"] = request.POST.get("hora", None)
         data["velocidadsobrepaso"] = request.POST.get("velocidadsobrepaso", None)
         data["tiempovelocidadexceso"] = request.POST.get("tiempovelocidadexceso", None)
@@ -311,8 +307,8 @@ def add_cccf_exceso(request, *args, **kwargs):
         messages.error(request, "Cargue Nro. de Certificado")
 
     context = {
-            "messages": [m.message for m in messages.get_messages(request)][-1],
-        }
+        "messages": [m.message for m in messages.get_messages(request)][-1],
+    }
     res = HttpResponse(
         render_to_string(template_name="tables/table_messages.html", context=context)
     )
