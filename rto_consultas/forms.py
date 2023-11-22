@@ -292,9 +292,68 @@ class InspectionOrderForm(forms.Form):
         )
 
 
+ATTRS = {"class": "form-control input-sm"}
+
+
 class CCCFForm(forms.ModelForm):
+    # Primero
+    nrocertificado = forms.CharField(
+        label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    fechacalibracion = forms.CharField(
+        label="Fecha Calibracion", widget=forms.DateInput(attrs={"class": ATTRS})
+    )
+    fechavencimiento = forms.CharField(
+        label="Fecha Vencimiento", widget=forms.DateInput(attrs={"class": ATTRS})
+    )
+
+    # Segundo
     cuit = forms.CharField(label="CUIT")
-    razon_social = forms.CharField(label="Razon Social")
+    razonsocial = forms.CharField(label="Razon Social")
+    usuario = forms.CharField(label="", widget=forms.TextInput(attrs={"class": ATTRS}))
+
+    # Tercero
+    dominio = forms.CharField(
+        label="Dominio", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    nrointerno = forms.CharField(
+        label="Nro. Interno", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    kilometraje = forms.CharField(
+        label="Kilometraje", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+
+    # Cuarto
+    tacmarca = forms.CharField(
+        label="Marca Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    tactipo = forms.CharField(
+        label="Tipo Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    tacmodelo = forms.CharField(
+        label="Modelo Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    tacnroserie = forms.CharField(
+        label="Nro. Serie Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    relw = forms.CharField(
+        label="Relación W", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    constantek = forms.CharField(
+        label="Constante K", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    rodado = forms.CharField(
+        label="Rodado", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    precinto = forms.CharField(
+        label="Precinto", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    impresora = forms.CharField(
+        label="Impresora", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
+    observaciones = forms.CharField(
+        label="Observaciones", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
 
     class Meta:
         model = CccfCertificados
