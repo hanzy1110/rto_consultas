@@ -10,6 +10,7 @@ from django.urls import reverse
 
 from .models import (
     # VWVerificaciones,
+    CccfCertificadoexcesos,
     Habilitacion,
     Localidades,
     Usuarios,
@@ -1014,3 +1015,9 @@ class CCCFTable(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+
+class CCCFExcesosTable(tables.Table):
+    class Meta:
+        model = CccfCertificadoexcesos
+        fields = ("fecha", "hora", "velocidadsobrepaso", "tiempovelocidadexceso")

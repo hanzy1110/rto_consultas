@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
 
 {% block content %}
 <h2><a href="#">Carga CCCF</a></h2>
@@ -74,71 +75,25 @@
             </div>
         </div>
         <div class="row clearfix">
-            <div class="col-md-12 column">
-                <table class="table table-bordered table-hover excesos-table" id="tab_logic" style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th class="text-center">
-                                #
-                            </th>
-                            <th class="text-center">
-                                Fecha
-                            </th>
-                            <th class="text-center">
-                                Hora
-                            </th>
-                            <th class="text-center">
-                                Velocidad de Sobrepaso
-                            </th>
-                            <th class="text-center">
-                                Tiempo Velocidad Exceso (min)
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="rowempty">
-                            <td colspan="11">
-                                <label for="SinExcesos">
-                                    <input type="checkbox" id="SinExcesos" name="SinExcesos" value="1" />
-                                    Sin Excesos de Velocidad
-                                </label><br />
-                                <label>Para agregar excesos de velocidad haga click en Agregar Fila</label>
-                            </td>
-                        </tr>
-                        <tr id='addr0' style="display: none;">
-                            <td class="numero">
-                                <span>1</span>
-                                <input type="hidden" name="ExcNumero[]" />
-                            </td>
-                            <td class="fecha" style="white-space: nowrap;">
-                                <span></span>
-                                <input type="hidden" name="ExcFecha[]" placeholder="Fecha" class="form-control" />
-                            </td>
-                            <td class="hora">
-                                <span></span>
-                                <input type="hidden" name="ExcHora[]" placeholder="Hora" class="form-control" />
-                            </td>
-                            <td class="velocidadsobrepaso">
-                                <span></span>
-                                <input type="hidden" name="ExcVelocidadSobrepaso[]" placeholder="Velocidad Sobrepaso"
-                                    class="form-control" />
-                            </td>
-                            <td class="tiempovelocidadexceso">
-                                <span></span>
-                                <input type="hidden" name="ExcTiempoVelocidadExceso[]"
-                                    placeholder="Tiempo Velocidad Exceso (Min)" class="form-control" />
-                            </td>
-                        </tr>
-                        <tr id="addr1"></tr>
-                    </tbody>
-                </table>
+            <div class="col-md-12 column" id="table-excesos">
+            </div>
+
+            <div class="col-md-6 column" id="sin-excesos">
+                <label for="SinExcesos">
+                    <input type="checkbox" id="SinExcesos" name="SinExcesos" value="1" />
+                    Sin Excesos de Velocidad
+                </label><br />
+                <label>Para agregar excesos de velocidad haga click en Agregar Fila</label>
             </div>
         </div>
 
         <div class="row clearfix">
 
-            <button hx-get="{% url "cccf_modal_excesos" %}" hx-target="body" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-                hx-swap="beforeend" style="display: block" class="btn btn-primary">
+            <div hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div"
+                hx-trigger="reloadTableExcesos from:body">
+            </div>
+            <button hx-get="{% url " cccf_modal_excesos" %}" hx-target="body"
+                hx-headers="X-CSRFToken: '{{ csrf_token }}'" hx-swap="beforeend" class="btn btn-primary">
                 Agregar Fila
             </button>
 

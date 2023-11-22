@@ -4,6 +4,8 @@ from django.template.loader import render_to_string
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.contrib import messages
 
 from datetime import date, datetime, timedelta
 
@@ -13,6 +15,7 @@ from django.shortcuts import render, redirect
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django_tables2 import SingleTableView
 
 from .models import (
     CccfAdjuntoscertificados,
@@ -20,6 +23,7 @@ from .models import (
     CccfCertificados,
 )
 from .tables import (
+    CCCFExcesosTable,
     CCCFTable,
 )
 from .helpers import (
@@ -273,3 +277,60 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
         "includes/carga_cccf.html",
         {"form": form, "form_informes": form_informes},
     )
+
+
+def add_cccf_exceso(request, *args, **kwargs):
+    nrocertificado = kwargs.pop("nrocertificado", None)
+
+    count_ = CccfCertificadoexcesos.objects.filter(
+        nrocertificado__iexact=nrocertificado
+    ).count()
+
+    numero = count_ if count_ > 0 else 1
+
+    context = {}
+
+    if nrocertificado:
+        data = {}
+        data["fecha"] = request.POST.get("fecha", None)
+        data["numero"] = request.POST.get("numero", None)
+        data["nrocertificado"] = request.POST.get("nrocertificado", None)
+        data["hora"] = request.POST.get("hora", None)
+        data["velocidadsobrepaso"] = request.POST.get("velocidadsobrepaso", None)
+        data["tiempovelocidadexceso"] = request.POST.get("tiempovelocidadexceso", None)
+
+        try:
+            new_exceso = CccfCertificadoexcesos(**data)
+            new_exceso.save()
+            messages.success(request, f"Exceso de Velocidad Añadido")
+        except Exception as e:
+            logger.error(e)
+            messages.error(request, "Error al cargar exceso")
+
+    else:
+        messages.error(request, "Cargue Nro. de Certificado")
+
+    context = {
+            "messages": [m.message for m in messages.get_messages(request)][-1],
+        }
+    res = HttpResponse(
+        render_to_string(template_name="tables/table_messages.html", context=context)
+    )
+    res.headers["HX-Trigger"] = "reloadTableExcesos"
+
+    return res
+
+
+class ExcesosTable(SingleTableView):
+    model = CccfCertificadoexcesos
+    table_class = CCCFExcesosTable
+    template_name = "includes/table_view.html"
+
+    def get_queryset(self):
+        nrocertificado = self.kwargs.pop("nrocertificado", None)
+        queryset = super().get_queryset()
+
+        if nrocertificado:
+            query = Q(nrocertificado__iexact=nrocertificado)
+            return queryset.filter(query)
+        return self.model.objects.none()

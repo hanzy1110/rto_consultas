@@ -21,9 +21,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rto_consultas.cccf_views import (
     AnularCCCF,
     CCCFView,
+    ExcesosTable,
     ListCCCFView,
     CCCFRenderForm,
     VerCCCF,
+    add_cccf_exceso,
     carga_cccf,
     get_cccf_modal,
     get_cccf_modal_excesos,
@@ -165,6 +167,12 @@ urlpatterns += [
         name="cccf_anular",
     ),
     path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
+    path("cccf_add_exceso/", add_cccf_exceso, name="cccf_add_exceso"),
+    path(
+        "cccf_exceso_table/<int:nrocertificado>",
+        ExcesosTable.as_view(),
+        name="cccf_exceso_table",
+    ),
     path(
         "cccf_modal_excesos/",
         get_cccf_modal_excesos,

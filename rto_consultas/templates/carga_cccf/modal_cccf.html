@@ -4,59 +4,57 @@
     <div class="modal-content">
 
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
             <h4 class="modal-title" id="dialogAddExceso">Agregar Exceso de Velocidad</h4>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="DlgFecha" class="control-label">Fecha:</label>
-                        <input
-                            class="form-control fecha input-sm validate[required,custom[date],funcCall[valFechaExceso]], datepicker"
-                            id="DlgFecha" name="DlgFecha" type="datetime">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="DlgHora" class="control-label">Hora (00:00 a 23:59)</label>
-                        <input class="form-control hora input-sm validate[required,funcCall[valFechaExceso]]"
-                            id="DlgHora" name="DlgHora" type="time">
-                    </div>
-                </div>
+            <div id="msg-container">
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="DlgVelocidadSobrepaso" class="control-label">Velocidad de Sobrepaso:</label>
-                        <input type="number" step="0.1" name="DlgVelocidadSobrepaso"
-                            placeholder="Velocidad de Sobrepaso"
-                            class="form-control velocidadsobrepaso validate[required]">
+            <form hx-post="{% url "cccf_add_exceso" %}" hx-target="#msg-container"
+                type="submit" hx-vals="js:{nrocertificado:document.getElementById('id_nrocertificado').value}"
+                hx-swap="innerHTML" hx-trigger="submit">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="DlgFecha" class="control-label">Fecha:</label>
+                            <input
+                                class="form-control fecha input-sm validate[required,custom[date],funcCall[valFechaExceso]], datepicker"
+                                id="DlgFecha" name="DlgFecha" type="date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="DlgHora" class="control-label">Hora (00:00 a 23:59)</label>
+                            <input class="form-control hora input-sm validate[required,funcCall[valFechaExceso]]"
+                                id="DlgHora" name="DlgHora" type="time">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="DlgTiempoVelocidadExceso" class="control-label">Tiempo Vel. Exceso (min):</label>
-                        <input type="number" step="0.1" name="DlgTiempoVelocidadExceso"
-                            placeholder="Tiempo Velocidad Exceso"
-                            class="form-control tiempovelocidadexceso validate[required]">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="DlgVelocidadSobrepaso" class="control-label">Velocidad de Sobrepaso:</label>
+                            <input type="number" step="0.1" name="DlgVelocidadSobrepaso"
+                                placeholder="Velocidad de Sobrepaso"
+                                class="form-control velocidadsobrepaso validate[required]">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="DlgTiempoVelocidadExceso" class="control-label">Tiempo Vel. Exceso
+                                (min):</label>
+                            <input type="number" step="0.1" name="DlgTiempoVelocidadExceso"
+                                placeholder="Tiempo Velocidad Exceso"
+                                class="form-control tiempovelocidadexceso validate[required]">
+                        </div>
                     </div>
                 </div>
-            </div>
         </div>
         <div class="modal-footer">
             <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
                 class="btn btn-primary">Cancelar</button>
             <!-- TODO HTMX Request here... -->
-            <button type="button" id="add_row" class="btn btn-primary">Agregar</button>
+            <button type="submit" class="btn btn-primary btn-block">Agregar</button>
         </div>
     </div>
+    </form>
 </div>
-</div>
-
-<form id="formDialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        </div>
-</form>
