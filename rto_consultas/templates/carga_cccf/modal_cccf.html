@@ -7,11 +7,11 @@
 		<br>
 		<br>
 
-		<button hx-post="{% url "cccf_anular" nrocertificado=nrocertificado dominio=dominio %}"
-			hx-target="#message-container" hx-swap="innerHTML" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-			>
-			Confirmar
-		</button>
+		<!-- <button hx-post="{% url "cccf_anular" nrocertificado=nrocertificado dominio=dominio %}"
+			 hx-target="#message-container" hx-swap="innerHTML" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
+			 >
+			 Confirmar
+		     </button> -->
 		<button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML"
 			hx-trigger="click">Cerrar</button>
 	</div>

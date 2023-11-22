@@ -137,10 +137,10 @@
 
         <div class="row clearfix">
 
-            <a hx-get="{% url "cccf_modal_excesos" %}" hx-target="body" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-                hx-swap="beforeend" style="display: block">
+            <button hx-get="{% url "cccf_modal_excesos" %}" hx-target="body" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
+                hx-swap="beforeend" style="display: block" class="btn btn-primary">
                 Agregar Fila
-            </a>
+            </button>
 
         </div>
 
