@@ -329,7 +329,7 @@ class CCCFForm(forms.ModelForm):
         super(CCCFForm, self).__init__(*args, **kwargs)
 
         for f in self.files.keys():
-            self.files[f].widget.attrs.update(attrs={"class": "form-control input-sm"})
+            self.files[f].widget.attrs.update({"class": "form-control input-sm"})
 
         self.helper = FormHelper()
         # self.helper.form_id = "formCargaCert"
