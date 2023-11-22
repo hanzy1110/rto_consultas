@@ -865,3 +865,8 @@ def handle_initial_cccf(nrocertificado, dominio):
     context["modelo"] = cccf.modelovehiculo
 
     return context
+
+
+def handle_upload_file(files):
+    # TODO Upload to S3
+    pass

@@ -29,6 +29,7 @@ from .helpers import (
     AuxData,
     handle_initial_cccf,
     handle_save_cccf,
+    handle_upload_file,
 )
 
 from .forms import (
@@ -210,6 +211,14 @@ def get_cccf_modal(request, *args, **kwargs):
     return render(request, template_name="tables/confirm_delete.html", context=context)
 
 
+def get_cccf_modal_excesos(request, *args, **kwargs):
+    context = {}
+    context["nrocertificado"] = kwargs.get("nrocertificado", None)
+    context["dominio"] = kwargs.get("dominio", None)
+
+    return render(request, template_name="tables/confirm_delete.html", context=context)
+
+
 class AnularCCCF(ChangeModelView):
     model = CccfCertificados
     msg_estado = "Fue anulado"
@@ -226,7 +235,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         if form.is_valid():
             try:
-                handle_uploaded_file(request.FILES["cccf_files"])
+                handle_upload_file(request.FILES["cccf_files"])
                 cccf = handle_save_cccf(
                     form.cleaned_data, form_informes.cleaned_data, request.user
                 )

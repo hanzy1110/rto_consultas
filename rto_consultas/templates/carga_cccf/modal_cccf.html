@@ -1,0 +1,18 @@
+<div></div>
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+	<div class="modal-underlay" _="on click trigger closeModal"></div>
+	<div class="modal-content">
+		<h1>Anular Certificado</h1>
+		¿Está seguro que desea anular el certificado?
+		<br>
+		<br>
+
+		<button hx-post="{% url "cccf_anular" nrocertificado=nrocertificado dominio=dominio %}"
+			hx-target="#message-container" hx-swap="innerHTML" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
+			>
+			Confirmar
+		</button>
+		<button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML"
+			hx-trigger="click">Cerrar</button>
+	</div>
+</div>
