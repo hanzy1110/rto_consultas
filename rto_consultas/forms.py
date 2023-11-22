@@ -439,7 +439,8 @@ class CCCFForm(forms.ModelForm):
                     css_class="card-body",
                     wrapper_class="col-md-4",
                 ),
-                wrapper_class="col-md-4",
+                css_class="panel-body",
+                # wrapper_class="col-md-4",
             )
         )
 
