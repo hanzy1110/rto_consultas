@@ -216,7 +216,7 @@ def get_cccf_modal_excesos(request, *args, **kwargs):
     context["nrocertificado"] = kwargs.get("nrocertificado", None)
     context["dominio"] = kwargs.get("dominio", None)
 
-    return render(request, template_name="tables/confirm_delete.html", context=context)
+    return render(request, template_name="carga_cccf/modal_cccf.html", context=context)
 
 
 class AnularCCCF(ChangeModelView):
