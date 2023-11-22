@@ -9,7 +9,7 @@
         <div class="modal-body">
             <div id="msg-container">
             </div>
-            <form hx-post="{% url " cccf_add_exceso" %}" hx-target="#msg-container" type="submit"
+            <form hx-post="{% url "cccf_add_exceso" %}" hx-target="#msg-container" type="submit"
                 hx-vals="js:{nrocertificado:document.getElementById('id_nrocertificado').value}" hx-swap="innerHTML"
                 hx-trigger="submit">
                 <div class="row">
