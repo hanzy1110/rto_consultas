@@ -292,7 +292,7 @@ class InspectionOrderForm(forms.Form):
         )
 
 
-ATTRS = {"class": "form-control input-sm"}
+ATTRS = "form-control input-sm"
 
 
 class CCCFForm(forms.ModelForm):
