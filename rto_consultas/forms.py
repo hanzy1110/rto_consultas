@@ -365,7 +365,7 @@ class CCCFForm(forms.ModelForm):
             "fechavencimiento",
             # Segundo
             "cuit",
-            "razon_social",
+            "razonsocial",
             "usuario",
             # Tercero
             "dominio",
