@@ -169,7 +169,7 @@ urlpatterns += [
     path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
     path("cccf_add_exceso/", add_cccf_exceso, name="cccf_add_exceso"),
     path(
-        "cccf_exceso_table/<int:nrocertificado>",
+        "cccf_exceso_table/",
         ExcesosTable.as_view(),
         name="cccf_exceso_table",
     ),
