@@ -9,9 +9,9 @@
         <div class="modal-body">
             <div id="msg-container">
             </div>
-            <form hx-post="{% url "cccf_add_exceso" %}" hx-target="#msg-container"
-                type="submit" hx-vals="js:{nrocertificado:document.getElementById('id_nrocertificado').value}"
-                hx-swap="innerHTML" hx-trigger="submit">
+            <form hx-post="{% url " cccf_add_exceso" %}" hx-target="#msg-container" type="submit"
+                hx-vals="js:{nrocertificado:document.getElementById('id_nrocertificado').value}" hx-swap="innerHTML"
+                hx-trigger="submit">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -48,13 +48,13 @@
                         </div>
                     </div>
                 </div>
-        </div>
-        <div class="modal-footer">
-            <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
-                class="btn btn-primary">Cancelar</button>
-            <!-- TODO HTMX Request here... -->
-            <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                <div class="modal-footer">
+                    <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
+                        class="btn btn-primary">Cancelar</button>
+                    <!-- TODO HTMX Request here... -->
+                    <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                </div>
+            </form>
         </div>
     </div>
-    </form>
 </div>
