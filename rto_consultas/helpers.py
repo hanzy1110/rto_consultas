@@ -751,7 +751,7 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user):
     new_data["modelovehiculo"] = cleaned_data["modelo"]
     new_data["nrocertificadocccf"] = cleaned_data["cccf"]
     new_data["razonsocialtitular"] = cleaned_data["titular"]
-    new_data["usuariodictamen"] = username
+    new_data["usuario"] = username
 
     today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_data["fechahoradictamen"] = today
@@ -770,7 +770,7 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user):
 
     new_data["nrocertificadocccf"] = cccf
 
-    last_hab_id = Habilitacion.objects.latest("idhabilitacion").idhabilitacion
+    last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
 
     servicios = cleaned_data["servicios"]
 
@@ -783,8 +783,8 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user):
 
     cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
     _, barcode = build_barcode(
-        last_hab_id + 1,
-        str(new_data["fechahoradictamen"])[0:10],
+        last_cccf_id + 1,
+        str(new_data["fechacalibracion"])[0:10],
         new_data["dominio"],
         cadena_id_servicio,
         False,

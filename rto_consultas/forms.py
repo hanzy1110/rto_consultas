@@ -327,6 +327,10 @@ class CCCFForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
+
+        for f in self.files.keys():
+            self.files[f].widget.attrs.update(attrs={"class": "form-control input-sm"})
+
         self.helper = FormHelper()
         # self.helper.form_id = "formCargaCert"
         # self.helper.form_method = "post"
@@ -395,6 +399,8 @@ class InformesForm(forms.Form):
         required=False,
     )
 
+    cccf_files = forms.FileField(label="Carga Archivos")
+
     def __init__(self, *args, **kwargs):
         super(InformesForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -410,18 +416,7 @@ class InformesForm(forms.Form):
                     css_class="form-group",
                 ),
                 Div(
-                    HTML(
-                        '<label class="col-md-3 control-label">&nbsp;</label>'
-                        '<div class="col-md-8">'
-                        '   <span class="btn btn-success fileinput-button">'
-                        '       <i class="glyphicon glyphicon-plus"></i>'
-                        '       <span id="upload">Adjuntar Archivos...</span>'
-                        "   </span><br/><br/>"
-                        '   <span id="status"></span>'
-                        '   <ul style="list-style: none;" id="files"></ul>'
-                        '   <span id="resultado"></span>'
-                        "</div>"
-                    ),
+                    Field("cccf_files"),
                     css_class="form-group",
                 ),
                 css_class="panel-body",

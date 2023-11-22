@@ -226,6 +226,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         if form.is_valid():
             try:
+                handle_uploaded_file(request.FILES["cccf_files"])
                 cccf = handle_save_cccf(
                     form.cleaned_data, form_informes.cleaned_data, request.user
                 )
