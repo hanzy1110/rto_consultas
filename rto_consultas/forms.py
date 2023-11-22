@@ -400,44 +400,47 @@ class CCCFForm(forms.ModelForm):
 
         self.helper.layout = Layout(
             Div(
-                HTML("<h2>Datos del Certificado</h2>"),
-                Field("nrocertificado"),
-                Field("fechacalibracion"),
-                Field("fechavencimiento"),
+                Div(
+                    HTML("<h2>Datos del Certificado</h2>"),
+                    Field("nrocertificado"),
+                    Field("fechacalibracion"),
+                    Field("fechavencimiento"),
+                    wrapper_class="col-md-4",
+                    css_class="card-body"
+                    # template="forms/cccf_layout.html",
+                ),
+                Div(
+                    HTML("<h2>Datos del Propietario</h2>"),
+                    Field("cuit"),
+                    Field("razonsocial"),
+                    Field("usuario"),
+                    css_class="card-body",
+                ),
+                Div(
+                    HTML("<h2>Datos del Vehiculo</h2>"),
+                    Field("dominio"),
+                    Field("nrointerno"),
+                    Field("kilometraje"),
+                    css_class="card-body",
+                    wrapper_class="col-md-4",
+                ),
+                HTML("<h2>Datos del Tacografo</h2>"),
+                Div(
+                    "tacmarca",
+                    "tactipo",
+                    "tacmodelo",
+                    "tacnroserie",
+                    "relw",
+                    "constantek",
+                    "rodado",
+                    "precinto",
+                    "impresora",
+                    "observaciones",
+                    css_class="card-body",
+                    wrapper_class="col-md-4",
+                ),
                 wrapper_class="col-md-4",
-                css_class="card-body"
-                # template="forms/cccf_layout.html",
-            ),
-            Div(
-                HTML("<h2>Datos del Propietario</h2>"),
-                Field("cuit"),
-                Field("razonsocial"),
-                Field("usuario"),
-                css_class="card-body",
-            ),
-            Div(
-                HTML("<h2>Datos del Vehiculo</h2>"),
-                Field("dominio"),
-                Field("nrointerno"),
-                Field("kilometraje"),
-                css_class="card-body",
-                wrapper_class="col-md-4",
-            ),
-            HTML("<h2>Datos del Tacografo</h2>"),
-            Div(
-                "tacmarca",
-                "tactipo",
-                "tacmodelo",
-                "tacnroserie",
-                "relw",
-                "constantek",
-                "rodado",
-                "precinto",
-                "impresora",
-                "observaciones",
-                css_class="card-body",
-                wrapper_class="col-md-4",
-            ),
+            )
         )
 
 
