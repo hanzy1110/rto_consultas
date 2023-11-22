@@ -14,11 +14,139 @@
         {% crispy form %}
     </div>
 
-    <div class="card-body p-1">
-        <h2>Informes</h2>
-        {% crispy form_informes %}
-        <input type="submit" value="Cargar Certificado">
-    </div>
+    <div class="panel panel-default excesos" style="font-size: smaller">
+        <!-- Empieza codigo a modificar exceso velocidad-->
+        <div class="panel-heading">Información</div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <table class="table table-bordered information-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                Cant. Desc.
+                            </th>
+                            <th class="text-center">
+                                Horas Desc.
+                            </th>
+                            <th class="text-center">
+                                Apertura Equipo
+                            </th>
+                            <th class="text-center">
+                                Retiro Elemento Grabación
+                            </th>
+                            <th class="text-center">
+                                Falla Dispositivo
+                            </th>
+                            <th class="text-center">
+                                Falta Inf.
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="desconexioncantidad">
+                                <span></span>
+                                <input type="number" name="DesconexionCantidad" />
+                            </td>
+                            <td class="desconexionhora">
+                                <span></span>
+                                <input type="number" step="any" name="DesconexionHora" />
+                            </td>
+                            <td class="aperturaequipo">
+                                <span></span>
+                                <input type="checkbox" name="AperturaEquipo" value="1"></input>
+                            </td>
+                            <td class="retiroelementograbacion">
+                                <span></span>
+                                <input type="checkbox" name="RetiroElementoGrabacion" value="1"></input>
+                            </td>
+                            <td class="fallasdispositivo">
+                                <span></span>
+                                <input type="checkbox" name="FallasDispositivo" value="1"></input>
+                            </td>
+                            <td class="faltainformacion">
+                                <span></span>
+                                <input type="checkbox" name="FaltaInformacion" value="1"></input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <table class="table table-bordered table-hover excesos-table" id="tab_logic" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                #
+                            </th>
+                            <th class="text-center">
+                                Fecha
+                            </th>
+                            <th class="text-center">
+                                Hora
+                            </th>
+                            <th class="text-center">
+                                Velocidad de Sobrepaso
+                            </th>
+                            <th class="text-center">
+                                Tiempo Velocidad Exceso (min)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="rowempty">
+                            <td colspan="11">
+                                <label for="SinExcesos">
+                                    <input type="checkbox" id="SinExcesos" name="SinExcesos" value="1" />
+                                    Sin Excesos de Velocidad
+                                </label><br />
+                                <label>Para agregar excesos de velocidad haga click en Agregar Fila</label>
+                            </td>
+                        </tr>
+                        <tr id='addr0' style="display: none;">
+                            <td class="numero">
+                                <span>1</span>
+                                <input type="hidden" name="ExcNumero[]" />
+                            </td>
+                            <td class="fecha" style="white-space: nowrap;">
+                                <span></span>
+                                <input type="hidden" name="ExcFecha[]" placeholder="Fecha" class="form-control" />
+                            </td>
+                            <td class="hora">
+                                <span></span>
+                                <input type="hidden" name="ExcHora[]" placeholder="Hora" class="form-control" />
+                            </td>
+                            <td class="velocidadsobrepaso">
+                                <span></span>
+                                <input type="hidden" name="ExcVelocidadSobrepaso[]" placeholder="Velocidad Sobrepaso"
+                                    class="form-control" />
+                            </td>
+                            <td class="tiempovelocidadexceso">
+                                <span></span>
+                                <input type="hidden" name="ExcTiempoVelocidadExceso[]"
+                                    placeholder="Tiempo Velocidad Exceso (Min)" class="form-control" />
+                            </td>
+                        </tr>
+                        <tr id="addr1"></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row clearfix">
+            <a id="AddExcesos" class="btn btn-default pull-left" data-toggle="modal"
+                data-target="#dialogAddExceso">Agregar Fila</a>
+        </div>
+
+        <div class="card-body p-1">
+            <h2>Informes</h2>
+            {% crispy form_informes %}
+        </div>
+        <div class="row clearfix">
+            <input type="submit" value="Cargar Certificado">
+        </div>
 </form>
 
 </div>
