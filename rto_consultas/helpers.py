@@ -870,3 +870,7 @@ def handle_initial_cccf(nrocertificado, dominio):
 def handle_upload_file(files):
     # TODO Upload to S3
     pass
+
+
+def allow_keys(data: dict, keys: list[str]):
+    return {k: data[k] for k in keys}

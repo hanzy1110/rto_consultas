@@ -1018,6 +1018,10 @@ class CCCFTable(tables.Table):
 
 
 class CCCFExcesosTable(tables.Table):
-    class Meta:
-        model = CccfCertificadoexcesos
-        fields = ("fecha", "hora", "velocidadsobrepaso", "tiempovelocidadexceso")
+    fecha = tables.Column(verbose_name="Fecha")
+    hora = tables.Column(verbose_name="Hora")
+    velocidadsobrepaso = tables.Column(verbose_name="Velocidad de Sobrepaso")
+    tiempovelocidadexceso = tables.Column(verbose_name="Tiempo de Velocidad en Exceso")
+
+    # class Meta:
+    # fields = ("fecha", "hora", "velocidadsobrepaso", "tiempovelocidadexceso")

@@ -27,6 +27,7 @@ from rto_consultas.cccf_views import (
     VerCCCF,
     add_cccf_exceso,
     carga_cccf,
+    consulta_excesos,
     get_cccf_modal,
     get_cccf_modal_excesos,
 )
@@ -170,7 +171,7 @@ urlpatterns += [
     path("cccf_add_exceso/", add_cccf_exceso, name="cccf_add_exceso"),
     path(
         "cccf_exceso_table/",
-        ExcesosTable.as_view(),
+        consulta_excesos,
         name="cccf_exceso_table",
     ),
     path(
