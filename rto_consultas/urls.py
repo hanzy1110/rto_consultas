@@ -21,7 +21,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rto_consultas.cccf_views import (
     AnularCCCF,
     CCCFView,
-    ExcesosTable,
     ListCCCFView,
     CCCFRenderForm,
     VerCCCF,
