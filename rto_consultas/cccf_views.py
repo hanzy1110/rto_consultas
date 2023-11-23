@@ -328,11 +328,12 @@ def add_cccf_exceso(request, *args, **kwargs):
 
 def consulta_excesos(request, *args, **kwargs):
     if request.htmx:
-        nrocertificado = int(kwargs.pop("nrocertificado", None))
-        nrocertificado = int(request.GET.get("nrocertificado", None))
+        nrocertificado = kwargs.pop("nrocertificado", None)
+        nrocertificado = request.GET.get("nrocertificado", None)
         logger.debug(f"CCCF NRO : {type(nrocertificado)} => { nrocertificado }")
 
         if nrocertificado:
+            nrocertificado = int(nrocertificado)
             # cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
             # count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
             cache_key = f"EXCESOS - {nrocertificado}"
@@ -342,12 +343,12 @@ def consulta_excesos(request, *args, **kwargs):
                     map(
                         lambda x: allow_keys(
                             x,
-                            (
+                            [
                                 "fecha",
                                 "hora",
                                 "velocidadsobrepaso",
                                 "tiempovelocidadexceso",
-                            ),
+                            ],
                         ),
                         prev_data,
                     )
