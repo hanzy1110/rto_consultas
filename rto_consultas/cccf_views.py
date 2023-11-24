@@ -338,8 +338,9 @@ def consulta_excesos(request, *args, **kwargs):
             nrocertificado = int(nrocertificado)
             # cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
             # count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
-            cache_key = f"EXCESOS - {nrocertificado}"
-            prev_data = cache.get(cache_key, [])
+        cache_key = f"EXCESOS - {nrocertificado}"
+        prev_data = cache.get(cache_key, [])
+        if prev_data:
             table = CCCFExcesosTable(
                 list(
                     map(
@@ -356,6 +357,7 @@ def consulta_excesos(request, *args, **kwargs):
                     )
                 )
             )
-            return render(request, "includes/table_view.html", {"table": table})
-
-        return HttpResponse(content="")
+        else:
+            logger.warn("CACHE MISS ON CCCF")
+            table = CCCFExcesosTable([])
+        return render(request, "includes/table_view.html", {"table": table})
