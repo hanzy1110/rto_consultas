@@ -304,6 +304,8 @@ def add_cccf_exceso(request, *args, **kwargs):
 
         prev_data.append(data)
         cache.set(cache_key, prev_data)
+        logger.debug(f"DATA =====> {data}")
+        logger.debug(f"PREV_DATA =====> {prev_data}")
         messages.success(request, f"Exceso de Velocidad Añadido")
 
         # try:
