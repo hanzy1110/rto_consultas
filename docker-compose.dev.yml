@@ -14,7 +14,8 @@ services:
 
   rto_memcached:
     container_name: rto_memcached
-    depends_on: rto_consultas_dev
+    depends_on:
+      - rto_consultas_dev
     image: memcached:latest
     ports:
       - 11211:11211
