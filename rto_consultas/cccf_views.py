@@ -291,7 +291,7 @@ def add_cccf_exceso(request, *args, **kwargs):
         nrocertificado = int(nrocertificado)
         # cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
         # count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
-        cache_key = f"EXCESOS - {nrocertificado}"
+        cache_key = f"excesos_{nrocertificado if nrocertificado else 0}"
         prev_data = cache.get(cache_key, [])
 
         data = {}
@@ -338,7 +338,7 @@ def consulta_excesos(request, *args, **kwargs):
             nrocertificado = int(nrocertificado)
             # cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
             # count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
-        cache_key = f"EXCESOS - {nrocertificado}"
+        cache_key = f"excesos_{nrocertificado if nrocertificado else 0}"
         prev_data = cache.get(cache_key, [])
         logger.info(f"PREV DATA = {prev_data}")
         if prev_data:
