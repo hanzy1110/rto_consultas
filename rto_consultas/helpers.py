@@ -782,12 +782,11 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
 
     new_data["desconexioncantidad"] = cleaned_data["desconexioncantidad"]
     new_data["desconexionhora"] = cleaned_data["desconexionhora"]
-    new_data["aperturaequipo"] = cleaned_data["aperturaequipo"]
-    new_data["faltainformacion"] = cleaned_data["faltainformacion"]
-    new_data["fallasdispositivo"] = cleaned_data["fallasdispositivo"]
-    new_data["retiroelementograbacion"] = cleaned_data["retiroelementograbacion"]
+    new_data["aperturaequipo"] = int(cleaned_data["aperturaequipo"])
+    new_data["faltainformacion"] = int(cleaned_data["faltainformacion"])
+    new_data["fallasdispositivo"] = int(cleaned_data["fallasdispositivo"])
+    new_data["retiroelementograbacion"] = int(cleaned_data["retiroelementograbacion"])
 
-    # TODO Buscar como se hace el cB
     today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
     new_data["cb"] = final_barcode

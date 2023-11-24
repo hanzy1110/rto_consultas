@@ -310,110 +310,54 @@ class CCCFForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
 
-    # # Segundo
-    # cuit = forms.CharField(label="CUIT")
-    # razonsocial = forms.CharField(label="Razon Social")
-    # usuario = forms.CharField(
-    #     label="Usuario", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
+    desconexioncantidad = forms.IntegerField(
+        required=False
+    )  # Example field for 'Cant. Desc.'
+    desconexionhora = forms.FloatField(
+        required=False
+    )  # Example field for 'Horas Desc.'
+    aperturaequipo = forms.BooleanField(
+        required=False
+    )  # Example field for 'Apertura Equipo'
+    retiroelementograbacion = forms.BooleanField(
+        required=False
+    )  # Example field for 'Retiro Elemento Grabación'
+    fallasdispositivo = forms.BooleanField(
+        required=False
+    )  # Example field for 'Falla Dispositivo'
+    faltainformacion = forms.BooleanField(
+        required=False
+    )  # Example field for 'Falta Inf.'
 
-    # # Tercero
-    # dominio = forms.CharField(
-    #     label="Dominio", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # nrointerno = forms.CharField(
-    #     label="Nro. Interno", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # kilometraje = forms.CharField(
-    #     label="Kilometraje", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
+    txtNroInforme = forms.CharField(
+        label="Nro Informe",
+        widget=forms.TextInput(
+            attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
+        ),
+        required=True,
+    )
 
-    # # Cuarto
-    # tacmarca = forms.CharField(
-    #     label="Marca Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # tactipo = forms.CharField(
-    #     label="Tipo Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # tacmodelo = forms.CharField(
-    #     label="Modelo Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # tacnroserie = forms.CharField(
-    #     label="Nro. Serie Tacógrafo", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # relw = forms.CharField(
-    #     label="Relación W", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # constantek = forms.CharField(
-    #     label="Constante K", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # rodado = forms.CharField(
-    #     label="Rodado", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # precinto = forms.CharField(
-    #     label="Precinto", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # impresora = forms.CharField(
-    #     label="Impresora", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # observaciones = forms.CharField(
-    #     label="Observaciones", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-    # desconexioncantidad = forms.IntegerField(
-    #     required=False
-    # )  # Example field for 'Cant. Desc.'
-    # desconexionhora = forms.FloatField(
-    #     required=False
-    # )  # Example field for 'Horas Desc.'
-    # aperturaequipo = forms.BooleanField(
-    #     required=False
-    # )  # Example field for 'Apertura Equipo'
-    # retiroelementograbacion = forms.BooleanField(
-    #     required=False
-    # )  # Example field for 'Retiro Elemento Grabación'
-    # fallasdispositivo = forms.BooleanField(
-    #     required=False
-    # )  # Example field for 'Falla Dispositivo'
-    # faltainformacion = forms.BooleanField(
-    #     required=False
-    # )  # Example field for 'Falta Inf.'
+    txtCantHojas = forms.CharField(
+        label="Cant. Hojas/Discos",
+        widget=forms.TextInput(
+            attrs={"class": "form-control input-sm", "id": "txtCantHojas"}
+        ),
+        required=True,
+    )
+
+    hfAdjuntos = forms.CharField(
+        widget=forms.HiddenInput(attrs={"id": "hfAdjuntos"}),
+        required=False,
+    )
+
+    cccf_files = forms.FileField(
+        label="Carga Archivos",
+    )
 
     class Meta:
         model = CccfCertificados
         # fields = "__all__"
         exclude = ("cb",)
-
-        # fields = (
-        #     # Primero
-        #     "nrocertificado",
-        #     "fechacalibracion",
-        #     "fechavencimiento",
-        #     # Segundo
-        #     "cuit",
-        #     "razonsocial",
-        #     "usuario",
-        #     # Tercero
-        #     "dominio",
-        #     "nrointerno",
-        #     "kilometraje",
-        #     # Cuarto
-        #     "tacmarca",
-        #     "tactipo",
-        #     "tacmodelo",
-        #     "tacnroserie",
-        #     "relw",
-        #     "constantek",
-        #     "rodado",
-        #     "precinto",
-        #     "impresora",
-        #     "observaciones",
-        #     "desconexioncantidad",
-        #     "desconexionhora",
-        #     "aperturaequipo",
-        #     "retiroelementograbacion",
-        #     "fallasdispositivo",
-        #     "faltainformacion",
-        # )
 
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
@@ -478,9 +422,25 @@ class CCCFForm(forms.ModelForm):
                     "retiroelementograbacion",
                     "fallasdispositivo",
                     "faltainformacion",
-                    css_class="form-group",
-                    wrapper_class="col",
+                    css_class="form-group row",
+                    wrapper_class="row",
                 ),
+                Div(
+                    Div(
+                        Field("nroinforme", wrapper_class="col-md-4"),
+                        css_class="form-group",
+                    ),
+                    Div(
+                        Field("canthojas", wrapper_class="col-md-4"),
+                        css_class="form-group",
+                    ),
+                    Div(
+                        Field("cccf_files"),
+                        css_class="form-group",
+                    ),
+                    css_class="panel-body",
+                ),
+                # css_class="panel panel-default",
                 css_class="panel-body",
                 # wrapper_class="col-md-4",
             )
