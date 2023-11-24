@@ -393,10 +393,10 @@ class CCCFForm(forms.ModelForm):
         #     self.files[f].widget.attrs.update({"class": "form-control input-sm"})
 
         self.helper = FormHelper()
-        # self.helper.form_id = "formCargaCert"
-        # self.helper.form_method = "post"
-        # self.helper.form_class = "form-horizontal"
-        # self.helper.form_enctype = "multipart/form-data"
+        self.helper.form_id = "formCargaCert"
+        self.helper.form_method = "post"
+        self.helper.form_class = "form-horizontal"
+        self.helper.form_enctype = "multipart/form-data"
 
         self.helper.layout = Layout(
             Div(
