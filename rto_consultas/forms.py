@@ -300,11 +300,14 @@ class CCCFForm(forms.ModelForm):
     nrocertificado = forms.CharField(
         label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
     )
+
     fechacalibracion = forms.DateField(
-        label="Fecha Calibracion", widget=forms.DateInput(attrs={"class": ATTRS})
+        label="Fecha Calibracion",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     fechavencimiento = forms.DateField(
-        label="Fecha Vencimiento", widget=forms.DateInput(attrs={"class": ATTRS})
+        label="Fecha Vencimiento",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
 
     # Segundo
