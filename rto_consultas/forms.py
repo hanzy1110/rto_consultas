@@ -300,10 +300,10 @@ class CCCFForm(forms.ModelForm):
     nrocertificado = forms.CharField(
         label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
     )
-    fechacalibracion = forms.CharField(
+    fechacalibracion = forms.DateField(
         label="Fecha Calibracion", widget=forms.DateInput(attrs={"class": ATTRS})
     )
-    fechavencimiento = forms.CharField(
+    fechavencimiento = forms.DateField(
         label="Fecha Vencimiento", widget=forms.DateInput(attrs={"class": ATTRS})
     )
 
@@ -389,8 +389,8 @@ class CCCFForm(forms.ModelForm):
 
         logger.debug(f"FORM FIELDS => {self.fields}")
 
-        for f in self.files.keys():
-            self.files[f].widget.attrs.update({"class": "form-control input-sm"})
+        # for f in self.files.keys():
+        #     self.files[f].widget.attrs.update({"class": "form-control input-sm"})
 
         self.helper = FormHelper()
         # self.helper.form_id = "formCargaCert"
@@ -422,7 +422,7 @@ class CCCFForm(forms.ModelForm):
                     Field("nrointerno"),
                     Field("kilometraje"),
                     css_class="card-body",
-                    wrapper_class="col-md-4",
+                    wrapper_class="col",
                 ),
                 HTML("<h2>Datos del Tacografo</h2>"),
                 Div(
@@ -437,7 +437,7 @@ class CCCFForm(forms.ModelForm):
                     "impresora",
                     "observaciones",
                     css_class="card-body",
-                    wrapper_class="col-md-4",
+                    wrapper_class="col",
                 ),
                 css_class="panel-body",
                 # wrapper_class="col-md-4",
