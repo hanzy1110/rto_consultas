@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 import hashlib
 import os
 import re
+import tempfile
 from itertools import chain
 from time import perf_counter
 from typing import Dict, Iterable, List, Tuple, Set, Union
@@ -18,6 +19,8 @@ from barcode import EAN13
 from barcode.writer import SVGWriter
 
 from rto_consultas.models import (
+    CccfAdjuntoscertificados,
+    CccfCertificadoexcesos,
     CccfCertificados,
     Certificados,
     Certificadosasignadosportaller,
@@ -30,7 +33,7 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
-from .presigned_url import generate_presigned_url
+from .presigned_url import generate_presigned_url, get_s3_client, upload_file_to_bucket
 from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
@@ -741,94 +744,81 @@ def check_vigencia(verificacion):
     return "background-color: #FFFFFF"
 
 
-def handle_save_cccf(cleaned_data, cleaned_informes_data, user):
+def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
 
     new_data = {}
-    username = user.username
 
-    new_data["dominio"] = cleaned_data["dominio"]
-    new_data["modelovehiculo"] = cleaned_data["modelo"]
-    new_data["nrocertificadocccf"] = cleaned_data["cccf"]
-    new_data["razonsocialtitular"] = cleaned_data["titular"]
+    nrocertificado = cleaned_data["nrocertificado"]
+
+    new_data["nrocertificado"] = nrocertificado
+    new_data["fechacalibracion"] = cleaned_data["fechacalibracion"]
+    new_data["fechavencimiento"] = cleaned_data["fechavencimiento"]
+
+    new_data["razonsocial"] = cleaned_data["razonsocial"]
+    new_data["cuit"] = cleaned_data["cuit"]
+    username = user.username
     new_data["usuario"] = username
 
+    dominio = cleaned_data["dominio"]
+    new_data["dominio"] = dominio
+    new_data["nrointerno"] = cleaned_data["nrointerno"]
+    new_data["kilometraje"] = cleaned_data["kilometraje"]
+
+    new_data["tacmarca"] = cleaned_data["tacmarca"]
+    new_data["tacmodelo"] = cleaned_data["tacmodelo"]
+    new_data["tacserie"] = cleaned_data["tacserie"]
+    new_data["tactipo"] = cleaned_data["tactipo"]
+
+    new_data["relw"] = cleaned_data["relw"]
+    new_data["constantek"] = cleaned_data["constantek"]
+    new_data["rodado"] = cleaned_data["rodado"]
+    new_data["precinto"] = cleaned_data["precinto"]
+    new_data["impresora"] = cleaned_data["impresora"]
+    new_data["observaciones"] = cleaned_data["observaciones"]
+
+    new_data["nroinforme"] = cleaned_informes_data["txtNroInforme"]
+    new_data["canthojas"] = cleaned_informes_data["txtCantHojas"]
+
+    new_data["desconexioncantidad"] = cleaned_data["desconexioncantidad"]
+    new_data["desconexionhora"] = cleaned_data["desconexionhora"]
+    new_data["aperturaequipo"] = cleaned_data["aperturaequipo"]
+    new_data["faltainformacion"] = cleaned_data["faltainformacion"]
+    new_data["fallasdispositivo"] = cleaned_data["fallasdispositivo"]
+    new_data["retiroelementograbacion"] = cleaned_data["retiroelementograbacion"]
+
+    # TODO Buscar como se hace el cB
     today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    new_data["fechahoradictamen"] = today
-    new_data["fechahoraultmodificacion"] = today
-    new_data["fechahoracreacion"] = today
+    _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
+    new_data["cb"] = final_barcode
 
-    historialModificacion = f"Usuario creacion: {username} || Fecha y hora creacion: {today} || Modelo vehiculo: {cleaned_data['modelo']} || Dato titular/empresa: {cleaned_data['titular']} || "
-    new_data["historialmodificacion"] = historialModificacion
-
+    new_cccf = CccfCertificados(**new_data)
+    new_cccf.save()
+    cache_key = f"excesos_{nrocertificado if nrocertificado else 0}"
+    prev_data = cache.get(cache_key, [])
     try:
-        cccf = CccfCertificados.objects.get(dominio=cleaned_data["dominio"])
-        cccf = cccf.nrocertificado
+        for data in prev_data:
+            data["idcertificado"] = new_cccf
+            data.pop("nrocertificado")
+            new_exceso = CccfCertificadoexcesos(**data)
+            new_exceso.save()
     except Exception as e:
-        logger.warn(f"No hay CCCF => {e}")
-        cccf = None
-
-    new_data["nrocertificadocccf"] = cccf
+        logger.error(e)
 
     last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
 
-    servicios = cleaned_data["servicios"]
+    for _file in cccf_files:
+        try:
+            data = {}
+            data["nombrearchivo"] = _file.name
+            data["idcertificado"] = last_cccf_id
+            new_cccf_adjunto = CccfAdjuntoscertificados(**data)
+            new_cccf_adjunto.save()
+            logger.info(f"FILE => {_file.name} SAVED!")
 
-    # foreach($colServicios as $element){
-    #     $sqlServicio="INSERT INTO serviciohab(idHabilitacion,idServiciosTransporteHab) VALUES
-    #     (".$idUltimaHab.",".$element.");";
-    #     //echo $sqlServicio;
-    #     $base->query($sqlServicio);
-    # }
-
-    cadena_id_servicio = "".join([str(s).zfill(2) for s in servicios])
-    _, barcode = build_barcode(
-        last_cccf_id + 1,
-        str(new_data["fechacalibracion"])[0:10],
-        new_data["dominio"],
-        cadena_id_servicio,
-        False,
-    )
-
-    new_data["nrocodigobarrashab"] = barcode
-    new_data["activo"] = 1
-    new_data["idlocalidadvehiculo"] = 0
-    new_data["marcavehiculo"] = ""
-
-    new_data["nombretitular"] = ""
-    new_data["nrodoctitular"] = 0
-    new_data["tipodoctitular"] = ""
-    new_data["idlocalidadtitular"] = 0
-    new_data["domiciliotitular"] = ""
-    new_data["apellidotitular"] = ""
-
-    new_data["nombreconductor"] = ""
-    new_data["apellidoconductor"] = ""
-    new_data["domicilioconductor"] = ""
-    new_data["idlocalidadconductor"] = 0
-    new_data["tipopersona"] = ""
-    new_data["cuittitular"] = ""
-    new_data["idtiposervicio"] = 0
-
-    logger.debug(f"NEW_DATA => {new_data}")
-
-    new_hab = Habilitacion(**new_data)
-    new_hab.save()
-
-    logger.info(f"Habilitacion => {new_hab} SAVED!")
-
-    servicios_transporte_habs = [
-        Serviciostransportehab.objects.get(idserviciostransportehab=int(s))
-        for s in servicios
-    ]
-
-    servs = [
-        Serviciohab(**{"idhabilitacion": new_hab, "idserviciostransportehab": s})
-        for s in servicios_transporte_habs
-    ]
-    Serviciohab.objects.bulk_create(servs)
-
-    return new_hab
+        except Exception as e:
+            logger.error(f"ERROR WHILE SAVING FILE => {_file.name}")
+    return new_cccf
 
 
 def handle_initial_cccf(nrocertificado, dominio):
@@ -867,9 +857,17 @@ def handle_initial_cccf(nrocertificado, dominio):
     return context
 
 
-def handle_upload_file(files):
+def handle_upload_file(files, s3_key, bucket_name=None):
     # TODO Upload to S3
-    pass
+    s3 = get_s3_client()
+    with tempfile.TemporaryFile() as fp:
+        for chunk in files.chunks():
+            fp.write(chunk)
+
+        # "s3_key is the path within the bucket"
+        upload_file_to_bucket(
+            file_path=files.name, bucket_name=bucket_name, s3_client=s3, s3_key=s3_key
+        )
 
 
 def allow_keys(data: dict, keys: list[str]):

@@ -1019,6 +1019,7 @@ class CCCFTable(tables.Table):
 
 class CCCFExcesosTable(tables.Table):
     fecha = tables.Column(verbose_name="Fecha", orderable=False, empty_values=())
+    numero = tables.Column(verbose_name="Nro.", orderable=False, empty_values=())
     hora = tables.Column(verbose_name="Hora", orderable=False, empty_values=())
     velocidadsobrepaso = tables.Column(
         verbose_name="Velocidad de Sobrepaso", orderable=False, empty_values=()

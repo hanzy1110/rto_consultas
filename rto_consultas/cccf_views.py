@@ -237,15 +237,18 @@ class AnularCCCF(ChangeModelView):
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
     if request.method == "POST":
         form = CCCFForm(request.POST)
-        form_informes = InformesForm(request.FORM)
+        form_informes = InformesForm(request.POST)
 
         if form.is_valid():
             try:
-                handle_upload_file(request.FILES["cccf_files"])
+                handle_upload_file(request.FILES["cccf_files"], s3_key="ADJUNTOS_CCCF")
                 cccf = handle_save_cccf(
-                    form.cleaned_data, form_informes.cleaned_data, request.user
+                    form.cleaned_data,
+                    form_informes.cleaned_data,
+                    request.user,
+                    request.FILES["cccf_files"],
                 )
-                logger.info(f"Habilitacion => {cccf} SAVED!")
+                logger.info(f"CCCF => {cccf} SAVED!")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
                     "includes/success_message.html",
@@ -350,6 +353,7 @@ def consulta_excesos(request, *args, **kwargs):
                         lambda x: allow_keys(
                             x,
                             [
+                                "numero",
                                 "fecha",
                                 "hora",
                                 "velocidadsobrepaso",

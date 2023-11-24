@@ -2,6 +2,33 @@ import os
 import boto3
 from dotenv import dotenv_values
 
+from .logging import configure_logger
+
+LOG_FILE = os.environ["LOG_FILE"]
+logger = configure_logger(LOG_FILE)
+
+
+def get_s3_client(bucket_name=None):
+    aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+    aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+    if not bucket_name:
+        bucket_name = os.environ.get("AWS_BUCKET_NAME")
+
+    session = boto3.Session(
+        aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key
+    )
+    return session.client("s3")
+
+
+# Upload a local file to the S3 bucket
+def upload_file_to_bucket(file_path, s3_key, s3_client, bucket_name):
+    if not bucket_name:
+        bucket_name = os.environ.get("AWS_BUCKET_NAME")
+
+    s3_client.upload_file(file_path, bucket_name, s3_key)
+    logger.info(f"FILE {file_path} UPLOADED TO s3")
+
 
 def generate_presigned_url(object_key, bucket_name=None, expiration=3600):
     """

@@ -292,7 +292,7 @@ class InspectionOrderForm(forms.Form):
         )
 
 
-ATTRS = "form-control input-sm"
+ATTRS = "form-control input-sm width:150px;"
 
 
 class CCCFForm(forms.ModelForm):
@@ -467,7 +467,9 @@ class InformesForm(forms.Form):
         required=False,
     )
 
-    cccf_files = forms.FileField(label="Carga Archivos")
+    cccf_files = forms.FileField(
+        label="Carga Archivos",
+    )
 
     def __init__(self, *args, **kwargs):
         super(InformesForm, self).__init__(*args, **kwargs)
