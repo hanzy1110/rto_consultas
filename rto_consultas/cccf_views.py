@@ -285,7 +285,7 @@ def add_cccf_exceso(request, *args, **kwargs):
     nrocertificado = kwargs.pop("nrocertificado", None)
     nrocertificado = request.GET.get("nrocertificado", None)
 
-    logger.debug(f"CCCF NRO : {type(nrocertificado)} => { nrocertificado }")
+    logger.debug(f"REQUEST PARAMS => {request.GET}")
 
     if nrocertificado:
         nrocertificado = int(nrocertificado)
@@ -296,7 +296,7 @@ def add_cccf_exceso(request, *args, **kwargs):
 
         data = {}
         data["fecha"] = request.POST.get("fecha", None)
-        data["numero"] = len(prev_data) - 1 if len(prev_data) >= 0 else 1
+        data["numero"] = len(prev_data) - 1 if len(prev_data) > 0 else 1
         data["hora"] = request.POST.get("hora", None)
         data["velocidadsobrepaso"] = request.POST.get("velocidadsobrepaso", None)
         data["tiempovelocidadexceso"] = request.POST.get("tiempovelocidadexceso", None)
