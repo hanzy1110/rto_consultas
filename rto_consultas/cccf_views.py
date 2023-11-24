@@ -357,3 +357,5 @@ def consulta_excesos(request, *args, **kwargs):
                 )
             )
             return render(request, "includes/table_view.html", {"table": table})
+
+        return HttpResponse(content="")
