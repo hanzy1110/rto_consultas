@@ -313,7 +313,9 @@ class CCCFForm(forms.ModelForm):
     # Segundo
     cuit = forms.CharField(label="CUIT")
     razonsocial = forms.CharField(label="Razon Social")
-    usuario = forms.CharField(label="", widget=forms.TextInput(attrs={"class": ATTRS}))
+    usuario = forms.CharField(
+        label="Usuario", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
 
     # Tercero
     dominio = forms.CharField(
