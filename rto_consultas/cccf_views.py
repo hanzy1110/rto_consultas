@@ -341,6 +341,7 @@ def consulta_excesos(request, *args, **kwargs):
         cache_key = f"EXCESOS - {nrocertificado}"
         prev_data = cache.get(cache_key, [])
         if prev_data:
+            logger.info(f"PREV DATA = {prev_data}")
             table = CCCFExcesosTable(
                 list(
                     map(
