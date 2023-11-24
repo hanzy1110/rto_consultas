@@ -366,7 +366,7 @@ class CCCFForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
 
-        logger.debug(f"FORM FIELDS => {self.fields}")
+        # logger.debug(f"FORM FIELDS => {self.fields}")
 
         # for f in self.files.keys():
         #     self.files[f].widget.attrs.update({"class": "form-control input-sm"})

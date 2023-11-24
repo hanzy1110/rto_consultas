@@ -790,6 +790,7 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
     today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
     new_data["cb"] = final_barcode
+    new_data["cbverificador"] = final_barcode
 
     new_cccf = CccfCertificados(**new_data)
     new_cccf.save()

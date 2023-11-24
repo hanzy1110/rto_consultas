@@ -416,22 +416,22 @@ class CccfCertificados(models.Model):
         db_column="SinExcesos", blank=True, null=True
     )  # Field name made lowercase.
     desconexioncantidad = models.IntegerField(
-        db_column="DesconexionCantidad"
+        db_column="DesconexionCantidad", verbose_name="Cant. Desconexiones"
     )  # Field name made lowercase.
     desconexionhora = models.FloatField(
-        db_column="DesconexionHora"
+        db_column="DesconexionHora", verbose_name="Hora Desconexiones"
     )  # Field name made lowercase.
     aperturaequipo = models.IntegerField(
-        db_column="AperturaEquipo"
+        db_column="AperturaEquipo", verbose_name="Apertura Equipo"
     )  # Field name made lowercase.
     retiroelementograbacion = models.IntegerField(
-        db_column="RetiroElementoGrabacion"
+        db_column="RetiroElementoGrabacion", verbose_name="Retiro Elemento Grabación"
     )  # Field name made lowercase.
     fallasdispositivo = models.CharField(
-        db_column="FallasDispositivo", max_length=500
+        db_column="FallasDispositivo", max_length=500, verbose_name="Fallas Dispositivo"
     )  # Field name made lowercase.
     faltainformacion = models.CharField(
-        db_column="FaltaInformacion", max_length=50
+        db_column="FaltaInformacion", max_length=50, verbose_name="Falta Información"
     )  # Field name made lowercase.
     cb = models.CharField(
         db_column="CB", max_length=50, blank=True, null=True
