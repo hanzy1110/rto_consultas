@@ -9,15 +9,16 @@
 <div id="success-message" style="display:none;">
 </div>
 
-<form method="post" class="tblForm" hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
+<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
     <div class="card-body p-1">
         {% csrf_token %}
         {% crispy form %}
     </div>
 
     <div class="panel panel-default excesos" style="font-size: smaller">
-        <!-- Empieza codigo a modificar exceso velocidad-->
-        <div class="panel-heading">Información</div>
+        <div class="panel-heading">
+            <h3> Información </h3>
+        </div>
         <div class="row clearfix">
             <div class="col-md-12 column">
                 <table class="table table-bordered information-table">
@@ -105,12 +106,9 @@
         {% crispy form_informes %}
     </div>
     <div class="row clearfix">
-        <button type="submit" class="btn btn-primary btn-block" value="Cargar Certificado">
-            Cargar Certificado
-        </button>
+        <button type="submit" class="btn btn-primary btn-block"> Cargar Certificado </button>
     </div>
 </form>
-</div>
 
 <script>
     htmx.on("htmx:response", function (event) {
