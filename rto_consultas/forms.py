@@ -301,6 +301,10 @@ class CCCFForm(forms.ModelForm):
     #     label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
     # )
 
+    cuit = forms.CharField(label="CUIT", widget=forms.TextInput(attrs={"class": ATTRS}))
+    razonsocial = forms.CharField(
+        label="Razon Social", widget=forms.TextInput(attrs={"class": ATTRS})
+    )
     fechacalibracion = forms.DateField(
         label="Fecha Calibracion",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
