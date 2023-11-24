@@ -301,14 +301,14 @@ class CCCFForm(forms.ModelForm):
     #     label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
     # )
 
-    # fechacalibracion = forms.DateField(
-    #     label="Fecha Calibracion",
-    #     widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
-    # )
-    # fechavencimiento = forms.DateField(
-    #     label="Fecha Vencimiento",
-    #     widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
-    # )
+    fechacalibracion = forms.DateField(
+        label="Fecha Calibracion",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
+    fechavencimiento = forms.DateField(
+        label="Fecha Vencimiento",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
 
     # # Segundo
     # cuit = forms.CharField(label="CUIT")
@@ -467,6 +467,17 @@ class CCCFForm(forms.ModelForm):
                     "precinto",
                     "impresora",
                     "observaciones",
+                    css_class="form-group",
+                    wrapper_class="col",
+                ),
+                Div(
+                    HTML("<h2>Informacion</h2>"),
+                    "desconexioncantidad",
+                    "desconexionhora",
+                    "aperturaequipo",
+                    "retiroelementograbacion",
+                    "fallasdispositivo",
+                    "faltainformacion",
                     css_class="form-group",
                     wrapper_class="col",
                 ),
