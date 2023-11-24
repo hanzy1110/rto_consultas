@@ -340,8 +340,8 @@ def consulta_excesos(request, *args, **kwargs):
             # count_ = CccfCertificadoexcesos.objects.filter(idcertificado=cccf).count()
         cache_key = f"EXCESOS - {nrocertificado}"
         prev_data = cache.get(cache_key, [])
+        logger.info(f"PREV DATA = {prev_data}")
         if prev_data:
-            logger.info(f"PREV DATA = {prev_data}")
             table = CCCFExcesosTable(
                 list(
                     map(

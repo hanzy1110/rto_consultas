@@ -236,7 +236,20 @@ DJANGO_TABLES2_TABLE_ATTRS = {
     #     'class': 'table-light',
     # },
 }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "rto_memcached:11211",
+    }
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 PAGINATION = 25
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "rto_cache",
+    }
+}

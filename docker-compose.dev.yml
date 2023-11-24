@@ -12,3 +12,10 @@ services:
     restart: unless-stopped
     command: ["/home/code/entrypoint.sh"]
 
+  rto_memcached:
+    container_name: rto_memcached
+    image: memcached:latest
+    ports:
+      - 11211:11211
+    command:
+      - '--memory-limit=1024'
