@@ -295,11 +295,11 @@ def add_cccf_exceso(request, *args, **kwargs):
         prev_data = cache.get(cache_key, [])
 
         data = {}
-        data["fecha"] = request.POST.get("fecha", None)
+        data["fecha"] = request.GET.get("fecha", None)
         data["numero"] = len(prev_data) - 1 if len(prev_data) > 0 else 1
-        data["hora"] = request.POST.get("hora", None)
-        data["velocidadsobrepaso"] = request.POST.get("velocidadsobrepaso", None)
-        data["tiempovelocidadexceso"] = request.POST.get("tiempovelocidadexceso", None)
+        data["hora"] = request.GET.get("hora", None)
+        data["velocidadsobrepaso"] = request.GET.get("velocidadsobrepaso", None)
+        data["tiempovelocidadexceso"] = request.GET.get("tiempovelocidadexceso", None)
         data["nrocertificado"] = nrocertificado
 
         prev_data.append(data)
