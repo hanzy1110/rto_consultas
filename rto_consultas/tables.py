@@ -1018,10 +1018,14 @@ class CCCFTable(tables.Table):
 
 
 class CCCFExcesosTable(tables.Table):
-    fecha = tables.Column(verbose_name="Fecha")
-    hora = tables.Column(verbose_name="Hora")
-    velocidadsobrepaso = tables.Column(verbose_name="Velocidad de Sobrepaso")
-    tiempovelocidadexceso = tables.Column(verbose_name="Tiempo de Velocidad en Exceso")
+    fecha = tables.Column(verbose_name="Fecha", orderable=False, empty_values=())
+    hora = tables.Column(verbose_name="Hora", orderable=False, empty_values=())
+    velocidadsobrepaso = tables.Column(
+        verbose_name="Velocidad de Sobrepaso", orderable=False, empty_values=()
+    )
+    tiempovelocidadexceso = tables.Column(
+        verbose_name="Tiempo de Velocidad en Exceso", orderable=False, empty_values=()
+    )
 
     # class Meta:
     # fields = ("fecha", "hora", "velocidadsobrepaso", "tiempovelocidadexceso")
