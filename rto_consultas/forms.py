@@ -314,11 +314,6 @@ ATTRS = "form-control input-sm width:150px;"
 
 
 class CCCFForm(forms.ModelForm):
-    # # Primero
-    # nrocertificado = forms.CharField(
-    #     label="Nro. Certificado", widget=forms.TextInput(attrs={"class": ATTRS})
-    # )
-
     cuit = forms.CharField(label="CUIT", widget=forms.TextInput(attrs={"class": ATTRS}))
     razonsocial = forms.CharField(
         label="Razon Social", widget=forms.TextInput(attrs={"class": ATTRS})
@@ -331,24 +326,23 @@ class CCCFForm(forms.ModelForm):
         label="Fecha Vencimiento",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
-
     desconexioncantidad = forms.IntegerField(
-        required=False
+        required=False, label="Cantidad de Desconexiones"
     )  # Example field for 'Cant. Desc.'
     desconexionhora = forms.FloatField(
-        required=False
+        required=False, label="Hora Desconexion"
     )  # Example field for 'Horas Desc.'
     aperturaequipo = forms.BooleanField(
-        required=False
+        required=False, label="Apertura Equipo"
     )  # Example field for 'Apertura Equipo'
     retiroelementograbacion = forms.BooleanField(
-        required=False
+        required=False, label="Retiro Elemento Grabacion"
     )  # Example field for 'Retiro Elemento Grabación'
     fallasdispositivo = forms.BooleanField(
-        required=False
+        required=False, label="Fallas Dispositivo"
     )  # Example field for 'Falla Dispositivo'
     faltainformacion = forms.BooleanField(
-        required=False
+        required=False, label="Falta Informacion"
     )  # Example field for 'Falta Inf.'
 
     nroinforme = forms.CharField(
@@ -379,7 +373,7 @@ class CCCFForm(forms.ModelForm):
     class Meta:
         model = CccfCertificados
         # fields = "__all__"
-        exclude = ("cb",)
+        exclude = ("cb", "idempresa", "fechahoracarga", "idestado", "patentemercosur")
 
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
