@@ -9,7 +9,8 @@
 <div id="success-message" style="display:none;">
 </div>
 
-<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message" hx-trigger="submit">
+<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message" hx-trigger="submit"
+    enctype="multipart/form-data">
     <div class="card-body p-1">
         {% csrf_token %}
         {% crispy form %}
