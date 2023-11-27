@@ -235,10 +235,20 @@ class AnularCCCF(ChangeModelView):
     table_view = "cccf_list"
 
 
-def cccf_estado(request, *args, **kwargs):
+def cccf_estado_success(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
     context = {"messages": stored_messages}
-    return render(request, template_name="carga_cccf/estado.html", context=context)
+    return render(
+        request, template_name="carga_cccf/estado_success.html", context=context
+    )
+
+
+def cccf_estado_error(request, *args, **kwargs):
+    stored_messages = messages.get_messages(request)
+    context = {"messages": stored_messages}
+    return render(
+        request, template_name="carga_cccf/estado_error.html", context=context
+    )
 
 
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
@@ -264,14 +274,19 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/success_message.html",
                     {"success_message": success_message},
                 )
-                return HttpResponse(success_message_html)
+
+                res = HttpResponse(success_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoSuccess"
+                return res
             except IndentationError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
                     "includes/error_message.html", {"error_message": error_message}
                 )
-                return HttpResponse(error_message_html)
+                res = HttpResponse(error_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoError"
+                return res
         else:
             logger.error(f"Validation Error => {form.errors}")
             assert False

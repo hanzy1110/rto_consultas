@@ -9,6 +9,12 @@
 <div id="success-message">
 </div>
 
+<div hx-get="{% url 'cccf_estado_success' %}" hx-swap="beforeend" hx-target="body"
+    hx-trigger="reloadEstadoSuccess from:body">
+</div>
+<div hx-get="{% url 'cccf_estado_error' %}" hx-swap="beforeend" hx-target="body"
+    hx-trigger="reloadEstadoError from:body">
+</div>
 <form hx-post="{% url 'cccf_carga' %}" hx-swap="innerHTML" hx-target="#success-message" hx-trigger="submit"
     enctype="multipart/form-data">
     <div class="card-body p-1">
