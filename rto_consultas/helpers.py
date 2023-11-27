@@ -812,20 +812,20 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
         new_data["nrointerno"] = cleaned_data.get("nrointerno", None)
         new_data["kilometraje"] = cleaned_data.get("kilometraje", None)
 
-        new_data["tacmarca"] = cleaned_data.get("tacmarca", None)
-        new_data["tacmodelo"] = cleaned_data.get("tacmodelo", None)
-        new_data["tacnroserie"] = cleaned_data.get("tacnroserie", None)
-        new_data["tactipo"] = cleaned_data.get("tactipo", None)
+        new_data["tacmarca"] = cleaned_data.get("tacmarca", "")
+        new_data["tacmodelo"] = cleaned_data.get("tacmodelo", "")
+        new_data["tacnroserie"] = cleaned_data.get("tacnroserie", "")
+        new_data["tactipo"] = cleaned_data.get("tactipo", "")
 
-        new_data["relw"] = cleaned_data.get("relw", None)
-        new_data["constantek"] = cleaned_data.get("constantek", None)
-        new_data["rodado"] = cleaned_data.get("rodado", None)
-        new_data["precinto"] = cleaned_data.get("precinto", None)
-        new_data["impresora"] = cleaned_data.get("impresora", None)
+        new_data["relw"] = cleaned_data.get("relw", 0)
+        new_data["constantek"] = cleaned_data.get("constantek", 0)
+        new_data["rodado"] = cleaned_data.get("rodado", "")
+        new_data["precinto"] = cleaned_data.get("precinto", 0)
+        new_data["impresora"] = cleaned_data.get("impresora", 0)
         new_data["observaciones"] = cleaned_data["observaciones"]
 
-        new_data["nroinforme"] = cleaned_data.get("nroinforme", None)
-        new_data["canthojas"] = cleaned_data.get("canthojas", None)
+        new_data["nroinforme"] = cleaned_data.get("nroinforme", 0)
+        new_data["canthojas"] = cleaned_data.get("canthojas", 0)
 
         new_data["desconexioncantidad"] = cleaned_data.get("desconexioncantidad", None)
         new_data["desconexionhora"] = cleaned_data.get("desconexionhora", None)
