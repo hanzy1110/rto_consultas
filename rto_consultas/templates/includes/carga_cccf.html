@@ -6,10 +6,10 @@
 {% block content %}
 <h2><a href="#">Carga CCCF</a></h2>
 
-<div id="success-message" style="display:none;">
+<div id="success-message">
 </div>
 
-<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message" hx-trigger="submit"
+<form hx-post="{% url 'cccf_carga' %}" hx-swap="innerHTML" hx-target="#success-message" hx-trigger="submit"
     enctype="multipart/form-data">
     <div class="card-body p-1">
         {% csrf_token %}
