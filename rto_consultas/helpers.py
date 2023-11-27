@@ -163,6 +163,26 @@ def parse_license_plate(value):
     return formatted_value
 
 
+def parse_license_plate_type(value):
+    # Remove any non-alphanumeric characters from the input value
+    # value = value[0]
+    alphanumeric_only = re.sub(r"\W", "", value)
+    mercosur = True
+
+    # Format the license plate
+    if len(alphanumeric_only) >= 7:
+        formatted_value = re.sub(
+            r"^(\w{2})(\d{3})(\w{2})$", r"\1-\2-\3", alphanumeric_only
+        )
+    elif len(alphanumeric_only) >= 6:
+        formatted_value = re.sub(r"^(\w{3})(\d{3})$", r"\1-\2", alphanumeric_only)
+        mercosur = False
+    else:
+        formatted_value = alphanumeric_only
+
+    return formatted_value, mercosur
+
+
 def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
     sort = query.pop("sort", None)
@@ -787,7 +807,7 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
             user = CccfUsuarios.objects.get(usuario=username)
             new_data["idtaller"] = user.idtaller
 
-        dominio = cleaned_data.get("dominio", None)
+        dominio, mercosur = parse_license_plate_type(cleaned_data.get("dominio", None))
         new_data["dominio"] = dominio
         new_data["nrointerno"] = cleaned_data.get("nrointerno", None)
         new_data["kilometraje"] = cleaned_data.get("kilometraje", None)
@@ -819,6 +839,8 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
         today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         new_data["fechahoracarga"] = datetime.now()
         new_data["idestado"] = 1
+        new_data["idestado"] = 1
+        new_data["patentemercosur"] = int(mercosur)
         _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
         new_data["cb"] = final_barcode
         new_data["cbverificador"] = final_barcode
