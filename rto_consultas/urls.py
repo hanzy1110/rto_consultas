@@ -26,6 +26,7 @@ from rto_consultas.cccf_views import (
     VerCCCF,
     add_cccf_exceso,
     carga_cccf,
+    cccf_estado,
     consulta_excesos,
     get_cccf_modal,
     get_cccf_modal_excesos,
@@ -167,6 +168,7 @@ urlpatterns += [
         name="cccf_anular",
     ),
     path("cccf_form/", CCCFRenderForm.as_view(), name="cccf_form"),
+    path("cccf_estado/", cccf_estado, name="cccf_estado"),
     path("cccf_add_exceso/", add_cccf_exceso, name="cccf_add_exceso"),
     path(
         "cccf_exceso_table/",

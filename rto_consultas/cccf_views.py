@@ -1,5 +1,5 @@
 import os
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.template.loader import render_to_string
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
@@ -235,6 +235,12 @@ class AnularCCCF(ChangeModelView):
     table_view = "cccf_list"
 
 
+def cccf_estado(request, *args, **kwargs):
+    stored_messages = messages.get_messages(request)
+    context = {"messages":stored_messages}
+    return render(request, template_name="carga_cccf/estado.html", context=context)
+
+
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
     logger.info(f"request method = {request.method}, htmx? {request.htmx}")
     if request.method == "POST":
@@ -258,7 +264,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/success_message.html",
                     {"success_message": success_message},
                 )
-                return HttpResponse(success_message_html)
+                return redirect("/cccf_estado")
             except IndentationError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
