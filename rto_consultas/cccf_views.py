@@ -235,10 +235,12 @@ class AnularCCCF(ChangeModelView):
 
 
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
+    logger.info(f"request method = {request.method}, htmx? {request.htmx}")
     if request.method == "POST":
         form = CCCFForm(request.POST)
-        form_informes = InformesForm(request.POST)
+        # form_informes = InformesForm(request.POST)
 
+        logger.info(f"form valid? {form.is_valid()}")
         if form.is_valid():
             try:
                 handle_upload_file(
@@ -246,7 +248,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                 )
                 cccf = handle_save_cccf(
                     form.cleaned_data,
-                    form_informes.cleaned_data,
+                    # form_informes.cleaned_data,
                     request.user,
                     request.FILES["cccf_files"],
                 )
