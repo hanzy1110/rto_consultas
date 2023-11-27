@@ -27,13 +27,15 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row clearfix">
             <div hx-get="{% url 'cccf_exceso_table' %}" hx-swap="innerHTML" hx-target="#table-excesos"
                 hx-trigger="reloadTableExcesos from:body"
                 hx-vals='js:{nrocertificado:document.getElementById("id_nrocertificado").value}'>
             </div>
-            <input hx-get="{% url 'cccf_modal_excesos' %}" hx-target="body" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-                hx-swap="beforeend" class="btn btn-primary btm-block" value="Agregar Fila">
+            <button hx-get="{% url 'cccf_modal_excesos' %}" hx-target="body"
+                hx-headers="X-CSRFToken: '{{ csrf_token }}'" hx-swap="beforeend" class="btn btn-primary">
+                Agregar Fila
+            </button>
         </div>
         <input type="submit" class="btn btn-primary btn-block" value="Cargar Certificado">
 </form>
