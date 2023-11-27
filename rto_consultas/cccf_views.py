@@ -266,6 +266,10 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/error_message.html", {"error_message": error_message}
                 )
                 return HttpResponse(error_message_html)
+        else:
+            logger.error(f"Validation Error => {form.errors}")
+            assert False
+
     else:
         if kwargs:
             nrocertificado = kwargs.pop("nrocertificado", None)
