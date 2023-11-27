@@ -39,6 +39,24 @@ def get_choices():
     return a
 
 
+class MultipleFileInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
+
+
 class CustomRTOForm(forms.Form):
     def __init__(self, form_data: AuxData, model: Model, *args, **kwargs):
         super(CustomRTOForm, self).__init__(*args, **kwargs)
@@ -333,7 +351,7 @@ class CCCFForm(forms.ModelForm):
         required=False
     )  # Example field for 'Falta Inf.'
 
-    txtNroInforme = forms.CharField(
+    nroinforme = forms.CharField(
         label="Nro Informe",
         widget=forms.TextInput(
             attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
@@ -341,7 +359,7 @@ class CCCFForm(forms.ModelForm):
         required=True,
     )
 
-    txtCantHojas = forms.CharField(
+    canthojas = forms.CharField(
         label="Cant. Hojas/Discos",
         widget=forms.TextInput(
             attrs={"class": "form-control input-sm", "id": "txtCantHojas"}
@@ -349,12 +367,12 @@ class CCCFForm(forms.ModelForm):
         required=True,
     )
 
-    hfAdjuntos = forms.CharField(
-        widget=forms.HiddenInput(attrs={"id": "hfAdjuntos"}),
-        required=False,
-    )
+    # hfAdjuntos = forms.CharField(
+    #     widget=forms.HiddenInput(attrs={"id": "hfAdjuntos"}),
+    #     required=False,
+    # )
 
-    cccf_files = forms.FileField(
+    cccf_files = MultipleFileField(
         label="Carga Archivos",
     )
 

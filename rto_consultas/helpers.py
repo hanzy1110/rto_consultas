@@ -805,7 +805,8 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
     except Exception as e:
         logger.error(e)
 
-    last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
+    # last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
+    last_cccf_id = new_cccf.idcertificado
 
     for _file in cccf_files:
         try:
@@ -857,17 +858,22 @@ def handle_initial_cccf(nrocertificado, dominio):
     return context
 
 
-def handle_upload_file(files, s3_key, bucket_name=None):
+def handle_upload_file(files, s3_prefix, bucket_name=None):
     # TODO Upload to S3
     s3 = get_s3_client()
-    with tempfile.TemporaryFile() as fp:
-        for chunk in files.chunks():
-            fp.write(chunk)
+    for f in files:
+        s3_key = f"{s3_prefix}/{f.name}"
+        with tempfile.TemporaryFile() as fp:
+            for chunk in f.chunks():
+                fp.write(chunk)
 
-        # "s3_key is the path within the bucket"
-        upload_file_to_bucket(
-            file_path=files.name, bucket_name=bucket_name, s3_client=s3, s3_key=s3_key
-        )
+            # "s3_key is the path within the bucket"
+            upload_file_to_bucket(
+                file_path=files.name,
+                bucket_name=bucket_name,
+                s3_client=s3,
+                s3_key=s3_key,
+            )
 
 
 def allow_keys(data: dict, keys: list[str]):
