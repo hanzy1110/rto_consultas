@@ -855,6 +855,8 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
                 data.pop("nrocertificado")
                 new_exceso = CccfCertificadoexcesos(**data)
                 new_exceso.save()
+                # Always gets updated but meh
+                new_data["sinexcesos"] = 0
                 logger.info(f"EXCESO => {new_exceso} SAVED!")
         except Exception as e:
             logger.error(e)
