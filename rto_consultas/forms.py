@@ -373,7 +373,14 @@ class CCCFForm(forms.ModelForm):
     class Meta:
         model = CccfCertificados
         # fields = "__all__"
-        exclude = ("cb", "idempresa", "fechahoracarga", "idestado", "patentemercosur")
+        exclude = (
+            "cb",
+            "idtaller",
+            "idempresa",
+            "fechahoracarga",
+            "idestado",
+            "patentemercosur",
+        )
 
     def __init__(self, *args, **kwargs):
         super(CCCFForm, self).__init__(*args, **kwargs)
