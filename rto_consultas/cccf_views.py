@@ -248,7 +248,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                 # files = {f.name: f for f in request.FILES["cccf_files"]}
                 files = form.fields["cccf_files"]
                 logger.debug(f"FILES => {dir(files)}")
-                handle_upload_file(files, s3_prefix="ADJUNTOS_CCCF")
+                handle_upload_file(files.bound_data, s3_prefix="ADJUNTOS_CCCF")
                 cccf = handle_save_cccf(
                     form.cleaned_data,
                     # form_informes.cleaned_data,
