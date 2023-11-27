@@ -264,14 +264,14 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/success_message.html",
                     {"success_message": success_message},
                 )
-                return success_message_html
+                return HttpResponse(success_message_html)
             except IndentationError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
                     "includes/error_message.html", {"error_message": error_message}
                 )
-                return error_message_html
+                return HttpResponse(error_message_html)
         else:
             logger.error(f"Validation Error => {form.errors}")
             assert False
