@@ -9,105 +9,35 @@
 <div id="success-message" style="display:none;">
 </div>
 
-<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message">
+<form hx-post="{% url 'cccf_carga' %}" hx-swap="outerHTML" hx-target="#success-message" hx-trigger="submit">
     <div class="card-body p-1">
         {% csrf_token %}
         {% crispy form %}
-    </div>
-
-    <div class="panel panel-default excesos" style="font-size: smaller">
-        <!-- <div class="panel-heading">
-                    <h3> Información </h3>
+        <div class="panel panel-default excesos" style="font-size: smaller">
+            <div class="row clearfix">
+                <div class="col-md-12 column" id="table-excesos">
                 </div>
-                <div class="row clearfix">
-                    <div class="col-md-12 column">
-                        <table class="table table-bordered information-table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">
-                                        Cant. Desc.
-                                    </th>
-                                    <th class="text-center">
-                                        Horas Desc.
-                                    </th>
-                                    <th class="text-center">
-                                        Apertura Equipo
-                                    </th>
-                                    <th class="text-center">
-                                        Retiro Elemento Grabación
-                                    </th>
-                                    <th class="text-center">
-                                        Falla Dispositivo
-                                    </th>
-                                    <th class="text-center">
-                                        Falta Inf.
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="desconexioncantidad">
-                                        <span></span>
-                                        <input type="number" name="DesconexionCantidad" />
-                                    </td>
-                                    <td class="desconexionhora">
-                                        <span></span>
-                                        <input type="number" step="any" name="DesconexionHora" />
-                                    </td>
-                                    <td class="aperturaequipo">
-                                        <span></span>
-                                        <input type="checkbox" name="AperturaEquipo" value="1"></input>
-                                    </td>
-                                    <td class="retiroelementograbacion">
-                                        <span></span>
-                                        <input type="checkbox" name="RetiroElementoGrabacion" value="1"></input>
-                                    </td>
-                                    <td class="fallasdispositivo">
-                                        <span></span>
-                                        <input type="checkbox" name="FallasDispositivo" value="1"></input>
-                                    </td>
-                                    <td class="faltainformacion">
-                                        <span></span>
-                                        <input type="checkbox" name="FaltaInformacion" value="1"></input>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> -->
+
+                <div class="col-md-6 column" id="sin-excesos">
+                    <label for="SinExcesos">
+                        <input type="checkbox" id="SinExcesos" name="SinExcesos" value="1" />
+                        Sin Excesos de Velocidad
+                    </label><br />
+                    <label>Para agregar excesos de velocidad haga click en Agregar Fila</label>
+                </div>
+            </div>
+        </div>
         <div class="row clearfix">
-            <div class="col-md-12 column" id="table-excesos">
+            <div hx-get="{% url 'cccf_exceso_table' %}" hx-swap="innerHTML" hx-target="#table-excesos"
+                hx-trigger="reloadTableExcesos from:body"
+                hx-vals='js:{nrocertificado:document.getElementById("id_nrocertificado").value}'>
             </div>
-
-            <div class="col-md-6 column" id="sin-excesos">
-                <label for="SinExcesos">
-                    <input type="checkbox" id="SinExcesos" name="SinExcesos" value="1" />
-                    Sin Excesos de Velocidad
-                </label><br />
-                <label>Para agregar excesos de velocidad haga click en Agregar Fila</label>
-            </div>
+            <button hx-get="{% url 'cccf_modal_excesos' %}" hx-target="body"
+                hx-headers="X-CSRFToken: '{{ csrf_token }}'" hx-swap="beforeend" class="btn btn-primary">
+                Agregar Fila
+            </button>
         </div>
-    </div>
-    <div class="row clearfix">
-
-        <div hx-get="{% url 'cccf_exceso_table' %}" hx-swap="innerHTML" hx-target="#table-excesos"
-            hx-trigger="reloadTableExcesos from:body"
-            hx-vals='js:{nrocertificado:document.getElementById("id_nrocertificado").value}'>
-        </div>
-        <button hx-get="{% url 'cccf_modal_excesos' %}" hx-target="body" hx-headers="X-CSRFToken: '{{ csrf_token }}'"
-            hx-swap="beforeend" class="btn btn-primary">
-            Agregar Fila
-        </button>
-
-    </div>
-
-    <!-- <div class="card-body p-1">
-         <h2>Informes</h2>
-         crispy form_informes
-         </div> -->
-    <div class="row clearfix">
-        <button type="submit" class="btn btn-primary btn-block"> Cargar Certificado </button>
-    </div>
+        <input type="submit" class="btn btn-primary btn-block"> Cargar Certificado </button>
 </form>
 
 <script>
