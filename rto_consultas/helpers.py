@@ -755,77 +755,78 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
 
     new_data = {}
 
-    nrocertificado = cleaned_data["nrocertificado"]
+    nrocertificado = cleaned_data.get("nrocertificado", None)
 
     new_data["nrocertificado"] = nrocertificado
-    new_data["fechacalibracion"] = cleaned_data["fechacalibracion"]
-    new_data["fechavencimiento"] = cleaned_data["fechavencimiento"]
+    if nrocertificado:
+        new_data["fechacalibracion"] = cleaned_data.get("fechacalibracion", None)
+        new_data["fechavencimiento"] = cleaned_data.get("fechavencimiento", None)
 
-    new_data["razonsocial"] = cleaned_data["razonsocial"]
-    new_data["cuit"] = cleaned_data["cuit"]
-    username = user.username
-    new_data["usuario"] = username
+        new_data["razonsocial"] = cleaned_data.get("razonsocial", None)
+        new_data["cuit"] = cleaned_data.get("cuit", None)
+        username = user.username
+        new_data["usuario"] = username
 
-    dominio = cleaned_data["dominio"]
-    new_data["dominio"] = dominio
-    new_data["nrointerno"] = cleaned_data["nrointerno"]
-    new_data["kilometraje"] = cleaned_data["kilometraje"]
+        dominio = cleaned_data.get("dominio", None)
+        new_data["dominio"] = dominio
+        new_data["nrointerno"] = cleaned_data.get("nrointerno", None)
+        new_data["kilometraje"] = cleaned_data.get("kilometraje", None)
 
-    new_data["tacmarca"] = cleaned_data["tacmarca"]
-    new_data["tacmodelo"] = cleaned_data["tacmodelo"]
-    new_data["tacserie"] = cleaned_data["tacserie"]
-    new_data["tactipo"] = cleaned_data["tactipo"]
+        new_data["tacmarca"] = cleaned_data.get("tacmarca", None)
+        new_data["tacmodelo"] = cleaned_data.get("tacmodelo", None)
+        new_data["tacserie"] = cleaned_data.get("tacserie", None)
+        new_data["tactipo"] = cleaned_data.get("tactipo", None)
 
-    new_data["relw"] = cleaned_data["relw"]
-    new_data["constantek"] = cleaned_data["constantek"]
-    new_data["rodado"] = cleaned_data["rodado"]
-    new_data["precinto"] = cleaned_data["precinto"]
-    new_data["impresora"] = cleaned_data["impresora"]
-    new_data["observaciones"] = cleaned_data["observaciones"]
+        new_data["relw"] = cleaned_data.get("relw", None)
+        new_data["constantek"] = cleaned_data.get("constantek", None)
+        new_data["rodado"] = cleaned_data.get("rodado", None)
+        new_data["precinto"] = cleaned_data.get("precinto", None)
+        new_data["impresora"] = cleaned_data.get("impresora", None)
+        new_data["observaciones"] = cleaned_data["observaciones"]
 
-    new_data["nroinforme"] = cleaned_data["nroinforme"]
-    new_data["canthojas"] = cleaned_data["canthojas"]
+        new_data["nroinforme"] = cleaned_data.get("nroinforme", None)
+        new_data["canthojas"] = cleaned_data.get("canthojas", None)
 
-    new_data["desconexioncantidad"] = cleaned_data["desconexioncantidad"]
-    new_data["desconexionhora"] = cleaned_data["desconexionhora"]
-    new_data["aperturaequipo"] = int(cleaned_data["aperturaequipo"])
-    new_data["faltainformacion"] = int(cleaned_data["faltainformacion"])
-    new_data["fallasdispositivo"] = int(cleaned_data["fallasdispositivo"])
-    new_data["retiroelementograbacion"] = int(cleaned_data["retiroelementograbacion"])
+        new_data["desconexioncantidad"] = cleaned_data.get("desconexioncantidad", None)
+        new_data["desconexionhora"] = cleaned_data.get("desconexionhora", None)
+        new_data["aperturaequipo"] = int(cleaned_data.get("aperturaequipo", None))
+        new_data["faltainformacion"] = int(cleaned_data.get("faltainformacion", None))
+        new_data["fallasdispositivo"] = int(cleaned_data.get("fallasdispositivo", None))
+        new_data["retiroelementograbacion"] = int(cleaned_data.get("retiroelementograbacion", None))
 
-    today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
-    new_data["cb"] = final_barcode
-    new_data["cbverificador"] = final_barcode
+        today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
+        new_data["cb"] = final_barcode
+        new_data["cbverificador"] = final_barcode
 
-    new_cccf = CccfCertificados(**new_data)
-    new_cccf.save()
-    cache_key = f"excesos_{nrocertificado if nrocertificado else 0}"
-    prev_data = cache.get(cache_key, [])
-    try:
-        for data in prev_data:
-            data["idcertificado"] = new_cccf
-            data.pop("nrocertificado")
-            new_exceso = CccfCertificadoexcesos(**data)
-            new_exceso.save()
-    except Exception as e:
-        logger.error(e)
-
-    # last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
-    last_cccf_id = new_cccf.idcertificado
-
-    for _file in cccf_files:
+        new_cccf = CccfCertificados(**new_data)
+        new_cccf.save()
+        cache_key = f"excesos_{nrocertificado if nrocertificado else 0}"
+        prev_data = cache.get(cache_key, [])
         try:
-            data = {}
-            data["nombrearchivo"] = _file.name
-            data["idcertificado"] = last_cccf_id
-            new_cccf_adjunto = CccfAdjuntoscertificados(**data)
-            new_cccf_adjunto.save()
-            logger.info(f"FILE => {_file.name} SAVED!")
-
+            for data in prev_data:
+                data["idcertificado"] = new_cccf
+                data.pop("nrocertificado")
+                new_exceso = CccfCertificadoexcesos(**data)
+                new_exceso.save()
         except Exception as e:
-            logger.error(f"ERROR WHILE SAVING FILE => {_file.name}")
-    return new_cccf
+            logger.error(e)
+
+        # last_cccf_id = CccfCertificados.objects.latest("idcertificado").idcertificado
+        last_cccf_id = new_cccf.idcertificado
+
+        for _file in cccf_files:
+            try:
+                data = {}
+                data["nombrearchivo"] = _file.name
+                data["idcertificado"] = last_cccf_id
+                new_cccf_adjunto = CccfAdjuntoscertificados(**data)
+                new_cccf_adjunto.save()
+                logger.info(f"FILE => {_file.name} SAVED!")
+
+            except Exception as e:
+                logger.error(f"ERROR WHILE SAVING FILE => {_file.name}")
+        return new_cccf
 
 
 def handle_initial_cccf(nrocertificado, dominio):
