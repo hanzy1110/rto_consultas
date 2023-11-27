@@ -862,6 +862,10 @@ def handle_upload_file(files, s3_prefix, bucket_name=None):
     # TODO Upload to S3
     s3 = get_s3_client()
     # for k, f in files.items():
+    logger.debug(f"FILE NAME => {files.name}")
+    logger.debug(f"FILE => {files}")
+    logger.debug(f"{s3_prefix}/{files.name}")
+
     s3_key = f"{s3_prefix}/{files.name}"
     with tempfile.TemporaryFile() as fp:
         for chunk in files.chunks():
