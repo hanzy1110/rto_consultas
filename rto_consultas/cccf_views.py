@@ -8,6 +8,8 @@ from django.db.models import Q
 from django.core.cache import cache
 from django.contrib import messages
 
+from django.core.files.storage import FileSystemStorage
+
 from datetime import date, datetime, timedelta
 
 from django.conf import settings
@@ -237,7 +239,7 @@ class AnularCCCF(ChangeModelView):
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
     logger.info(f"request method = {request.method}, htmx? {request.htmx}")
     if request.method == "POST":
-        form = CCCFForm(request.POST)
+        form = CCCFForm(request.POST, request.FILES)
         # form_informes = InformesForm(request.POST)
 
         logger.info(f"form valid? {form.is_valid()}")
@@ -258,7 +260,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     {"success_message": success_message},
                 )
                 return HttpResponse(success_message_html)
-            except Exception as e:
+            except ValueError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
