@@ -242,10 +242,10 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
         form = CCCFForm(request.POST)
         # form_informes = InformesForm(request.POST)
 
-        logger.info(f"form valid? {form.is_valid()}")
         if form.is_valid():
             try:
-                files = request.FILES.get("cccf_files")
+                # files = request.FILES.get("cccf_files")
+                files = request.FILES["cccf_files"]
                 logger.debug(f"FILES => {dir(files)}")
                 logger.debug(f"FILES => {files}")
                 handle_upload_file(files, s3_prefix="ADJUNTOS_CCCF")
