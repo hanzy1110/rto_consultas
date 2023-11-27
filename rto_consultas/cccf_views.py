@@ -262,7 +262,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     {"success_message": success_message},
                 )
                 return HttpResponse(success_message_html)
-            except ValueError as e:
+            except IndentationError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
