@@ -241,7 +241,9 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         if form.is_valid():
             try:
-                handle_upload_file(request.FILES["cccf_files"], s3_key="ADJUNTOS_CCCF")
+                handle_upload_file(
+                    request.FILES["cccf_files"], s3_prefix="ADJUNTOS_CCCF"
+                )
                 cccf = handle_save_cccf(
                     form.cleaned_data,
                     form_informes.cleaned_data,
