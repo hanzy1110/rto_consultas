@@ -774,7 +774,7 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
 
         new_data["tacmarca"] = cleaned_data.get("tacmarca", None)
         new_data["tacmodelo"] = cleaned_data.get("tacmodelo", None)
-        new_data["tacserie"] = cleaned_data.get("tacserie", None)
+        new_data["tacnroserie"] = cleaned_data.get("tacnroserie", None)
         new_data["tactipo"] = cleaned_data.get("tactipo", None)
 
         new_data["relw"] = cleaned_data.get("relw", None)
@@ -792,7 +792,9 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
         new_data["aperturaequipo"] = int(cleaned_data.get("aperturaequipo", None))
         new_data["faltainformacion"] = int(cleaned_data.get("faltainformacion", None))
         new_data["fallasdispositivo"] = int(cleaned_data.get("fallasdispositivo", None))
-        new_data["retiroelementograbacion"] = int(cleaned_data.get("retiroelementograbacion", None))
+        new_data["retiroelementograbacion"] = int(
+            cleaned_data.get("retiroelementograbacion", None)
+        )
 
         today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         _, final_barcode = build_barcode(nrocertificado, today, dominio, "123")
