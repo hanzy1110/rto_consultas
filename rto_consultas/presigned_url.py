@@ -21,6 +21,14 @@ def get_s3_client(bucket_name=None):
     return session.client("s3")
 
 
+def upload_fileobj_to_bucket(file_, s3_key, s3_client, bucket_name):
+    if not bucket_name:
+        bucket_name = os.environ.get("AWS_BUCKET_NAME")
+
+    s3_client.upload_fileobj(file_, bucket_name, s3_key)
+    logger.info(f"FILE {s3_key} UPLOADED TO s3")
+
+
 # Upload a local file to the S3 bucket
 def upload_file_to_bucket(file_path, s3_key, s3_client, bucket_name):
     if not bucket_name:

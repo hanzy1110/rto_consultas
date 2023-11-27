@@ -3,6 +3,7 @@ from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
 import hashlib
 import os
@@ -33,7 +34,12 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
-from .presigned_url import generate_presigned_url, get_s3_client, upload_file_to_bucket
+from .presigned_url import (
+    generate_presigned_url,
+    get_s3_client,
+    upload_file_to_bucket,
+    upload_fileobj_to_bucket,
+)
 from .logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
@@ -858,26 +864,29 @@ def handle_initial_cccf(nrocertificado, dominio):
     return context
 
 
-def handle_upload_file(files, s3_prefix, bucket_name=None):
+def handle_upload_file(file, s3_prefix, bucket_name=None):
     # TODO Upload to S3
     s3 = get_s3_client()
     # for k, f in files.items():
-    logger.debug(f"FILE NAME => {files.name}")
-    logger.debug(f"FILE => {files}")
-    logger.debug(f"{s3_prefix}/{files.name}")
+    logger.debug(f"FILE NAME => {file.name}")
+    logger.debug(f"FILE => {file}")
+    logger.debug(f"{s3_prefix}/{file.name}")
 
-    s3_key = f"{s3_prefix}/{files.name}"
-    with tempfile.TemporaryFile() as fp:
-        for chunk in files.chunks():
-            fp.write(chunk)
+    s3_key = f"{s3_prefix}/{file.name}"
 
-        # "s3_key is the path within the bucket"
-        upload_file_to_bucket(
-            file_path=fp.name,
-            bucket_name=bucket_name,
-            s3_client=s3,
-            s3_key=s3_key,
-        )
+    upload_fileobj_to_bucket(file, s3_key, s3_client=s3, bucket_name=None)
+
+    # with tempfile.TemporaryFile() as fp:
+    #     for chunk in file.chunks():
+    #         fp.write(chunk)
+
+    #     # "s3_key is the path within the bucket"
+    # upload_file_to_bucket(
+    #     file_path=fp.name,
+    #     bucket_name=bucket_name,
+    #     s3_client=s3,
+    #     s3_key=s3_key,
+    # )
 
 
 def allow_keys(data: dict, keys: list[str]):
