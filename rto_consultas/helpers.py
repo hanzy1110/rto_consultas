@@ -744,7 +744,7 @@ def check_vigencia(verificacion):
     return "background-color: #FFFFFF"
 
 
-def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
+def handle_save_cccf(cleaned_data, user, cccf_files):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
 
     new_data = {}
@@ -777,8 +777,8 @@ def handle_save_cccf(cleaned_data, cleaned_informes_data, user, cccf_files):
     new_data["impresora"] = cleaned_data["impresora"]
     new_data["observaciones"] = cleaned_data["observaciones"]
 
-    new_data["nroinforme"] = cleaned_informes_data["txtNroInforme"]
-    new_data["canthojas"] = cleaned_informes_data["txtCantHojas"]
+    new_data["nroinforme"] = cleaned_data["nroinforme"]
+    new_data["canthojas"] = cleaned_data["canthojas"]
 
     new_data["desconexioncantidad"] = cleaned_data["desconexioncantidad"]
     new_data["desconexionhora"] = cleaned_data["desconexionhora"]

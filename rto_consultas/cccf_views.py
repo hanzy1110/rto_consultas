@@ -279,11 +279,11 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
         form = CCCFForm(initial=initial)
         form_informes = InformesForm(initial=initial)
 
-    return render(
-        request,
-        "includes/carga_cccf.html",
-        {"form": form, "form_informes": form_informes},
-    )
+        return render(
+            request,
+            "includes/carga_cccf.html",
+            {"form": form, "form_informes": form_informes},
+        )
 
 
 def add_cccf_exceso(request, *args, **kwargs):
