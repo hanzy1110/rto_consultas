@@ -237,7 +237,7 @@ class AnularCCCF(ChangeModelView):
 
 def cccf_estado(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
-    context = {"messages":stored_messages}
+    context = {"messages": stored_messages}
     return render(request, template_name="carga_cccf/estado.html", context=context)
 
 
@@ -264,14 +264,14 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     "includes/success_message.html",
                     {"success_message": success_message},
                 )
-                return redirect("/cccf_estado")
+                return success_message_html
             except IndentationError as e:
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
                     "includes/error_message.html", {"error_message": error_message}
                 )
-                return HttpResponse(error_message_html)
+                return error_message_html
         else:
             logger.error(f"Validation Error => {form.errors}")
             assert False
