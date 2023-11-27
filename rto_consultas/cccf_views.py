@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.core.cache import cache
 from django.contrib import messages
 
-from django.core.files.storage import FileSystemStorage
 
 from datetime import date, datetime, timedelta
 
@@ -239,22 +238,21 @@ class AnularCCCF(ChangeModelView):
 def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
     logger.info(f"request method = {request.method}, htmx? {request.htmx}")
     if request.method == "POST":
-        form = CCCFForm(request.POST)
+        form = CCCFForm(request.POST, request.FILES)
         # form_informes = InformesForm(request.POST)
 
         if form.is_valid():
             try:
                 # files = request.FILES.get("cccf_files")
                 files = request.FILES.getlist("cccf_files")
-                for f in files:
-                    handle_upload_file(f, s3_prefix="ADJUNTOS_CCCF")
                 cccf = handle_save_cccf(
                     form.cleaned_data,
-                    # form_informes.cleaned_data,
                     request.user,
-                    request.FILES["cccf_files"],
+                    files,
                 )
                 logger.info(f"CCCF => {cccf} SAVED!")
+                for f in files:
+                    handle_upload_file(f, s3_prefix="ADJUNTOS_CCCF")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
                     "includes/success_message.html",
