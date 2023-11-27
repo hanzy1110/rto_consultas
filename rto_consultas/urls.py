@@ -26,7 +26,6 @@ from rto_consultas.cccf_views import (
     VerCCCF,
     add_cccf_exceso,
     carga_cccf,
-    cccf_estado,
     cccf_estado_error,
     cccf_estado_success,
     consulta_excesos,
