@@ -23,6 +23,8 @@ from rto_consultas.models import (
     CccfAdjuntoscertificados,
     CccfCertificadoexcesos,
     CccfCertificados,
+    CccfEmpresas,
+    CccfUsuarios,
     Certificados,
     Certificadosasignadosportaller,
     Habilitacion,
@@ -762,10 +764,28 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
         new_data["fechacalibracion"] = cleaned_data.get("fechacalibracion", None)
         new_data["fechavencimiento"] = cleaned_data.get("fechavencimiento", None)
 
-        new_data["razonsocial"] = cleaned_data.get("razonsocial", None)
-        new_data["cuit"] = cleaned_data.get("cuit", None)
+        razonsocial = cleaned_data.get("razonsocial", None)
+        cuit = cleaned_data.get("cuit", None)
+
+        empresa = CccfEmpresas.objects.filter(cuit__iexact=cuit)
+        if empresa:
+            new_data["idempresa"] = empresa[0]
+        else:
+            empresa = CccfEmpresas(razonsocial=razonsocial, cuit=cuit)
+            empresa.save()
+            new_data["idempresa"] = empresa
+
         username = user.username
         new_data["usuario"] = username
+
+        try:
+            user = CccfUsuarios.objects.get(usuario=username)
+            new_data["idtaller"] = user.idtaller
+        except Exception as e:
+            logger.warn("CCCF USER NOT FOUND")
+            username = cleaned_data.get("usuario")
+            user = CccfUsuarios.objects.get(usuario=username)
+            new_data["idtaller"] = user.idtaller
 
         dominio = cleaned_data.get("dominio", None)
         new_data["dominio"] = dominio
