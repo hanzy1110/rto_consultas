@@ -827,8 +827,8 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
         new_data["nroinforme"] = cleaned_data.get("nroinforme", 0)
         new_data["canthojas"] = cleaned_data.get("canthojas", 0)
 
-        new_data["desconexioncantidad"] = cleaned_data.get("desconexioncantidad", None)
-        new_data["desconexionhora"] = cleaned_data.get("desconexionhora", None)
+        new_data["desconexioncantidad"] = cleaned_data.get("desconexioncantidad", 0)
+        new_data["desconexionhora"] = cleaned_data.get("desconexionhora", 0)
         new_data["aperturaequipo"] = int(cleaned_data.get("aperturaequipo", None))
         new_data["faltainformacion"] = int(cleaned_data.get("faltainformacion", None))
         new_data["fallasdispositivo"] = int(cleaned_data.get("fallasdispositivo", None))
