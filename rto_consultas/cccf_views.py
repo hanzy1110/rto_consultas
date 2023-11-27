@@ -246,6 +246,8 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
             try:
                 # files = request.FILES.get("cccf_files")
                 files = request.FILES.getlist("cccf_files")
+                for f in files:
+                    print(f.name)
                 logger.debug(f"FILES => {files}")
                 logger.debug(f"FILES => {dir(files)}")
                 handle_upload_file(files, s3_prefix="ADJUNTOS_CCCF")
