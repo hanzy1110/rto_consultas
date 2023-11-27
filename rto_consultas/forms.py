@@ -366,9 +366,7 @@ class CCCFForm(forms.ModelForm):
     #     required=False,
     # )
 
-    cccf_files = MultipleFileField(
-        label="Carga Archivos",
-    )
+    cccf_files = MultipleFileField(label="Carga Archivos", required=False)
 
     class Meta:
         model = CccfCertificados
