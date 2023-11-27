@@ -350,7 +350,7 @@ class CCCFForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
         ),
-        required=True,
+        required=False,
     )
 
     canthojas = forms.CharField(
@@ -358,7 +358,7 @@ class CCCFForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={"class": "form-control input-sm", "id": "txtCantHojas"}
         ),
-        required=True,
+        required=False,
     )
 
     # hfAdjuntos = forms.CharField(
@@ -389,8 +389,8 @@ class CCCFForm(forms.ModelForm):
 
         # for f in self.files.keys():
         #     self.files[f].widget.attrs.update({"class": "form-control input-sm"})
-        for field_name, field in self.fields.items():
-            field.required = False
+        # for field_name, field in self.fields.items():
+        #     field.required = False
 
         self.helper = FormHelper()
         self.helper.form_id = "formCargaCert"
