@@ -861,15 +861,15 @@ def handle_initial_cccf(nrocertificado, dominio):
 def handle_upload_file(files, s3_prefix, bucket_name=None):
     # TODO Upload to S3
     s3 = get_s3_client()
-    for k, f in files:
-        s3_key = f"{s3_prefix}/{f.name}"
+    for k, f in files.items():
+        s3_key = f"{s3_prefix}/{k}"
         with tempfile.TemporaryFile() as fp:
             for chunk in f.chunks():
                 fp.write(chunk)
 
             # "s3_key is the path within the bucket"
             upload_file_to_bucket(
-                file_path=f.name,
+                file_path=fp.name,
                 bucket_name=bucket_name,
                 s3_client=s3,
                 s3_key=s3_key,
