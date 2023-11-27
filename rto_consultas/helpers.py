@@ -869,7 +869,7 @@ def handle_upload_file(files, s3_prefix, bucket_name=None):
 
             # "s3_key is the path within the bucket"
             upload_file_to_bucket(
-                file_path=files.name,
+                file_path=f.name,
                 bucket_name=bucket_name,
                 s3_client=s3,
                 s3_key=s3_key,
