@@ -453,6 +453,9 @@ class CCCFForm(forms.ModelForm):
                         Field("desconexionhora", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
+                    css_class="card card-plain mt-2 box",
+                ),
+                Div(
                     Div(
                         Field("aperturaequipo", wrapper_class="form-group col-3"),
                         Field(
