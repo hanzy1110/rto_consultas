@@ -11,6 +11,7 @@ from django.urls import reverse
 from .models import (
     # VWVerificaciones,
     CccfCertificadoexcesos,
+    CccfNroscertificadosasignados,
     Habilitacion,
     Localidades,
     Usuarios,
@@ -1038,7 +1039,6 @@ class PrecintosAssignTable(tables.Table):
     # 	form_fields={ "idtaller":("nombre", Talleres) },
     # 	parsed_names={"name":"name"}
     # )
-
     class Meta:
         template_name = "tables/htmx_table.html"
         model = CccfNroscertificadosasignados
