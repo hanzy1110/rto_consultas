@@ -1039,6 +1039,18 @@ class PrecintosAssignTable(tables.Table):
     # 	form_fields={ "idtaller":("nombre", Talleres) },
     # 	parsed_names={"name":"name"}
     # )
+    nrocertificado = tables.Column(
+        verbose_name="Nro. Certificado", orderable=False, empty_values=()
+    )
+    fechacarga = tables.Column(
+        verbose_name="Fecha Carga", orderable=False, empty_values=()
+    )
+    disponible = tables.Column(
+        verbose_name="Disponible", orderable=False, empty_values=()
+    )
+
+    idtaller = tables.Column(verbose_name="Taller", orderable=False, empty_values=())
+
     class Meta:
         template_name = "tables/htmx_table.html"
         model = CccfNroscertificadosasignados
