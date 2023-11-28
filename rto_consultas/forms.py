@@ -457,12 +457,10 @@ class CCCFForm(forms.ModelForm):
                 ),
                 Div(
                     Div(
-                        Field("aperturaequipo", wrapper_class="form-group col-3"),
-                        Field(
-                            "retiroelementograbacion", wrapper_class="form-group col-3"
-                        ),
-                        Field("fallasdispositivo", wrapper_class="form-group col-3"),
-                        Field("faltainformacion", wrapper_class="form-group col-3"),
+                        Field("aperturaequipo"),
+                        Field("retiroelementograbacion"),
+                        Field("fallasdispositivo"),
+                        Field("faltainformacion"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
