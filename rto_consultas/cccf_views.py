@@ -271,7 +271,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                     handle_upload_file(f, s3_prefix="ADJUNTOS_CCCF")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
-                    "includes/success_message.html",
+                    "carga_cccf/estado_success.html",
                     {"success_message": success_message},
                 )
 
@@ -282,7 +282,7 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                 logger.error(e)
                 error_message = "An error occurred: " + str(e)
                 error_message_html = render_to_string(
-                    "includes/error_message.html", {"error_message": error_message}
+                    "carga_cccf/estado_error.html", {"error_message": error_message}
                 )
                 res = HttpResponse(error_message_html)
                 res.headers["HX-Trigger"] = "reloadEstadoError"
