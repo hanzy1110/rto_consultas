@@ -287,7 +287,7 @@ def handle_precinto_insert(taller_id, precinto_init, precinto_end):
                 fechacarga=datetime.today(),
                 disponible=1,
             )
-            for nro in range(int(precinto_init[0]), int(precinto_end[0]))
+            for nro in range(precinto_init, precinto_end)
         ]
 
         try:
