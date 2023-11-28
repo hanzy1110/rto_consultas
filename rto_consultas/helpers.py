@@ -214,7 +214,7 @@ def handle_query(request, model, fecha_field="fecha"):
         query.get("idtaller", None), precinto_init, precinto_end
     )
 
-    if precinto_init and precinto_end:
+    if precinto_init or precinto_end:
         return handle_nro_precinto(precinto_init, precinto_end)
 
     if cert_init and cert_end:
