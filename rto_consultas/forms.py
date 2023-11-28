@@ -403,7 +403,7 @@ class CCCFForm(forms.ModelForm):
                     Field("nrocertificado", wrapper_class="form-group col-md-4"),
                     Field("fechacalibracion", wrapper_class="form-group col-md-4"),
                     Field("fechavencimiento", wrapper_class="form-group col-md-4"),
-                    css_class="form-group"
+                    css_class="card card-plain mt-8",
                     # template="forms/cccf_layout.html",
                 ),
                 Div(
@@ -411,12 +411,14 @@ class CCCFForm(forms.ModelForm):
                     Field("cuit", wrapper_class="form-group col-md-4"),
                     Field("razonsocial", wrapper_class="form-group col-md-4"),
                     Field("usuario", wrapper_class="form-group col-md-4"),
+                    css_class="card card-plain mt-8",
                 ),
                 Div(
                     HTML("<h2>Datos del Vehiculo</h2>"),
                     Field("dominio", wrapper_class="form-group col-md-4"),
                     Field("nrointerno", wrapper_class="form-group col-md-4"),
                     Field("kilometraje", wrapper_class="form-group col-md-4"),
+                    css_class="card card-plain mt-8",
                 ),
                 HTML("<h2>Datos del Tacografo</h2>"),
                 Div(
@@ -430,6 +432,7 @@ class CCCFForm(forms.ModelForm):
                     Field("precinto", wrapper_class="form-group col-md-4"),
                     Field("impresora", wrapper_class="form-group col-md-4"),
                     Field("observaciones", wrapper_class="form-group col-md-4"),
+                    css_class="card card-plain mt-8",
                 ),
                 Div(
                     HTML("<h2>Informacion</h2>"),
@@ -441,19 +444,16 @@ class CCCFForm(forms.ModelForm):
                     ),
                     Field("fallasdispositivo", wrapper_class="form-group col-md-4"),
                     Field("faltainformacion", wrapper_class="form-group col-md-4"),
+                    css_class="card card-plain mt-8",
                 ),
                 Div(
                     Div(
                         Field("nroinforme", wrapper_class="col-md-4"),
                         Field("canthojas", wrapper_class="col-md-4"),
                         Field("cccf_files"),
-                        css_class="form-group",
+                        css_class="card card-plain mt-8",
                     ),
-                    css_class="panel-body",
                 ),
-                # css_class="panel panel-default",
-                css_class="panel-body",
-                # wrapper_class="col-md-4",
             )
         )
 
