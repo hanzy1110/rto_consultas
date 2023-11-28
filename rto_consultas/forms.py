@@ -401,9 +401,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Certificado</h2>"),
                     Div(
-                        Field("nrocertificado", wrapper_class="form-group col-4"),
-                        Field("fechacalibracion", wrapper_class="form-group col-4"),
-                        Field("fechavencimiento", wrapper_class="form-group col-4"),
+                        Field("nrocertificado", wrapper_class="form-group col-6"),
+                        Field("fechacalibracion", wrapper_class="form-group col-6"),
+                        Field("fechavencimiento", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -412,9 +412,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Propietario</h2>"),
                     Div(
-                        Field("cuit", wrapper_class="form-group col-4"),
-                        Field("razonsocial", wrapper_class="form-group col-4"),
-                        Field("usuario", wrapper_class="form-group col-4"),
+                        Field("cuit", wrapper_class="form-group col-6"),
+                        Field("razonsocial", wrapper_class="form-group col-6"),
+                        Field("usuario", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -422,9 +422,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Vehiculo</h2>"),
                     Div(
-                        Field("dominio", wrapper_class="form-group col-4"),
-                        Field("nrointerno", wrapper_class="form-group col-4"),
-                        Field("kilometraje", wrapper_class="form-group col-4"),
+                        Field("dominio", wrapper_class="form-group col-6"),
+                        Field("nrointerno", wrapper_class="form-group col-6"),
+                        Field("kilometraje", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -432,16 +432,16 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Tacografo</h2>"),
                     Div(
-                        Field("tacmarca", wrapper_class="form-group col-4"),
-                        Field("tactipo", wrapper_class="form-group col-4"),
-                        Field("tacmodelo", wrapper_class="form-group col-4"),
-                        Field("tacnroserie", wrapper_class="form-group col-4"),
-                        Field("relw", wrapper_class="form-group col-4"),
-                        Field("constantek", wrapper_class="form-group col-4"),
-                        Field("rodado", wrapper_class="form-group col-4"),
-                        Field("precinto", wrapper_class="form-group col-4"),
-                        Field("impresora", wrapper_class="form-group col-4"),
-                        Field("observaciones", wrapper_class="form-group col-4"),
+                        Field("tacmarca", wrapper_class="form-group col-6"),
+                        Field("tactipo", wrapper_class="form-group col-6"),
+                        Field("tacmodelo", wrapper_class="form-group col-6"),
+                        Field("tacnroserie", wrapper_class="form-group col-6"),
+                        Field("relw", wrapper_class="form-group col-6"),
+                        Field("constantek", wrapper_class="form-group col-6"),
+                        Field("rodado", wrapper_class="form-group col-6"),
+                        Field("precinto", wrapper_class="form-group col-6"),
+                        Field("impresora", wrapper_class="form-group col-6"),
+                        Field("observaciones", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -449,22 +449,22 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Informacion</h2>"),
                     Div(
-                        Field("desconexioncantidad", wrapper_class="form-group col-4"),
-                        Field("desconexionhora", wrapper_class="form-group col-4"),
-                        Field("aperturaequipo", wrapper_class="form-group col-4"),
+                        Field("desconexioncantidad", wrapper_class="form-group col-6"),
+                        Field("desconexionhora", wrapper_class="form-group col-6"),
+                        Field("aperturaequipo", wrapper_class="form-group col-6"),
                         Field(
-                            "retiroelementograbacion", wrapper_class="form-group col-4"
+                            "retiroelementograbacion", wrapper_class="form-group col-6"
                         ),
-                        Field("fallasdispositivo", wrapper_class="form-group col-4"),
-                        Field("faltainformacion", wrapper_class="form-group col-4"),
+                        Field("fallasdispositivo", wrapper_class="form-group col-6"),
+                        Field("faltainformacion", wrapper_class="form-group col-6"),
                         css_class="form-group row",
                     ),
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     Div(
-                        Field("nroinforme", wrapper_class="col-4"),
-                        Field("canthojas", wrapper_class="col-4"),
+                        Field("nroinforme", wrapper_class="col-6"),
+                        Field("canthojas", wrapper_class="col-6"),
                         Field("cccf_files"),
                         css_class="form-group row",
                     ),
@@ -507,11 +507,11 @@ class InformesForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Div(
-                    Field("txtNroInforme", wrapper_class="col-4"),
+                    Field("txtNroInforme", wrapper_class="col-6"),
                     css_class="form-group",
                 ),
                 Div(
-                    Field("txtCantHojas", wrapper_class="col-4"),
+                    Field("txtCantHojas", wrapper_class="col-6"),
                     css_class="form-group",
                 ),
                 Div(
