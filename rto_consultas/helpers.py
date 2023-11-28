@@ -260,6 +260,8 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
 
 def parse_querydict_arg(arg):
     match arg:
+        case None:
+            return None
         case []:
             return None
         case [""]:
