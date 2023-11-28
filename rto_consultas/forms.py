@@ -451,12 +451,15 @@ class CCCFForm(forms.ModelForm):
                     Div(
                         Field("desconexioncantidad", wrapper_class="form-group col-6"),
                         Field("desconexionhora", wrapper_class="form-group col-6"),
-                        Field("aperturaequipo", wrapper_class="form-group col-6"),
+                        css_class="form-group row box",
+                    ),
+                    Div(
+                        Field("aperturaequipo", wrapper_class="form-group col-3"),
                         Field(
-                            "retiroelementograbacion", wrapper_class="form-group col-6"
+                            "retiroelementograbacion", wrapper_class="form-group col-3"
                         ),
-                        Field("fallasdispositivo", wrapper_class="form-group col-6"),
-                        Field("faltainformacion", wrapper_class="form-group col-6"),
+                        Field("fallasdispositivo", wrapper_class="form-group col-3"),
+                        Field("faltainformacion", wrapper_class="form-group col-3"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
