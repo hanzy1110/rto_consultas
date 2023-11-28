@@ -6,10 +6,14 @@
             <h4 class="modal-title" id="dialogAddExceso">Resultado Carga</h4>
         </div>
         <div class="modal-body">
-            Certificado Creado con Exito!
-        <button hx-get="{% url 'cccf_list' %}" hx-swap="outerHTML" hx-target="body" hx-trigger="onclick">
-            Regresar
-        </button>
+            <span>Certificado Creado con Exito!</span>
+            <a style="display:block" href="{% url 'cccf_list' %}">
+                <button class="btn btn-sm btn-primary">
+                    Regresar
+                </button>
+            </a>
         </div>
+
     </div>
+</div>
 </div>
