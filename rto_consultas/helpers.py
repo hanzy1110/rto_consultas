@@ -277,6 +277,7 @@ def handle_precinto_insert(taller_id, precinto_init, precinto_end):
 
         try:
             CccfNroscertificadosasignados.objects.bulk_create(precintos)
+            logger.info("PRECINTOS CREADOS...")
             return precinto_init, precinto_end
         except Exception as e:
             logger.error("ERROR DURING INSERTING PRECINTOS...")
