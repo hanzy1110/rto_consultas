@@ -401,9 +401,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Certificado</h2>"),
                     Div(
-                        Field("nrocertificado", wrapper_class="form-group col-6"),
-                        Field("fechacalibracion", wrapper_class="form-group col-6"),
-                        Field("fechavencimiento", wrapper_class="form-group col-6"),
+                        Field("nrocertificado", wrapper_class="form-group col-4"),
+                        Field("fechacalibracion", wrapper_class="form-group col-4"),
+                        Field("fechavencimiento", wrapper_class="form-group col-4"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -412,9 +412,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Propietario</h2>"),
                     Div(
-                        Field("cuit", wrapper_class="form-group col-6"),
-                        Field("razonsocial", wrapper_class="form-group col-6"),
-                        Field("usuario", wrapper_class="form-group col-6"),
+                        Field("cuit", wrapper_class="form-group col-4"),
+                        Field("razonsocial", wrapper_class="form-group col-4"),
+                        Field("usuario", wrapper_class="form-group col-4"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
@@ -422,9 +422,9 @@ class CCCFForm(forms.ModelForm):
                 Div(
                     HTML("<h2>Datos del Vehiculo</h2>"),
                     Div(
-                        Field("dominio", wrapper_class="form-group col-6"),
-                        Field("nrointerno", wrapper_class="form-group col-6"),
-                        Field("kilometraje", wrapper_class="form-group col-6"),
+                        Field("dominio", wrapper_class="form-group col-4"),
+                        Field("nrointerno", wrapper_class="form-group col-4"),
+                        Field("kilometraje", wrapper_class="form-group col-4"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
