@@ -1030,3 +1030,25 @@ class CCCFExcesosTable(tables.Table):
 
     # class Meta:
     # fields = ("fecha", "hora", "velocidadsobrepaso", "tiempovelocidadexceso")
+
+
+class PrecintosAssignTable(tables.Table):
+    # aux_data = AuxData(
+    # 	query_fields=[],
+    # 	form_fields={ "idtaller":("nombre", Talleres) },
+    # 	parsed_names={"name":"name"}
+    # )
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = CccfNroscertificadosasignados
+        query_fields = {"nrocertificado", "idtaller", "disponible"}
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self

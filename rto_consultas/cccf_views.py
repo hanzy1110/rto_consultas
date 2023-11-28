@@ -23,10 +23,12 @@ from .models import (
     CccfAdjuntoscertificados,
     CccfCertificadoexcesos,
     CccfCertificados,
+    CccfTalleres,
 )
 from .tables import (
     CCCFExcesosTable,
     CCCFTable,
+    PrecintosAssignTable,
 )
 from .helpers import (
     allow_keys,
@@ -58,6 +60,7 @@ class CCCFView(IndexView):
     urls = {
         "cccf_list": "Listar CCCF",
         "cccf_carga": "Cargar CCCF",
+        "cccf_carga_precinto": "Cargar Precintos",
         # "carga_certificados": "Cargar CCCF",
     }
 
@@ -399,3 +402,37 @@ def consulta_excesos(request, *args, **kwargs):
             logger.warn("CACHE MISS ON CCCF")
             table = CCCFExcesosTable([])
         return render(request, "includes/table_view.html", {"table": table})
+
+
+@method_decorator(login_required, name="dispatch")
+class CargaPrecinto(CustomRTOView):
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model = CccfNroscertificadosasignados
+    paginate_by = settings.PAGINATION
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = PrecintosAssignTable
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=[
+            "precinto_init",
+            "precinto_end",
+        ],
+        form_fields={
+            "idtaller": ("nombre", CccfTalleres),
+        },
+        parsed_names={
+            "idtaller": "Nombre Taller",
+            "precinto_init": "Nro Oblea desde",
+            "precinto_end": "Nro Oblea hasta",
+        },
+        ids={},
+        types={
+            "precinto_init": "text",
+            "precinto_end": "text",
+        },
+        fecha_field="fechacarga",
+        render_url="cccf_carga_precinto",
+    )

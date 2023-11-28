@@ -24,6 +24,8 @@ from rto_consultas.models import (
     CccfCertificadoexcesos,
     CccfCertificados,
     CccfEmpresas,
+    CccfNroscertificadosasignados,
+    CccfTalleres,
     CccfUsuarios,
     Certificados,
     Certificadosasignadosportaller,
@@ -201,10 +203,19 @@ def handle_query(request, model, fecha_field="fecha"):
 
     cert_init = query.pop("cert_init", None)
     cert_end = query.pop("cert_end", None)
+    # CCCF
+    precinto_init = query.pop("precinto_init", None)
+    precinto_end = query.pop("precinto_end", None)
 
     cert_init, cert_end = handle_cert_insert(
         query.get("idtaller", None), cert_init, cert_end
     )
+    precinto_init, precinto_end = handle_precinto_insert(
+        query.get("idtaller", None), precinto_init, precinto_end
+    )
+
+    if precinto_init and precinto_end:
+        queryset = handle_nro_precinto(precinto_init, precinto_end)
 
     if cert_init and cert_end:
         queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
@@ -245,6 +256,33 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
         logger.error(f"ERROR WHILE PARSING REQUEST => {e}")
         raise ValueError(f"WRONG QUERY {e}")
         # return queryset_copy
+
+
+def handle_precinto_insert(taller_id, precinto_init, precinto_end):
+    logger.debug(f"PARAMS TO HANDLE:, {taller_id}, {precinto_init}, {precinto_end}")
+
+    if taller_id and precinto_end and precinto_init:
+        # TODO Check bounds for c]ertificate numbers...
+        taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
+        taller = CccfTalleres.objects.get(idtaller__iexact=taller_id)
+        precintos = [
+            CccfNroscertificadosasignados(
+                nrocertificado=nro,
+                idtaller=taller,
+                fechacarga=datetime.today(),
+                disponible=1,
+            )
+            for nro in range(int(precinto_init[0]), int(precinto_end[0]))
+        ]
+
+        try:
+            CccfNroscertificadosasignados.objects.bulk_create(precintos)
+            return precinto_init, precinto_end
+        except Exception as e:
+            logger.error("ERROR DURING INSERTING PRECINTOS...")
+            logger.error(e.__cause__)
+
+    return precinto_init, precinto_end
 
 
 def handle_cert_insert(taller_id, cert_init, cert_end):
@@ -427,6 +465,18 @@ def handle_anulado(queryset, anulado, model):
                 return related_objects_in_a
             else:
                 return queryset.filter(anulado=anulado)
+
+
+def handle_nro_precinto(precinto_init, precinto_end):
+    assert precinto_init < precinto_end
+
+    queryset = CccfNroscertificadosasignados.objects.filter(
+        nrocertificado__range=(
+            precinto_init,
+            precinto_end,
+        ),
+    )
+    return queryset
 
 
 def handle_nrocertificados(
