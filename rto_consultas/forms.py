@@ -400,57 +400,72 @@ class CCCFForm(forms.ModelForm):
             Div(
                 Div(
                     HTML("<h2>Datos del Certificado</h2>"),
-                    Field("nrocertificado", wrapper_class="form-group col-3"),
-                    Field("fechacalibracion", wrapper_class="form-group col-3"),
-                    Field("fechavencimiento", wrapper_class="form-group col-3"),
+                    Field("nrocertificado", wrapper_class="form-group col-5"),
+                    Field("fechacalibracion", wrapper_class="form-group col-5"),
+                    Field("fechavencimiento", wrapper_class="form-group col-5"),
                     css_class="card card-plain mt-2 box",
                     # template="forms/cccf_layout.html",
                 ),
                 Div(
                     HTML("<h2>Datos del Propietario</h2>"),
-                    Field("cuit", wrapper_class="form-group col-3"),
-                    Field("razonsocial", wrapper_class="form-group col-3"),
-                    Field("usuario", wrapper_class="form-group col-3"),
+                    Div(
+                        Field("cuit", wrapper_class="form-group col-5"),
+                        Field("razonsocial", wrapper_class="form-group col-5"),
+                        Field("usuario", wrapper_class="form-group col-5"),
+                        css_class="form-group row",
+                    ),
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     HTML("<h2>Datos del Vehiculo</h2>"),
-                    Field("dominio", wrapper_class="form-group col-3"),
-                    Field("nrointerno", wrapper_class="form-group col-3"),
-                    Field("kilometraje", wrapper_class="form-group col-3"),
-                    css_class="card card-plain mt-2 box",
-                ),
-                Div(
-                    HTML("<h2>Datos del Tacografo</h2>"),
-                    Field("tacmarca", wrapper_class="form-group col-3"),
-                    Field("tactipo", wrapper_class="form-group col-3"),
-                    Field("tacmodelo", wrapper_class="form-group col-3"),
-                    Field("tacnroserie", wrapper_class="form-group col-3"),
-                    Field("relw", wrapper_class="form-group col-3"),
-                    Field("constantek", wrapper_class="form-group col-3"),
-                    Field("rodado", wrapper_class="form-group col-3"),
-                    Field("precinto", wrapper_class="form-group col-3"),
-                    Field("impresora", wrapper_class="form-group col-3"),
-                    Field("observaciones", wrapper_class="form-group col-3"),
-                    css_class="card card-plain mt-2 box",
-                ),
-                Div(
-                    HTML("<h2>Informacion</h2>"),
-                    Field("desconexioncantidad", wrapper_class="form-group col-3"),
-                    Field("desconexionhora", wrapper_class="form-group col-3"),
-                    Field("aperturaequipo", wrapper_class="form-group col-3"),
-                    Field("retiroelementograbacion", wrapper_class="form-group col-3"),
-                    Field("fallasdispositivo", wrapper_class="form-group col-3"),
-                    Field("faltainformacion", wrapper_class="form-group col-3"),
+                    Div(
+                        Field("dominio", wrapper_class="form-group col-5"),
+                        Field("nrointerno", wrapper_class="form-group col-5"),
+                        Field("kilometraje", wrapper_class="form-group col-5"),
+                        css_class="form-group row",
+                    ),
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     Div(
-                        Field("nroinforme", wrapper_class="col-3"),
-                        Field("canthojas", wrapper_class="col-3"),
-                        Field("cccf_files"),
-                        css_class="card card-plain mt-2 box",
+                        HTML("<h2>Datos del Tacografo</h2>"),
+                        Field("tacmarca", wrapper_class="form-group col-5"),
+                        Field("tactipo", wrapper_class="form-group col-5"),
+                        Field("tacmodelo", wrapper_class="form-group col-5"),
+                        Field("tacnroserie", wrapper_class="form-group col-5"),
+                        Field("relw", wrapper_class="form-group col-5"),
+                        Field("constantek", wrapper_class="form-group col-5"),
+                        Field("rodado", wrapper_class="form-group col-5"),
+                        Field("precinto", wrapper_class="form-group col-5"),
+                        Field("impresora", wrapper_class="form-group col-5"),
+                        Field("observaciones", wrapper_class="form-group col-5"),
+                        css_class="form-group row",
                     ),
+                    css_class="card card-plain mt-2 box",
+                ),
+                Div(
+                    Div(
+                        HTML("<h2>Informacion</h2>"),
+                        Field("desconexioncantidad", wrapper_class="form-group col-5"),
+                        Field("desconexionhora", wrapper_class="form-group col-5"),
+                        Field("aperturaequipo", wrapper_class="form-group col-5"),
+                        Field(
+                            "retiroelementograbacion", wrapper_class="form-group col-5"
+                        ),
+                        Field("fallasdispositivo", wrapper_class="form-group col-5"),
+                        Field("faltainformacion", wrapper_class="form-group col-5"),
+                        css_class="form-group row",
+                    ),
+                    css_class="card card-plain mt-2 box",
+                ),
+                Div(
+                    Div(
+                        Field("nroinforme", wrapper_class="col-5"),
+                        Field("canthojas", wrapper_class="col-5"),
+                        Field("cccf_files"),
+                        css_class="form-group row",
+                    ),
+                    css_class="card card-plain mt-2 box",
                 ),
             )
         )
@@ -489,11 +504,11 @@ class InformesForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Div(
-                    Field("txtNroInforme", wrapper_class="col-3"),
+                    Field("txtNroInforme", wrapper_class="col-5"),
                     css_class="form-group",
                 ),
                 Div(
-                    Field("txtCantHojas", wrapper_class="col-3"),
+                    Field("txtCantHojas", wrapper_class="col-5"),
                     css_class="form-group",
                 ),
                 Div(
