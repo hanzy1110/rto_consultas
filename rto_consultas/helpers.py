@@ -287,7 +287,7 @@ def handle_precinto_insert(taller_id, precinto_init, precinto_end):
                 fechacarga=datetime.today(),
                 disponible=1,
             )
-            for nro in range(precinto_init, precinto_end)
+            for nro in range(precinto_init, precinto_end + 1)
         ]
 
         try:
@@ -484,7 +484,9 @@ def handle_anulado(queryset, anulado, model):
 
 
 def handle_nro_precinto(precinto_init, precinto_end):
-    assert precinto_init < precinto_end
+    if not (isinstance(precinto_init, int) and isinstance(precinto_end, int)):
+        precinto_init = parse_querydict_arg(precinto_init)
+        precinto_end = parse_querydict_arg(precinto_end)
 
     queryset = CccfNroscertificadosasignados.objects.filter(
         nrocertificado__range=(
