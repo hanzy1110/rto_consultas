@@ -49,6 +49,12 @@ SECRET_KEY = "django-insecure-uecy-2dd!$p*6#0kh!wwgio^sdsoh$v%xiv3yk3ti*=1#w+%2@
 DEBUG = os.environ.get("DEBUG", False)
 ALLOWED_HOSTS = ["*"]
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "rto_memcached:11211",
+    }
+}
 if not DEBUG:
     try:
         SECRET_KEY = os.environ["SECRET_KEY"]
@@ -71,6 +77,12 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "LOCATION": "rto_memcached_prod:11210",
+        }
+    }
     # SSL Certificate paths
     # SECURE_SSL_CERT = BASE_DIR / "certificates/rto_consultas_prod.crt"
     # SECURE_SSL_KEY = BASE_DIR / "certificates/rto_consultas_prod.key"
@@ -235,12 +247,6 @@ DJANGO_TABLES2_TABLE_ATTRS = {
     # 'thead': {
     #     'class': 'table-light',
     # },
-}
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "rto_memcached:11211",
-    }
 }
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"

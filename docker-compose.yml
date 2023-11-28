@@ -25,12 +25,12 @@ services:
       - ./certificates:/etc/nginx/certificates
       - ./staticfiles:/home/code/staticfiles:ro
 
-  rto_memcached:
-    container_name: rto_memcached
+  rto_memcached_prod:
+    container_name: rto_memcached_prod
     depends_on:
       - rto_consultas_prod
     image: memcached:latest
     ports:
-      - 11211:11211
+      - 11210:11211
     command:
       - '--memory-limit=1024'
