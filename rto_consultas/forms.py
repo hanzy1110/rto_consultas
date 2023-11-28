@@ -425,13 +425,13 @@ class CCCFForm(forms.ModelForm):
                         Field("dominio", wrapper_class="form-group col-4"),
                         Field("nrointerno", wrapper_class="form-group col-4"),
                         Field("kilometraje", wrapper_class="form-group col-4"),
-                        css_class="form-group row",
+                        css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
+                    HTML("<h2>Datos del Tacografo</h2>"),
                     Div(
-                        HTML("<h2>Datos del Tacografo</h2>"),
                         Field("tacmarca", wrapper_class="form-group col-4"),
                         Field("tactipo", wrapper_class="form-group col-4"),
                         Field("tacmodelo", wrapper_class="form-group col-4"),
@@ -442,13 +442,13 @@ class CCCFForm(forms.ModelForm):
                         Field("precinto", wrapper_class="form-group col-4"),
                         Field("impresora", wrapper_class="form-group col-4"),
                         Field("observaciones", wrapper_class="form-group col-4"),
-                        css_class="form-group row",
+                        css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
+                    HTML("<h2>Informacion</h2>"),
                     Div(
-                        HTML("<h2>Informacion</h2>"),
                         Field("desconexioncantidad", wrapper_class="form-group col-4"),
                         Field("desconexionhora", wrapper_class="form-group col-4"),
                         Field("aperturaequipo", wrapper_class="form-group col-4"),
