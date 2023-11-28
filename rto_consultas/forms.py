@@ -332,7 +332,7 @@ class CCCFForm(forms.ModelForm):
     desconexionhora = forms.DateField(
         required=True,
         label="Hora Desconexion",
-        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+        widget=forms.DateInput(attrs={"class": "date", "type": "datetime-local"}),
     )  # Example field for 'Horas Desc.'
     aperturaequipo = forms.BooleanField(
         required=False, label="Apertura Equipo"
