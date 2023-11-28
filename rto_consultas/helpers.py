@@ -519,9 +519,9 @@ def generate_key_certificado(certificado, bucket_name=None):
     return None
 
 
-def generate_cccf_key(certificado_adjunto, idtaller, bucket_name="rto-nqn-cccf"):
+def generate_cccf_key(certificado_adjunto, idtaller, bucket_name="rto-nqn-files"):
     if certificado_adjunto:
-        key = f"{idtaller}/{certificado_adjunto.nombrearchivo}"
+        key = f"ADJUNTOS_CCCF/{idtaller}/{certificado_adjunto.nombrearchivo}"
         return generate_presigned_url(key, bucket_name=bucket_name)
     return ""
 
@@ -914,7 +914,7 @@ def handle_initial_cccf(nrocertificado, dominio):
     return context
 
 
-def handle_upload_file(file, s3_prefix, bucket_name=None):
+def handle_upload_file(file, idtaller, s3_prefix, bucket_name=None):
     # TODO Upload to S3
     s3 = get_s3_client()
     # for k, f in files.items():
@@ -922,7 +922,7 @@ def handle_upload_file(file, s3_prefix, bucket_name=None):
     logger.debug(f"FILE => {file}")
     logger.debug(f"{s3_prefix}/{file.name}")
 
-    s3_key = f"{s3_prefix}/{file.name}"
+    s3_key = f"{s3_prefix}/{idtaller}/{file.name}"
 
     upload_fileobj_to_bucket(file, s3_key, s3_client=s3, bucket_name=None)
 

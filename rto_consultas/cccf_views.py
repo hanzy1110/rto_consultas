@@ -179,9 +179,9 @@ class VerCCCF(DetailView, LoginRequiredMixin):
             idcertificado=self.cccf.idcertificado
         )
 
-        # cccf_urls = [
-        #     generate_cccf_key(ad, self.cccf.idtaller_id) for ad in cccf_adjuntos
-        # ]
+        cccf_urls = [
+            generate_cccf_key(ad, self.cccf.idtaller_id) for ad in cccf_adjuntos
+        ]
         # TODO No tocar hasta no tener los archivos trasladados
 
         cccf_urls = ["" for _ in cccf_adjuntos]
@@ -268,7 +268,9 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
                 )
                 logger.info(f"CCCF => {cccf} SAVED!")
                 for f in files:
-                    handle_upload_file(f, s3_prefix="ADJUNTOS_CCCF")
+                    handle_upload_file(
+                        f, idtaller=cccf.idtaller_id, s3_prefix="ADJUNTOS_CCCF"
+                    )
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
                     "carga_cccf/estado_success.html",
