@@ -488,13 +488,19 @@ def handle_nro_precinto(precinto_init, precinto_end):
         precinto_init = parse_querydict_arg(precinto_init)
         precinto_end = parse_querydict_arg(precinto_end)
 
-    queryset = CccfNroscertificadosasignados.objects.filter(
-        nrocertificado__range=(
-            precinto_init,
-            precinto_end,
-        ),
-    )
-    return queryset
+    if precinto_init:
+        if precinto_end:
+            queryset = CccfNroscertificadosasignados.objects.filter(
+                nrocertificado__range=(
+                    precinto_init,
+                    precinto_end,
+                ),
+            )
+        else:
+            queryset = CccfNroscertificadosasignados.objects.filter(
+                nrocertificado__iexact=precinto_init
+            )
+        return queryset
 
 
 def handle_nrocertificados(
