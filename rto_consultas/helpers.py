@@ -258,9 +258,22 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
         # return queryset_copy
 
 
+def parse_querydict_arg(arg):
+    match arg:
+        case []:
+            return None
+        case [""]:
+            return None
+        case _:
+            return int(arg[0])
+
+
 def handle_precinto_insert(taller_id, precinto_init, precinto_end):
     logger.debug(f"PARAMS TO HANDLE:, {taller_id}, {precinto_init}, {precinto_end}")
 
+    # TODO improve the parsing of this...
+    precinto_init = parse_querydict_arg(precinto_init)
+    precinto_end = parse_querydict_arg(precinto_end)
     if taller_id and precinto_end and precinto_init:
         # TODO Check bounds for c]ertificate numbers...
         taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
