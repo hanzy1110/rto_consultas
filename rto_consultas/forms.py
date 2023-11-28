@@ -327,10 +327,12 @@ class CCCFForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     desconexioncantidad = forms.IntegerField(
-        required=False, label="Cantidad de Desconexiones"
+        required=True, label="Cantidad de Desconexiones"
     )  # Example field for 'Cant. Desc.'
-    desconexionhora = forms.FloatField(
-        required=False, label="Hora Desconexion"
+    desconexionhora = forms.DateField(
+        required=True,
+        label="Hora Desconexion",
+        widget=forms.DateInput(attrs={"class": "time", "type": "time"}),
     )  # Example field for 'Horas Desc.'
     aperturaequipo = forms.BooleanField(
         required=False, label="Apertura Equipo"
