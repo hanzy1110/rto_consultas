@@ -23,6 +23,7 @@ from .models import (
     CccfAdjuntoscertificados,
     CccfCertificadoexcesos,
     CccfCertificados,
+    CccfNroscertificadosasignados,
     CccfTalleres,
 )
 from .tables import (
