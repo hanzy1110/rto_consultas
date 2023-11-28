@@ -427,7 +427,7 @@ class CCCFForm(forms.ModelForm):
                         Field("kilometraje", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
-                    css_class="card card-plain mt-2 ",
+                    css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     HTML("<h2>Datos del Tacografo</h2>"),
@@ -444,7 +444,7 @@ class CCCFForm(forms.ModelForm):
                         Field("observaciones", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
-                    css_class="card card-plain mt-2",
+                    css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     HTML("<h2>Informacion</h2>"),
@@ -459,7 +459,7 @@ class CCCFForm(forms.ModelForm):
                         Field("faltainformacion", wrapper_class="form-group col-6"),
                         css_class="form-group row box",
                     ),
-                    css_class="card card-plain mt-2",
+                    css_class="card card-plain mt-2 box",
                 ),
                 Div(
                     Div(
@@ -468,7 +468,7 @@ class CCCFForm(forms.ModelForm):
                         Field("cccf_files"),
                         css_class="form-group row box",
                     ),
-                    css_class="card card-plain mt-2",
+                    css_class="card card-plain mt-2 box",
                 ),
             )
         )
