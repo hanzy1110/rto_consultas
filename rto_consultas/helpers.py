@@ -215,7 +215,7 @@ def handle_query(request, model, fecha_field="fecha"):
     )
 
     if precinto_init and precinto_end:
-        queryset = handle_nro_precinto(precinto_init, precinto_end)
+        return handle_nro_precinto(precinto_init, precinto_end)
 
     if cert_init and cert_end:
         queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
