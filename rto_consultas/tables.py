@@ -1048,7 +1048,6 @@ class PrecintosAssignTable(tables.Table):
     disponible = tables.Column(
         verbose_name="Disponible", orderable=False, empty_values=()
     )
-
     idtaller = tables.Column(verbose_name="Taller", orderable=False, empty_values=())
 
     class Meta:

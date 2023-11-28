@@ -426,8 +426,8 @@ class CargaPrecinto(CustomRTOView):
         },
         parsed_names={
             "idtaller": "Nombre Taller",
-            "precinto_init": "Nro Oblea desde",
-            "precinto_end": "Nro Oblea hasta",
+            "precinto_init": "Nro. Precinto desde",
+            "precinto_end": "Nro. Precinto hasta",
         },
         ids={},
         types={
