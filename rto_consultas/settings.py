@@ -79,10 +79,10 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
 
     CACHES = {
-        # "default": {
-        #     "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        #     "LOCATION": "rto_memcached_prod:11211",
-        # }
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "LOCATION": "rto_memcached:11211",
+        }
     }
     # SSL Certificate paths
     # SECURE_SSL_CERT = BASE_DIR / "certificates/rto_consultas_prod.crt"
