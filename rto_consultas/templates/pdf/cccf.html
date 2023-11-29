@@ -1,41 +1,3 @@
-<!--
-     $NroCertifcado = $_POST["hfNroCert"];
-     $fechaCal = $_POST["hfFechaCal"];
-     $fechaVen = $_POST["hfFechaVen"];
-     $razonSocial = $_POST["hfRS"];
-     $CUIT= $_POST["hfCUIT"];
-     $PropUsuario= $_POST["hfPropUsuario"];
-     $dominio = $_POST["hfDominio"];
-     $interno = $_POST["hfNroInterno"];
-     $km = $_POST["hfKm"];
-     $marca = $_POST["hfMarca"];
-     $tipo = $_POST["hfTipo"];
-     $modelo = $_POST["hfModelo"];
-     $serie = $_POST["hfNroSerie"];
-     $relW = $_POST["hfRelW"];
-     $cosntK = $_POST["hfConstK"];
-     $rodado = $_POST["hfRodado"];
-     $precinto = $_POST["hfNroPrecinto"];
-     $impresora = $_POST["hfImpresora"];
-     $observaciones = $_POST["hfObs"];
-     $nroInforme = $_POST["hfNroInf"];
-     $cantHojas = $_POST["hfCantHojas"];
-     $idEstado = $_POST["hfIdEstado"];
-     $nomTaller = $_POST["hfNomTaller"];
-     $CBVerificador= $_POST["hfCBVerificador"];
-     $SinExcesos = $_POST["hfSinExcesos"];
-     $DesconexionCantidad = $_POST["hfDesconexionCantidad"];
-     $DesconexionHora = $_POST["hfDesconexionHora"];
-     $AperturaEquipo = $_POST["hfAperturaEquipo"];
-     $RetiroElementoGrabacion = $_POST["hfRetiroElementoGrabacion"];
-     $FallasDispositivo = $_POST["hfFallasDispositivo"];
-     $FaltaInformacion = $_POST["hfFaltaInformacion"];
-     $usuario= $_POST["hfUsuario"];
-     $Excesos = $_POST["hfExcesos"];
-     $ExcesosMP= $_POST["MPhfExcesos"];
- $Excesos =  str_replace("8%;\" change-width", "25%;\"", str_replace("rgb(221, 221, 221);", "black; width: 660px;", str_replace("width: 100%", "", $Excesos))) ;
--->
-
 <html>
 
 {% load static %}
@@ -46,12 +8,12 @@
 </head>
 
 <body>
-    <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
-        {{ contenido_original }}
-    </page>
-    <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
-        {{ anexo }}
-    </page>
+    <!-- <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'> -->
+    {{ contenido_original }}
+    <!-- </page> -->
+    <!-- <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'> -->
+    {{ anexo }}
+    <!-- </page> -->
 
     <!-- <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
          contenido_duplicado
