@@ -36,23 +36,32 @@
  $Excesos =  str_replace("8%;\" change-width", "25%;\"", str_replace("rgb(221, 221, 221);", "black; width: 660px;", str_replace("width: 100%", "", $Excesos))) ;
 -->
 
-<page footer='page'  pagegroup='new' backbottom='10mm' backtop='40mm'>
-    {{ contenido_original }}
-</page> .
-<page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
-    {{ anexo }}
-</page>
+<html>
 
-<page footer='page'  pagegroup='new' backbottom='10mm' backtop='40mm'>
-    {{ contenido_duplicado }}
-</page> .
-<page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
-    {{ anexo }}
-</page>
+<head>
+    <meta charset="UTF-8">
+    <!-- Other head content -->
+</head>
 
-<page footer='page'  pagegroup='new' backbottom='10mm' backtop='40mm'>
-    {{ contenido_triplicado }}
-</page> .
-<page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
-    {{ anexo }}
-</page>
+<body>
+    <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
+        {{ contenido_original }}
+    </page> .
+    <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
+        {{ anexo }}
+    </page>
+
+    <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
+        {{ contenido_duplicado }}
+    </page> .
+    <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
+        {{ anexo }}
+    </page>
+
+    <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
+        {{ contenido_triplicado }}
+    </page> .
+    <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
+        {{ anexo }}
+    </page>
+</body>
