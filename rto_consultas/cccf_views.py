@@ -501,6 +501,7 @@ class PDFCccf(PDFTemplateView):
         # fechahora = habilitacion.fechahoracreacion
         # date_str = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
         # context["date_str"] = date_str
+        logger.debug(f"STATIC_URL => {settings.STATIC_URL}")
         context["STATIC_URL"] = settings.STATIC_URL
 
         return context
