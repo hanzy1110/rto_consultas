@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.core.cache import cache
 from django.contrib import messages
 
+from django.conf import settings
 
 from datetime import date, datetime, timedelta
 
@@ -500,5 +501,6 @@ class PDFCccf(PDFTemplateView):
         # fechahora = habilitacion.fechahoracreacion
         # date_str = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
         # context["date_str"] = date_str
+        context["STATIC_URL"] = settings.STATIC_URL
 
         return context
