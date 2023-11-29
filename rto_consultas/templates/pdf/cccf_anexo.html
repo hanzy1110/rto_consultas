@@ -124,9 +124,28 @@
         {% if sinexcesos %}
         Sin Exceso de Velocidad
         {% else %}
-        {% for e in cccf_excesos %}
-        {{ e }}
-        {% endfor %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Numero</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Velocidad de Sobrepaso</th>
+                    <th>Tiempo Velocidad de Sobrepaso</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for instance in cccf_excesos %}
+                <tr>
+                    <td>{{ instance.numero }}</td>
+                    <td>{{ instance.fecha }}</td>
+                    <td>{{ instance.hora }}</td>
+                    <td>{{ instance.velocidadsobrepaso }}</td>
+                    <td>{{ instance.tiempovelocidadexceso }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% endif %}
     </span>
 
