@@ -1657,7 +1657,7 @@ class Talleres(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self):
-        return f"{self.nombre}".strip(" ")
+        return f"{self.idtaller}".replace(" ", "")
 
     class Meta:
         # managed = False
@@ -2616,8 +2616,8 @@ class Verificaciones(models.Model):
         return cert.nrocertificado
 
     def __str__(self) -> str:
-        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".strip(
-            " "
+        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".replace(
+            " ", ""
         )
 
     class Meta:
