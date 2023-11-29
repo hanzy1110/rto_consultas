@@ -371,6 +371,7 @@ def map_fields(data: AuxData, model: Model):
             cache_key = (
                 f"unique_values_{model._meta.db_table}{model._meta.app_label}_{field}"
             )
+            assert False
             cached_values = cache.get(cache_key)
 
             if cached_values is None:
