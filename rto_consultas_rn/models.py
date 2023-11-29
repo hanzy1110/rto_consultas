@@ -1656,6 +1656,9 @@ class Talleres(models.Model):
         db_column="AdjObligatorio"
     )  # Field name made lowercase.
 
+    def __str__(self):
+        return f"{self.nombre}".strip(" ")
+
     class Meta:
         # managed = False
         app_label = "rto_consultas_rn"
@@ -2611,6 +2614,11 @@ class Verificaciones(models.Model):
         )
 
         return cert.nrocertificado
+
+    def __str__(self) -> str:
+        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".strip(
+            " "
+        )
 
     class Meta:
         # managed = False
