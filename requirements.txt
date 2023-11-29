@@ -15,3 +15,4 @@ crispy-bootstrap4
 psycopg2-binary
 gunicorn
 pymemcache
+gevent
