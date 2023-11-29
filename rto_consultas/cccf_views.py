@@ -450,9 +450,9 @@ class PDFCccf(PDFTemplateView):
     def get_context_data(self, **kwargs):
         context = super(PDFCccf, self).get_context_data(**kwargs)
 
-        idcertificado = self.kwargs["idcertificado"]
+        nrocertificado = self.kwargs["nrocertificado"]
         # dominio       = self.kwargs["dominio"]
-        cccf = CccfCertificados.objects.get(idcertificado=idcertificado)
+        cccf = CccfCertificados.objects.get(nrocertificado__iexact=nrocertificado)
 
         try:
             logger.debug(f"Checking usuario: {cccf}")
