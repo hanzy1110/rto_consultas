@@ -25,6 +25,7 @@ from rto_consultas.cccf_views import (
     ListCCCFView,
     CCCFRenderForm,
     VerCCCF,
+    PDFCccf,
     add_cccf_exceso,
     carga_cccf,
     cccf_estado_error,
@@ -157,7 +158,7 @@ urlpatterns += [
 ]
 
 # URLS CCCF
-urlpatterns += [
+cccf_urls = [
     path("cccf", CCCFView.as_view(), name="cccf"),
     path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
     path(
@@ -174,6 +175,7 @@ urlpatterns += [
     path("cccf_estado_success/", cccf_estado_success, name="cccf_estado_success"),
     path("cccf_add_exceso/", add_cccf_exceso, name="cccf_add_exceso"),
     path("cccf_carga_precinto/", CargaPrecinto.as_view(), name="cccf_carga_precinto"),
+    path("cccf_imprimir/<int:nrocertificado>", PDFCccf.as_view(), name="cccf_imprimir"),
     path(
         "cccf_exceso_table/",
         consulta_excesos,
@@ -200,6 +202,8 @@ urlpatterns += [
 urlpatterns += [
     path("", include("rto_consultas_rn.urls")),
 ]
+
+urlpatterns += cccf_urls
 
 if settings.DEBUG:
     urlpatterns += [

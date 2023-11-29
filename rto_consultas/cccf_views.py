@@ -18,6 +18,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django_tables2 import SingleTableView
+from wkhtmltopdf.views import PDFTemplateView
 
 from .models import (
     CccfAdjuntoscertificados,
@@ -25,6 +26,7 @@ from .models import (
     CccfCertificados,
     CccfNroscertificadosasignados,
     CccfTalleres,
+    CccfUsuarios,
 )
 from .tables import (
     CCCFExcesosTable,
@@ -33,6 +35,7 @@ from .tables import (
 )
 from .helpers import (
     allow_keys,
+    build_barcode,
     convert_date,
     generate_cccf_key,
     handle_context,
@@ -437,3 +440,63 @@ class CargaPrecinto(CustomRTOView):
         fecha_field="fechacarga",
         render_url="cccf_carga_precinto",
     )
+
+
+class PDFCccf(PDFTemplateView):
+    filename = "cccf.pdf"
+    template_name = "pdf/cccf.html"
+    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
+
+    def get_context_data(self, **kwargs):
+        context = super(PDFCccf, self).get_context_data(**kwargs)
+
+        idcertificado = self.kwargs["idcertificado"]
+        # dominio       = self.kwargs["dominio"]
+        cccf = CccfCertificados.objects.get(idcertificado=idcertificado)
+
+        try:
+            logger.debug(f"Checking usuario: {cccf}")
+            user = User.objects.get(username=cccf.usuariodictamen).username
+            username = f"{user.first_name} {user.lastname}"
+
+        except Exception as e:
+            logger.warning("User not found....")
+            user = CccfUsuarios.objects.get(usuario=cccf.usuario)
+            username = f"{user.nombre} {user.apellido}"
+
+        today = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        barcode_path, final_barcode = build_barcode(
+            cccf.nrocertificado, today, cccf.dominio, "123"
+        )
+        logger.debug(f"BARCODE => {barcode_path}")
+        context["barcode_path"] = barcode_path
+        context["barcode"] = final_barcode
+
+        cccf_excesos = CccfCertificadoexcesos.objects.filter(idcertificado=cccf)
+        context["cccf_excesos"] = cccf_excesos
+
+        context["sinexcesos"] = True
+        if cccf_excesos:
+            context["sinexcesos"] = False
+
+        context["anexo"] = render_to_string(
+            template_name="pdf/cccf_anexo.html", context=context
+        )
+        context["TIPO"] = "Original"
+        context["contenido_original"] = render_to_string(
+            template_name="pdf/cccf_content.html", context=context
+        )
+
+        context["TIPO"] = "Duplicado"
+        context["contenido_duplicado"] = render_to_string(
+            template_name="pdf/cccf_content.html", context=context
+        )
+        context["TIPO"] = "Triplicado"
+        context["contenido_triplicado"] = render_to_string(
+            template_name="pdf/cccf_content.html", context=context
+        )
+        # fechahora = habilitacion.fechahoracreacion
+        # date_str = f"Neuquén, {fechahora.day} de {MONTHS_DICT[fechahora.month]} de {fechahora.year}"
+        # context["date_str"] = date_str
+
+        return context

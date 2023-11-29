@@ -1,0 +1,250 @@
+<page_header>
+
+    <table align='center' cellpadding='0' width='780' cellspacing='0'>
+        <tr>
+            <td><img src='{{ STATIC_URL }}img/logos/LOGO_UNCOMA.png' align='top' /></td>
+            <td><img src='{{ STATIC_URL }}img/logos/LOGO_DPT.png' align='top' /></td>
+        </tr>
+    </table>
+
+</page_header>
+
+<div style="background-color: #fff;font-family: Arial, Geneva, sans-serif;font-size: 10pt;width:750px">
+    <table align="center" cellpadding="0" width="780" cellspacing="0">
+
+        <tr>
+            <td colspan="2" align="center"><b><big>CERTIFICADO DE CALIBRACI&Oacute;N Y CORRECTO FUNCIONAMIENTO</big></b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>';
+        <tr>
+            <td>&nbsp;</td>
+            <td align="right">
+                <table cellpadding="10">
+                    <tr>
+                        <td width="150"><strong>Fecha de Vencimiento: </strong></td>
+                        <td width="100" style="border: 1px solid;text-align: right;">{{ cccf.fechavencimiento }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td align="right">
+                <table cellpadding="10">
+                    <tr>
+                        <td width="250" style="text-align: right;color:#666666;">{{ TIPO }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="400">&nbsp;</td>
+            <td align="right">
+                <table cellpadding="10">
+                    <tr>
+                        <td width="150"><strong>Certificado Nro: </strong></td>
+                        <td width="100" style="border: 1px solid;text-align: right;">{{ cccf.nrocertificado }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td align="right">
+                <table cellpadding="10">
+                    <tr>
+                        <td width="150"><strong>Fecha de Calibraci&oacute;n: </strong></td>
+                        <td width="100" style="border: 1px solid;text-align: right;">{{ cccf.fechacalibracion }}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table cellpadding="0" cellspacing="2" style="margin-left:20px;">
+                    <tr>
+                        <td colspan="2">
+                            <p><strong>Servicio T&eacute;cnico Oficial: {{ cccf.idtaller.nombre }}</strong></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table align="center" cellpadding="0" cellspacing="2" style="border: 1px solid;" width="520">
+                    <tr>
+                        <td colspan="3" align="center">
+                            <h4><b>Identificaci&oacute;n del Veh&iacute;culo</b></h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <strong>Raz&oacute;n Social/Empresa: </strong> {{ cccf.idempresa.razonsocial }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p><strong>CUIT: </strong>{{ cccf.idempresa.cuit }}</p>
+                        </td>
+                        <td>
+                            <p><strong>Usuario: </strong>{{ cccf.usuario }}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="200">
+                            <p><strong>Dominio: </strong>
+                                {{ cccf.dominio }}</p>
+                        </td>
+                        <td width="200">
+                            <p><strong>N&deg; de Interno: </strong>{{ cccf.nrointerno }}</p>
+                        </td>
+                        <td width="250">
+                            <p><strong>Kilometraje: </strong>{{ cccf.kilometraje }}</p>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <table align="center" cellpadding="0" cellspacing="2" style="border: 1px solid;" width="520">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <h4>Datos del Tac&oacute;grafo</h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Marca: </strong>{{ cccf.tacmarca }}</p>
+                        </td>
+                        <td width="306">
+                            <p><strong>Tipo: </strong>{{ cccf.tactipo }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Modelo: </strong>{{ cccf.tacmodelo }}</p>
+                        </td>
+                        <td width="300">
+                            <p><strong>N&deg; de Serie: </strong>{{ cccf.tacnroserie }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Relaci&oacute;n W: </strong>{{ cccf.relw }}</p>
+                        </td>
+                        <td width="300">
+                            <p><strong>Valor Constante K: </strong>{{ cccf.constantek }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Rodado: </strong>{{ cccf.rodado }}</p>
+                        </td>
+                        <td width="300">
+                            <p><strong>N&deg; de Precinto: </strong>{{ cccf.precinto }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Impresora: </strong>{{ cccf.impresora }}</p>
+                        </td>
+                        <td width="300">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table align="center" cellpadding="0" cellspacing="2" style="border: 1px solid;">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <h4><b>Informe</b></h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="350">
+                            <p><strong>Nro de Informe: </strong>{{ cccf.nroinforme }}</p>
+                        </td>
+                        <td width="306">
+                            <p><strong>Cant. Hojas: </strong>{{ cccf.canthojas }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table align="center" style="border: 1px solid;" cellpadding="0" cellspacing="2">
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="110"><strong>Observaciones:</strong></td>
+                                    <td width="546">{{ cccf.observaciones }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">Firma Responsable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign="bottom" colspan="2">
+                <div>
+                    <img src="{{ barcode_path }}" width="400">
+                </div>
+            </td>
+        </tr>
+
+
+    </table>
+</div>

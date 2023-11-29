@@ -1,0 +1,132 @@
+<page_header>
+    <table align='center' cellpadding='0' width='780' cellspacing='0'>
+        <tr>
+            <td><img src='{{ STATIC_URL }}img/logos/LOGO_UNCOMA.png' align='top' /></td>
+            <td><img src='{{ STATIC_URL }}img/logos/LOGO_DPT.png' align='top' /></td>
+        </tr>
+    </table>
+</page_header>
+<page_footer>
+    <div style='text-align: right; padding-bottom: 150px;padding-right: 80px'>Firma Responsable</div>
+</page_footer>
+<div style="background-color: #fff;font-family: Arial, Geneva, sans-serif;font-size: 10pt;width:750px">
+
+    <table>
+        <tr>
+            <td style="text-align:center;width:780px">
+                <strong><big>CERTIFICADO DE CALIBRACION Y CORRECTO FUNCIONAMIENTO</big></strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;width:780px">
+                <br />
+                <big><strong>ANEXO II: REPORTE</strong></big>
+            </td>
+        </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" style="width:660px;margin-left: 25px;">
+        <tr>
+            <td style="text-align:left">
+                <br />
+                Servicio Técnico Oficial: $nomTaller
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                &nbsp;
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table style="width:780px;">
+                    <tr>
+                        <td style="text-align:left; width:390px; border: solid 1px;">
+                            <p style="text-align:center"><strong>Identificación del vehículo</strong></p>
+                            Razón Social/Empresa: {{ cccf.idempresa.razonsocial }}
+                            <p>
+                                CUIT: $CUIT
+                            </p>
+                            Dominio: $dominio&nbsp;&nbsp;&nbsp;
+                            Nro. Interno: {{ cccf.nrointerno }}&nbsp;&nbsp;&nbsp;
+                            Nro. Certificado: {{ cccf.nrocertificado }}
+                        </td>
+                        <td style="text-align:center;vertical-align: middle">
+                        <td valign="bottom">
+                            <div>
+                                <img src="{{ barcode_path }}" width="400">
+                            </div>
+                        </td>
+            </td>
+        </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    </table>
+</div>
+<div style="background-color: #fff;font-family: Arial, Geneva, sans-serif;font-size: 10pt;width:690px;
+    margin-left:30px">
+    <table style="border: 1px solid; width: 690px;">
+        <thead>
+            <tr>
+                <th class="text-center" style='width: 112px;'>
+                    Cant. Desc.
+                </th>
+                <th class="text-center" style='width: 112px;'>
+                    Horas Desc.
+                </th>
+                <th class="text-center" style='width: 112px;'>
+                    Apertura Equipo
+                </th>
+                <th class="text-center" style='width: 112px;'>
+                    Retiro Elemento Grabación
+                </th>
+                <th class="text-center" style='width: 112px;'>
+                    Falla Dispositivo
+                </th>
+                <th class="text-center" style='width: 112px;'>
+                    Falta Inf.
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <span>{{ cccf.desconexioncantidad }}</span>
+                </td>
+                <td class="desconexionhora">
+                    <span>{{ cccf.desconexionhora }}</span>
+                </td>
+                <td class="aperturaequipo">
+                    <span>{{ cccf.aperturaequipo }}</span>
+                </td>
+                <td class="retiroelementograbacion">
+                    <span>{{ cccf.retiroelementograbacion }}</span>
+                </td>
+                <td class="fallasdispositivo">
+                    <span>{{ cccf.fallasdispositivo }}</span>
+                </td>
+                <td class="faltainformacion">
+                    <span>{{ cccf.faltainformacion }}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Excesos de velocidad</b>
+<br><br>
+<span style="font-family: Arial, Geneva, sans-serif;font-size: 10pt;width:750px">
+    {% if sinexcesos %}
+    Sin Exceso de Velocidad
+    {% else %}
+    {% for e in cccf_excesos %}
+    {{ e }}
+    {% endfor %}
+    {% endif %}
+</span>
