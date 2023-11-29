@@ -2097,7 +2097,7 @@ class Talleres(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self):
-        return f"{self.nombre}".strip(" ")
+        return f"{self.nombre}".replace(" ", "")
 
     class Meta:
         app_label = "rto_consultas"
@@ -2813,8 +2813,8 @@ class Verificaciones(models.Model):
     #     unique_together = (("idverificacion", "idtaller"),)
 
     def __str__(self) -> str:
-        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".strip(
-            " "
+        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".replace(
+            " ", ""
         )
 
     @staticmethod
