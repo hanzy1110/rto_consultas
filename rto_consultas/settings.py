@@ -64,6 +64,7 @@ if not DEBUG:
     ALLOWED_HOSTS = [
         ".52.72.115.11",
         ".rto_consultas_prod",
+        ".rto_memcached_prod",
         "10.0.0.4",
         "10.0.0.3",
         ".rtounco.ddns.net",
@@ -80,7 +81,7 @@ if not DEBUG:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-            "LOCATION": "rto_memcached_prod:11210",
+            "LOCATION": "rto_memcached_prod:11211",
         }
     }
     # SSL Certificate paths
