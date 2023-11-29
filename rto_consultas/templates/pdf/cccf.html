@@ -38,6 +38,8 @@
 
 <html>
 
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <!-- Other head content -->
@@ -46,21 +48,21 @@
 <body>
     <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
         {{ contenido_original }}
-    </page> .
+    </page>
     <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
         {{ anexo }}
     </page>
 
     <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
         {{ contenido_duplicado }}
-    </page> .
+    </page>
     <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
         {{ anexo }}
     </page>
 
     <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
         {{ contenido_triplicado }}
-    </page> .
+    </page>
     <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'>
         {{ anexo }}
     </page>
