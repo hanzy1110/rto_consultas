@@ -7,12 +7,25 @@
     <!-- Other head content -->
 </head>
 
+<style>
+    @media print {
+        .new-page {
+            page-break-before: always;
+        }
+    }
+
+</style>
+
 <body>
     <!-- <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'> -->
-    {{ contenido_original }}
+    <p class="new-page">
+        {{ contenido_original }}
+    </p>
     <!-- </page> -->
     <!-- <page orientation='p' footer='page' backbottom='80mm' backtop='40mm'> -->
-    {{ anexo }}
+    <p class="new-page">
+        {{ anexo }}
+    </p>
     <!-- </page> -->
 
     <!-- <page footer='page' pagegroup='new' backbottom='10mm' backtop='40mm'>
