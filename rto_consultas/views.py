@@ -74,6 +74,7 @@ from .tables import (
 from .helpers import (
     filter_vup_transporte,
     generate_key_certificado,
+    get_template_from_user,
     handle_context,
     handle_query,
     AuxData,
@@ -116,29 +117,6 @@ def index(request):
         template_name = "pages/sv_index.html"
 
     return render(request, template_name, {"segment": "index"})
-
-
-def get_template_name(request, *args, **kwargs):
-    # TODO Change the default!
-    if request.htmx:
-        width = request.GET.get("width", None)
-
-        if not width:
-            width = kwargs.pop("width", -1)
-        width = int(width)
-
-        logger.debug(f"WIDTH WAS => {width}")
-
-        template_name = "pages/index_large.html"
-        if width <= 768 and width > -1:
-            template_name = "pages/index_small.html"
-        # elif width >= 768 and width < 1024:
-        #     template_name = "index_medium.html"
-        # else:
-        #     template_name = "index_large.html"
-
-        # return JsonResponse({"template_name": template_name})
-        return render(request, template_name, {"segment": "index"})
 
 
 # Authentication
@@ -237,6 +215,32 @@ class DocumentView(IndexView):
         "carga_obleas": "Carga Obleas",
         "resumen_obleas": "Consulta Disponibilidad Obleas",
     }
+
+
+def get_template_name(request, *args, **kwargs):
+    # TODO Change the default!
+    if request.htmx:
+        width = request.GET.get("width", None)
+
+        if not width:
+            width = kwargs.pop("width", -1)
+        width = int(width)
+
+        logger.debug(f"WIDTH WAS => {width}")
+
+        # TODO additional routing depending on size
+        template_name = get_template_from_user(request)
+        logger.info(f"TEMPLATE NAME => {template_name}")
+
+        # if width <= 768 and width > -1:
+        #     template_name = "pages/index_small.html"
+        # elif width >= 768 and width < 1024:
+        #     template_name = "index_medium.html"
+        # else:
+        #     template_name = "index_large.html"
+
+        # return JsonResponse({"template_name": template_name})
+        return render(request, template_name, {"segment": "index"})
 
 
 class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):

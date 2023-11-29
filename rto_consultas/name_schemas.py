@@ -55,5 +55,13 @@ DOCS = [(i, d) for i, d in enumerate(["", "DNI", "LC", "LE", "PAS", "CUIT"])]
 
 MODIFICADOS = {0: "No", 1: "Si"}
 
+USER_GROUPS = [
+    "CCCFGroup",
+    "DPTGroup",
+    "SecTranspRNGroup",
+    "SVGroup",
+    "VialidadRNGroup",
+]
+
 # TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
 # TALLERES_RN_CHOICES = map_fields([], TalleresRN)

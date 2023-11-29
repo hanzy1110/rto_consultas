@@ -38,6 +38,7 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
+from rto_consultas.name_schemas import USER_GROUPS
 from .presigned_url import (
     generate_presigned_url,
     get_s3_client,
@@ -1014,6 +1015,20 @@ def handle_upload_file(file, idtaller, s3_prefix, bucket_name=None):
     #     s3_client=s3,
     #     s3_key=s3_key,
     # )
+
+
+def get_template_from_user(request, default_template="pages/index_large.html"):
+    user = request.user
+    # Check the user's group or any other condition
+    selected_group = next(
+        filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+    )
+    if selected_group:
+        logger.info(f"SELECTED GROUP => {selected_group}")
+        return f"pages/{selected_group}.html"
+
+    logger.warn("REMEMBER UPDATING name_schemas.USERGROUPS!")
+    return default_template
 
 
 def allow_keys(data: dict, keys: list[str]):
