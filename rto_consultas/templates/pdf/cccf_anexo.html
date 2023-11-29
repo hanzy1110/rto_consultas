@@ -29,7 +29,7 @@
         <tr>
             <td style="text-align:left">
                 <br />
-                Servicio Técnico Oficial: $nomTaller
+                Servicio Técnico Oficial: {{ cccf.idtaller.nombre }}
                 <br />
             </td>
         </tr>
@@ -47,7 +47,7 @@
                             <p style="text-align:center"><strong>Identificación del vehículo</strong></p>
                             Razón Social/Empresa: {{ cccf.idempresa.razonsocial }}
                             <p>
-                                CUIT: $CUIT
+                                CUIT: {{ cccf.idempresa.cuit }}
                             </p>
                             Dominio: $dominio&nbsp;&nbsp;&nbsp;
                             Nro. Interno: {{ cccf.nrointerno }}&nbsp;&nbsp;&nbsp;

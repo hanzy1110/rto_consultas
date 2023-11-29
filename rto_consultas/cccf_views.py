@@ -479,6 +479,8 @@ class PDFCccf(PDFTemplateView):
         if cccf_excesos:
             context["sinexcesos"] = False
 
+        context["cccf"] = cccf
+
         context["anexo"] = render_to_string(
             template_name="pdf/cccf_anexo.html", context=context
         )
