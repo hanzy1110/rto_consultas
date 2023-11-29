@@ -446,7 +446,7 @@ class CargaPrecinto(CustomRTOView):
 class PDFCccf(PDFTemplateView):
     filename = "cccf.pdf"
     template_name = "pdf/cccf.html"
-    cmd_options = {"log-level": "debug", "quiet": False, "enable-local-file-access": ""}
+    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
 
     def get_context_data(self, **kwargs):
         context = super(PDFCccf, self).get_context_data(**kwargs)
