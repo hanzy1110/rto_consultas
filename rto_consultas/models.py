@@ -1086,6 +1086,9 @@ class Habilitacion(models.Model):
         db_column="NroCertificadoCCCF", max_length=50, blank=True, null=True
     )  # Field name made lowercase.
 
+    def __str__(self):
+        return f"{self.idhabilitacion}_{self.dominio}".strip(" ")
+
     class Meta:
         ordering = ("-idhabilitacion",)
         app_label = "rto_consultas"
@@ -2093,6 +2096,9 @@ class Talleres(models.Model):
         db_column="AdjObligatorio"
     )  # Field name made lowercase.
 
+    def __str__(self):
+        return f"{self.nombre}".strip(" ")
+
     class Meta:
         app_label = "rto_consultas"
         # managed = False
@@ -2807,7 +2813,9 @@ class Verificaciones(models.Model):
     #     unique_together = (("idverificacion", "idtaller"),)
 
     def __str__(self) -> str:
-        return f"Verif: {self.idverificacion}:{self.dominiovehiculo} - {self.idtaller}"
+        return f"{self.idverificacion}_{self.dominiovehiculo}_{self.idtaller}".strip(
+            " "
+        )
 
     @staticmethod
     def get_nro_certificado(record):

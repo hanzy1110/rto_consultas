@@ -829,7 +829,7 @@ def parse_name_length(value, ptype):
 
 
 def check_vigencia(verificacion):
-    cache_key = f"certificado:{verificacion.idtaller}-{verificacion.idverificacion}"
+    cache_key = f"{verificacion.idverificacion}"
     cert = cache.get(cache_key, None)
     if not cert:
         logger.warn(f"CERT NOT FOUND! CACHE MISS")

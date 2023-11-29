@@ -55,7 +55,7 @@ ESTADO_CERTIFICADO = {
 
 class ImageColumn(tables.Column):
     def render(self, record):
-        cache_key = f"certificado:{record.idtaller}-{record.idverificacion}"
+        cache_key = f"{record.idverificacion}"
 
         cert = cache.get(cache_key, None)
 
@@ -92,7 +92,7 @@ class FileColumnHabs(tables.FileColumn):
         )
 
         logger.debug(f"URL => {url}")
-        cache_key = f"habilitacion:{record.idhabilitacion}"
+        cache_key = f"{record.idhabilitacion}"
         cached_cert = cache.get(cache_key)
 
         image_url = static(f"img/small-logos/pdf-flat.png")
@@ -129,9 +129,7 @@ class CustomFileColumn(tables.FileColumn):
         if certificado:
             certificado = certificado[0]
 
-            cache_key = (
-                f"certificado:{certificado.idtaller_id}-{certificado.idverificacion_id}"
-            )
+            cache_key = f"{certificado.idverificacion}"
             cache.set(cache_key, certificado)
             url = generate_key_from_params(
                 certificado.idtaller_id,
@@ -144,7 +142,7 @@ class CustomFileColumn(tables.FileColumn):
     def render(self, value, record):
         url = self.get_url(value, record)
         logger.debug(f"URL => {url}")
-        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
+        cache_key = f"{record.idverificacion}"
         cached_cert = cache.get(cache_key)
 
         image_url = static(f"img/small-logos/pdf-flat.png")

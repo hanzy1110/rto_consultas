@@ -46,7 +46,7 @@ from rto_consultas.name_schemas import *
 
 class ImageColumn(tables.Column):
     def render(self, record):
-        cache_key = f"certificado:{record.idtaller}-{record.idverificacion}"
+        cache_key = f"{record.idverificacion}"
 
         cert = cache.get(cache_key, None)
 
@@ -133,7 +133,7 @@ class CustomFileColumn(tables.FileColumn):
     def render(self, value, record):
         url = self.get_url(value, record)
         logger.debug(f"URL => {url}")
-        cache_key = f"certificado:{record.idtaller_id}-{record.idverificacion}"
+        cache_key = f"{record.idverificacion}"
         cached_cert = cache.get(cache_key)
 
         image_url = static(f"img/small-logos/pdf-flat.png")
