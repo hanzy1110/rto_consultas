@@ -612,7 +612,7 @@ class ResumenObleas_RN(CustomRTOView_RN, LoginRequiredMixin):
             "nrocertificado": "text",
         },
         fecha_field="fechacarga",
-        render_url="resumen_obleas",
+        render_url="obleas_por_taller_rn",
     )
 
     def get_context_data(self):
