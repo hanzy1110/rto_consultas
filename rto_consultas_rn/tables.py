@@ -825,7 +825,7 @@ class ProrrogasTable_RN(tables.Table):
             "idtaller",
             "fundamentacionpeticion",
             "fundamentaciondictamen",
-            "aprobado"
+            # "aprobado"
             # HYPERLINKS:
             # "vista_previa",
         ]
@@ -879,7 +879,7 @@ class ExcepcionesTable_RN(tables.Table):
             "modelovehiculo",
             "titular",
             "idtaller",
-            "aprobado"
+            # "aprobado"
             # HYPERLINKS:
             # "vista_previa",
         ]
