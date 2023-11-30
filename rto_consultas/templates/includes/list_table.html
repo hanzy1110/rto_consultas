@@ -14,7 +14,7 @@
     <div hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="reloadTable from:body">
     </div>
 
-    <div hx-get="{% url "cert_bound_error" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundError" from:body">
+    <div hx-get="{% url "cert_bound_error" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundError from:body">
     </div>
 
     <form hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="submit">
