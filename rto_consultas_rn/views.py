@@ -61,6 +61,7 @@ from rto_consultas_rn.tables import (
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
+    ObleasPorTallerTable,
     VehiculosTable,
     CertificadosTable,
     CertificadosAssignTable,
@@ -576,4 +577,65 @@ class VerHabilitacion_RN(DetailView, LoginRequiredMixin):
         context["modificado"] = modificado
 
         context["descripciones"] = descripciones
+        return context
+
+
+class ResumenObleas_RN(CustomRTOView_RN, LoginRequiredMixin):
+    model = Certificadosasignadosportaller
+    paginate_by = settings.PAGINATION
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = ObleasPorTaller
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=[
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idtaller": "Nombre Taller",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+        },
+        ids={
+            "fecha_desde": "#txtFechaD",
+            "fecha_hasta": "#txtFechaH",
+        },
+        types={
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+            "nrocertificado": "text",
+        },
+        fecha_field="fechacarga",
+        render_url="resumen_obleas",
+    )
+
+    def get_context_data(self):
+        context = super().get_context_data()
+
+        data = []
+        talleres = Talleres.objects.all()
+        if self.request.GET:
+            idtaller = self.request.GET.get("taller", None)
+            talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
+
+        for t in talleres:
+            certs_by_taller = Certificadosasignadosportaller.objects.filter(
+                idtaller=t.idtaller, disponible__iexact=1
+            )
+
+            cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data["taller"] = t.nombre
+
+            data.append(cert_data)
+
+        logger.info(data)
+        table = ObleasPorTallerTable(data)
+        context["table"] = table
+
         return context

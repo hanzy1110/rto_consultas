@@ -845,3 +845,12 @@ class ExcepcionesTable_RN(tables.Table):
         self.page = self.paginator.page(page)
 
         return self
+
+
+class ObleasPorTallerTable(tables.Table):
+    taller = tables.Column(verbose_name="Planta")
+    cant_vup = tables.Column(verbose_name="ANSV")
+    cant_transporte = tables.Column(verbose_name="DPT")
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
