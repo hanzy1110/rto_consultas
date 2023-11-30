@@ -41,7 +41,6 @@ from rto_consultas.models import (
 from rto_consultas.name_schemas import (
     USER_CERTS_BOUNDS,
     USER_GROUPS,
-    USER_QUERIES,
     USER_QUERIES_CERTS_ASIGNADOS,
     USER_QUERIES_VERIFICACIONES,
 )
