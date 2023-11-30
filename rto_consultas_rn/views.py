@@ -500,6 +500,7 @@ class RenderExcepcionesForm_RN(TemplateView):
         },
         parsed_names={
             "dominio": "Dominio Vehiculo",
+            "idtaller": "Planta",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
         },
