@@ -81,6 +81,15 @@ class ImageColumn(tables.Column):
         # return format_html('<img src="img/small-logos/{}.png" />', key)
 
 
+class ImageColumnAprobado(tables.Column):
+    def render(self, record):
+        key = VALS_ANULADO[record.aprobado]
+        # Use the static template tag to generate the image URL
+        image_url = static(f"img/small-logos/{key}.png")
+        # Return the HTML with the correct image URL
+        return format_html('<img src="{}" />', image_url)
+
+
 class FileColumnHabs(tables.FileColumn):
     def render(self, value, record):
         url = self.get_url(value, record)
@@ -802,7 +811,7 @@ class ProrrogasTable_RN(tables.Table):
     dominio = tables.Column(verbose_name="Dominio")
     fechahoracreacion = tables.Column(verbose_name="Fecha Hora Creacion")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
-    aprobado = ImageColumn(
+    aprobado = ImageColumnAprobado(
         empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
     )
 
@@ -856,7 +865,7 @@ class ExcepcionesTable_RN(tables.Table):
     modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
-    aprobado = ImageColumn(
+    aprobado = ImageColumnAprobado(
         empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
     )
 
