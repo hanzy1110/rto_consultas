@@ -79,6 +79,7 @@ from rto_consultas.helpers import (
     generate_key,
     build_barcode,
     handle_save_hab,
+    get_queryset_from_user,
 )
 
 from rto_consultas.forms import (
@@ -129,6 +130,8 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
 
+        if self.model == Verificaciones:
+            queryset = get_queryset_from_user(queryset, self.request)
         if page:
             # Handle pagination...
             self.table_data = queryset
