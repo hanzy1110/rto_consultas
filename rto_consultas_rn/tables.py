@@ -800,8 +800,10 @@ class ExcepcionesTable_RN(tables.Table):
     )
 
     dominio = tables.Column(verbose_name="Dominio")
-    conductor = tables.Column(orderable=False, empty_values=())
+    titular = tables.Column(orderable=False, empty_values=())
     fecha = tables.Column(verbose_name="Fecha Desde")
+    modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
+    marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
 
     class Meta:
         template_name = "tables/htmx_table.html"
@@ -811,7 +813,7 @@ class ExcepcionesTable_RN(tables.Table):
             "fecha",
             "marcavehiculo",
             "modelovehiculo",
-            "conductor",
+            "titular",
             "idtaller"
             # HYPERLINKS:
             # "vista_previa",
@@ -829,7 +831,7 @@ class ExcepcionesTable_RN(tables.Table):
             logger.warn(e)
             return "UNK"
 
-    def render_conductor(self, record):
+    def render_titular(self, record):
         if record.tipopersona in "Jj":
             return f"{record.razonsocialtitular}"
         return f"{record.nombretitular} {record.apellidotitular}"
