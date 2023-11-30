@@ -491,7 +491,6 @@ class RenderExcepcionesForm_RN(TemplateView):
     aux_data = AuxData(
         query_fields=[
             "dominio",
-            "idtaller",
             "idtipouso",
             "fecha_desde",
             "fecha_hasta",
