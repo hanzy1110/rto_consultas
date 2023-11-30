@@ -561,7 +561,7 @@ class ListProrrogas_RN(CustomRTOView_RN):
         if isinstance(queryset, list):
             queryset = list(reversed(queryset))
         else:
-            queryset = queryset.order_by("-fecha")
+            queryset = queryset.order_by("-fechahoracreacion")
         logger.info("QUERYSET DONE...")
         return queryset
 
