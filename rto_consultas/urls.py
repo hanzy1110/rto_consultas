@@ -47,6 +47,11 @@ urlpatterns = [
 
 urlpatterns += [
     path(
+        "seg_vial_auditoria/",
+        views.SVViewAuditoria.as_view(),
+        name="seg_vial_auditoria",
+    ),
+    path(
         "seg_vial",
         views.SVView.as_view(),
         name="seg_vial",

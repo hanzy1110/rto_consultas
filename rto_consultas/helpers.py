@@ -1020,9 +1020,14 @@ def handle_upload_file(file, idtaller, s3_prefix, bucket_name=None):
 def get_template_from_user(request, default_template="pages/index_large.html"):
     user = request.user
     # Check the user's group or any other condition
-    selected_group = next(
-        filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
-    )
+    try:
+        selected_group = next(
+            filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+        )
+    except StopIteration as e:
+        logger.warn(f"Maybe no group... {user}")
+        return default_template
+
     if selected_group:
         logger.info(f"SELECTED GROUP => {selected_group}")
         return f"pages/{selected_group}.html"

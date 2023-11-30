@@ -202,10 +202,16 @@ class HabsView(IndexView):
     }
 
 
-class SVView(IndexView):
+class SVViewAuditoria(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "consulta_documentacion": "Consulta Documentacion",
+    }
+
+
+class SVView(IndexView):
+    urls = {
+        "verificaciones": "Verificaciones",
     }
 
 
