@@ -17,7 +17,7 @@ from django.contrib.auth.views import (
     PasswordChangeView,
     PasswordResetConfirmView,
 )
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpHeaders, HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 
 from django.contrib.auth.models import User
@@ -72,6 +72,7 @@ from .tables import (
     VerificacionesAnuales,
 )
 from .helpers import (
+    CertBoundError,
     filter_vup_transporte,
     generate_key_certificado,
     get_queryset_from_user,
@@ -265,6 +266,10 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
         if self.model == Verificaciones:
             queryset = get_queryset_from_user(queryset, self.request)
+        # elif self.model == Certificadosasignadosportaller:
+        #     queryset = get_queryset_from_user(
+        #         queryset, self.request, model="certs_asignados"
+        #     )
 
         if page:
             # Handle pagination...
@@ -280,6 +285,17 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
 
         logger.debug("CONTEXT HANDLED...")
         return context
+
+    def get(self, request, *args, **kwargs):
+        try:
+            response = super().get(request, *args, **kwargs)
+            return response
+        except CertBoundError as e:
+            logger.error("ERROR DURING QUERY CERT BOUNDS...")
+            logger.error(e.__cause__)
+            res = HttpResponse("")
+            res.headers["Hx-Trigger"] = "certBoundError"
+            return res
 
     def get_template_names(self):
         if self.request.htmx:
@@ -329,6 +345,10 @@ class ListVerificacionesView(CustomRTOView):
 
         queryset = get_queryset_from_user(queryset, self.request)
         return queryset
+
+
+def cert_bound_error(request, *args, **kwargs):
+    return render(template_name="pages/cert_bound_error.html", request=request)
 
 
 @method_decorator(login_required, name="dispatch")

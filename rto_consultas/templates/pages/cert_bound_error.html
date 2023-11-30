@@ -1,0 +1,17 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+    <div class="modal-underlay" _="on click trigger closeModal"></div>
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="dialogAddExceso">Error carga Obleas</h4>
+        </div>
+        <div class="modal-body">
+            <span>Revisar los Valores ingresados</span>
+        <a style="display:block" href="{% url 'carga_obleas' %}">
+        <button class="btn btn-sm btn-primary">
+            Regresar
+        </button>
+        </a>
+        </div>
+    </div>
+</div>

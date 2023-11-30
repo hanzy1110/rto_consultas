@@ -316,10 +316,10 @@ ATTRS = "form-control input-sm width:150px;"
 class CCCFForm(forms.ModelForm):
     cuit = forms.CharField(label="CUIT", widget=forms.TextInput(attrs={"class": ATTRS}))
     razonsocial = forms.CharField(
-        label="Razon Social", widget=forms.TextInput(attrs={"class": ATTRS})
+        label="Razón Social", widget=forms.TextInput(attrs={"class": ATTRS})
     )
     fechacalibracion = forms.DateField(
-        label="Fecha Calibracion",
+        label="Fecha Calibración",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     fechavencimiento = forms.DateField(
@@ -331,20 +331,20 @@ class CCCFForm(forms.ModelForm):
     )  # Example field for 'Cant. Desc.'
     desconexionhora = forms.FloatField(
         required=False,
-        label="Hora Desconexion",
+        label="Hora Desconexión",
         # widget=forms.DateInput(attrs={"class": "date", "type": "datetime-local"}),
     )  # Example field for 'Horas Desc.'
     aperturaequipo = forms.BooleanField(
         required=False, label="Apertura Equipo"
     )  # Example field for 'Apertura Equipo'
     retiroelementograbacion = forms.BooleanField(
-        required=False, label="Retiro Elemento Grabacion"
+        required=False, label="Retiro Elemento Grabación"
     )  # Example field for 'Retiro Elemento Grabación'
     fallasdispositivo = forms.BooleanField(
         required=False, label="Fallas Dispositivo"
     )  # Example field for 'Falla Dispositivo'
     faltainformacion = forms.BooleanField(
-        required=False, label="Falta Informacion"
+        required=False, label="Falta Información"
     )  # Example field for 'Falta Inf.'
 
     nroinforme = forms.CharField(
@@ -422,7 +422,7 @@ class CCCFForm(forms.ModelForm):
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
-                    HTML("<h2>Datos del Vehiculo</h2>"),
+                    HTML("<h2>Datos del Vehículo</h2>"),
                     Div(
                         Field("dominio", wrapper_class="form-group col-4"),
                         Field("nrointerno", wrapper_class="form-group col-4"),
@@ -432,7 +432,7 @@ class CCCFForm(forms.ModelForm):
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
-                    HTML("<h2>Datos del Tacografo</h2>"),
+                    HTML("<h2>Datos del Tacógrafo</h2>"),
                     Div(
                         Field("tacmarca", wrapper_class="form-group col-6"),
                         Field("tactipo", wrapper_class="form-group col-6"),
@@ -449,7 +449,7 @@ class CCCFForm(forms.ModelForm):
                     css_class="card card-plain mt-2 box",
                 ),
                 Div(
-                    HTML("<h2>Informacion</h2>"),
+                    HTML("<h2>Información</h2>"),
                     Div(
                         Field("desconexioncantidad", wrapper_class="form-group col-6"),
                         Field("desconexionhora", wrapper_class="form-group col-6"),
@@ -477,54 +477,4 @@ class CCCFForm(forms.ModelForm):
                     css_class="card card-plain mt-2 box",
                 ),
             )
-        )
-
-
-class InformesForm(forms.Form):
-    txtNroInforme = forms.CharField(
-        label="Nro Informe",
-        widget=forms.TextInput(
-            attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
-        ),
-        required=True,
-    )
-
-    txtCantHojas = forms.CharField(
-        label="Cant. Hojas/Discos",
-        widget=forms.TextInput(
-            attrs={"class": "form-control input-sm", "id": "txtCantHojas"}
-        ),
-        required=True,
-    )
-
-    hfAdjuntos = forms.CharField(
-        widget=forms.HiddenInput(attrs={"id": "hfAdjuntos"}),
-        required=False,
-    )
-
-    cccf_files = forms.FileField(
-        label="Carga Archivos",
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(InformesForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = "post"
-        self.helper.layout = Layout(
-            Div(
-                Div(
-                    Field("txtNroInforme", wrapper_class="col-6"),
-                    css_class="form-group",
-                ),
-                Div(
-                    Field("txtCantHojas", wrapper_class="col-6"),
-                    css_class="form-group",
-                ),
-                Div(
-                    Field("cccf_files"),
-                    css_class="form-group",
-                ),
-                css_class="panel-body",
-            ),
-            # css_class="panel panel-default",
         )

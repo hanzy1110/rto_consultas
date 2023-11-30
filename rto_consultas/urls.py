@@ -210,6 +210,16 @@ urlpatterns += [
 
 urlpatterns += cccf_urls
 
+error_urls = [
+    path(
+        "cert_bound_error",
+        views.cert_bound_error,
+        name="cert_bound_error",
+    ),
+]
+
+urlpatterns += error_urls
+
 if settings.DEBUG:
     urlpatterns += [
         path("static/", serve, {"document_root": settings.STATIC_ROOT}),

@@ -38,7 +38,13 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
-from rto_consultas.name_schemas import USER_GROUPS, USER_QUERIES
+from rto_consultas.name_schemas import (
+    USER_CERTS_BOUNDS,
+    USER_GROUPS,
+    USER_QUERIES,
+    USER_QUERIES_CERTS_ASIGNADOS,
+    USER_QUERIES_VERIFICACIONES,
+)
 from .presigned_url import (
     generate_presigned_url,
     get_s3_client,
@@ -64,6 +70,12 @@ class AuxData:
     aux: Dict[str, str] = field(default_factory=dict)
     render_url: str = ""
     render_form: str = ""
+
+
+class CertBoundError(Exception):
+    def __init__(self, *args: object) -> None:
+        logger.error("CERT BOUND ERROR...")
+        super().__init__(*args)
 
 
 def convert_date(input_date):
@@ -188,6 +200,7 @@ def parse_license_plate_type(value):
 
 def handle_query(request, model, fecha_field="fecha"):
     query = request.GET.copy()
+    user = request.user
     sort = query.pop("sort", None)
     page = query.pop("page", None)
     _export = query.pop("_export", None)
@@ -209,8 +222,9 @@ def handle_query(request, model, fecha_field="fecha"):
     precinto_end = query.pop("precinto_end", None)
 
     cert_init, cert_end = handle_cert_insert(
-        query.get("idtaller", None), cert_init, cert_end
+        query.get("idtaller", None), cert_init, cert_end, user
     )
+
     precinto_init, precinto_end = handle_precinto_insert(
         query.get("idtaller", None), precinto_init, precinto_end
     )
@@ -302,30 +316,34 @@ def handle_precinto_insert(taller_id, precinto_init, precinto_end):
     return precinto_init, precinto_end
 
 
-def handle_cert_insert(taller_id, cert_init, cert_end):
+def handle_cert_insert(taller_id, cert_init, cert_end, user=None):
     logger.debug(f"PARAMS TO HANDLE:, {taller_id}, {cert_init}, {cert_end}")
 
     if taller_id and cert_end and cert_init:
         # TODO Check bounds for c]ertificate numbers...
-        taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
-        taller = Talleres.objects.get(idtaller__iexact=taller_id)
-        certs = [
-            Certificadosasignadosportaller(
-                nrocertificado=nro,
-                idtaller=taller,
-                fechacarga=datetime.today(),
-                disponible=1,
-                replicado=0,
-            )
-            for nro in range(int(cert_init[0]), int(cert_end[0]))
-        ]
 
-        try:
-            Certificadosasignadosportaller.objects.bulk_create(certs)
-            return cert_init, cert_end
-        except Exception as e:
-            logger.error("ERROR DURING INSERTING CERTS...")
-            logger.error(e.__cause__)
+        if check_cert_bounds(cert_init, cert_end, user):
+            taller_id = int(taller_id) if isinstance(taller_id, str) else taller_id
+            taller = Talleres.objects.get(idtaller__iexact=taller_id)
+            certs = [
+                Certificadosasignadosportaller(
+                    nrocertificado=nro,
+                    idtaller=taller,
+                    fechacarga=datetime.today(),
+                    disponible=1,
+                    replicado=0,
+                )
+                for nro in range(int(cert_init[0]), int(cert_end[0]))
+            ]
+
+            try:
+                Certificadosasignadosportaller.objects.bulk_create(certs)
+                return cert_init, cert_end
+            except Exception as e:
+                logger.error("ERROR DURING INSERTING CERTS...")
+                logger.error(e.__cause__)
+        else:
+            raise CertBoundError()
 
     return cert_init, cert_end
     # return None, None
@@ -1036,7 +1054,7 @@ def get_template_from_user(request, default_template="pages/index_large.html"):
     return default_template
 
 
-def get_queryset_from_user(queryset, request):
+def get_queryset_from_user(queryset, request, model="verificaciones"):
     user = request.user
     # Check the user's group or any other condition
     try:
@@ -1050,7 +1068,12 @@ def get_queryset_from_user(queryset, request):
     if selected_group:
         logger.info(f"SELECTED GROUP => {selected_group}")
 
-        user_query = USER_QUERIES[selected_group]
+        user_query = {}
+        if model == "verificaciones":
+            user_query = USER_QUERIES_VERIFICACIONES[selected_group]
+        elif model == "certs_asignados":
+            user_query = USER_QUERIES_CERTS_ASIGNADOS[selected_group]
+
         logger.debug(f"SELECTED QUERY => {user_query}")
         if user_query:
             return queryset.filter(Q(**user_query))
@@ -1062,3 +1085,22 @@ def get_queryset_from_user(queryset, request):
 
 def allow_keys(data: dict, keys: list[str]):
     return {k: data[k] for k in keys}
+
+
+def check_cert_bounds(cert_init, cert_end, user):
+    try:
+        selected_group = next(
+            filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+        )
+    except StopIteration as e:
+        logger.warn(f"Maybe no group... {user}")
+        return True
+
+    bound = USER_CERTS_BOUNDS.get(selected_group, None)
+    if bound:
+        init = str(cert_init)[:3] == bound
+        end = str(cert_end)[:3] == bound
+
+        return init and end
+
+    return True

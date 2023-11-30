@@ -63,7 +63,7 @@ USER_GROUPS = [
     "VialidadRNGroup",
 ]
 
-USER_QUERIES = {
+USER_QUERIES_CERTS_ASIGNADOS = {
     "CCCFGroup": {},
     "DPTGroup": {"idtipouso__iexact": 3},
     "SecTranspRNGroup": {"idtipouso__iexact": 3},
@@ -71,6 +71,22 @@ USER_QUERIES = {
     "VialidadRNGroup": {"idtipouso__iexact": 1},
 }
 
+
+USER_QUERIES_VERIFICACIONES = {
+    "CCCFGroup": {},
+    "DPTGroup": {"idtipouso__iexact": 3},
+    "SecTranspRNGroup": {"idtipouso__iexact": 3},
+    "SVGroup": {"idtipouso__iexact": 1},
+    "VialidadRNGroup": {"idtipouso__iexact": 1},
+}
+
+USER_CERTS_BOUNDS = {
+    "CCCFGroup": None,
+    "DPTGroup": "123",
+    "SecTranspRNGroup": None,
+    "SVGroup": "152",
+    "VialidadRNGroup": None,
+}
 
 # TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
 # TALLERES_RN_CHOICES = map_fields([], TalleresRN)
