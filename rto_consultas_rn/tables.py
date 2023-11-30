@@ -828,7 +828,12 @@ class ExcepcionesTable_RN(tables.Table):
     #     return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_idtaller(self, value):
-        return value.nombre
+        try:
+            taller = Talleres.objects.get(idtaller=value)
+            return taller.nombre
+        except Exception as e:
+            logger.warn(e)
+            return "UNK"
 
     def render_conductor(self, record):
         if record.tipopersona in "Jj":
