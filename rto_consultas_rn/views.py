@@ -37,9 +37,11 @@ from admin_soft.forms import LoginForm
 
 from .models import (
     Adjuntos,
+    Excepcion,
     Localidades,
     Personas,
     Provincias,
+    Talleres,
     Usuarios,
     Verificaciones,
     Certificadosasignadosportaller,
@@ -54,6 +56,7 @@ from rto_consultas_rn.models import Estados, Tipousovehiculo
 from rto_consultas_rn.models import Talleres as TalleresRN
 
 from rto_consultas_rn.tables import (
+    ExcepcionesTable_RN,
     OitsTable_RN,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
@@ -433,6 +436,83 @@ class RenderOitsForm_RN(TemplateView):
 
     form_class = CustomRTOForm
     model = Oits
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context = handle_context(context, self)
+        return context
+
+
+@method_decorator(login_required, name="dispatch")
+class ListExcepciones_RN(CustomRTOView_RN):
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model = Excepcion
+    template_name = "includes/list_table.html"
+    paginate_by = settings.PAGINATION
+    context_object_name = "Oits"
+    table_class = ExcepcionesTable_RN
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
+        ],
+        form_fields={},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+        },
+        ids={
+            "dominio": "#txtDominio",
+        },
+        types={
+            "dominio": "text",
+        },
+        render_url="excepciones_rn",
+        render_form="excepciones_rn_form",
+    )
+
+    def get_queryset(self):
+        logger.info("CALCULATE QUERYSET...")
+        queryset = super().get_queryset()
+        if isinstance(queryset, list):
+            queryset = list(reversed(queryset))
+        else:
+            queryset = queryset.order_by("-fecha")
+        logger.info("QUERYSET DONE...")
+        return queryset
+
+
+@method_decorator(login_required, name="dispatch")
+class RenderExcepcionesForm_RN(TemplateView):
+    template_name = "includes/form_render.html"
+
+    aux_data = AuxData(
+        query_fields=[
+            "dominio",
+            "idtaller",
+            "idtipouso",
+            "fecha_desde",
+            "fecha_hasta",
+        ],
+        form_fields={"idtaller": Talleres},
+        parsed_names={
+            "dominio": "Dominio Vehiculo",
+            "fecha_desde": "Fecha Desde",
+            "fecha_hasta": "Fecha Hasta",
+        },
+        ids={"dominiovehiculo": "#txtDominio"},
+        types={
+            "dominio": "text",
+            "fecha_desde": "date",
+            "fecha_hasta": "date",
+        },
+        render_url="oits",
+        fecha_field="fecha",
+    )
+
+    form_class = CustomRTOForm
+    model = Excepcion
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

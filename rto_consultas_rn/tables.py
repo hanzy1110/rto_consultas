@@ -10,6 +10,7 @@ from rto_consultas_rn.models import (
     # VWVerificaciones,
     Localidades,
     Oits,
+    Excepcion,
     Usuarios,
     Verificacionespdf,
     Tipovehiculo,
@@ -780,6 +781,59 @@ class OitsTable_RN(tables.Table):
         logger.debug(f"FECHA => {fecha}")
         vigencia = fecha + timedelta(days=15.0)
         return vigencia
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
+class ExcepcionesTable_RN(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={},
+        parsed_names={"name": "name"},
+    )
+
+    dominio = tables.Column(verbose_name="Dominio")
+    conductor = tables.Column(orderable=False, empty_values=())
+    # razonsocial = tables.Column(verbose_name="Titular")
+    fecha = tables.Column(verbose_name="Fecha Desde")
+    # vista_previa = tables.Column(verbose_name="Vista Previa")
+
+    vigencia = tables.Column(
+        verbose_name="Fecha Hasta", orderable=False, empty_values=()
+    )
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = Excepcion
+        fields = [
+            "dominio",
+            "fecha",
+            "marcavehiculo",
+            "modelovehiculo",
+            "conductor",
+            "idtaller"
+            # HYPERLINKS:
+            # "vista_previa",
+        ]
+
+    # def render_vista_previa(self, record):
+    #     image_url = static(f"img/small-logos/lupa.png")
+    #     return format_html('<img src="{}" width="25px"/>', image_url)
+
+    def render_idtaller(self, value):
+        return value.nombre
+
+    def render_conductor(self, record):
+        if record.tipopersona in "Jj":
+            return f"{record.razonsocialtitular}"
+        return f"{record.nombretitular} {record.apellidotitular}"
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
