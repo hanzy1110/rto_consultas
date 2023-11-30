@@ -804,6 +804,7 @@ class ExcepcionesTable_RN(tables.Table):
     fecha = tables.Column(verbose_name="Fecha Desde")
     modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
+    idtaller = tables.Column(verbose_name="Planta")
 
     class Meta:
         template_name = "tables/htmx_table.html"
