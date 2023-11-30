@@ -83,7 +83,7 @@ class ImageColumn(tables.Column):
 
 class ImageColumnAprobado(tables.Column):
     def render(self, record):
-        key = VALS_ANULADO[record.aprobado]
+        key = VALS_ANULADO.get(record.anulado, "anulado")
         # Use the static template tag to generate the image URL
         image_url = static(f"img/small-logos/{key}.png")
         # Return the HTML with the correct image URL
