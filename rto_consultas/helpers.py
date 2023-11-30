@@ -406,6 +406,8 @@ def map_fields(data: AuxData, model: Model):
                 descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
                 descriptions = list(map(filter_vup, descriptions))
 
+                logger.info(f"DESCRIPTIONS => {descriptions}")
+                logger.info(f"VALUES LIST => {values_list}")
                 vals = {v: d for v, d in zip(values_list, descriptions)}
                 logger.info(f"VALUES => {vals}")
                 values[field] = vals
