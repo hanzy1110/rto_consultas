@@ -811,9 +811,9 @@ class ProrrogasTable_RN(tables.Table):
     dominio = tables.Column(verbose_name="Dominio")
     fechahoracreacion = tables.Column(verbose_name="Fecha Hora Creacion")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
-    aprobado = ImageColumnAprobado(
-        empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
-    )
+    # aprobado = ImageColumnAprobado(
+    #     empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
+    # )
 
     class Meta:
         template_name = "tables/htmx_table.html"
@@ -865,9 +865,9 @@ class ExcepcionesTable_RN(tables.Table):
     modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
-    aprobado = ImageColumnAprobado(
-        empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
-    )
+    # aprobado = ImageColumnAprobado(
+    #     empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
+    # )
 
     class Meta:
         template_name = "tables/htmx_table.html"
