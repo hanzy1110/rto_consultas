@@ -13,6 +13,11 @@ urlpatterns = [
         name="oits_form",
     ),
     path(
+        "obleas_por_taller/",
+        views_RN.ResumenObleas_RN.as_view(),
+        name="obleas_por_taller_rn",
+    ),
+    path(
         "oits/",
         views_RN.ListOits_RN.as_view(),
         name="oits",

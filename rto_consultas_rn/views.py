@@ -100,7 +100,7 @@ class DVRView(IndexView):
     urls = {
         "verificaciones_rn": "Verificaciones",
         "carga_obleas": "Carga Obleas",
-        "resumen_obleas": "Consulta Disponibilidad Obleas",
+        "obleas_por_taller_rn": "Consulta Disponibilidad Obleas",
         "excepciones_rn": "Consulta Excepciones",
     }
 
@@ -585,7 +585,7 @@ class ResumenObleas_RN(CustomRTOView_RN, LoginRequiredMixin):
     paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
     context_object_name = "Certificados Asignados por taller"
-    table_class = ObleasPorTaller
+    table_class = ObleasPorTallerTable
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
 
