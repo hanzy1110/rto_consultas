@@ -193,6 +193,7 @@ class DPTView(IndexView):
         "verificaciones": "Verificaciones",
         "consulta_ordenes_insp": "Consulta Órdenes de Inspección",
         "cccf": "Consulta CCCF",
+        "carga_obleas": "Carga Obleas",
     }
 
 
@@ -214,6 +215,7 @@ class SVViewAuditoria(IndexView):
 class SVView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
+        "carga_obleas": "Carga Obleas",
     }
 
 
