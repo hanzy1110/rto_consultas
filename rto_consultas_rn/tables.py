@@ -805,6 +805,9 @@ class ExcepcionesTable_RN(tables.Table):
     modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
+    aprobado = ImageColumn(
+        empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
+    )
 
     class Meta:
         template_name = "tables/htmx_table.html"
@@ -815,7 +818,8 @@ class ExcepcionesTable_RN(tables.Table):
             "marcavehiculo",
             "modelovehiculo",
             "titular",
-            "idtaller"
+            "idtaller",
+            "aprobado"
             # HYPERLINKS:
             # "vista_previa",
         ]

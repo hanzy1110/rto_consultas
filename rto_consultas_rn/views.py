@@ -100,7 +100,7 @@ class DVRView(IndexView):
     urls = {
         "verificaciones_rn": "Verificaciones",
         "carga_obleas": "Carga Obleas",
-        "obleas_por_taller_rn": "Consulta Disponibilidad Obleas",
+        # "obleas_por_taller_rn": "Consulta Disponibilidad Obleas",
         "excepciones_rn": "Consulta Excepciones",
     }
 
