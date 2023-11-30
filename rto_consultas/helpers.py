@@ -386,13 +386,11 @@ def map_fields(data: AuxData, model: Model):
             dfield = vals[0]
             dmodel: Model = vals[1]
 
-            try:
-                cache_key = f"unique_values_{model._meta.db_table}{model._meta.app_label}_{field}"
-                logger.debug(cache_key)
-                cached_values = cache.get(cache_key)
-            except Exception as e:
-                logger.error(f"CACHE ERROR {e}")
-                assert False
+            cache_key = (
+                f"unique_values_{model._meta.db_table}{model._meta.app_label}_{field}"
+            )
+            logger.debug(cache_key)
+            cached_values = cache.get(cache_key)
 
             if cached_values is None:
                 logger.info(f"CACHE MISS => {cache_key}")

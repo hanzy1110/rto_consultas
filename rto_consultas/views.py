@@ -433,7 +433,7 @@ class CargaObleas(CustomRTOView):
             "idtaller": ("nombre", Talleres),
         },
         parsed_names={
-            "idtaller": "Nombre Taller",
+            "idtaller": "Planta",
             "cert_init": "Nro Oblea desde",
             "cert_end": "Nro Oblea hasta",
         },
