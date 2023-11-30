@@ -32,4 +32,9 @@ urlpatterns = [
         views_RN.ListVerificacionesView_RN.as_view(),
         name="verificaciones_rn",
     ),
+    path(
+        "excepciones_rn/",
+        views_RN.ListExcepciones_RN.as_view(),
+        name="excepciones_rn",
+    ),
 ]

@@ -100,6 +100,7 @@ class DVRView(IndexView):
         "verificaciones_rn": "Verificaciones",
         "carga_obleas": "Carga Obleas",
         "resumen_obleas": "Consulta Disponibilidad Obleas",
+        "excepciones_rn": "Consulta Excepciones",
     }
 
 
