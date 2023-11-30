@@ -46,6 +46,7 @@ from .presigned_url import (
     upload_fileobj_to_bucket,
 )
 from .logging import configure_logger
+from name_schemas import *
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
@@ -1034,6 +1035,30 @@ def get_template_from_user(request, default_template="pages/index_large.html"):
 
     logger.warn("REMEMBER UPDATING name_schemas.USERGROUPS!")
     return default_template
+
+
+def get_queryset_from_user(queryset, request):
+    user = request.user
+    # Check the user's group or any other condition
+    try:
+        selected_group = next(
+            filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+        )
+    except StopIteration as e:
+        logger.warn(f"Maybe no group... {user}")
+        return queryset
+
+    if selected_group:
+        logger.info(f"SELECTED GROUP => {selected_group}")
+
+        user_query = USER_QUERIES[selected_group]
+        logger.debug(f"SELECTED QUERY => {user_query}")
+        if user_query:
+            return queryset.filter(Q(**user_query))
+        return queryset
+
+    logger.warn("REMEMBER UPDATING name_schemas.USERGROUPS!")
+    return queryset
 
 
 def allow_keys(data: dict, keys: list[str]):

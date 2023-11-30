@@ -809,7 +809,9 @@ class ProrrogasTable_RN(tables.Table):
     )
 
     dominio = tables.Column(verbose_name="Dominio")
-    fechahoracreacion = tables.Column(verbose_name="Fecha Hora Creacion")
+    fechahoracreacion = tables.Column(verbose_name="Fecha Hora Creación")
+    fundamentacionpeticion = tables.Column(verbose_name="Fundamentación Petición")
+    fundamentaciondictamen = tables.Column(verbose_name="Fundamentación Dictamen")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
     # aprobado = ImageColumnAprobado(
     #     empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}

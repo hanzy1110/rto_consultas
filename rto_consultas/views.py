@@ -74,6 +74,7 @@ from .tables import (
 from .helpers import (
     filter_vup_transporte,
     generate_key_certificado,
+    get_queryset_from_user,
     get_template_from_user,
     handle_context,
     handle_query,
@@ -321,7 +322,10 @@ class ListVerificacionesView(CustomRTOView):
         else:
             queryset = queryset.order_by("-idverificacion")
             queryset = queryset.order_by("-fecha")
+
         logger.info("QUERYSET DONE...")
+
+        queryset = get_queryset_from_user(queryset, self.request)
         return queryset
 
 

@@ -63,5 +63,14 @@ USER_GROUPS = [
     "VialidadRNGroup",
 ]
 
+USER_QUERIES = {
+    "CCCFGroup": {},
+    "DPTGroup": {"idtipouso__iexact": 3},
+    "SecTranspRNGroup": {"idtipouso__iexact": 3},
+    "SVGroup": {"idtipouso__iexact": 1},
+    "VialidadRNGroup": {"idtipouso__iexact": 1},
+}
+
+
 # TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
 # TALLERES_RN_CHOICES = map_fields([], TalleresRN)
