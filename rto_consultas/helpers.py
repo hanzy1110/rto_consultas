@@ -397,7 +397,8 @@ def map_fields(data: AuxData, model: Model):
                 try:
                     values_list = model.objects.values_list(field, flat=True).distinct()
                 except Exception as e:
-                    print(e)
+                    logger.error("WHILE PARSING VALUES...")
+                    logger.error(e.__cause__)
                     values_list = dmodel.objects.values_list(
                         "descripcion", flat=True
                     ).distinct()
