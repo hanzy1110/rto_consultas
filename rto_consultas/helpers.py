@@ -38,6 +38,9 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
+
+from rto_consultas_rn.models import Talleres as TalleresRN
+
 from rto_consultas.name_schemas import (
     USER_CERTS_BOUNDS,
     USER_GROUPS,
@@ -395,8 +398,14 @@ def map_fields(data: AuxData, model: Model):
             if cached_values is None:
                 logger.info(f"CACHE MISS => {cache_key}")
                 try:
-                    logger.debug(f"MODEL {model} -- FIELD {field}")
-                    values_list = model.objects.values_list(field, flat=True).distinct()
+                    if model == Talleres or model == TalleresRN:
+                        values_list = model.objects.all().values_list(
+                            "idtaller", flat=True
+                        )
+                    else:
+                        values_list = model.objects.values_list(
+                            field, flat=True
+                        ).distinct()
                 except Exception as e:
                     logger.error("WHILE PARSING VALUES...")
                     logger.error(e.__cause__)
