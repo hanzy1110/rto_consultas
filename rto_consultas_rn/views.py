@@ -510,7 +510,7 @@ class RenderExcepcionesForm_RN(TemplateView):
             "fecha_desde": "date",
             "fecha_hasta": "date",
         },
-        render_url="oits",
+        render_url="excepciones_rn",
         fecha_field="fecha",
     )
 
