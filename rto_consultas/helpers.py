@@ -38,7 +38,7 @@ from rto_consultas.models import (
     Verificacionespdf,
     Usuarios,
 )
-from rto_consultas.name_schemas import USER_GROUPS
+from rto_consultas.name_schemas import USER_GROUPS, USER_QUERIES
 from .presigned_url import (
     generate_presigned_url,
     get_s3_client,
@@ -46,7 +46,6 @@ from .presigned_url import (
     upload_fileobj_to_bucket,
 )
 from .logging import configure_logger
-from name_schemas import *
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
