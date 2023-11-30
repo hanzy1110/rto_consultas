@@ -398,8 +398,8 @@ def map_fields(data: AuxData, model: Model):
             if cached_values is None:
                 logger.info(f"CACHE MISS => {cache_key}")
                 try:
-                    if model == Talleres or model == TalleresRN:
-                        values_list = model.objects.all().values_list(
+                    if dmodel == Talleres or dmodel == TalleresRN:
+                        values_list = dmodel.objects.all().values_list(
                             "idtaller", flat=True
                         )
                     else:
