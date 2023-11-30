@@ -395,6 +395,7 @@ def map_fields(data: AuxData, model: Model):
             if cached_values is None:
                 logger.info(f"CACHE MISS => {cache_key}")
                 try:
+                    logger.debug(f"MODEL {model} -- FIELD {field}")
                     values_list = model.objects.values_list(field, flat=True).distinct()
                 except Exception as e:
                     logger.error("WHILE PARSING VALUES...")
