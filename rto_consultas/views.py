@@ -111,10 +111,10 @@ def index(request):
     user = request.user
     # Check the user's group or any other condition
     template_name = "pages/index.html"
-    if user.groups.filter(name="DPTGroup").exists():
-        template_name = "pages/dpt_index.html"
-    elif user.groups.filter(name="SVGroup").exists():
-        template_name = "pages/sv_index.html"
+    # if user.groups.filter(name="DPTGroup").exists():
+    #     template_name = "pages/dpt_index.html"
+    # elif user.groups.filter(name="SVGroup").exists():
+    #     template_name = "pages/sv_index.html"
 
     return render(request, template_name, {"segment": "index"})
 
