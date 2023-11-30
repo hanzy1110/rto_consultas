@@ -59,6 +59,7 @@ from rto_consultas_rn.models import Talleres as TalleresRN
 from rto_consultas_rn.tables import (
     ExcepcionesTable_RN,
     OitsTable_RN,
+    ProrrogasTable_RN,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
     VerificacionesTables,
@@ -533,7 +534,7 @@ class ListProrrogas_RN(CustomRTOView_RN):
     template_name = "includes/list_table.html"
     paginate_by = settings.PAGINATION
     context_object_name = "Oits"
-    table_class = ExcepcionesTable_RN
+    table_class = ProrrogasTable_RN
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
 
