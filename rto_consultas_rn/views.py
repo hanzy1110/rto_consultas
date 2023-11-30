@@ -496,7 +496,9 @@ class RenderExcepcionesForm_RN(TemplateView):
             "fecha_desde",
             "fecha_hasta",
         ],
-        form_fields={"idtaller": Talleres},
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
         parsed_names={
             "dominio": "Dominio Vehiculo",
             "fecha_desde": "Fecha Desde",
