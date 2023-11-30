@@ -49,7 +49,6 @@ from .helpers import (
 from .forms import (
     CCCFForm,
     CustomRTOForm,
-    InformesForm,
 )  # Import the form you created
 
 from .views import CustomRTOView, ChangeModelView, IndexView
