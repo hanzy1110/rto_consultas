@@ -792,6 +792,57 @@ class OitsTable_RN(tables.Table):
         return self
 
 
+class ProrrogasTable_RN(tables.Table):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={},
+        parsed_names={"name": "name"},
+    )
+
+    dominio = tables.Column(verbose_name="Dominio")
+    fechahoracreacion = tables.Column(verbose_name="Fecha Hora Creacion")
+    idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
+    aprobado = ImageColumn(
+        empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
+    )
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = Excepcion
+        fields = [
+            "dominio",
+            "nrocertificado",
+            "fechahoracreacion",
+            "idtaller",
+            "fundamentacionpeticion",
+            "fundamentaciondictamen",
+            "aprobado"
+            # HYPERLINKS:
+            # "vista_previa",
+        ]
+
+    # def render_vista_previa(self, record):
+    #     image_url = static(f"img/small-logos/lupa.png")
+    #     return format_html('<img src="{}" width="25px"/>', image_url)
+
+    def render_idtaller(self, value):
+        try:
+            taller = Talleres.objects.get(idtaller=value)
+            return taller.nombre
+        except Exception as e:
+            logger.warn(e)
+            return "UNK"
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
 class ExcepcionesTable_RN(tables.Table):
     aux_data = AuxData(
         query_fields=[],

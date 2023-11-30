@@ -18,6 +18,16 @@ urlpatterns = [
         name="obleas_por_taller_rn",
     ),
     path(
+        "prorrogas_rn",
+        views_RN.ListProrrogas_RN.as_view(),
+        name="prorrogas_rn",
+    ),
+    path(
+        "prorrogas_rn_form",
+        views_RN.ListProrrogas_RN.as_view(),
+        name="prorrogas_rn_form",
+    ),
+    path(
         "oits/",
         views_RN.ListOits_RN.as_view(),
         name="oits",
