@@ -801,13 +801,7 @@ class ExcepcionesTable_RN(tables.Table):
 
     dominio = tables.Column(verbose_name="Dominio")
     conductor = tables.Column(orderable=False, empty_values=())
-    # razonsocial = tables.Column(verbose_name="Titular")
     fecha = tables.Column(verbose_name="Fecha Desde")
-    # vista_previa = tables.Column(verbose_name="Vista Previa")
-
-    vigencia = tables.Column(
-        verbose_name="Fecha Hasta", orderable=False, empty_values=()
-    )
 
     class Meta:
         template_name = "tables/htmx_table.html"
