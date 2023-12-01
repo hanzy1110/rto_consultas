@@ -27,6 +27,7 @@ from rto_consultas.helpers import (
     AuxData,
     map_fields,
     generate_key_from_params,
+    check_vigencia,
     convert_date,
     parse_name_length,
 )
@@ -223,6 +224,7 @@ class VerificacionesTables(tables.Table):
 
     class Meta:
         model = Verificaciones
+        row_attrs = {"style": lambda record: check_vigencia(record)}
         orderable = False
         fields = (
             "dominiovehiculo",
