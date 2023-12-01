@@ -33,7 +33,8 @@ def get_choices():
     vals = map_fields(aux_data, Talleres)
     logger.debug(vals)
 
-    choices = list(tuple(vals["idtaller"].items()))
+    # choices = list(tuple(vals["idtaller"].items()))
+    choices = list(vals["idtaller"])
     a = [("", "")]
     a.extend(choices)
     return a

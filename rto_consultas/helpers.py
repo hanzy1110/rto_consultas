@@ -415,7 +415,7 @@ def map_fields(data: AuxData, model: Model):
                 if dmodel == Talleres or dmodel == TalleresRN:
                     # Cosas que solo se hacen en python
                     logger.info(values_list)
-                    assert False
+                    # assert False
                     values[field] = dict(values_list)
                 else:
                     descriptions = dmodel.objects.values_list(
