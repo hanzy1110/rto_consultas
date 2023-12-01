@@ -414,7 +414,7 @@ def map_fields(data: AuxData, model: Model):
                     ).distinct()
                 if dmodel == Talleres or dmodel == TalleresRN:
                     # Cosas que solo se hacen en python
-                    values[field] = values_list
+                    values[field] = dict(values_list)
                 else:
                     descriptions = dmodel.objects.values_list(
                         dfield, flat=True
