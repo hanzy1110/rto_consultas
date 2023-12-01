@@ -312,12 +312,12 @@ def carga_cccf(request, nrocertificado=None, dominio=None, *args, **kwargs):
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = CCCFForm(initial=initial)
-        form_informes = InformesForm(initial=initial)
+        # form_informes = InformesForm(initial=initial)
 
         return render(
             request,
             "includes/carga_cccf.html",
-            {"form": form, "form_informes": form_informes},
+            {"form": form},
         )
 
 
