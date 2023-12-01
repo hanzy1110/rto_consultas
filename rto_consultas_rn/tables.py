@@ -224,7 +224,7 @@ class VerificacionesTables(tables.Table):
 
     class Meta:
         model = Verificaciones
-        row_attrs = {"style": lambda record: check_vigencia(record)}
+        row_attrs = {"style": lambda record: check_vigencia(record, sender="RN")}
         orderable = False
         fields = (
             "dominiovehiculo",

@@ -19,6 +19,8 @@ from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
 
+from rto_consultas_rn.models import Certificados as CertificadosRN
+
 from rto_consultas.models import (
     CccfAdjuntoscertificados,
     CccfCertificadoexcesos,
@@ -868,15 +870,21 @@ def parse_name_length(value, ptype):
             return " ".join([truncate_name(value[0]), truncate_name(value[1])])
 
 
-def check_vigencia(verificacion):
+def check_vigencia(verificacion, sender="NQN"):
     cache_key = f"{verificacion.idverificacion}"
     cert = cache.get(cache_key, None)
     if not cert:
         logger.warn(f"CERT NOT FOUND! CACHE MISS")
-        cert = Certificados.objects.filter(
-            idverificacion_id__exact=verificacion.idverificacion,
-            idtaller_id__exact=verificacion.idtaller,
-        ).values()
+        if sender == "NQN":
+            cert = Certificados.objects.filter(
+                idverificacion_id__exact=verificacion.idverificacion,
+                idtaller_id__exact=verificacion.idtaller,
+            ).values()
+        else:
+            cert = CertificadosRN.objects.filter(
+                idverificacion_id__exact=verificacion.idverificacion,
+                idtaller_id__exact=verificacion.idtaller,
+            ).values()
 
     vigencia = cert[0]["vigenciahasta"]
 
