@@ -13,12 +13,12 @@ from django.conf import settings
 from datetime import date, datetime, timedelta
 
 from django.conf import settings
-from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django_tables2 import SingleTableView
+
+# from django_tables2 import SingleTableView
 from wkhtmltopdf.views import PDFTemplateView
 
 from .models import (
@@ -37,7 +37,6 @@ from .tables import (
 from .helpers import (
     allow_keys,
     build_barcode,
-    convert_date,
     generate_cccf_key,
     handle_context,
     AuxData,

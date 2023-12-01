@@ -400,7 +400,7 @@ def map_fields(data: AuxData, model: Model):
                 try:
                     if dmodel == Talleres or dmodel == TalleresRN:
                         values_list = dmodel.objects.all().values_list(
-                            "idtaller", flat=True
+                            "idtaller", "nombre", flat=True
                         )
                     else:
                         values_list = model.objects.values_list(
@@ -412,15 +412,20 @@ def map_fields(data: AuxData, model: Model):
                     values_list = dmodel.objects.values_list(
                         "descripcion", flat=True
                     ).distinct()
-
-                descriptions = dmodel.objects.values_list(dfield, flat=True).distinct()
-                descriptions = list(map(filter_vup, descriptions))
+                if dmodel == Talleres or dmodel == TalleresRN:
+                    # Cosas que solo se hacen en python
+                    values[field] = values_list
+                else:
+                    descriptions = dmodel.objects.values_list(
+                        dfield, flat=True
+                    ).distinct()
+                    descriptions = list(map(filter_vup, descriptions))
+                    vals = {v: d for v, d in zip(values_list, descriptions)}
+                    values[field] = vals
 
                 logger.info(f"DESCRIPTIONS => {descriptions}")
                 logger.info(f"VALUES LIST => {values_list}")
-                vals = {v: d for v, d in zip(values_list, descriptions)}
                 logger.info(f"VALUES => {vals}")
-                values[field] = vals
 
                 cache.set(cache_key, vals)
             else:
