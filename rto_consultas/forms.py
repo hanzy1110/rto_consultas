@@ -160,23 +160,20 @@ class CustomRTOForm(forms.Form):
 
         query_div = Div(
             *[
-                Field(qf, css_class="form-control col-3")
+                Field(qf, wrapper_class="form-control col-3")
                 for qf in form_data.query_fields
             ],
-       css_class="form-group row box"
+            css_class="form-group row box",
         )
         form_div = Div(
             *[
-                Field(ff, css_class="form-control col-3")
+                Field(ff, wrapper_class="form-control col-3")
                 for ff in form_data.form_fields
             ],
-        css_class="form-group row box"
+            css_class="form-group row box",
         )
 
-        side_by_side = Row(
-            Div(query_div),
-            Div(form_div),
-        )
+        side_by_side = Div(Div(query_div), Div(form_div), css_class="row box")
 
         self.helper.layout = Layout(side_by_side)
 
