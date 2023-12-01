@@ -400,7 +400,7 @@ def map_fields(data: AuxData, model: Model):
                 try:
                     if dmodel == Talleres or dmodel == TalleresRN:
                         values_list = dmodel.objects.all().values_list(
-                            "idtaller", "nombre", flat=True
+                            "idtaller", "nombre"
                         )
                     else:
                         values_list = model.objects.values_list(
