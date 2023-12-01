@@ -423,7 +423,7 @@ def map_fields(data: AuxData, model: Model):
                     vals = {v: d for v, d in zip(values_list, descriptions)}
                     values[field] = vals
 
-                logger.info(f"DESCRIPTIONS => {descriptions}")
+                    logger.info(f"DESCRIPTIONS => {descriptions}")
                 logger.info(f"VALUES LIST => {values_list}")
                 logger.info(f"VALUES => {vals}")
 
