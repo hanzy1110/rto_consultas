@@ -1,4 +1,5 @@
-from django.db.models import Q, QuerySet, Subquery
+from uuid import uuid1
+from django.db.models import Q, Count, QuerySet, Subquery
 from django.db.models import Model
 from django.core.cache import cache
 from datetime import timedelta, datetime
@@ -1130,3 +1131,16 @@ def check_cert_bounds(cert_init, cert_end, user):
         return init and end
 
     return True
+
+
+def get_resumen_data_mensual(cleaned_data):
+    verifs = (
+        Verificaciones.objects.values("idcategoria", "idestado", "idtipouso")
+        .anotate(cant_verif=Count("idtipouso"))
+        .order_by()
+    )
+
+    uuid = uuid1()
+    cache_key = f"{uuid}"
+    cache.set(str(uuid), verifs)
+    return verifs, uuid

@@ -189,6 +189,17 @@ class ObleasPorTaller(forms.Form):
     )
 
 
+class ResumenMensualForm(forms.Form):
+    fecha_desde = forms.DateField(required=False, label="Fecha Desde")
+    fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
+    taller_id = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=get_choices(),
+        required=False,
+        label="Planta",
+    )
+
+
 class ConsultaDPTForm(forms.Form):
     dominio = forms.CharField(
         label="Dominio",

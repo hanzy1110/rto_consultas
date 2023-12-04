@@ -1,7 +1,7 @@
 from collections.abc import Callable
 import os
-from typing import List
-from django.db.models import Model, Prefetch
+from django.core.cache import cache
+from django.db.models import Count, Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
 from django.views import View
@@ -76,6 +76,7 @@ from .helpers import (
     filter_vup_transporte,
     generate_key_certificado,
     get_queryset_from_user,
+    get_resumen_data_mensual,
     get_template_from_user,
     handle_context,
     handle_query,
@@ -91,6 +92,7 @@ from .forms import (
     CustomRTOForm,
     ObleasPorTaller,
     InspectionOrderForm,
+    ResumenMensualForm,
 )  # Import the form you created
 
 from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
@@ -209,6 +211,7 @@ class SVViewAuditoria(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "consulta_documentacion": "Consulta Documentacion",
+        "consulta_resumen_mensual": "Resumen Por Categoria",
     }
 
 
@@ -1211,3 +1214,39 @@ def consulta_habilitaciones(request):
         "includes/list_table.html",
         {"form": form, "render_url": "consulta_habilitaciones_finales"},
     )
+
+
+def consulta_resumen_mensual(request):
+    if request.htmx:
+        form = ResumenMensualForm(request.GET)
+        if form.is_valid():
+            logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
+            # Get the data, render HTML and cache the result
+            resumen_data, uuid = get_resumen_data_mensual(form.cleaned_data)
+            return render(
+                request,
+                "pdf/resumen.html",
+                {"resumen_data": resumen_data, "uuid": uuid},
+            )
+        else:
+            logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
+    else:
+        form = ResumenMensualForm()
+
+    return render(
+        request,
+        "includes/list_table.html",
+        {"form": form, "render_url": "consulta_resumen_mensual"},
+    )
+
+
+class PDFResumenMensual(PDFTemplateView):
+    filename = "resumen_mensual.pdf"
+    template_name = "pdf/tabla_resumen.html"
+    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
+
+    def get_context_data(self, **kwargs):
+        context = super(PDFHabilitacion, self).get_context_data(**kwargs)
+        # categorias = Verificaciones.values_list("id_categoria", flat=True).distinct()
+        uuid = self.kwargs.get("uuid")
+        data = cache.get(uuid, None)

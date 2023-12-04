@@ -1,0 +1,164 @@
+<!-- TODO maybe this into a div? -->
+<table cellspacing='1' border='1' id='tbCab'>
+    <tr>
+        <td>
+            <img src='images/LOGOUNCImp.png' alt='Logo Unco' align='left' style='margin:10px;' /> <br />
+            <h3 style='display:inline;'>UNIVERSIDAD NACIONAL DEL COMAHUE</h3> <br />
+            <h4 style='display:inline;'>FACULTAD DE INGENIERIA</h4>
+        </td>
+        <td>
+            <p style='margin-left:10px;'>
+                <b>Planta</b>: $nroTaller - $nombre <br /><b>CUIT</b>: $Cuit <br />
+                <b>Direcci&oacute;n</b>: $direccion / $localidad - $provincia
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan='2' align='center'><b>RESUMEN PERIODO: {{ fechaDesde }} - {{ fechaHasta }}</b></td>
+</table>
+<br />
+
+
+<table cellspacing='0' class='tblDatos'>
+    <tr>
+        <th width='180px' rowspan='2'>
+            Categoria
+        </th>
+        <th width='100px' rowspan='2'>
+            Cantidad Total
+        </th>
+        <th width='500px'>
+            Verificaciones por Estado y Tipo Uso
+        </th>
+    </tr>
+    <tr>
+        <th width='500px'>
+            <table width='100%' cellspacing='0' class='tblDatos'>
+                <tr>
+                    <th width='200px'>Estado</th>
+                    <th width='200px'>Tipo Uso Vehiculo</th>
+                    <th width='100px'>Cantidad</th>
+                </tr>
+            </table>
+        </th>
+    </tr>
+
+    $filas = "";
+    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
+    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
+    AND V.idEstado = 1 $where ) AS CantidadTU
+    FROM tipousovehiculo TU ";
+
+    //echo $sql;
+    $resTU = $base->query($sql);
+    if ($resTU){
+    $filas .= "<table cellspacing='0'>
+        <tr>
+            <td align='center' width='200px'>Aprobados</td>
+            <td>
+                <table cellspacing='0'>";
+                    foreach ($resTU as $rowTU)
+                    {
+                    $filas .= "<tr>
+                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
+                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
+                    </tr>";
+                    $valorTotal += $rowTU["CantidadTU"];
+                    }
+                    $filas .= "</table>
+            </td>
+        </tr>
+    </table>";
+    }
+
+
+    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
+    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
+    AND V.idEstado = 3 $where ) AS CantidadTU
+    FROM tipousovehiculo TU ";
+    //echo $sql;
+    $resTU = $base->query($sql);
+    if ($resTU){
+    $filas .= "<table cellspacing='0'>
+        <tr>
+            <td align='center' width='200px'>Aprobado Condicional</td>
+            <td>
+                <table cellspacing='0'>";
+                    foreach ($resTU as $rowTU)
+                    {
+                    $filas .= "<tr>
+                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
+                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
+                    </tr>";
+                    $valorTotal += $rowTU["CantidadTU"];
+                    }
+                    $filas .= "</table>
+            </td>
+        </tr>
+    </table>";
+    }
+
+    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
+    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
+    AND V.idEstado = 2 $where ) AS CantidadTU
+    FROM tipousovehiculo TU ";
+    //echo $sql;
+    $resTU = $base->query($sql);
+    if ($resTU){
+    <table cellspacing='0'>
+        <tr>
+            <td align='center' width='200px'>Rechazado</td>
+            <td>
+                <table cellspacing='0'>";
+                    foreach ($resTU as $rowTU)
+                    {
+                    $filas .= "<tr>
+                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
+                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
+                    </tr>";
+                    $valorTotal += $rowTU["CantidadTU"];
+                    }
+                    $filas .= "</table>
+            </td>
+        </tr>
+    </table>";
+
+    <tr>
+        <td align='center'>".$row["Categoria"]."</td>
+        <td align='center'>".$row["CantidadCert"]."</td>
+        <td>".$filas."</td>";
+    </tr>
+
+    /* Vamos a mostrar la cantidad de certificados reverificados que corresponden a otro periodo */
+
+    <!-- TODO LOS CERTIFICADOS DE OTRO PERIODO -->
+    <!-- $sql2 = " SELECT V1.idVerificacion,C.NroCertificado FROM
+        verificaciones V1
+        INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
+        INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
+        WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
+        AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
+
+        $Fuera=$base->query($sql2);
+            if ($Fuera){
+            $certNum = "";
+            foreach ($Fuera as $rowFi)
+            {
+            $certNum .= " - ".$rowFi["NroCertificado"];
+            }
+
+            if($Fuera->rowCount() > 0){
+            $tabla .= "<tr>
+                <td colspan='2'>&nbsp;</td>
+                <td align='right' style='padding-right:15px;'>
+                    Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount().".
+                    NUMEROS($certNum)</td>
+            </tr>";
+            }else{
+            $tabla .= "<tr>
+                <td colspan='2'>&nbsp;</td>
+                <td align='right' style='padding-right:15px;'>
+                    Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount()."</td>
+            </tr>";
+            }
+            } -->

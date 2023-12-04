@@ -140,6 +140,16 @@ urlpatterns += [
         views.consulta_habilitaciones,
         name="consulta_habilitaciones_finales",
     ),
+    path(
+        "consulta_resumen_mensual/",
+        views.consulta_resumen_mensual,
+        name="consulta_resumen_mensual",
+    ),
+    path(
+        "imprimir_resumen_mensual/<str:uuid>",
+        views.PDFResumenMensual.as_view(),
+        name="imprimir_resumen_mensual",
+    ),
     # path("", include("admin_soft.urls"), name=admin),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]
