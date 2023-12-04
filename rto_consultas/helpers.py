@@ -1141,7 +1141,7 @@ def get_resumen_data_mensual(cleaned_data):
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
     if id_taller:
-        taller_query = Q(idtaller_id__iexact=id_taller)
+        taller_query = Q(idtaller_id=id_taller)
     else:
         taller_query = Q()
 
