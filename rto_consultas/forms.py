@@ -33,7 +33,7 @@ def get_choices():
     # vals = map_fields(aux_data, Talleres)
     # logger.debug(vals)
 
-    vals = Talleres.objects.all().values_list("idtaller", "nombre")
+    vals = Talleres.objects.filter(activo__iexact=1).values_list("idtaller", "nombre")
     # choices = list(tuple(vals["idtaller"].items()))
     choices = list(vals)
     a = [("", "")]
