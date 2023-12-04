@@ -201,7 +201,7 @@ class ResumenMensualForm(forms.Form):
         label="Fecha Hasta",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
-    taller_id = forms.ChoiceField(
+    id_taller = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=get_choices(),
         required=False,
@@ -218,7 +218,7 @@ class ResumenMensualForm(forms.Form):
             Div(
                 Field("fecha_desde", wrapper_class="form-group col-6"),
                 Field("fecha_hasta", wrapper_class="form-group col-6"),
-                Field("taller_id", wrapper_class="form-group col-6"),
+                Field("id_taller", wrapper_class="form-group col-6"),
             )
         )
 
