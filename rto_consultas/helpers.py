@@ -1134,14 +1134,34 @@ def check_cert_bounds(cert_init, cert_end, user):
 
 
 def get_resumen_data_mensual(cleaned_data):
-    verifs = (
-        Verificaciones.objects.values("idestado", "idtipouso")
-        .annotate(cant_verif=Count("idtipouso"))
+    fecha_desde = cleaned_data["fecha_desde"]
+    fecha_hasta = cleaned_data["fecha_hasta"]
+    id_taller = cleaned_data["id_taller"]
+    certs = (
+        Certificados.objects.filter(
+            handle_date_range(fecha_desde, fecha_hasta), idtaller_id__iexact=id_taller
+        )
+        .values("idcategoria", "idverificacion_id", "idtaller_id")
+        .annotate(cant_por_categoria=Count("idcategoria"))
         .order_by()
     )
 
+    categorias = certs.values_list("idcategoria").distinct()
+
+    verifs = {}
+    for c in categorias:
+        cat_verifs = certs.filter(
+            idcategoria__iexact=c, idtaller_id=id_taller
+        ).values_list("idverificacion_id")
+        verifs[c] = (
+            Verificaciones.objects.values("idestado", "idtipouso")
+            .filter(idverificacion__in=cat_verifs)
+            .annotate(cant_verif=Count("idtipouso"))
+            .order_by()
+        )
+
     logger.info(list(verifs))
     uuid = uuid1()
-    cache_key = f"{uuid}"
+    logger.info(f"UUID ====> {uuid}")
     cache.set(str(uuid), verifs)
     return verifs, uuid

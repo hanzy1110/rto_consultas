@@ -1226,7 +1226,12 @@ def consulta_resumen_mensual(request):
             return render(
                 request,
                 "pdf/resumen.html",
-                {"resumen_data": resumen_data, "uuid": uuid},
+                {
+                    "uuid": uuid,
+                    "fecha_desde": form.cleaned_data.get("fecha_desde", None),
+                    "fecha_hasta": form.cleaned_data.get("fecha_hasta", None),
+                    "id_taller": form.cleaned_data.get("id_taller", None),
+                },
             )
         else:
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
@@ -1249,4 +1254,5 @@ class PDFResumenMensual(PDFTemplateView):
         context = super(PDFHabilitacion, self).get_context_data(**kwargs)
         # categorias = Verificaciones.values_list("id_categoria", flat=True).distinct()
         uuid = self.kwargs.get("uuid")
-        data = cache.get(uuid, None)
+        logger.debug(f"UUID ===> {uuid}")
+        resumen_data = cache.get(uuid, None)
