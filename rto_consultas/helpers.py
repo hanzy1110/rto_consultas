@@ -1137,10 +1137,15 @@ def get_resumen_data_mensual(cleaned_data):
     fecha_desde = cleaned_data["fecha_desde"]
     fecha_hasta = cleaned_data["fecha_hasta"]
     id_taller = cleaned_data["id_taller"]
+
+    fecha_query = handle_date_range(fecha_desde, fecha_hasta)
+    if id_taller:
+        taller_query = Q(idtaller_id__iexact=id_taller)
+    else:
+        taller_query = Q()
+
     certs = (
-        Certificados.objects.filter(
-            handle_date_range(fecha_desde, fecha_hasta), idtaller_id__iexact=id_taller
-        )
+        Certificados.objects.filter(fecha_query, taller_query)
         .values("idcategoria", "idverificacion_id", "idtaller_id")
         .annotate(cant_por_categoria=Count("idcategoria"))
         .order_by()
