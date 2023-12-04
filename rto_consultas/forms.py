@@ -201,8 +201,8 @@ class ResumenMensualForm(forms.Form):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     taller_id = forms.ChoiceField(
-        choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        # choices=get_choices(),
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=get_choices(),
         required=False,
         label="Planta",
     )
@@ -212,7 +212,7 @@ class ResumenMensualForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
-        logger.info(f"HELPER {self.helper}")
+        logger.info(f"CHOICES {get_choices()}")
 
         self.helper.layout = Layout(
             Div(
