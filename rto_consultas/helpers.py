@@ -1163,7 +1163,8 @@ def get_resumen_data_mensual(cleaned_data):
     logger.debug(f"CATEGORIAS => { categorias }")
     for c in categorias:
         cat_verifs = certs.filter(
-            idcategoria__iexact=c, idtaller_id=id_taller
+            idcategoria__exact=c,
+            # idtaller_id=id_taller
         ).values_list("idverificacion_id")
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
@@ -1174,7 +1175,7 @@ def get_resumen_data_mensual(cleaned_data):
 
         logger.debug(f"CAT_VERIFS {cat_verifs}")
 
-    logger.info(list(verifs))
+    logger.info(f"VERIFICACIONES => {verifs}")
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
     cache.set(str(uuid), verifs)
