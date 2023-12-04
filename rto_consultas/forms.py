@@ -201,8 +201,8 @@ class ResumenMensualForm(forms.Form):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     taller_id = forms.ChoiceField(
-        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        choices=get_choices(),
+        choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        # choices=get_choices(),
         required=False,
         label="Planta",
     )
