@@ -192,19 +192,19 @@ class ObleasPorTaller(forms.Form):
 
 class ResumenMensualForm(forms.Form):
     fecha_desde = forms.DateField(
-        required=False,
+        required=True,
         label="Fecha Desde",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     fecha_hasta = forms.DateField(
-        required=False,
+        required=True,
         label="Fecha Hasta",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
     id_taller = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=get_choices(),
-        required=False,
+        required=True,
         label="Planta",
     )
 
