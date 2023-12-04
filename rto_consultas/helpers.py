@@ -1136,7 +1136,7 @@ def check_cert_bounds(cert_init, cert_end, user):
 def get_resumen_data_mensual(cleaned_data):
     verifs = (
         Verificaciones.objects.values("idestado", "idtipouso")
-        .anotate(cant_verif=Count("idtipouso"))
+        .annotate(cant_verif=Count("idtipouso"))
         .order_by()
     )
 
