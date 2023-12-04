@@ -212,6 +212,7 @@ class ResumenMensualForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
+        logger.info(f"HELPER {self.helper}")
 
         self.helper.layout = Layout(
             Div(
