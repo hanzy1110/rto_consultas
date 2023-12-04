@@ -2,7 +2,7 @@
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
-            <img src='/home/code/staticfiles/img/logos/LOGO_UNCOMA.png' alt='Logo Unco' align='left'
+            <img src="/home/code/staticfiles/img/logos/LOGO_UNCOMA.png" alt='Logo Unco' align='left'
                 style='margin:10px;' /> <br />
             <h3 style='display:inline;'>UNIVERSIDAD NACIONAL DEL COMAHUE</h3> <br />
             <h4 style='display:inline;'>FACULTAD DE INGENIERIA</h4>
@@ -44,91 +44,57 @@
         </th>
     </tr>
 
-    $filas = "";
-    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
-    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
-    AND V.idEstado = 1 $where ) AS CantidadTU
-    FROM tipousovehiculo TU ";
+    {% for cat, verifs in verificaciones.items %}
 
-    //echo $sql;
-    $resTU = $base->query($sql);
-    if ($resTU){
-    $filas .= "<table cellspacing='0'>
+    <table cellspacing='0'>
         <tr>
             <td align='center' width='200px'>Aprobados</td>
             <td>
-                <table cellspacing='0'>";
-                    foreach ($resTU as $rowTU)
-                    {
-                    $filas .= "<tr>
-                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
-                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
+                <table cellspacing='0'>
+                    {% for v in filter_idestado verifs 1 %}
+                    <tr>
+                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                     </tr>";
-                    $valorTotal += $rowTU["CantidadTU"];
-                    }
-                    $filas .= "</table>
+                    {% endfor %}
+                </table>
             </td>
         </tr>
-    </table>";
-    }
+    </table>
 
-
-    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
-    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
-    AND V.idEstado = 3 $where ) AS CantidadTU
-    FROM tipousovehiculo TU ";
-    //echo $sql;
-    $resTU = $base->query($sql);
-    if ($resTU){
-    $filas .= "<table cellspacing='0'>
+    <table cellspacing='0'>
         <tr>
             <td align='center' width='200px'>Aprobado Condicional</td>
             <td>
-                <table cellspacing='0'>";
-                    foreach ($resTU as $rowTU)
-                    {
-                    $filas .= "<tr>
-                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
-                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
-                    </tr>";
-                    $valorTotal += $rowTU["CantidadTU"];
-                    }
-                    $filas .= "</table>
+                <table cellspacing='0'>
+                    {% for v in filter_idestado verifs 3 %}
+                    <tr>
+                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </td>
         </tr>
-    </table>";
-    }
+    </table>
 
-    $sql = " SELECT TU.Descripcion AS tipoUso, (SELECT COUNT(*) FROM vw_verificaciones V
-    WHERE V.idTipoUso = TU.idTipoUso AND V.idCategoria = ".$row["idCategoria"]."
-    AND V.idEstado = 2 $where ) AS CantidadTU
-    FROM tipousovehiculo TU ";
-    //echo $sql;
-    $resTU = $base->query($sql);
-    if ($resTU){
     <table cellspacing='0'>
         <tr>
             <td align='center' width='200px'>Rechazado</td>
             <td>
-                <table cellspacing='0'>";
-                    foreach ($resTU as $rowTU)
-                    {
-                    $filas .= "<tr>
-                        <td align='left' width='200px'>".$rowTU["tipoUso"]."</td>
-                        <td align='center' width='100px'>".$rowTU["CantidadTU"]."</td>
-                    </tr>";
-                    $valorTotal += $rowTU["CantidadTU"];
-                    }
-                    $filas .= "</table>
+                <table cellspacing='0'>
+                    {% for v in filter_idestado verifs 2 %}
+                    <tr>
+                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </td>
         </tr>
-    </table>";
+    </table>
 
-    <tr>
-        <td align='center'>".$row["Categoria"]."</td>
-        <td align='center'>".$row["CantidadCert"]."</td>
-        <td>".$filas."</td>";
-    </tr>
+    {% endfor %}
 
     /* Vamos a mostrar la cantidad de certificados reverificados que corresponden a otro periodo */
 

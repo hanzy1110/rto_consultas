@@ -1178,5 +1178,16 @@ def get_resumen_data_mensual(cleaned_data):
     logger.info(f"VERIFICACIONES => {verifs}")
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
-    cache.set(str(uuid), verifs)
+    cache_key_certs = f"certs__{uuid}"
+    cache_key_verifs = f"verifs__{uuid}"
+    cache.set(cache_key_verifs, verifs)
+    cache.set(cache_key_certs, certs)
     return verifs, uuid
+
+
+def handle_resumen_context(uuid):
+    cache_key_certs = f"certs__{uuid}"
+    cache_key_verifs = f"verifs__{uuid}"
+
+    verifs = cache.get(cache_key_verifs)
+    certs = cache.get(cache_key_certs)

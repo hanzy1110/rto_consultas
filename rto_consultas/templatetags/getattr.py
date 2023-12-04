@@ -112,6 +112,11 @@ def check_anulado(context):
 
 
 @register.simple_tag(takes_context=True)
+def filter_idestado(context, verifs, estado):
+    return verifs.filter(idestado=estado)
+
+
+@register.simple_tag(takes_context=True)
 def translate(context, name):
     match name:
         case "Username":

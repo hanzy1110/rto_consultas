@@ -83,6 +83,7 @@ from .helpers import (
     AuxData,
     generate_key,
     build_barcode,
+    handle_resumen_context,
     handle_save_hab,
     handle_initial_hab,
 )
@@ -1223,6 +1224,8 @@ def consulta_resumen_mensual(request):
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
             resumen_data, uuid = get_resumen_data_mensual(form.cleaned_data)
+            context = handle_resumen_context(resumen_data)
+
             return render(
                 request,
                 "pdf/resumen.html",
