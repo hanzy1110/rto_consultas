@@ -1144,8 +1144,10 @@ def get_resumen_data_mensual(cleaned_data):
     else:
         taller_query = Q()
 
+    total_query = fecha_query and taller_query
+
     certs = (
-        Certificados.objects.filter(fecha_query, taller_query)
+        Certificados.objects.filter(total_query)
         .values("idcategoria", "idverificacion_id", "idtaller_id")
         .annotate(cant_por_categoria=Count("idcategoria"))
         .order_by()
