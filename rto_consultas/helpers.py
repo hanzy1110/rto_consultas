@@ -1157,11 +1157,11 @@ def get_resumen_data_mensual(cleaned_data):
     if total_query:
         certs.filter(total_query)
 
-    categorias = certs.values_list("idcategoria").distinct()
+    categorias = certs.values_list("idcategoria", flat=True).distinct()
 
     verifs = {}
-    logger.debug(f"CATEGORIAS => { categorias }")
     for c in categorias:
+        logger.debug(f"CATEGORIA => { c }")
         cat_verifs = certs.filter(
             idcategoria__exact=c,
             # idtaller_id=id_taller
