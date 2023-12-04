@@ -35,7 +35,7 @@ def get_choices():
 
     vals = Talleres.objects.all().values_list("idtaller", "nombre")
     # choices = list(tuple(vals["idtaller"].items()))
-    choices = list(vals["idtaller"])
+    choices = list(vals)
     a = [("", "")]
     a.extend(choices)
     return a
