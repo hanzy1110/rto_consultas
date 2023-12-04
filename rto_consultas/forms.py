@@ -190,14 +190,36 @@ class ObleasPorTaller(forms.Form):
 
 
 class ResumenMensualForm(forms.Form):
-    fecha_desde = forms.DateField(required=False, label="Fecha Desde")
-    fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
+    fecha_desde = forms.DateField(
+        required=False,
+        label="Fecha Desde",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
+    fecha_hasta = forms.DateField(
+        required=False,
+        label="Fecha Hasta",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
     taller_id = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=get_choices(),
         required=False,
         label="Planta",
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = "post"
+        self.helper.form_class = "form-horizontal"
+
+        self.helper.layout = Layout(
+            Div(
+                Field("fecha_desde", wrapper_class="form-group col-6"),
+                Field("fecha_hasta", wrapper_class="form-group col-6"),
+                Field("taller_id", wrapper_class="form-group col-6"),
+            )
+        )
 
 
 class ConsultaDPTForm(forms.Form):
