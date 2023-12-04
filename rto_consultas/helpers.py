@@ -1135,11 +1135,12 @@ def check_cert_bounds(cert_init, cert_end, user):
 
 def get_resumen_data_mensual(cleaned_data):
     verifs = (
-        Verificaciones.objects.values("idcategoria", "idestado", "idtipouso")
+        Verificaciones.objects.values("idestado", "idtipouso")
         .anotate(cant_verif=Count("idtipouso"))
         .order_by()
     )
 
+    logger.info(list(verifs))
     uuid = uuid1()
     cache_key = f"{uuid}"
     cache.set(str(uuid), verifs)
