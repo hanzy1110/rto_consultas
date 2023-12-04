@@ -1160,6 +1160,7 @@ def get_resumen_data_mensual(cleaned_data):
     categorias = certs.values_list("idcategoria").distinct()
 
     verifs = {}
+    logger.debug(f"CATEGORIAS => { categorias }")
     for c in categorias:
         cat_verifs = certs.filter(
             idcategoria__iexact=c, idtaller_id=id_taller
@@ -1170,6 +1171,8 @@ def get_resumen_data_mensual(cleaned_data):
             .annotate(cant_verif=Count("idtipouso"))
             .order_by()
         )
+
+        logger.debug(f"CAT_VERIFS {cat_verifs}")
 
     logger.info(list(verifs))
     uuid = uuid1()
