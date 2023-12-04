@@ -19,20 +19,21 @@ from .name_schemas import *
 
 
 def get_choices():
-    aux_data = AuxData(
-        query_fields=[],
-        form_fields={
-            "idestado": ("descripcion", Estados),
-            "idtipouso": ("descripcion", Tipousovehiculo),
-            "idtipovehiculo": ("descripcion", Tipovehiculo),
-            "idtaller": ("nombre", Talleres),
-        },
-        parsed_names={"name": "name"},
-    )
-    logger.debug(aux_data)
-    vals = map_fields(aux_data, Talleres)
-    logger.debug(vals)
+    # aux_data = AuxData(
+    #     query_fields=[],
+    #     form_fields={
+    #         "idestado": ("descripcion", Estados),
+    #         "idtipouso": ("descripcion", Tipousovehiculo),
+    #         "idtipovehiculo": ("descripcion", Tipovehiculo),
+    #         "idtaller": ("nombre", Talleres),
+    #     },
+    #     parsed_names={"name": "name"},
+    # )
+    # logger.debug(aux_data)
+    # vals = map_fields(aux_data, Talleres)
+    # logger.debug(vals)
 
+    vals = Talleres.objects.all().values_list("idtaller", "nombre")
     # choices = list(tuple(vals["idtaller"].items()))
     choices = list(vals["idtaller"])
     a = [("", "")]
