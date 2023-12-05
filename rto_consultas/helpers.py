@@ -1170,6 +1170,15 @@ def get_resumen_data_mensual(cleaned_data):
         .order_by()
         .values_list("idcategoria", "cant_por_categoria")
     )
+    query_cat_reverif = [
+        Q(reverificado=1),
+        Q(fecha__lt=fecha_desde),
+        Q(idtaller_id=id_taller),
+    ]
+
+    v_reverificados = Verificaciones.objects.filter(*query_cat_reverif).values_list(
+        "idverificacion_id", "idtaller_id", "idverificacionoriginal"
+    )
 
     # if total_query:
     #     certs.filter(total_query)
@@ -1200,21 +1209,14 @@ def get_resumen_data_mensual(cleaned_data):
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
-
-        query_cat_reverif = [
-            Q(idcategoria__exact=c),
-            Q(reverificado=1),
-            # Q(fecha__lt=fecha_desde),
-            # Q(idtaller_id=id_taller),
-        ]
-
-        r = certs.filter(*query_cat_reverif).values_list(
-            "idverificacion_id", "idtaller_id", "nrocertificado"
-        )
-        logger.debug(f"REVERIFICADOS => {r}")
-        if r:
-            outside_certs = len(r)
-            reverificados[c] = {"values": r, "cantidad": outside_certs}
+        r_cat = v_reverificados.filter(idcategoria__exact=c)
+        logger.debug(f"REVERIFICADOS => {r_cat}")
+        if r_cat:
+            r_certs = Certificados.objects.filter(idverificacion__in=r_cat).values(
+                "nrocertificado", flat=True
+            )
+            outside_certs = len(r_certs)
+            reverificados[c] = {"values": r_certs, "cantidad": outside_certs}
         else:
             reverificados[c] = {}
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
