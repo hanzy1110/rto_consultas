@@ -1188,9 +1188,7 @@ def get_resumen_data_mensual(cleaned_data):
 
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
 
-    certs_count_categoria = {
-        c["idcategoria"]: c["cant_por_categoria"] for c in certs_count_categoria
-    }
+    certs_count_categoria = dict(certs_count_categoria)
 
     logger.info(f"CERTS => {certs_count_categoria}")
     uuid = uuid1()
