@@ -1170,15 +1170,28 @@ def get_resumen_data_mensual(cleaned_data):
         .order_by()
         .values_list("idcategoria", "cant_por_categoria")
     )
-    query_cat_reverif = [
+    # Todos los reverificados de este periodo
+    query_reverif = [
         Q(reverificacion=1),
-        Q(fecha__lt=fecha_desde),
+        handle_date_range(fecha_desde, fecha_hasta),
         Q(idtaller_id=id_taller),
     ]
 
-    v_reverificados = Verificaciones.objects.filter(*query_cat_reverif).values_list(
-        "idverificacion", "idtaller_id", "idverificacionoriginal"
+    v_reverificados = Verificaciones.objects.filter(*query_reverif)
+    v_anteriores = Verificaciones.objects.filter(fecha__lt=fecha_desde).values_list(
+        "idverificacionoriginal", flat=True
     )
+
+    v_reverif_totales = v_reverificados.filter(
+        idverificacionoriginal__in=v_anteriores
+    ).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
+
+    composite_keys = [
+        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
+    ]
+    c_reverificados = Certificados.objects.filter(
+        reduce(lambda x, y: x | y, composite_keys)
+    ).values("idcategoria", "idverificacion_id", "nrocertificado")
 
     # if total_query:
     #     certs.filter(total_query)
@@ -1209,14 +1222,11 @@ def get_resumen_data_mensual(cleaned_data):
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
-        r_cat = v_reverificados.filter(idcategoria__exact=c)
+        r_cat = c_reverificados.filter(idcategoria__exact=c)
         logger.debug(f"REVERIFICADOS => {r_cat}")
         if r_cat:
-            r_certs = Certificados.objects.filter(idverificacion__in=r_cat).values(
-                "nrocertificado", flat=True
-            )
-            outside_certs = len(r_certs)
-            reverificados[c] = {"values": r_certs, "cantidad": outside_certs}
+            outside_certs = len(r_cat)
+            reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
         else:
             reverificados[c] = {}
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
