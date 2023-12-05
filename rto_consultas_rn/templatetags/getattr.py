@@ -36,7 +36,8 @@ def get_model_attr(context, instance, name):
 
 @register.simple_tag(takes_context=True)
 def query_dict(context, instance, name):
-    name = name.replace(" ", "")
+    if isinstance(name, str):
+        name = name.replace(" ", "")
     try:
         return instance[name]
     except KeyError:
