@@ -1233,7 +1233,7 @@ def get_resumen_data_mensual(cleaned_data):
 
     certs_count_categoria = dict(certs_count_categoria)
 
-    logger.info(f"CERTS => {certs_count_categoria}")
+    logger.info(f"REVERIFICADOS => {reverificados}")
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
     cache_key_certs = f"certs__{uuid}"
