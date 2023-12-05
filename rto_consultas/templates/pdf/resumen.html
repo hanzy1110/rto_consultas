@@ -14,7 +14,7 @@
         <td>
             <p style='margin-left:10px;'>
                 <b>Planta</b>: {{ taller.nrotaller }} - {{ taller.nombre }} <br /><b>CUIT</b>: {{ taller.cuit }} <br />
-                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.localidad }} - {{ taller.provincia }}
+                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.idlocalidad }} - {{ taller.idprovincia }}
             </p>
         </td>
     </tr>
@@ -51,7 +51,7 @@
     {% for cat, verifs in verificaciones.items %}
 
     <tr>
-        <td align='center'>{{ cat }}</td>
+        <td align='center'>{% query_dict CATEGORIAS cat %}</td>
         <td align='center'>{% query_dict certs_count_categoria cat %}</td>
         <td>
 
@@ -63,7 +63,7 @@
                             {% for v in verifs %}
                             {% if v.idestado == 1 %}
                             <tr>
-                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
                                 <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                             </tr>
                             {% endif %}
@@ -81,7 +81,7 @@
                             {% for v in verifs %}
                             {% if v.idestado == 3 %}
                             <tr>
-                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
                                 <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                             </tr>
                             {% endif %}
@@ -99,7 +99,7 @@
                             {% for v in verifs %}
                             {% if v.idestado == 2 %}
                             <tr>
-                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
                                 <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                             </tr>
                             {% endif %}

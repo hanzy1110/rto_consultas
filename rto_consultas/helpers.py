@@ -23,6 +23,7 @@ from barcode.writer import SVGWriter
 from rto_consultas_rn.models import Certificados as CertificadosRN
 
 from rto_consultas.models import (
+    Categorias,
     CccfAdjuntoscertificados,
     CccfCertificadoexcesos,
     CccfCertificados,
@@ -45,6 +46,7 @@ from rto_consultas.models import (
 from rto_consultas_rn.models import Talleres as TalleresRN
 
 from rto_consultas.name_schemas import (
+    TIPO_USO_VEHICULO,
     USER_CERTS_BOUNDS,
     USER_GROUPS,
     USER_QUERIES_CERTS_ASIGNADOS,
@@ -1207,6 +1209,11 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_certs_count = f"certs_count__{uuid}"
+
+    context["TIPO_USO"] = TIPO_USO_VEHICULO
+    context["CATEGORIAS"] = dict(
+        Categorias.objects.all().values_list("idcategoria", "descripcion")
+    )
 
     context["verificaciones"] = cache.get(cache_key_verifs)
     context["certs"] = cache.get(cache_key_certs)
