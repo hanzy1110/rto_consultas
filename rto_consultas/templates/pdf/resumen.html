@@ -59,12 +59,12 @@
                     <td>
                         <table cellspacing='0'>
                             {% for v in verificaciones %}
-                            {% if v.idestado == 1 %}
+                            {#% if v.idestado == 1 %#}
                             <tr>
                                 <td align='left' width='200px'>{{ v.idtipouso }}</td>
                                 <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                             </tr>";
-                            {% endif %}
+                            {#% endif %#}
                             {% endfor %}
                         </table>
                     </td>
