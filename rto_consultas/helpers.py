@@ -1189,9 +1189,12 @@ def get_resumen_data_mensual(cleaned_data):
     composite_keys = [
         Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
     ]
-    c_reverificados = Certificados.objects.filter(
-        reduce(lambda x, y: x | y, composite_keys)
-    ).values("idcategoria", "idverificacion_id", "nrocertificado")
+    if composite_keys:
+        c_reverificados = Certificados.objects.filter(
+            reduce(lambda x, y: x | y, composite_keys)
+        ).values("idcategoria", "idverificacion_id", "nrocertificado")
+    else:
+        c_reverificados = None
 
     # if total_query:
     #     certs.filter(total_query)
@@ -1223,13 +1226,19 @@ def get_resumen_data_mensual(cleaned_data):
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
-        r_cat = c_reverificados.filter(idcategoria__exact=c).values("nrocertificado")
-        if r_cat:
-            logger.debug(f"CAT {c} -- r_cat => {r_cat}")
-            outside_certs = len(r_cat)
-            # reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
-            reverificados[c] = [c["nrocertificado"] for c in r_cat]
-            reverificados_cant[c] = outside_certs
+        if c_reverificados:
+            r_cat = c_reverificados.filter(idcategoria__exact=c).values(
+                "nrocertificado"
+            )
+            if r_cat:
+                logger.debug(f"CAT {c} -- r_cat => {r_cat}")
+                outside_certs = len(r_cat)
+                # reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
+                reverificados[c] = [c["nrocertificado"] for c in r_cat]
+                reverificados_cant[c] = outside_certs
+            else:
+                reverificados[c] = ""
+                reverificados_cant[c] = 0
         else:
             reverificados[c] = ""
             reverificados_cant[c] = 0
