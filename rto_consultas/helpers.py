@@ -1,3 +1,4 @@
+from functools import reduce
 from uuid import uuid1
 from django.db.models import Q, Count, QuerySet, Subquery
 from django.db.models import Model
@@ -1143,7 +1144,7 @@ def get_resumen_data_mensual(cleaned_data):
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
     # TODO FILTRO REVERIFICACIONES
-    # exclude_reverificado_query = ~Q(reverificado=1)
+    exclude_reverificado_query = Q(reverificado=0)
     # TODO CERTIFICADOS DE OTRO PERIODO
 
     if id_taller:
@@ -1151,7 +1152,7 @@ def get_resumen_data_mensual(cleaned_data):
     else:
         taller_query = Q()
 
-    total_query = [fecha_query, taller_query]
+    total_query = [fecha_query, taller_query, exclude_reverificado_query]
 
     logger.debug(f"total_query => {total_query}")
 
@@ -1180,10 +1181,13 @@ def get_resumen_data_mensual(cleaned_data):
         logger.debug(f"CATEGORIA => { c }")
         cat_verifs = certs.filter(
             idcategoria__exact=c,
-        ).values_list("idverificacion_id")
+        ).values_list("idverificacion_id", "idtaller_id")
+        composite_keys = [
+            Q(idverificacion=item[0], idtaller_id=item[1]) for item in cat_verifs
+        ]
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
-            .filter(idverificacion__in=cat_verifs)
+            .filter(reduce(lambda x, y: x | y, composite_keys))
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
