@@ -35,6 +35,24 @@ def get_model_attr(context, instance, name):
 
 
 @register.simple_tag(takes_context=True)
+def get_reverificados_cant(context, cat):
+    try:
+        return context["reverificados"][cat]["cantidad"]
+    except Exception as e:
+        print(e)
+        return "RENDER ERROR"
+
+
+@register.simple_tag(takes_context=True)
+def get_reverificados_value(context, cat):
+    try:
+        return context["reverificados"][cat]["values"]
+    except Exception as e:
+        print(e)
+        return "RENDER ERROR"
+
+
+@register.simple_tag(takes_context=True)
 def query_dict(context, instance, name):
     if isinstance(name, str):
         name = name.replace(" ", "")
