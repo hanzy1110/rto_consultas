@@ -1223,7 +1223,7 @@ def consulta_resumen_mensual(request):
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
-            resumen_data, uuid = get_resumen_data_mensual(form.cleaned_data)
+            uuid = get_resumen_data_mensual(form.cleaned_data)
             context = handle_resumen_context(uuid, **form.cleaned_data)
 
             return render(
