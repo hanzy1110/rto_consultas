@@ -1143,8 +1143,8 @@ def get_resumen_data_mensual(cleaned_data):
 
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
-    # TODO FILTRO REVERIFICACIONES
     exclude_reverificado_query = Q(reverificado=0)
+    # reverificado_query = Q(reverificado=1)
     # TODO CERTIFICADOS DE OTRO PERIODO
 
     if id_taller:

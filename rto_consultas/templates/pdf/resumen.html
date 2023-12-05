@@ -113,36 +113,34 @@
 
     {% endfor %}
 
-    /* Vamos a mostrar la cantidad de certificados reverificados que corresponden a otro periodo */
-
     <!-- TODO LOS CERTIFICADOS DE OTRO PERIODO -->
     <!-- $sql2 = " SELECT V1.idVerificacion,C.NroCertificado FROM
-        verificaciones V1
-        INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
-        INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
-        WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
-        AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
+         verificaciones V1
+         INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
+         INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
+         WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
+         AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
 
-        $Fuera=$base->query($sql2);
-            if ($Fuera){
-            $certNum = "";
-            foreach ($Fuera as $rowFi)
-            {
-            $certNum .= " - ".$rowFi["NroCertificado"];
-            }
+         $Fuera=$base->query($sql2);
+         if ($Fuera){
+         $certNum = "";
+         foreach ($Fuera as $rowFi)
+         {
+         $certNum .= " - ".$rowFi["NroCertificado"];
+         }
 
-            if($Fuera->rowCount() > 0){
-            $tabla .= "<tr>
-                <td colspan='2'>&nbsp;</td>
-                <td align='right' style='padding-right:15px;'>
-                    Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount().".
-                    NUMEROS($certNum)</td>
-            </tr>";
-            }else{
-            $tabla .= "<tr>
-                <td colspan='2'>&nbsp;</td>
-                <td align='right' style='padding-right:15px;'>
-                    Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount()."</td>
-            </tr>";
-            }
-            } -->
+         if($Fuera->rowCount() > 0){
+         $tabla .= "<tr>
+         <td colspan='2'>&nbsp;</td>
+         <td align='right' style='padding-right:15px;'>
+         Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount().".
+         NUMEROS($certNum)</td>
+         </tr>";
+         }else{
+         $tabla .= "<tr>
+         <td colspan='2'>&nbsp;</td>
+         <td align='right' style='padding-right:15px;'>
+         Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount()."</td>
+         </tr>";
+         }
+         } -->
