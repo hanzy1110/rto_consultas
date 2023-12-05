@@ -110,21 +110,13 @@
             </table>
         </td>
     </tr>
-    {% if reverificados.cat %}
     <tr>
         <td colspan='2'>&nbsp;</td>
         <td align='right' style='padding-right:15px;'>
             Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-            {{ reverificados.cat.cantidad }}
-            NUMEROS( {{ reverificados.cat.values }} )</td>
+            {{ reverificados.cat.cantidad|default 0 }} {{ reverificados.cat.values|default "" }}
+        </td>
     </tr>
-    {% else %}
-    <tr>
-        <td colspan='2'>&nbsp;</td>
-        <td align='right' style='padding-right:15px;'>
-            Certificados Reverificados correspondientes a Otro Per&iacute;odo: 0</td>
-    </tr>
-    {% endif %}
 
     {% endfor %}
 
