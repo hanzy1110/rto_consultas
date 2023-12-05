@@ -58,14 +58,13 @@
                     <td align='center' width='200px'>Aprobados</td>
                     <td>
                         <table cellspacing='0'>
-                            {% for v in verificaciones %}
-                            {#% if v.idestado == 1 %#}
-                            {{ v }}
+                            {% for v in verifs %}
+                            {% if v.idestado == 1 %}
                             <tr>
                                 <td align='left' width='200px'>{{ v.idtipouso }}</td>
                                 <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                             </tr>
-                            {#% endif %#}
+                            {% endif %}
                             {% endfor %}
                         </table>
                     </td>
@@ -77,7 +76,7 @@
                     <td align='center' width='200px'>Aprobado Condicional</td>
                     <td>
                         <table cellspacing='0'>
-                            {% for v in verificaciones %}
+                            {% for v in verifs %}
                             {% if v.idestado == 3 %}
                             <tr>
                                 <td align='left' width='200px'>{{ v.idtipouso }}</td>
@@ -95,7 +94,7 @@
                     <td align='center' width='200px'>Rechazado</td>
                     <td>
                         <table cellspacing='0'>
-                            {% for v in verificaciones %}
+                            {% for v in verifs %}
                             {% if v.idestado == 2 %}
                             <tr>
                                 <td align='left' width='200px'>{{ v.idtipouso }}</td>
