@@ -1146,13 +1146,14 @@ def get_resumen_data_mensual(cleaned_data):
     exclude_reverificado_query = Q(reverificado=0)
     # reverificado_query = Q(reverificado=1)
     # TODO CERTIFICADOS DE OTRO PERIODO
+    # TODO Tal vez haya un query de mas, posible que tenga que arreglarlo!
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
     else:
         taller_query = Q()
 
-    total_query = [fecha_query, taller_query, exclude_reverificado_query]
+    total_query = [fecha_query, taller_query]
 
     logger.debug(f"total_query => {total_query}")
 
@@ -1174,14 +1175,22 @@ def get_resumen_data_mensual(cleaned_data):
     # if total_query:
     #     certs.filter(total_query)
 
+    # INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
+    # INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
+    # WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
+    # AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
+
     categorias = certs.values_list("idcategoria", flat=True).distinct()
 
     verifs = {}
+    reverificados = {}
     for c in sorted(categorias):
         logger.debug(f"CATEGORIA => { c }")
-        cat_verifs = certs.filter(
-            idcategoria__exact=c,
-        ).values_list("idverificacion_id", "idtaller_id")
+        query_cat = [Q(idcategoria__exact=c), exclude_reverificado_query]
+
+        cat_verifs = certs.filter(*query_cat).values_list(
+            "idverificacion_id", "idtaller_id"
+        )
         composite_keys = [
             Q(idverificacion=item[0], idtaller_id=item[1]) for item in cat_verifs
         ]
@@ -1192,6 +1201,21 @@ def get_resumen_data_mensual(cleaned_data):
             .order_by("idtipouso")
         )
 
+        query_cat_reverif = [
+            Q(idcategoria__exact=c),
+            Q(reverificado=1),
+            # Q(fecha__lt=fecha_desde),
+            # Q(idtaller_id=id_taller),
+        ]
+
+        r = certs.filter(*query_cat_reverif).values_list(
+            "idverificacion_id", "idtaller_id", "nrocertificado"
+        )
+        if r:
+            outside_certs = len(r)
+            reverificados[c] = {"values": r, "cantidad": outside_certs}
+        else:
+            reverificados[c] = {}
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
 
     certs_count_categoria = dict(certs_count_categoria)
@@ -1202,7 +1226,9 @@ def get_resumen_data_mensual(cleaned_data):
     cache_key_certs = f"certs__{uuid}"
     cache_key_certs_count = f"certs_count__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
+    cache_key_reverifs = f"reverifs__{uuid}"
     cache.set(cache_key_verifs, verifs)
+    cache.set(cache_key_reverifs, reverificados)
     cache.set(cache_key_certs, certs)
     cache.set(cache_key_certs_count, certs_count_categoria)
     return uuid
@@ -1213,6 +1239,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_certs_count = f"certs_count__{uuid}"
+    cache_key_reverifs = f"reverifs__{uuid}"
 
     context["TIPO_USO"] = TIPO_USO_VEHICULO
     context["CATEGORIAS"] = dict(
@@ -1220,6 +1247,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     )
 
     context["verificaciones"] = cache.get(cache_key_verifs)
+    context["reverificados"] = cache.get(cache_key_reverifs)
     context["certs"] = cache.get(cache_key_certs)
     context["certs_count_categoria"] = cache.get(cache_key_certs_count)
     context["taller"] = Talleres.objects.get(idtaller=id_taller)

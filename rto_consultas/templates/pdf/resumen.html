@@ -1,6 +1,6 @@
 <!-- TODO maybe this into a div? -->
 {% load getattr %}
-{% load static %}
+{% load i18n static %}
 
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
@@ -14,7 +14,7 @@
         <td>
             <p style='margin-left:10px;'>
                 <b>Planta</b>: {{ taller.nrotaller }} - {{ taller.nombre }} <br /><b>CUIT</b>: {{ taller.cuit }} <br />
-                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.idlocalidad.descripcion }} - {{ taller.idprovincia.abreviatura }}
+                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.idlocalidad.descripcion }}
             </p>
         </td>
     </tr>
@@ -110,6 +110,21 @@
             </table>
         </td>
     </tr>
+    {% if query_dict reverificados cat %}
+    <tr>
+        <td colspan='2'>&nbsp;</td>
+        <td align='right' style='padding-right:15px;'>
+            Certificados Reverificados correspondientes a Otro Per&iacute;odo:
+            {% query_descriptions reverificados cat 'cantidad' %}
+            NUMEROS($certNum)</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan='2'>&nbsp;</td>
+        <td align='right' style='padding-right:15px;'>
+            Certificados Reverificados correspondientes a Otro Per&iacute;odo: 0</td>
+    </tr>
+    {% endif %}
 
     {% endfor %}
 
@@ -129,18 +144,4 @@
          $certNum .= " - ".$rowFi["NroCertificado"];
          }
 
-         if($Fuera->rowCount() > 0){
-         $tabla .= "<tr>
-         <td colspan='2'>&nbsp;</td>
-         <td align='right' style='padding-right:15px;'>
-         Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount().".
-         NUMEROS($certNum)</td>
-         </tr>";
-         }else{
-         $tabla .= "<tr>
-         <td colspan='2'>&nbsp;</td>
-         <td align='right' style='padding-right:15px;'>
-         Certificados Reverificados correspondientes a Otro Per&iacute;odo: ".$Fuera->rowCount()."</td>
-         </tr>";
-         }
          } -->
