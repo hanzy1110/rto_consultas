@@ -1185,7 +1185,7 @@ def get_resumen_data_mensual(cleaned_data):
             Verificaciones.objects.values("idestado", "idtipouso")
             .filter(idverificacion__in=cat_verifs)
             .annotate(cant_verifs=Count("idtipouso"))
-            .order_by()
+            .order_by("idtipouso")
         )
 
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
