@@ -1223,7 +1223,6 @@ def get_resumen_data_mensual(cleaned_data):
             .order_by("idtipouso")
         )
         r_cat = c_reverificados.filter(idcategoria__exact=c)
-        logger.debug(f"REVERIFICADOS => {r_cat}")
         if r_cat:
             outside_certs = len(r_cat)
             reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
