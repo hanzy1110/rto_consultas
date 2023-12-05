@@ -1155,6 +1155,11 @@ def get_resumen_data_mensual(cleaned_data):
     certs = (
         Certificados.objects.filter(*total_query)
         .values("idcategoria", "idverificacion_id", "idtaller_id")
+        .order_by()
+    )
+    certs_count_categoria = (
+        Certificados.objects.filter(*total_query)
+        .values("idcategoria")
         .annotate(cant_por_categoria=Count("idcategoria"))
         .order_by()
     )
@@ -1169,7 +1174,6 @@ def get_resumen_data_mensual(cleaned_data):
         logger.debug(f"CATEGORIA => { c }")
         cat_verifs = certs.filter(
             idcategoria__exact=c,
-            # idtaller_id=id_taller
         ).values_list("idverificacion_id")
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
@@ -1184,19 +1188,23 @@ def get_resumen_data_mensual(cleaned_data):
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
     cache_key_certs = f"certs__{uuid}"
+    cache_key_certs_count = f"certs_count__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache.set(cache_key_verifs, verifs)
     cache.set(cache_key_certs, certs)
-    return verifs, uuid
+    cache.set(cache_key_certs_count, certs_count_categoria)
+    return uuid
 
 
-def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta):
+def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     context = {}
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
+    cache_key_certs_count = f"certs_count__{uuid}"
 
     context["verificaciones"] = cache.get(cache_key_verifs)
     context["certs"] = cache.get(cache_key_certs)
+    context["certs_count_categoria"] = cache.get(cache_key_certs_count)
     context["taller"] = Talleres.objects.get(idtaller=id_taller)
     context["fecha_desde"] = fecha_desde
     context["fecha_hasta"] = fecha_hasta
