@@ -114,7 +114,8 @@
         <td colspan='2'>&nbsp;</td>
         <td align='right' style='padding-right:15px;'>
             Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-            {{ reverificados.cat.cantidad|default:0 }} {{ reverificados.cat.values|default:"" }}
+            {{ reverificados.cat.cantidad|default:"-1" }}
+            {{ reverificados.cat.values|default:"RENDER ERROR" }}
         </td>
     </tr>
 
