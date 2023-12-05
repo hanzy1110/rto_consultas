@@ -1205,6 +1205,7 @@ def get_resumen_data_mensual(cleaned_data):
 
     verifs = {}
     reverificados = {}
+    reverificados_cant = {}
     for c in sorted(categorias):
         query_cat = [
             Q(idcategoria__exact=c),
@@ -1228,7 +1229,9 @@ def get_resumen_data_mensual(cleaned_data):
         if r_cat:
             logger.debug(f"CAT {c} -- r_cat => {r_cat}")
             outside_certs = len(r_cat)
-            reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
+            # reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
+            reverificados[c] = r_cat
+            reverificados_cant[c] = outside_certs
         else:
             reverificados[c] = {}
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
@@ -1242,8 +1245,10 @@ def get_resumen_data_mensual(cleaned_data):
     cache_key_certs_count = f"certs_count__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_reverifs = f"reverifs__{uuid}"
+    cache_key_reverifs_cant = f"reverifs_cant__{uuid}"
     cache.set(cache_key_verifs, verifs)
     cache.set(cache_key_reverifs, reverificados)
+    cache.set(cache_key_reverifs_cant, reverificados_cant)
     cache.set(cache_key_certs, certs)
     cache.set(cache_key_certs_count, certs_count_categoria)
     return uuid
@@ -1255,6 +1260,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_certs_count = f"certs_count__{uuid}"
     cache_key_reverifs = f"reverifs__{uuid}"
+    cache_key_reverifs_cant = f"reverifs_cant__{uuid}"
 
     context["TIPO_USO"] = TIPO_USO_VEHICULO
     context["CATEGORIAS"] = dict(
@@ -1263,6 +1269,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
 
     context["verificaciones"] = cache.get(cache_key_verifs)
     context["reverificados"] = cache.get(cache_key_reverifs)
+    context["reverificados_cant"] = cache.get(cache_key_reverifs_cant)
     context["certs"] = cache.get(cache_key_certs)
     context["certs_count_categoria"] = cache.get(cache_key_certs_count)
     context["taller"] = Talleres.objects.get(idtaller=id_taller)
