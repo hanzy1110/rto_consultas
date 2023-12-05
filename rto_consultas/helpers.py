@@ -1228,7 +1228,7 @@ def get_resumen_data_mensual(cleaned_data):
             logger.debug(f"CAT {c} -- r_cat => {r_cat}")
             outside_certs = len(r_cat)
             # reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
-            reverificados[c] = r_cat
+            reverificados[c] = [c.nrocertificado for c in r_cat]
             reverificados_cant[c] = outside_certs
         else:
             reverificados[c] = ""
