@@ -1223,7 +1223,7 @@ def get_resumen_data_mensual(cleaned_data):
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
-        r_cat = c_reverificados.filter(idcategoria__exact=c).values_list(
+        r_cat = c_reverificados.filter(idcategoria__exact=c).values(
             "nrocertificado", flat=True
         )
         if r_cat:
@@ -1233,7 +1233,8 @@ def get_resumen_data_mensual(cleaned_data):
             reverificados[c] = r_cat
             reverificados_cant[c] = outside_certs
         else:
-            reverificados[c] = {}
+            reverificados[c] = ""
+            reverificados_cant[c] = 0
         # logger.debug(f"CAT_VERIFS {cat_verifs}")
 
     certs_count_categoria = dict(certs_count_categoria)
