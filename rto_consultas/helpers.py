@@ -1171,7 +1171,7 @@ def get_resumen_data_mensual(cleaned_data):
         .values_list("idcategoria", "cant_por_categoria")
     )
     query_cat_reverif = [
-        Q(reverificado=1),
+        Q(reverificacion=1),
         Q(fecha__lt=fecha_desde),
         Q(idtaller_id=id_taller),
     ]
