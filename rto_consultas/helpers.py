@@ -1147,15 +1147,14 @@ def get_resumen_data_mensual(cleaned_data):
     # reverificado_query = Q(reverificado=1)
     # TODO CERTIFICADOS DE OTRO PERIODO
     # TODO Tal vez haya un query de mas, posible que tenga que arreglarlo!
+    # Tiene que estar para agarrar las que posiblemente no esten en el query...
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
     else:
         taller_query = Q()
 
-    total_query = [fecha_query, taller_query]
-
-    logger.debug(f"total_query => {total_query}")
+    total_query = [fecha_query, taller_query, exclude_reverificado_query]
 
     certs = (
         Certificados.objects.filter(*total_query)
@@ -1185,8 +1184,9 @@ def get_resumen_data_mensual(cleaned_data):
     verifs = {}
     reverificados = {}
     for c in sorted(categorias):
-        logger.debug(f"CATEGORIA => { c }")
-        query_cat = [Q(idcategoria__exact=c), exclude_reverificado_query]
+        query_cat = [
+            Q(idcategoria__exact=c),
+        ]
 
         cat_verifs = certs.filter(*query_cat).values_list(
             "idverificacion_id", "idtaller_id"
@@ -1211,6 +1211,7 @@ def get_resumen_data_mensual(cleaned_data):
         r = certs.filter(*query_cat_reverif).values_list(
             "idverificacion_id", "idtaller_id", "nrocertificado"
         )
+        logger.debug(f"REVERIFICADOS => {r}")
         if r:
             outside_certs = len(r)
             reverificados[c] = {"values": r, "cantidad": outside_certs}
