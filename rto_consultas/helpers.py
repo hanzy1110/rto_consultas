@@ -1184,7 +1184,7 @@ def get_resumen_data_mensual(cleaned_data):
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache.set(cache_key_verifs, verifs)
-    cache.set(cache_key_certs, certs.values_list())
+    cache.set(cache_key_certs, certs.values("idcategoria", "cant_por_categoria"))
     return verifs, uuid
 
 
