@@ -115,8 +115,8 @@
         <td colspan='2'>&nbsp;</td>
         <td align='right' style='padding-right:15px;'>
             Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-            {% query_descriptions reverificados.cat.cantidad %}
-            NUMEROS($certNum)</td>
+            {{ reverificados.cat.cantidad }}
+            NUMEROS( {{ reverificados.cat.values }} )</td>
     </tr>
     {% else %}
     <tr>
