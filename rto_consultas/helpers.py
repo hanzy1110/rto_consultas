@@ -1177,7 +1177,7 @@ def get_resumen_data_mensual(cleaned_data):
     ]
 
     v_reverificados = Verificaciones.objects.filter(*query_cat_reverif).values_list(
-        "idverificacion_id", "idtaller_id", "idverificacionoriginal"
+        "idverificacion", "idtaller_id", "idverificacionoriginal"
     )
 
     # if total_query:
