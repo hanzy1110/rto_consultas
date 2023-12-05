@@ -1,4 +1,6 @@
 <!-- TODO maybe this into a div? -->
+{% load getattr %}
+
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
@@ -9,13 +11,13 @@
         </td>
         <td>
             <p style='margin-left:10px;'>
-                <b>Planta</b>: $nroTaller - $nombre <br /><b>CUIT</b>: $Cuit <br />
-                <b>Direcci&oacute;n</b>: $direccion / $localidad - $provincia
+                <b>Planta</b>: {{ taller.nrotaller }} - {{ taller.nombre }} <br /><b>CUIT</b>: {{ taller.cuit }} <br />
+                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.localidad }} - {{ taller.provincia }}
             </p>
         </td>
     </tr>
     <tr>
-        <td colspan='2' align='center'><b>RESUMEN PERIODO: {{ fechaDesde }} - {{ fechaHasta }}</b></td>
+        <td colspan='2' align='center'><b>RESUMEN PERIODO: {{ fecha_desde }} - {{ fecha_hasta }}</b></td>
 </table>
 <br />
 
@@ -46,53 +48,60 @@
 
     {% for cat, verifs in verificaciones.items %}
 
-    <table cellspacing='0'>
-        <tr>
-            <td align='center' width='200px'>Aprobados</td>
-            <td>
-                <table cellspacing='0'>
-                    {% for v in filter_idestado verifs 1 %}
-                    <tr>
-                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
-                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                    </tr>";
-                    {% endfor %}
-                </table>
-            </td>
-        </tr>
-    </table>
+    <tr>
+        <td align='center'>{{ cat }}</td>
+        <td align='center'>{{ query_descriptions certs cat "cant_por_categoria" }}</td>
+        <td>
 
-    <table cellspacing='0'>
-        <tr>
-            <td align='center' width='200px'>Aprobado Condicional</td>
-            <td>
-                <table cellspacing='0'>
-                    {% for v in filter_idestado verifs 3 %}
-                    <tr>
-                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
-                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </td>
-        </tr>
-    </table>
+            <table cellspacing='0'>
+                <tr>
+                    <td align='center' width='200px'>Aprobados</td>
+                    <td>
+                        <table cellspacing='0'>
+                            {% for v in filter_idestado verifs 1 %}
+                            <tr>
+                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                            </tr>";
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
 
-    <table cellspacing='0'>
-        <tr>
-            <td align='center' width='200px'>Rechazado</td>
-            <td>
-                <table cellspacing='0'>
-                    {% for v in filter_idestado verifs 2 %}
-                    <tr>
-                        <td align='left' width='200px'>{{ v.idtipouso }}</td>
-                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </td>
-        </tr>
-    </table>
+            <table cellspacing='0'>
+                <tr>
+                    <td align='center' width='200px'>Aprobado Condicional</td>
+                    <td>
+                        <table cellspacing='0'>
+                            {% for v in filter_idestado verifs 3 %}
+                            <tr>
+                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table cellspacing='0'>
+                <tr>
+                    <td align='center' width='200px'>Rechazado</td>
+                    <td>
+                        <table cellspacing='0'>
+                            {% for v in filter_idestado verifs 2 %}
+                            <tr>
+                                <td align='left' width='200px'>{{ v.idtipouso }}</td>
+                                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
 
     {% endfor %}
 

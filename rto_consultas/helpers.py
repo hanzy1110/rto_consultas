@@ -1140,6 +1140,9 @@ def get_resumen_data_mensual(cleaned_data):
 
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
+    # TODO FILTRO REVERIFICACIONES
+    # TODO CERTIFICADOS DE OTRO PERIODO
+
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
     else:
@@ -1181,13 +1184,19 @@ def get_resumen_data_mensual(cleaned_data):
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache.set(cache_key_verifs, verifs)
-    cache.set(cache_key_certs, certs)
+    cache.set(cache_key_certs, certs.values_list())
     return verifs, uuid
 
 
-def handle_resumen_context(uuid):
+def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta):
+    context = {}
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
 
-    verifs = cache.get(cache_key_verifs)
-    certs = cache.get(cache_key_certs)
+    context["verificaciones"] = cache.get(cache_key_verifs)
+    context["certs"] = cache.get(cache_key_certs)
+    context["taller"] = Talleres.objects.get(idtaller=id_taller)
+    context["fecha_desde"] = fecha_desde
+    context["fecha_hasta"] = fecha_hasta
+
+    return context
