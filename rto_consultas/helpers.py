@@ -1176,15 +1176,15 @@ def get_resumen_data_mensual(cleaned_data):
             .order_by()
         )
 
-        logger.debug(f"CAT_VERIFS {cat_verifs}")
+        # logger.debug(f"CAT_VERIFS {cat_verifs}")
 
-    logger.info(f"VERIFICACIONES => {verifs}")
+    logger.info(f"CERTS => {certs}")
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache.set(cache_key_verifs, verifs)
-    cache.set(cache_key_certs, certs.values("idcategoria", "cant_por_categoria"))
+    cache.set(cache_key_certs, certs)
     return verifs, uuid
 
 
