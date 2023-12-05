@@ -1226,16 +1226,7 @@ def consulta_resumen_mensual(request):
             uuid = get_resumen_data_mensual(form.cleaned_data)
             context = handle_resumen_context(uuid, **form.cleaned_data)
 
-            return render(
-                request,
-                "pdf/resumen.html",
-                {
-                    "uuid": uuid,
-                    "fecha_desde": form.cleaned_data.get("fecha_desde", None),
-                    "fecha_hasta": form.cleaned_data.get("fecha_hasta", None),
-                    "id_taller": form.cleaned_data.get("id_taller", None),
-                },
-            )
+            return render(request, "pdf/resumen.html", context)
         else:
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
     else:
