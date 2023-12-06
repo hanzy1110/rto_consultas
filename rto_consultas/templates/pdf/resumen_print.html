@@ -26,11 +26,11 @@
 
 {% for cat, verifs in verificaciones.items %}
 <div class="card col">
-    <div class="card-header col-6" style="margin: auto; align-items: center;">
+    <div class="card-header col" style="margin: auto; align-items: center;">
         <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
         <h4>Cantidad: {% query_dict certs_count_categoria cat %}</h4>
     </div>
-    <div class="card-body col-6" style="margin: auto; align-items: center;">
+    <div class="card-body" style="margin: auto; align-items: center;">
         <table cellspacing='0' class='table-md'>
             <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
             <tr>
