@@ -32,9 +32,11 @@
 <!-- <table cellspacing='0' class='tblDatos'> -->
 
 <div class="card col box">
-    <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
-    <h3>Cantidad: {% query_dict certs_count_categoria cat %}</h3>
-    <div class="card-body col">
+    <div class="card">
+        <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
+        <h4>Cantidad: {% query_dict certs_count_categoria cat %}</h4>
+    </div>
+    <div class="card col">
         <table cellspacing='0' class='table-md'>
             <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
             <tr>
