@@ -37,19 +37,18 @@
             <td>
                 <h3>{% query_dict CATEGORIAS cat %}</h3>
                 <h3>{% query_dict certs_count_categoria cat %}</h3>
-                <table cellspacing='0'>
-                    <tr>
-                        <td align='center' width='200px'>Aprobados</td>
-                        <td>
-                            {% for v in verifs %}
-                            {% if v.idestado == 1 %}
-                    <tr>
-                        <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-            </td>
+        <tr>
+            <td align='center' width='200px'>Aprobados</td>
+            <td>
+                {% for v in verifs %}
+                {% if v.idestado == 1 %}
+        <tr>
+            <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+            <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </td>
         </tr>
     </table>
 
