@@ -85,9 +85,14 @@
             </td>
         </tr> -->
 </table>
-Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-<div>{% query_dict reverificados cat %}</div>
-<div>{% query_dict reverificados_cant cat %}</div>
+
+<div class="card">
+    <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:</p>
+    <div class="card-body">
+        {% query_dict reverificados cat %}
+        {% query_dict reverificados_cant cat %}
+    </div>
+</div>
 {% endfor %}
 
 
