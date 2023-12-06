@@ -117,10 +117,10 @@
         </div>
     </div>
 </div>
-<footer align="right">
-    Página {{ cat }} de {{ TOTAL_PAGES }}
-</footer>
 </p>
+<footer align="right">
+    Página {% query_dict PAGE_INDEX cat %} de {{ TOTAL_PAGES }}
+</footer>
 {% endfor %}
 
 </html>
