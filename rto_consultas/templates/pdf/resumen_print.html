@@ -40,13 +40,13 @@
         <table cellspacing='0' class='table-md'>
             <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
             <tr>
-                <th width='200px'>Estado</th>
+                <th>Estado</th>
                 <!-- <th width='200px'>Tipo Uso Vehiculo</th> -->
-                <th width='100px'>Cantidad</th>
+                <th>Cantidad</th>
             </tr>
 
             <tr>
-                <td align='center' width='200px'>Aprobados</td>
+                <td align='center'>Aprobados</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 1 %}
@@ -54,36 +54,36 @@
             </tr>
             <td>
                 <tr>
-                    <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                    <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                    <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                    <td align='center'>{{ v.cant_verifs }}</td>
                 </tr>
             </td>
             {% endif %}
             {% endfor %}
             <tr>
-                <td align='center' width='200px'>Aprobado Condicional</td>
+                <td align='center'>Aprobado Condicional</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 3 %}
                 </td>
             </tr>
             <tr>
-                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
             </tr>
             {% endif %}
             {% endfor %}
 
             <tr>
-                <td align='center' width='200px'>Rechazado</td>
+                <td align='center'>Rechazado</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 2 %}
                 </td>
             </tr>
             <tr>
-                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
             </tr>
             {% endif %}
             {% endfor %}
