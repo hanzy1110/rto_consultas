@@ -86,11 +86,11 @@
         </tr> -->
 </table>
 
-<div class="card">
+<div class="card col-6">
     <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:</p>
-    <div class="card-body">
-        {% query_dict reverificados cat %}
-        {% query_dict reverificados_cant cat %}
+    <div class="card-body col-6">
+        Cantidad: {% query_dict reverificados_cant cat %}
+        Certificados: {% query_dict reverificados cat %}
     </div>
 </div>
 {% endfor %}
