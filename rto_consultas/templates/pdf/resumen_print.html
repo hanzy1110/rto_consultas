@@ -78,16 +78,16 @@
     {% endif %}
     {% endfor %}
     <!-- </table> -->
-    <tr>
-        <td colspan='2'>&nbsp;</td>
-        <td align='right' style='padding-right:15px;'>
-            Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-            <div>{% query_dict reverificados cat %}</div>
-            <div>{% query_dict reverificados_cant cat %}</div>
+    <!-- <tr>
+            <td colspan='2'>&nbsp;</td>
+            <td align='right' style='padding-right:15px;'>
 
-        </td>
-    </tr>
+            </td>
+        </tr> -->
 </table>
+Certificados Reverificados correspondientes a Otro Per&iacute;odo:
+<div>{% query_dict reverificados cat %}</div>
+<div>{% query_dict reverificados_cant cat %}</div>
 {% endfor %}
 
 
