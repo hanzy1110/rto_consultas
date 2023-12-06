@@ -1,4 +1,22 @@
 <!-- TODO maybe this into a div? -->
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- Other head content -->
+</head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+    @media print {
+        .new-page {
+            page-break-before: always;
+        }
+    }
+
+</style>
+
 {% load getattr %}
 {% load i18n static %}
 
@@ -97,3 +115,4 @@
 </div>
 {% endfor %}
 
+</html>
