@@ -25,11 +25,11 @@
 
 
 {% for cat, verifs in verificaciones.items %}
-<div class="card">
+<div class="card col-6">
 
     <div class="card-body">
-        <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
-        <h3>Cantidad: {% query_dict certs_count_categoria cat %}</h3>
+        <p>Categoría: {% query_dict CATEGORIAS cat %}</p>
+        <p>Cantidad: {% query_dict certs_count_categoria cat %}</p>
     </div>
 </div>
 <table cellspacing='0' class='tblDatos'>
@@ -89,7 +89,7 @@
     <div class="card-body col-10">
         Cantidad: {% query_dict reverificados_cant cat %}
     </div>
-    <div class="card-body col-10">
+    <div class="card-body">
         Certificados: {% query_dict reverificados cat %}
     </div>
 </div>
