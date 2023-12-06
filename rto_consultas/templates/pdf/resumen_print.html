@@ -42,10 +42,12 @@
             {% if v.idestado == 1 %}
         </td>
     </tr>
-    <tr>
-        <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-    </tr>
+    <td>
+        <tr>
+            <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+            <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+        </tr>
+    </td>
     {% endif %}
     {% endfor %}
     <tr>
