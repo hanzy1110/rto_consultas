@@ -46,7 +46,7 @@
             </tr>
 
             <tr>
-                <td align='center'>Aprobados</td>
+                <td align='center' style="padding:0.5rem">Aprobados</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 1 %}
@@ -61,7 +61,7 @@
             {% endif %}
             {% endfor %}
             <tr>
-                <td align='center'>Aprobado Condicional</td>
+                <td align='left' style="padding:0.5rem">Aprobado Condicional</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 3 %}
@@ -75,7 +75,7 @@
             {% endfor %}
 
             <tr>
-                <td align='center'>Rechazado</td>
+                <td align='center' style="padding:0.5rem">Rechazado</td>
                 <td>
                     {% for v in verifs %}
                     {% if v.idestado == 2 %}
