@@ -16,15 +16,22 @@
         }
     }
 
-    .content {
-        flex: 1;
+    html,
+    body {
+        height: 100%;
+        margin: 0px;
     }
 
-    footer {
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
+    body>div {
+        height: 100%;
+        display: block;
+        position: relative;
+    }
+
+    body>div>div {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
     }
 
 </style>
@@ -129,9 +136,9 @@
     </div>
 </div>
 </p>
-<footer align="right">
+<div align="right">
     Página {% query_dict PAGE_INDEX cat %} de {{ TOTAL_PAGES }}
-</footer>
+</div>
 {% endfor %}
 
 </html>
