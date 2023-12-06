@@ -1247,7 +1247,6 @@ class PDFResumenMensual(PDFTemplateView):
     cmd_options = {
         "log-level": "info",
         "quiet": False,
-        "--footer-center": "[page]/[topage]",
         "enable-local-file-access": "",
     }
 

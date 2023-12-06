@@ -1287,4 +1287,6 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     context["fecha_desde"] = fecha_desde
     context["fecha_hasta"] = fecha_hasta
 
+    context["TOTAL_PAGES"] = len(context["verificaciones"].keys())
+
     return context
