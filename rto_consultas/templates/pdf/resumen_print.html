@@ -1,6 +1,7 @@
 <!-- TODO maybe this into a div? -->
 
 <html>
+
 <head>
     <meta charset="UTF-8">
     <!-- Other head content -->
@@ -20,11 +21,17 @@
 {% load getattr %}
 {% load i18n static %}
 
+{% for cat, verifs in verificaciones.items %}
+{% if cat != 1 %}
+<p class="new-page">
+    {% else %}
+<p>
+    {% endif %}
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
-            <img src="/home/code/staticfiles/img/logos/LOGO_UNCOMA.png" alt='Logo Unco' align='left' style='margin:10px;'
-                width="500px" />
+            <img src="/home/code/staticfiles/img/logos/LOGO_UNCOMA.png" alt='Logo Unco' align='left'
+                style='margin:10px;' width="500px" />
             <br />
             <h3 style='display:inline;'>UNIVERSIDAD NACIONAL DEL COMAHUE</h3> <br />
             <h4 style='display:inline;'>FACULTAD DE INGENIERIA</h4>
@@ -41,14 +48,6 @@
 </table>
 <br />
 
-
-{% for cat, verifs in verificaciones.items %}
-
-    {% if cat != 1 %}
-        <p class="new-page">
-    {% else %}
-        <p>
-    {% endif %}
 
 <div class="card col">
     <div class="card-header col" style="margin: auto; align-items: center;">
@@ -120,7 +119,7 @@
         </div>
     </div>
 </div>
-    </p>
+</p>
 {% endfor %}
 
 </html>

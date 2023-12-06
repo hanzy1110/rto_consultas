@@ -1244,7 +1244,12 @@ def consulta_resumen_mensual(request):
 class PDFResumenMensual(PDFTemplateView):
     filename = "resumen_mensual.pdf"
     template_name = "pdf/resumen_print.html"
-    cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
+    cmd_options = {
+        "log-level": "info",
+        "quiet": False,
+        "--footer-center": "[page]/[topage]",
+        "enable-local-file-access": "",
+    }
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
