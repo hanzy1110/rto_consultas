@@ -32,65 +32,70 @@
     </div>
 </div>
 <!-- <table cellspacing='0' class='tblDatos'> -->
-<table cellspacing='0' class='table-md'>
-    <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
-    <tr>
-        <th width='200px'>Estado</th>
-        <th width='200px'>Tipo Uso Vehiculo</th>
-        <th width='100px'>Cantidad</th>
-    </tr>
-
-    <tr>
-        <td align='center' width='200px'>Aprobados</td>
-        <td>
-            {% for v in verifs %}
-            {% if v.idestado == 1 %}
-        </td>
-    </tr>
-    <td>
-        <tr>
-            <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-            <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-        </tr>
-    </td>
-    {% endif %}
-    {% endfor %}
-    <tr>
-        <td align='center' width='200px'>Aprobado Condicional</td>
-        <td>
-            {% for v in verifs %}
-            {% if v.idestado == 3 %}
-        </td>
-    </tr>
-    <tr>
-        <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-
-    <tr>
-        <td align='center' width='200px'>Rechazado</td>
-        <td>
-            {% for v in verifs %}
-            {% if v.idestado == 2 %}
-        </td>
-    </tr>
-    <tr>
-        <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-</table>
 
 <div class="card col-6">
     <div class="card-body">
-        <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:</p>
-        Cantidad: {% query_dict reverificados_cant cat %}
-    </div>
-    <div class="card-body">
-        Certificados: {% query_dict reverificados cat %}
+        <table cellspacing='0' class='table-md'>
+            <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
+            <tr>
+                <th width='200px'>Estado</th>
+                <th width='200px'>Tipo Uso Vehiculo</th>
+                <th width='100px'>Cantidad</th>
+            </tr>
+
+            <tr>
+                <td align='center' width='200px'>Aprobados</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 1 %}
+                </td>
+            </tr>
+            <td>
+                <tr>
+                    <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                    <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+                </tr>
+            </td>
+            {% endif %}
+            {% endfor %}
+            <tr>
+                <td align='center' width='200px'>Aprobado Condicional</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 3 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td align='center' width='200px'>Rechazado</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 2 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        <div class="card col-6">
+            <div class="card-body">
+                <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:</p>
+                Cantidad: {% query_dict reverificados_cant cat %}
+            </div>
+            <div class="card-body">
+                Certificados: {% query_dict reverificados cat %}
+            </div>
+        </div>
     </div>
 </div>
 {% endfor %}
