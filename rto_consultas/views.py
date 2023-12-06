@@ -1225,6 +1225,8 @@ def consulta_resumen_mensual(request):
             # Get the data, render HTML and cache the result
             uuid = get_resumen_data_mensual(form.cleaned_data)
             context = handle_resumen_context(uuid, **form.cleaned_data)
+            cache_key_params = f"params__{uuid}"
+            cache.set(cache_key_params, form.cleaned_data)
 
             return render(request, "pdf/resumen_print.html", context)
         else:
@@ -1241,7 +1243,7 @@ def consulta_resumen_mensual(request):
 
 class PDFResumenMensual(PDFTemplateView):
     filename = "resumen_mensual.pdf"
-    template_name = "pdf/tabla_resumen.html"
+    template_name = "pdf/resumen_print.html"
     cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
 
     def get_context_data(self, **kwargs):
@@ -1249,4 +1251,8 @@ class PDFResumenMensual(PDFTemplateView):
         # categorias = Verificaciones.values_list("id_categoria", flat=True).distinct()
         uuid = self.kwargs.get("uuid")
         logger.debug(f"UUID ===> {uuid}")
-        resumen_data = cache.get(uuid, None)
+
+        params = cache.get(f"params__{uuid}")
+        context = handle_resumen_context(uuid, **params)
+
+        return context

@@ -5,7 +5,7 @@
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
-            <img src="{% static 'img/logos/LOGO_UNCOMA.png' %}" alt='Logo Unco' align='left' style='margin:10px;'
+            <img src="/home/code/staticfiles/img/logos/LOGO_UNCOMA.png" alt='Logo Unco' align='left' style='margin:10px;'
                 width="500px" />
             <br />
             <h3 style='display:inline;'>UNIVERSIDAD NACIONAL DEL COMAHUE</h3> <br />
@@ -89,7 +89,7 @@
                     {% query_dict reverificados_cant cat %}
                 </p>
             </div>
-            <div class="card-body">
+            <div class="card-body col-4">
                 Certificados: {% query_dict reverificados cat %}
             </div>
         </div>
@@ -97,21 +97,3 @@
 </div>
 {% endfor %}
 
-
-<!-- TODO LOS CERTIFICADOS DE OTRO PERIODO -->
-<!-- $sql2 = " SELECT V1.idVerificacion,C.NroCertificado FROM
-         verificaciones V1
-         INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
-         INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
-         WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
-         AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
-
-         $Fuera=$base->query($sql2);
-         if ($Fuera){
-         $certNum = "";
-         foreach ($Fuera as $rowFi)
-         {
-         $certNum .= " - ".$rowFi["NroCertificado"];
-         }
-
-         } -->
