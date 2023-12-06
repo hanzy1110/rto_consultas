@@ -16,24 +16,6 @@
         }
     }
 
-    html,
-    body {
-        height: 100%;
-        margin: 0px;
-    }
-
-    body>div {
-        height: 100%;
-        display: block;
-        position: relative;
-    }
-
-    body>div>div {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-    }
-
 </style>
 
 {% load getattr %}
@@ -136,9 +118,9 @@
     </div>
 </div>
 </p>
-<div align="right">
+<footer align="right">
     Página {% query_dict PAGE_INDEX cat %} de {{ TOTAL_PAGES }}
-</div>
+</footer>
 {% endfor %}
 
 </html>
