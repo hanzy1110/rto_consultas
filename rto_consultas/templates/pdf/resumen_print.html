@@ -26,7 +26,7 @@
 
 {% for cat, verifs in verificaciones.items %}
 <div class="card col">
-    <div class="card-header box col-6">
+    <div class="card-header col-6" style="margin: auto; align-items: center;">
         <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
         <h4>Cantidad: {% query_dict certs_count_categoria cat %}</h4>
     </div>
