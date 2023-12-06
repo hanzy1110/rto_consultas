@@ -11,7 +11,7 @@
 <style>
     @media print {
         .new-page {
-            page-break-before: auto;
+            page-break-before: always;
         }
     }
 
@@ -44,7 +44,12 @@
 
 {% for cat, verifs in verificaciones.items %}
 
-<p class="new-page">
+    {% if cat!=1 %}
+        <p class="new-page">
+    {% else %}
+        <p>
+    {% endif %}
+
 <div class="card col">
     <div class="card-header col" style="margin: auto; align-items: center;">
         <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
