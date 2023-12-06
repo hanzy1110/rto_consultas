@@ -1247,11 +1247,9 @@ def get_resumen_data_mensual(cleaned_data):
     certs_count_categoria = dict(certs_count_categoria)
 
     # logger.info(f"REVERIFICADOS => {reverificados}")
-
     uuid = uuid1()
     logger.info(f"UUID ====> {uuid}")
     cache_key_certs = f"certs__{uuid}"
-    cache_key_params = f"params__{uuid}"
     cache_key_certs_count = f"certs_count__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_reverifs = f"reverifs__{uuid}"
@@ -1277,6 +1275,8 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     context["CATEGORIAS"] = dict(
         Categorias.objects.all().values_list("idcategoria", "descripcion")
     )
+
+    context["uuid"] = str(uuid)
 
     context["verificaciones"] = cache.get(cache_key_verifs)
     context["reverificados"] = cache.get(cache_key_reverifs)
