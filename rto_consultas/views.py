@@ -1228,7 +1228,7 @@ def consulta_resumen_mensual(request):
             cache_key_params = f"params__{uuid}"
             cache.set(cache_key_params, form.cleaned_data)
 
-            return render(request, "pdf/resumen_print.html", context)
+            return render(request, "pdf/resumen.html", context)
         else:
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
     else:
