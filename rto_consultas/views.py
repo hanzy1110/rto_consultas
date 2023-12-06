@@ -1247,7 +1247,7 @@ class PDFResumenMensual(PDFTemplateView):
     cmd_options = {"log-level": "info", "quiet": False, "enable-local-file-access": ""}
 
     def get_context_data(self, **kwargs):
-        context = super(PDFHabilitacion, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         # categorias = Verificaciones.values_list("id_categoria", flat=True).distinct()
         uuid = self.kwargs.get("uuid")
         logger.debug(f"UUID ===> {uuid}")
