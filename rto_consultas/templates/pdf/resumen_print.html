@@ -20,7 +20,6 @@
 {% load getattr %}
 {% load i18n static %}
 
-<p class="new-page">
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
@@ -44,6 +43,8 @@
 
 
 {% for cat, verifs in verificaciones.items %}
+
+<p class="new-page">
 <div class="card col">
     <div class="card-header col" style="margin: auto; align-items: center;">
         <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
