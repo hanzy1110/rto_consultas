@@ -35,81 +35,74 @@
 
         <tr>
             <td>
-
                 <h3>{% query_dict CATEGORIAS cat %}</h3>
                 <h3>{% query_dict certs_count_categoria cat %}</h3>
                 <table cellspacing='0'>
                     <tr>
                         <td align='center' width='200px'>Aprobados</td>
                         <td>
-                            <table cellspacing='0'>
-                                {% for v in verifs %}
-                                {% if v.idestado == 1 %}
-                                <tr>
-                                    <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                                    <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                                </tr>
-                                {% endif %}
-                                {% endfor %}
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-
-                <table cellspacing='0'>
+                            {% for v in verifs %}
+                            {% if v.idestado == 1 %}
                     <tr>
-                        <td align='center' width='200px'>Aprobado Condicional</td>
-                        <td>
-                            <table cellspacing='0'>
-                                {% for v in verifs %}
-                                {% if v.idestado == 3 %}
-                                <tr>
-                                    <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                                    <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                                </tr>
-                                {% endif %}
-                                {% endfor %}
-                            </table>
-                        </td>
+                        <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                        <td align='center' width='100px'>{{ v.cant_verifs }}</td>
                     </tr>
-                </table>
-
-                <table cellspacing='0'>
-                    <tr>
-                        <td align='center' width='200px'>Rechazado</td>
-                        <td>
-                            <table cellspacing='0'>
-                                {% for v in verifs %}
-                                {% if v.idestado == 2 %}
-                                <tr>
-                                    <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
-                                    <td align='center' width='100px'>{{ v.cant_verifs }}</td>
-                                </tr>
-                                {% endif %}
-                                {% endfor %}
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                    {% endif %}
+                    {% endfor %}
             </td>
         </tr>
-        <tr>
-            <td colspan='2'>&nbsp;</td>
-            <td align='right' style='padding-right:15px;'>
-                Certificados Reverificados correspondientes a Otro Per&iacute;odo:
-                <div>{% query_dict reverificados cat %}</div>
-                <div>{% query_dict reverificados_cant cat %}</div>
-
-            </td>
-        </tr>
-
-        {% endfor %}
-
     </table>
 
+    <table cellspacing='0'>
+        <tr>
+            <td align='center' width='200px'>Aprobado Condicional</td>
+            <td>
+                {% for v in verifs %}
+                {% if v.idestado == 3 %}
+        <tr>
+            <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+            <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </td>
+        </tr>
+    </table>
 
-    <!-- TODO LOS CERTIFICADOS DE OTRO PERIODO -->
-    <!-- $sql2 = " SELECT V1.idVerificacion,C.NroCertificado FROM
+    <table cellspacing='0'>
+        <tr>
+            <td align='center' width='200px'>Rechazado</td>
+            <td>
+                {% for v in verifs %}
+                {% if v.idestado == 2 %}
+        <tr>
+            <td align='left' width='200px'>{% query_dict TIPO_USO v.idtipouso %}</td>
+            <td align='center' width='100px'>{{ v.cant_verifs }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </td>
+        </tr>
+    </table>
+    </td>
+    </tr>
+    <tr>
+        <td colspan='2'>&nbsp;</td>
+        <td align='right' style='padding-right:15px;'>
+            Certificados Reverificados correspondientes a Otro Per&iacute;odo:
+            <div>{% query_dict reverificados cat %}</div>
+            <div>{% query_dict reverificados_cant cat %}</div>
+
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+<!-- TODO LOS CERTIFICADOS DE OTRO PERIODO -->
+<!-- $sql2 = " SELECT V1.idVerificacion,C.NroCertificado FROM
          verificaciones V1
          INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
          INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
