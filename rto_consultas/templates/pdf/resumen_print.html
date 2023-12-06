@@ -24,6 +24,7 @@
 <br />
 
 
+{% for cat, verifs in verificaciones.items %}
 <table cellspacing='0' class='tblDatos'>
     <tr>
         <th width='180px' rowspan='2'>
@@ -47,8 +48,6 @@
             </table>
         </th>
     </tr>
-
-    {% for cat, verifs in verificaciones.items %}
 
     <tr>
         <td align='center'>{% query_dict CATEGORIAS cat %}</td>

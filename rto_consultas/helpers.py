@@ -1254,6 +1254,7 @@ def get_resumen_data_mensual(cleaned_data):
     cache_key_verifs = f"verifs__{uuid}"
     cache_key_reverifs = f"reverifs__{uuid}"
     cache_key_reverifs_cant = f"reverifs_cant__{uuid}"
+
     cache.set(cache_key_verifs, verifs)
     cache.set(cache_key_reverifs, reverificados)
     cache.set(cache_key_reverifs_cant, reverificados_cant)
