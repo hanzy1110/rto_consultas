@@ -1,10 +1,11 @@
 {% load getattr %}
 {% load i18n static %}
 
-
-<button type="button" class="btn btn-primary btn-block" hx-get="{% url 'imprimir_resumen_mensual' uuid=uuid %}" hx-trigger="click">
-Imprimir
-</button>
+<a href="{% url 'imprimir_resumen_mensual' uuid=uuid %}">
+    <button type="button" class="btn btn-primary btn-block">
+        Imprimir
+    </button>
+</a>
 <table cellspacing='1' border='1' id='tbCab'>
     <tr>
         <td>
