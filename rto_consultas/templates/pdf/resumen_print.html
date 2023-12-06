@@ -25,15 +25,15 @@
 
 
 {% for cat, verifs in verificaciones.items %}
-<div class="card col-6">
+<!-- <div class="card col-6">
     <div class="card-body">
-        <p>Categoría: {% query_dict CATEGORIAS cat %}</p>
-        <p>Cantidad: {% query_dict certs_count_categoria cat %}</p>
     </div>
-</div>
+</div> -->
 <!-- <table cellspacing='0' class='tblDatos'> -->
 
 <div class="card col-6">
+    <p>Categoría: {% query_dict CATEGORIAS cat %}</p>
+    <p>Cantidad: {% query_dict certs_count_categoria cat %}</p>
     <div class="card-body">
         <table cellspacing='0' class='table-md'>
             <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
