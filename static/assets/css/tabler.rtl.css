@@ -12844,7 +12844,7 @@ a.icon:hover {
 }
 
 .table thead th, .text-wrap table thead th {
-  border-top: 0;
+  border-top: 2px;
   border-bottom-width: 1px;
   padding-top: .5rem;
   padding-bottom: .5rem;
@@ -12856,10 +12856,15 @@ a.icon:hover {
   font-size: 0.875rem;
   font-weight: 400;
 }
-
-.table-md th,
+.table-md th {
+    border: 1px solid #000; /* Set border for table headers */
+    padding: .5rem; /* Add padding for table headers */
+    text-align: center; /* Align text to the left in headers */
+},
 .table-md td {
   padding: .5rem;
+  border: 1px solid #000; /* Set border for table cells */
+  text-align: left; /* Align text to the left in cells */
 }
 
 .table-vcenter td,
