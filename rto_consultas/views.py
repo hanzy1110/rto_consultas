@@ -25,7 +25,7 @@ from django.contrib.auth.models import User
 
 from wkhtmltopdf.views import PDFTemplateView
 
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.conf import settings
 from django.contrib.auth import login, authenticate, logout
@@ -1242,7 +1242,9 @@ def consulta_resumen_mensual(request):
             raise ValidationError("Error while validating resumen FORM")
     else:
         tipo_uso = get_tipo_uso_by_user(request)
-        form = ResumenMensualForm({"tipo_uso": tipo_uso})
+        today = datetime.today()
+        prev = today - timedelta(weeks=8)
+        form = ResumenMensualForm({"tipo_uso": tipo_uso, "fecha_desde": prev, "fecha_hasta": today})
 
     return render(
         request,

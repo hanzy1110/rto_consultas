@@ -223,11 +223,13 @@ class ResumenMensualForm(forms.Form):
         tipo_uso = kwargs.get("tipo_uso", None)
         logger.info(f"ARGS ==> {args}")
 
-        if tipo_uso:
-            self.fields["tipo_uso"].initial = tipo_uso
-            self.fields["tipo_uso"].choices = list(
-                filter(lambda x: x[0] == tipo_uso, TIPO_USO_CHOICES)
-            )
+        if args:
+            for k,v in args[0].items():
+                # fugly code
+                if k == "tipo_uso"
+                    self.fields[k].choices = list(
+                        filter(lambda x: x[0] == k, TIPO_USO_CHOICES)
+                    )
 
         self.helper.layout = Layout(
             Div(
