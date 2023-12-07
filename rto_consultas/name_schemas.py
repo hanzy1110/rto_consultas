@@ -105,6 +105,7 @@ La primera hace referencia a vehiculos acoplados que no excedan los 3.500 kg
 que no correspondan a la categoria O1. La segunda corresponde a vehiculos
 que superen los 3.500 kg y que no excedan los 10.000; y por ultimo vehiculos
 que superen los 10.000 kg. """,
+    "I": "Equipos Especiales",
 }
 
 # TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
