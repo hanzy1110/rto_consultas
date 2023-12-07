@@ -214,11 +214,13 @@ class ResumenMensualForm(forms.Form):
         label="Tipo de Uso",
     )
 
-    def __init__(self, tipo_uso, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ResumenMensualForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
+
+        tipo_uso = kwargs.get("tipo_uso", None)
 
         if tipo_uso:
             self.fields["tipo_uso"].initial = tipo_uso

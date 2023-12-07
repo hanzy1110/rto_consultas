@@ -1221,11 +1221,11 @@ def consulta_habilitaciones(request):
 
 def consulta_resumen_mensual(request):
     if request.htmx:
-        form = ResumenMensualForm(request.GET)
+        tipo_uso = get_tipo_uso_by_user(request)
+        form = ResumenMensualForm(request.GET, tipo_uso=tipo_uso)
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
-            tipo_uso = get_tipo_uso_by_user(request)
             uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso)
             context = handle_resumen_context(uuid, **form.cleaned_data)
             cache_key_params = f"params__{uuid}"
