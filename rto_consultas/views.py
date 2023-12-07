@@ -1,6 +1,7 @@
 from collections.abc import Callable
 import os
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.db.models import Count, Model, Prefetch
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
@@ -1233,6 +1234,7 @@ def consulta_resumen_mensual(request):
             return render(request, "pdf/resumen.html", context)
         else:
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
+            raise ValidationError("Error while validating resumen FORM")
     else:
         tipo_uso = get_tipo_uso_by_user(request)
         form = ResumenMensualForm(tipo_uso)
