@@ -52,12 +52,12 @@ urlpatterns += [
         name="seg_vial_auditoria",
     ),
     path(
-        "seg_vial",
+        "seg_vial/",
         views.SVView.as_view(),
         name="seg_vial",
     ),
     path(
-        "dpt",
+        "dpt/",
         views.DPTView.as_view(),
         name="dpt",
     ),
