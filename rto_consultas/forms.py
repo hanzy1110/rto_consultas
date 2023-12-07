@@ -224,9 +224,9 @@ class ResumenMensualForm(forms.Form):
         logger.info(f"ARGS ==> {args}")
 
         if args:
-            for k,v in args[0].items():
+            for k, v in args[0].items():
                 # fugly code
-                if k == "tipo_uso"
+                if k == "tipo_uso":
                     self.fields[k].choices = list(
                         filter(lambda x: x[0] == k, TIPO_USO_CHOICES)
                     )
