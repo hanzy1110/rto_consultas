@@ -45,7 +45,6 @@ from rto_consultas.models import (
 )
 
 from rto_consultas_rn.models import Talleres as TalleresRN
-from rto_consultas.forms import ResumenMensualDPT, ResumenMensualForm, ResumenMensualSV
 
 from rto_consultas.name_schemas import (
     TARIFARIO_DPT,
@@ -1149,27 +1148,6 @@ def get_tipo_uso_by_user(request):
         logger.warn(f"Maybe no group... {user}")
         return ""
     return USER_TIPO_USO.get(selected_group, None)
-
-
-def route_form(tipo_uso, referer):
-    if tipo_uso:
-        match tipo_uso:
-            case "vup":
-                return ResumenMensualSV
-            case "dpt":
-                return ResumenMensualDPT
-            case _:
-                return ResumenMensualForm
-    elif referer:
-        match referer:
-            case "seg_vial":
-                return ResumenMensualSV
-            case "seg_vial_auditoria":
-                return ResumenMensualSV
-            case "dpt":
-                return ResumenMensualDPT
-            case _:
-                return ResumenMensualForm
 
 
 def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
