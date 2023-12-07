@@ -202,7 +202,7 @@ class DPTView(IndexView):
         "consulta_ordenes_insp": "Consulta Órdenes de Inspección",
         "cccf": "Consulta CCCF",
         "carga_obleas": "Carga Obleas",
-        "consulta_resumen_mensual": "Resumen Por Categoria",
+        "consulta_resumen_mensual": "Resumen de Inspecciones",
     }
 
 
@@ -218,7 +218,7 @@ class SVViewAuditoria(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "consulta_documentacion": "Consulta Documentacion",
-        "consulta_resumen_mensual": "Resumen Por Categoria",
+        "consulta_resumen_mensual": "Resumen de Inspecciones",
     }
 
 
@@ -226,7 +226,7 @@ class SVView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "carga_obleas": "Carga Obleas",
-        "consulta_resumen_mensual": "Resumen Por Categoria",
+        "consulta_resumen_mensual": "Resumen de Inspecciones",
     }
 
 
