@@ -220,22 +220,6 @@ class ResumenMensualForm(forms.Form):
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
 
-        tipo_uso = kwargs.get("tipo_uso", None)
-        logger.info(f"ARGS ==> {args}")
-
-        if args:
-            for k, v in args[0].items():
-                # fugly code
-                if k == "tipo_uso":
-                    possible_choices = dict(TIPO_USO_CHOICES)
-                    logger.debug(f"AVAILABLE ==> {possible_choices}")
-
-                    chosen = possible_choices.get(v, None)
-                    if chosen:
-                        self.fields[k].choices = [
-                            ("", ""),
-                        ].extend(chosen)
-
         self.helper.layout = Layout(
             Div(
                 Field("fecha_desde", wrapper_class="form-group col-6"),
@@ -244,6 +228,24 @@ class ResumenMensualForm(forms.Form):
                 Field("tipo_uso", wrapper_class="form-group col-6"),
             )
         )
+
+
+class ResumenMensualSV(ResumenMensualForm):
+    tipo_uso = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=[("vup", "Uso Particular")],
+        required=False,
+        label="Tipo de Uso",
+    )
+
+
+class ResumenMensualDPT(ResumenMensualForm):
+    tipo_uso = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=[("dpt", "Transp. Carga y Pasajeros")],
+        required=False,
+        label="Tipo de Uso",
+    )
 
 
 class ConsultaDPTForm(forms.Form):

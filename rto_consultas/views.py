@@ -95,7 +95,9 @@ from .forms import (
     CustomRTOForm,
     ObleasPorTaller,
     InspectionOrderForm,
+    ResumenMensualDPT,
     ResumenMensualForm,
+    ResumenMensualSV,
 )  # Import the form you created
 
 from .consultas_dpt import HabsResponse, query_dpt, DPTResponse
@@ -1224,10 +1226,14 @@ def consulta_habilitaciones(request):
 def consulta_resumen_mensual(request):
     if request.htmx:
         tipo_uso_user = get_tipo_uso_by_user(request)
-        get_data = request.GET.copy()
-        if tipo_uso_user:
-            get_data["tipo_uso"] = tipo_uso_user
-        form = ResumenMensualForm(get_data)
+        match tipo_uso_user:
+            case "vup":
+                form = ResumenMensualSV(request.GET)
+            case "dpt":
+                form = ResumenMensualDPT(request.GET)
+            case _:
+                form = ResumenMensualForm(request.GET)
+
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
@@ -1244,7 +1250,21 @@ def consulta_resumen_mensual(request):
         tipo_uso = get_tipo_uso_by_user(request)
         today = datetime.today()
         prev = today - timedelta(weeks=8)
-        form = ResumenMensualForm({"tipo_uso": tipo_uso, "fecha_desde": prev, "fecha_hasta": today})
+
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        initial_data = {
+            "tipo_uso": tipo_uso,
+            "fecha_desde": prev,
+            "fecha_hasta": today,
+            "id_taller": "",
+        }
+        match tipo_uso_user:
+            case "vup":
+                form = ResumenMensualSV(initial_data)
+            case "dpt":
+                form = ResumenMensualDPT(initial_data)
+            case _:
+                form = ResumenMensualForm(initial_data)
 
     return render(
         request,
