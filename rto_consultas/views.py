@@ -1222,7 +1222,7 @@ def consulta_habilitaciones(request):
 def consulta_resumen_mensual(request):
     if request.htmx:
         tipo_uso = get_tipo_uso_by_user(request)
-        form = ResumenMensualForm(request.GET, tipo_uso=tipo_uso)
+        form = ResumenMensualForm(request.GET)
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
@@ -1236,8 +1236,8 @@ def consulta_resumen_mensual(request):
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
             raise ValidationError("Error while validating resumen FORM")
     else:
-        tipo_uso = get_tipo_uso_by_user(request)
-        form = ResumenMensualForm(tipo_uso)
+        # tipo_uso = get_tipo_uso_by_user(request)
+        form = ResumenMensualForm()
 
     return render(
         request,
