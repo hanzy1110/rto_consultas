@@ -1221,8 +1221,11 @@ def consulta_habilitaciones(request):
 
 def consulta_resumen_mensual(request):
     if request.htmx:
-        tipo_uso = get_tipo_uso_by_user(request)
-        form = ResumenMensualForm(request.GET)
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        get_data = request.GET.copy()
+        if tipo_uso_user:
+            get_data["tipo_uso"] = tipo_uso_user
+        form = ResumenMensualForm(get_data)
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result

@@ -1208,12 +1208,19 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     else:
         c_reverificados = None
 
+    categorias_descripciones = dict(
+        Categorias.objects.all().values_list("idcategoria", "descripcion")
+    )
     categorias = certs.values_list("idcategoria", flat=True).distinct()
     match tipo_uso:
         case "vup":
-            categorias = list(filter(lambda x: x == "Z", categorias))
+            categorias = list(
+                filter(lambda x: categorias_descripciones[x] == "Z", categorias)
+            )
         case "dpt":
-            categorias = list(filter(lambda x: x != "Z", categorias))
+            categorias = list(
+                filter(lambda x: categorias_descripciones[x] != "Z", categorias)
+            )
         case _:
             categorias = categorias
 
