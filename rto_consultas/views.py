@@ -88,6 +88,7 @@ from .helpers import (
     handle_resumen_context,
     handle_save_hab,
     handle_initial_hab,
+    route_form,
 )
 
 from .forms import (
@@ -1223,16 +1224,12 @@ def consulta_habilitaciones(request):
     )
 
 
-def consulta_resumen_mensual(request):
+def consulta_resumen_mensual(request, *args, **kwargs):
     if request.htmx:
         tipo_uso_user = get_tipo_uso_by_user(request)
-        match tipo_uso_user:
-            case "vup":
-                form = ResumenMensualSV(request.GET)
-            case "dpt":
-                form = ResumenMensualDPT(request.GET)
-            case _:
-                form = ResumenMensualForm(request.GET)
+        referer = request.META.get("HTTP_REFERER", None)
+        logger.debug(f"ARGS PASSED TO ROUTING =>{tipo_uso_user}, {referer}")
+        form = route_form(tipo_uso=tipo_uso_user, referer=referer)(request.GET)
 
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
@@ -1258,13 +1255,11 @@ def consulta_resumen_mensual(request):
             "fecha_hasta": today,
             "id_taller": "",
         }
-        match tipo_uso_user:
-            case "vup":
-                form = ResumenMensualSV(initial_data)
-            case "dpt":
-                form = ResumenMensualDPT(initial_data)
-            case _:
-                form = ResumenMensualForm(initial_data)
+
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        referer = request.META.get("HTTP_REFERER", None)
+        logger.debug(f"ARGS PASSED TO ROUTING =>{tipo_uso_user}, {referer}")
+        form = route_form(tipo_uso=tipo_uso_user, referer=referer)(initial_data)
 
     return render(
         request,
