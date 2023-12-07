@@ -1229,7 +1229,7 @@ def consulta_resumen_mensual(request):
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
-            uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso)
+            uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso_user)
             context = handle_resumen_context(uuid, **form.cleaned_data)
             cache_key_params = f"params__{uuid}"
             cache.set(cache_key_params, form.cleaned_data)
