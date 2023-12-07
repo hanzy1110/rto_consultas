@@ -53,6 +53,7 @@ from rto_consultas.name_schemas import (
     USER_GROUPS,
     USER_QUERIES_CERTS_ASIGNADOS,
     USER_QUERIES_VERIFICACIONES,
+    USER_TIPO_USO,
 )
 from .presigned_url import (
     generate_presigned_url,
@@ -1137,18 +1138,28 @@ def check_cert_bounds(cert_init, cert_end, user):
     return True
 
 
-def get_resumen_data_mensual(cleaned_data):
+def get_tipo_uso_by_user(request):
+    user = request.user
+    try:
+        selected_group = next(
+            filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+        )
+    except StopIteration as e:
+        logger.warn(f"Maybe no group... {user}")
+        return ""
+    return USER_TIPO_USO.get(selected_group, None)
+
+
+def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     fecha_desde = cleaned_data["fecha_desde"]
     fecha_hasta = cleaned_data["fecha_hasta"]
     id_taller = cleaned_data["id_taller"]
+    if not tipo_uso:
+        tipo_uso = cleaned_data.get("tipo_uso", None)
 
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
     exclude_reverificado_query = Q(reverificado=0)
-    # reverificado_query = Q(reverificado=1)
-    # TODO CERTIFICADOS DE OTRO PERIODO
-    # TODO Tal vez haya un query de mas, posible que tenga que arreglarlo!
-    # Tiene que estar para agarrar las que posiblemente no esten en el query...
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
@@ -1197,15 +1208,14 @@ def get_resumen_data_mensual(cleaned_data):
     else:
         c_reverificados = None
 
-    # if total_query:
-    #     certs.filter(total_query)
-
-    # INNER JOIN verificaciones R ON (V1.idVerificacionOriginal = R.idVerificacion AND V1.idTaller = R.idTaller)
-    # INNER JOIN certificados C ON (V1.idVerificacion = C.idVerificacion AND V1.idTaller = C.idTaller)
-    # WHERE V1.idTaller = $taller AND V1.Reverificacion = 1 AND V1.Fecha >= '".formatFecha($fechaD)."'
-    # AND V1.Fecha <= '".formatFecha($fechaH)."' AND R.Fecha < '".formatFecha($fechaD)."' AND C.idCategoria=".$row["idCategoria"];
-
     categorias = certs.values_list("idcategoria", flat=True).distinct()
+    match tipo_uso:
+        case "vup":
+            categorias = list(filter(lambda x: x == "Z", categorias))
+        case "dpt":
+            categorias = list(filter(lambda x: x != "Z", categorias))
+        case _:
+            categorias = categorias
 
     verifs = {}
     reverificados = {}

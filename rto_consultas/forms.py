@@ -207,18 +207,28 @@ class ResumenMensualForm(forms.Form):
         required=True,
         label="Planta",
     )
+    tipo_uso = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=[("", ""), ("vup", "Vehiculos Uso Particular"), ("dpt", "Carga y Transp. Pasajeros")],
+        required=True,
+        label="Tipo de Uso",
+    )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, tipo_uso, *args, **kwargs):
         super(ResumenMensualForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
+
+        if tipo_uso:
+            self.fields["tipo_uso"].initial = tipo_uso
 
         self.helper.layout = Layout(
             Div(
                 Field("fecha_desde", wrapper_class="form-group col-6"),
                 Field("fecha_hasta", wrapper_class="form-group col-6"),
                 Field("id_taller", wrapper_class="form-group col-6"),
+                Field("tipo_uso", wrapper_class="form-group col-6"),
             )
         )
 

@@ -88,6 +88,14 @@ USER_CERTS_BOUNDS = {
     "VialidadRNGroup": None,
 }
 
+USER_TIPO_USO = {
+    "CCCFGroup": None,
+    "DPTGroup": "dpt",
+    "SecTranspRNGroup": None,
+    "SVGroup": "vup",
+    "VialidadRNGroup": None,
+}
+
 TARIFARIO_DPT = {
     "A": "Vehiculos utilitarios para transporte de pasajeros, categorias M1 de mas de 8 y hasta 15 asientos y que no supere los 3.500 kg. ",
     "B": "Vehiculos utilitarios para transporte de pasajeros, categoria M1 y M2 de mas de 15 y hasta 29 asientos, de 2 ees y que no supere 5.000 kg ",

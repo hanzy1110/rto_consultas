@@ -78,6 +78,7 @@ from .helpers import (
     get_queryset_from_user,
     get_resumen_data_mensual,
     get_template_from_user,
+    get_tipo_uso_by_user,
     handle_context,
     handle_query,
     AuxData,
@@ -1223,7 +1224,8 @@ def consulta_resumen_mensual(request):
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
-            uuid = get_resumen_data_mensual(form.cleaned_data)
+            tipo_uso = get_tipo_uso_by_user(request)
+            uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso)
             context = handle_resumen_context(uuid, **form.cleaned_data)
             cache_key_params = f"params__{uuid}"
             cache.set(cache_key_params, form.cleaned_data)
@@ -1232,7 +1234,8 @@ def consulta_resumen_mensual(request):
         else:
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
     else:
-        form = ResumenMensualForm()
+        tipo_uso = get_tipo_uso_by_user(request)
+        form = ResumenMensualForm(tipo_uso)
 
     return render(
         request,
