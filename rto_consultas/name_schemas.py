@@ -88,5 +88,24 @@ USER_CERTS_BOUNDS = {
     "VialidadRNGroup": None,
 }
 
+TARIFARIO_DPT = {
+    "A": "Vehiculos utilitarios para transporte de pasajeros, categorias M1 de mas de 8 y hasta 15 asientos y que no supere los 3.500 kg. ",
+    "B": "Vehiculos utilitarios para transporte de pasajeros, categoria M1 y M2 de mas de 15 y hasta 29 asientos, de 2 ees y que no supere 5.000 kg ",
+    "C": "Vehiculos utilitarios para transporte de pasajeros, categoria M3 superan los} 5.000 kg., con 2 ejes.",
+    "D": "Vehiculos utilitarios para transporte de pasajeros, categoria M3 superan los 15.000 kg., con 3 ejes.",
+    "E": "Vehiculos utilizados para el transporte de carga, categorias N y N1. La primera hace referencia los vehiculos de hasta 1.000 kg, y la segunda se refiere a vehiculos que no superen los 3.500 kg.",
+    "F": "Vehiculos utilizados para el transporte de carga, categorias N2 que carguen mas de 3.500 kg., que no superen los 12.000 kg.",
+    "G": "Vehiculos utilizados para el transporte de carga, categorias N3 que supere los 12,000 kg. De carga. ",
+    "H": """Vehiculos acoplados y semiacoplados utilizados para el transporte de cargas
+categorias O y O1. La primera corresponde a vehiculos acoplados incluyendo
+semiacopados; y la segunda a vehiculos acoplados con un eje que no sea
+semiacoplados y que su carga no exceda los 750 kg. Vehiculos acoplados
+semiacoplados utilizados para el transporte de carga, categorias 02, 03 y 04,
+La primera hace referencia a vehiculos acoplados que no excedan los 3.500 kg
+que no correspondan a la categoria O1. La segunda corresponde a vehiculos
+que superen los 3.500 kg y que no excedan los 10.000; y por ultimo vehiculos
+que superen los 10.000 kg. """,
+}
+
 # TALLERES_NQN_CHOICES = map_fields([], TalleresNQN)
 # TALLERES_RN_CHOICES = map_fields([], TalleresRN)

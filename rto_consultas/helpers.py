@@ -47,6 +47,7 @@ from rto_consultas.models import (
 from rto_consultas_rn.models import Talleres as TalleresRN
 
 from rto_consultas.name_schemas import (
+    TARIFARIO_DPT,
     TIPO_USO_VEHICULO,
     USER_CERTS_BOUNDS,
     USER_GROUPS,
@@ -1272,9 +1273,14 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     cache_key_reverifs_cant = f"reverifs_cant__{uuid}"
 
     context["TIPO_USO"] = TIPO_USO_VEHICULO
-    context["CATEGORIAS"] = dict(
+    categorias = dict(
         Categorias.objects.all().values_list("idcategoria", "descripcion")
     )
+
+    context["CATEGORIAS_DPT"] = {
+        k: TARIFARIO_DPT[categorias[k]] for k in categorias.keys()
+    }
+    context["CATEGORIAS"] = categorias
 
     context["uuid"] = str(uuid)
 
