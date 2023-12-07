@@ -49,9 +49,9 @@
 
 <div class="card col">
     <div class="card-header col" style="margin: auto; align-items: center;">
-        <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
-        <h4>Cantidad: {% query_dict certs_count_categoria cat %}</h4>
+        <h3>Categoría {% query_dict CATEGORIAS cat %}</h3>
         <h5>{% query_dict CATEGORIAS_DPT cat %}</h5>
+        <h3><b>Cantidad: {% query_dict certs_count_categoria cat %}</b></h3>
     </div>
     <div class="card-body" style="margin: auto; align-items: center;">
         <table cellspacing='0' class='table'>
