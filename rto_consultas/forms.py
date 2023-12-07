@@ -221,13 +221,13 @@ class ResumenMensualForm(forms.Form):
         self.helper.form_class = "form-horizontal"
 
         tipo_uso = kwargs.get("tipo_uso", None)
-
-        logger.info(f"TIPO USO ===> {tipo_uso}")
-
+        logger.info(f"ARGS ==> {args}")
 
         if tipo_uso:
             self.fields["tipo_uso"].initial = tipo_uso
-            self.fields["tipo_uso"].choices = list(filter(lambda x: x[0]==tipo_uso, TIPO_USO_CHOICES))
+            self.fields["tipo_uso"].choices = list(
+                filter(lambda x: x[0] == tipo_uso, TIPO_USO_CHOICES)
+            )
 
         self.helper.layout = Layout(
             Div(
