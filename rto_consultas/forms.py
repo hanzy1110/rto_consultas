@@ -243,7 +243,7 @@ class ResumenMensualDPT(ResumenMensualForm):
     tipo_uso = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=[("dpt", "Transp. Carga y Pasajeros")],
-        required=False,
+        required=True,
         label="Tipo de Uso",
     )
 
@@ -257,7 +257,7 @@ class ConsultaDPTForm(forms.Form):
     consulta = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=[("", ""), (1, "Dominio"), (2, "Habilitación")],
-        required=False,
+        required=True,
         label="Tipo de Consulta",
     )
 
