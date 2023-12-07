@@ -95,7 +95,11 @@ USER_TIPO_USO = {
     "SVGroup": "vup",
     "VialidadRNGroup": None,
 }
-
+TIPO_USO_CHOICES = [
+    ("", ""),
+    ("vup", "Vehiculos Uso Particular"),
+    ("dpt", "Carga y Transp. Pasajeros"),
+]
 TARIFARIO_DPT = {
     "A": "Vehiculos utilitarios para transporte de pasajeros, categorias M1 de mas de 8 y hasta 15 asientos y que no supere los 3.500 kg. ",
     "B": "Vehiculos utilitarios para transporte de pasajeros, categoria M1 y M2 de mas de 15 y hasta 29 asientos, de 2 ees y que no supere 5.000 kg ",

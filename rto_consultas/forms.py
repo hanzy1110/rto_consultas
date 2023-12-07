@@ -209,7 +209,7 @@ class ResumenMensualForm(forms.Form):
     )
     tipo_uso = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        choices=[("", ""), ("vup", "Vehiculos Uso Particular"), ("dpt", "Carga y Transp. Pasajeros")],
+        choices=TIPO_USO_CHOICES,
         required=False,
         label="Tipo de Uso",
     )
@@ -222,9 +222,10 @@ class ResumenMensualForm(forms.Form):
 
         tipo_uso = kwargs.get("tipo_uso", None)
 
+
         if tipo_uso:
             self.fields["tipo_uso"].initial = tipo_uso
-            self.fields["tipo_uso"].widget.attrs.update({'readonly': 'readonly'})
+            self.fields["tipo_uso"].choices = list(filter(lambda x: x[0]==tipo_uso, TIPO_USO_CHOICES))
 
         self.helper.layout = Layout(
             Div(
