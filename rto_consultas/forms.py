@@ -220,11 +220,11 @@ class ResumenMensualForm(forms.Form):
         self.helper.form_method = "post"
         self.helper.form_class = "form-horizontal"
 
-        # tipo_uso = kwargs.get("tipo_uso", None)
+        tipo_uso = kwargs.get("tipo_uso", None)
 
-        # if tipo_uso:
-        #     self.fields["tipo_uso"].initial = tipo_uso
-        #     self.fields["tipo_uso"].widget.attrs.update({'readonly': 'readonly'})
+        if tipo_uso:
+            self.fields["tipo_uso"].initial = tipo_uso
+            self.fields["tipo_uso"].widget.attrs.update({'readonly': 'readonly'})
 
         self.helper.layout = Layout(
             Div(

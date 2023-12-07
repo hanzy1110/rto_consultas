@@ -199,6 +199,7 @@ class DPTView(IndexView):
         "consulta_ordenes_insp": "Consulta Órdenes de Inspección",
         "cccf": "Consulta CCCF",
         "carga_obleas": "Carga Obleas",
+        "consulta_resumen_mensual": "Resumen Por Categoria",
     }
 
 
@@ -222,6 +223,7 @@ class SVView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "carga_obleas": "Carga Obleas",
+        "consulta_resumen_mensual": "Resumen Por Categoria",
     }
 
 
@@ -1239,8 +1241,8 @@ def consulta_resumen_mensual(request):
             logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
             raise ValidationError("Error while validating resumen FORM")
     else:
-        # tipo_uso = get_tipo_uso_by_user(request)
-        form = ResumenMensualForm()
+        tipo_uso = get_tipo_uso_by_user(request)
+        form = ResumenMensualForm({"tipo_uso": tipo_uso})
 
     return render(
         request,
