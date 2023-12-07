@@ -20,12 +20,12 @@
     <form hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="submit">
         <div class="container-fluid py-4">
 
-            <table width="90%" style="margin-left: 10px;">
-                <tr>
+            <!-- <table width="90%" style="margin-left: 10px;">
+                 <tr> -->
                     {% csrf_token %}
                     {% crispy form %}
-                </tr>
-            </table>
+            <!-- </tr>
+                 </table> -->
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Buscar</button>
