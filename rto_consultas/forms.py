@@ -222,6 +222,8 @@ class ResumenMensualForm(forms.Form):
 
         tipo_uso = kwargs.get("tipo_uso", None)
 
+        logger.info(f"TIPO USO ===> {tipo_uso}")
+
 
         if tipo_uso:
             self.fields["tipo_uso"].initial = tipo_uso
