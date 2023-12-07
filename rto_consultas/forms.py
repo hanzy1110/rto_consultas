@@ -227,16 +227,15 @@ class ResumenMensualForm(forms.Form):
             for k, v in args[0].items():
                 # fugly code
                 if k == "tipo_uso":
-                    possible_choices = list(
-                        filter(lambda x: x[0] == k, TIPO_USO_CHOICES)
-                    )
-                    logger.debug(
-                        f"AVAILABLE ==> {TIPO_USO_CHOICES} POSSIBLE CHOICES ==> {possible_choices}"
-                    )
+                    possible_choices = dict(TIPO_USO_CHOICES)
+                    logger.debug(f"AVAILABLE ==> {possible_choices}")
 
-                    self.fields[k].choices = [
-                        ("", ""),
-                    ].extend(possible_choices)
+                    chosen = possible_choices.get(v, None)
+                    if chosen:
+                        self.fields[k].choices = [
+                            ("", ""),
+                        ].extend(chosen)
+
         self.helper.layout = Layout(
             Div(
                 Field("fecha_desde", wrapper_class="form-group col-6"),
