@@ -248,6 +248,27 @@ class ResumenMensualDPT(ResumenMensualForm):
     )
 
 
+def route_form(tipo_uso, referer):
+    if tipo_uso:
+        match tipo_uso:
+            case "vup":
+                return ResumenMensualSV
+            case "dpt":
+                return ResumenMensualDPT
+            case _:
+                return ResumenMensualForm
+    elif referer:
+        match referer:
+            case "seg_vial":
+                return ResumenMensualSV
+            case "seg_vial_auditoria":
+                return ResumenMensualSV
+            case "dpt":
+                return ResumenMensualDPT
+            case _:
+                return ResumenMensualForm
+
+
 class ConsultaDPTForm(forms.Form):
     dominio = forms.CharField(
         label="Dominio",
