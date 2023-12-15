@@ -398,7 +398,7 @@ def map_fields(data: AuxData, model: Model):
             dmodel: Model = vals[1]
 
             cache_key = (
-                f"unique_values_{model._meta.db_table}{model._meta.app_label}_{field}"
+                f"unique_values_{model._meta.db_table}_{model._meta.app_label}_{field}"
             )
             logger.debug(cache_key)
             cached_values = cache.get(cache_key)
@@ -422,7 +422,7 @@ def map_fields(data: AuxData, model: Model):
                     ).distinct()
                 if dmodel == Talleres or dmodel == TalleresRN:
                     # Cosas que solo se hacen en python
-                    logger.info(values_list)
+                    logger.info(f"VALUES_LIST ===> {values_list}")
                     # assert False
                     values[field] = dict(values_list)
                 else:
