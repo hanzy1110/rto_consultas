@@ -366,6 +366,10 @@ class CertificadosAssignTable(tables.Table):
     # 	form_fields={ "idtaller":("nombre", Talleres) },
     # 	parsed_names={"name":"name"}
     # )
+    nrocertificado = tables.Column(verbose_name="Nro. Certificado")
+    idtaller = tables.Column(verbose_name="Planta")
+    disponible = tables.Column(verbose_name="Disponible")
+    replicado = tables.Column(verbose_name="Replicado")
 
     class Meta:
         template_name = "tables/htmx_table_RN.html"
