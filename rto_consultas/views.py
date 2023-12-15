@@ -923,6 +923,12 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         return context
 
 
+class AuditarRevision(VerVerificacion):
+    model: Verificaciones
+    template_name = "includes/ver_verificaciones_auditoria.html"
+    context_object_name: str
+
+
 @login_required
 def resumen_obleas(request):
     if request.htmx:
@@ -1287,3 +1293,7 @@ class PDFResumenMensual(PDFTemplateView):
         context = handle_resumen_context(uuid, **params)
 
         return context
+
+
+def route_navigation(request, *args, **kwargs):
+    pass

@@ -257,18 +257,18 @@ def route_form(tipo_uso, referer):
                 return ResumenMensualDPT
             case _:
                 return ResumenMensualForm
-    elif referer:
-        referer = referer[:-1].split("/")[-1]
-        logger.debug(f"PARSED REFERER {referer}")
-        match referer:
-            case "seg_vial":
-                return ResumenMensualSV
-            case "seg_vial_auditoria":
-                return ResumenMensualSV
-            case "dpt":
-                return ResumenMensualDPT
-            case _:
-                return ResumenMensualForm
+
+    referer = referer[:-1].split("/")[-1]
+    logger.debug(f"PARSED REFERER {referer}")
+    match referer:
+        case "seg_vial":
+            return ResumenMensualSV
+        case "seg_vial_auditoria":
+            return ResumenMensualSV
+        case "dpt":
+            return ResumenMensualDPT
+        case _:
+            return ResumenMensualForm
 
 
 class ConsultaDPTForm(forms.Form):

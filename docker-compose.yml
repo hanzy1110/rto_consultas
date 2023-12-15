@@ -20,6 +20,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    restart: unless-stopped
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./certificates:/etc/nginx/certificates

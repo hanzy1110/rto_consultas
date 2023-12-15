@@ -17,6 +17,7 @@ services:
     depends_on:
       - rto_consultas_dev
     image: memcached:latest
+    restart: unless-stopped
     ports:
       - 11211:11211
     command:
