@@ -140,7 +140,9 @@ class CustomFileColumn(tables.FileColumn):
         if certificado:
             certificado = certificado[0].__dict__
 
-            cache_key = f"{certificado['idverificacion']}-{certificado['idtaller']}"
+            cache_key = (
+                f"{certificado['idverificacion_id']}-{certificado['idtaller_id']}"
+            )
             cache.set(cache_key, certificado)
             url = generate_key_from_params(
                 certificado.idtaller_id,
