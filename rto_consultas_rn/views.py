@@ -102,7 +102,7 @@ def rn_view(request):
 class DVRView(IndexView):
     urls = {
         "verificaciones_rn": "Verificaciones",
-        "carga_obleas": "Carga Obleas",
+        "carga_obleas_rn": "Carga Obleas",
         # "obleas_por_taller_rn": "Consulta Disponibilidad Obleas",
         "excepciones_rn": "Consulta Excepciones",
         "prorrogas_rn": "Consulta Prorrogas",
