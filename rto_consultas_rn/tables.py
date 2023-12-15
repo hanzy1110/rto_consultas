@@ -145,8 +145,8 @@ class CustomFileColumn(tables.FileColumn):
             )
             cache.set(cache_key, certificado)
             url = generate_key_from_params(
-                certificado.idtaller_id,
-                certificado.nombrea4,
+                certificado["idtaller_id"],
+                certificado["nombrea4"],
                 bucket_name="rto-rn-files",
             )
             return url
