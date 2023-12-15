@@ -370,6 +370,7 @@ class CertificadosAssignTable(tables.Table):
     idtaller = tables.Column(verbose_name="Planta")
     disponible = tables.Column(verbose_name="Disponible")
     replicado = tables.Column(verbose_name="Replicado")
+    fechacarga = tables.Column(verbose_name="Fecha Carga")
 
     class Meta:
         template_name = "tables/htmx_table_RN.html"
