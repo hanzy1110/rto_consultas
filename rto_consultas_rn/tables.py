@@ -138,7 +138,7 @@ class CustomFileColumn(tables.FileColumn):
             idverificacion_id__exact=record.idverificacion,
         )
         if certificado:
-            certificado = certificado[0].values()
+            certificado = certificado[0].__dict__
 
             cache_key = f"{certificado['idverificacion']}-{certificado['idtaller']}"
             cache.set(cache_key, certificado)
