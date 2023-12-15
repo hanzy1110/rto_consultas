@@ -1296,4 +1296,5 @@ class PDFResumenMensual(PDFTemplateView):
 
 
 def route_navigation(request, *args, **kwargs):
+    referer = request.META.get("HTTP_REFERER", None)
     pass

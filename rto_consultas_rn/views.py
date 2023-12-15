@@ -723,3 +723,36 @@ class ResumenObleas_RN(CustomRTOView_RN, LoginRequiredMixin):
         context["table"] = table
 
         return context
+
+
+class CargaObleas(CustomRTOView_RN):
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model = Certificadosasignadosportaller
+    paginate_by = settings.PAGINATION
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = CertificadosAssignTable
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=[
+            "cert_init",
+            "cert_end",
+        ],
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idtaller": "Planta",
+            "cert_init": "Nro Oblea desde",
+            "cert_end": "Nro Oblea hasta",
+        },
+        ids={},
+        types={
+            "cert_init": "text",
+            "cert_end": "text",
+        },
+        fecha_field="fechacarga",
+        render_url="carga_obleas_rn",
+    )
