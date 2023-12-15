@@ -117,6 +117,7 @@ class CustomRTOForm(forms.Form):
                 cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
             elif "taller" in ff:
                 desc = descriptions.get(ff, None)
+                logger.debug(f"DESCRIPTIONS ===> {desc}")
                 cs = list(desc.items())
             else:
                 desc = descriptions.get(ff, None)
