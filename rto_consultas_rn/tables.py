@@ -198,7 +198,7 @@ class VerificacionesTables(tables.Table):
             },
         ),
         empty_values=(),
-        attrs={"th": {"colspan": "3"}},
+        attrs={"th": {"colspan": "4"}},
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
         verbose_name="Certificado", empty_values=(), attrs={"th": {"hidden": True}}
