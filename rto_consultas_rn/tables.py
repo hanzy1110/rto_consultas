@@ -221,6 +221,9 @@ class VerificacionesTables(tables.Table):
         },
         parsed_names={"name": "name"},
     )
+    auditado = ImageColumn(
+        empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
+    )
 
     class Meta:
         model = Verificaciones
@@ -237,6 +240,7 @@ class VerificacionesTables(tables.Table):
             "ver_verificacion",
             "ver_certificado",
             "anulado",
+            "auditado",
             "idtaller",
         )
         extra_columns = ("certificado",)
@@ -270,6 +274,10 @@ class VerificacionesTables(tables.Table):
         except Exception as e:
             print(e)
             return "Unknown!"
+
+    def render_auditado(self, record):
+        image_url = static(f"img/small-logos/auditoria.png")
+        return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_vigencia(self, record):
         cert = Certificados.objects.filter(
