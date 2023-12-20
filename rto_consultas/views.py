@@ -302,6 +302,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         try:
             logger.debug(f"KWARGS ==> {kwargs}")
+            assert False
             response = super().get(request, *args, **kwargs)
             return response
         except CertBoundError as e:
