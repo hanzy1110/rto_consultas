@@ -297,6 +297,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = handle_context(context, self)
 
         context["item_count"] = self.object_list.count()
+        context["context_object_name"] = self.context_object_name
 
         logger.debug("CONTEXT HANDLED...")
         return context
