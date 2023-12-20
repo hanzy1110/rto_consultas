@@ -296,13 +296,12 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
 
-        context["item_count"] = self.queryset.count()
-
         logger.debug("CONTEXT HANDLED...")
         return context
 
     def get(self, request, *args, **kwargs):
         try:
+            logger.debug(f"KWARGS ==> {kwargs}")
             response = super().get(request, *args, **kwargs)
             return response
         except CertBoundError as e:
