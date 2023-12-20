@@ -296,6 +296,8 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
 
+        context["item_count"] = self.queryset.count()
+
         logger.debug("CONTEXT HANDLED...")
         return context
 
