@@ -204,16 +204,16 @@ class DPTView(IndexView):
         "verificaciones": "Verificaciones",
         "consulta_ordenes_insp": "Consulta Órdenes de Inspección",
         "cccf": "Consulta CCCF",
-        "carga_obleas": "Carga Obleas",
+        # "carga_obleas": "Carga Obleas",
         "consulta_resumen_mensual": "Resumen de Inspecciones",
+        "consulta_habilitaciones_finales": "Consulta DPT",
     }
 
 
 class HabsView(IndexView):
     urls = {
         "carga_habilitacion": "Carga Órdenes de Inspección",
-        "habilitaciones": "Consulta Órdenes de Inspección",
-        "consulta_habilitaciones_finales": "Consulta DPT",
+        "habilitaciones": "Órdenes de Inspección",
     }
 
 
@@ -228,7 +228,7 @@ class SVViewAuditoria(IndexView):
 class SVView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
-        "carga_obleas": "Carga Obleas",
+        # "carga_obleas": "Carga Obleas",
         "consulta_resumen_mensual": "Resumen de Inspecciones",
     }
 
@@ -620,23 +620,23 @@ class RenderHabilitacionForm(TemplateView):
     aux_data = AuxData(
         query_fields=[
             "dominio",
-            "nrocodigobarrashab",
-            "usuario",
+            # "nrocodigobarrashab",
+            # "usuario",
             "fecha_desde",
             "fecha_hasta",
         ],
         form_fields={},
         parsed_names={
             "dominio": "Dominio Vehiculo",
-            "nrocodigobarrashab": "Nro. Orden de Inspección",
-            "usuario": "Usuario",
+            # "nrocodigobarrashab": "Nro. Orden de Inspección",
+            # "usuario": "Usuario",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
         },
         ids={"dominiovehiculo": "#txtDominio", "nrocodigobarrashab": "#txtNro"},
         types={
             "dominio": "text",
-            "nrocodigobarrashab": "text",
+            # "nrocodigobarrashab": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
         },

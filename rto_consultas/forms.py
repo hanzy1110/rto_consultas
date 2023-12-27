@@ -295,13 +295,13 @@ class InspectionOrderForm(forms.Form):
         label="Dominio",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
     )
-    ckPatenteMer = forms.BooleanField(
-        label="P. Mercosur",
-        required=False,
-        widget=forms.CheckboxInput(
-            attrs={"id": "ckPatenteMer", "name": "ckPatenteMer", "value": "1"}
-        ),
-    )
+    # ckPatenteMer = forms.BooleanField(
+    #     label="P. Mercosur",
+    #     required=False,
+    #     widget=forms.CheckboxInput(
+    #         attrs={"id": "ckPatenteMer", "name": "ckPatenteMer", "value": "1"}
+    #     ),
+    # )
     modelo = forms.CharField(
         label="Año de Fabricación",
         widget=forms.TextInput(attrs={"class": "txt", "style": "width: 242px"}),
@@ -350,11 +350,11 @@ class InspectionOrderForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_class = "col_w900 col_w900_last"
         self.helper.layout = Layout(
-            Div(
-                Field("dominio"),
-                Field("ckPatenteMer"),
-                css_class="tr",
-            ),
+            # Div(
+            #     Field("dominio"),
+            #     Field("ckPatenteMer"),
+            #     css_class="tr",
+            # ),
             Div(
                 Field("modelo"),
                 css_class="tr",
