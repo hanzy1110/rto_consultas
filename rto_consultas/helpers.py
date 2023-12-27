@@ -501,6 +501,8 @@ def handle_reverificado(queryset, reverificado, model):
 
     if reverificado:
         return queryset.filter(reverificacion=1)
+    else:
+        return queryset
 
 
 def handle_anulado(queryset, anulado, model):
