@@ -569,7 +569,8 @@ def handle_nrocertificados(
             return queryset
         case _:
             nrocertificado_init = int(nrocertificado_init[0])
-            logger.debug(f"NRO CERT => {nrocertificado_init}")
+            logger.info(f"NRO CERT => {nrocertificado_init}")
+            logger.info(f"ANULADO => {anulado}")
             if anulado:
                 cert = Certificados.objects.filter(
                     nrocertificado__exact=nrocertificado_init, anulado__exact=1
