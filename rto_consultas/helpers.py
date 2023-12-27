@@ -503,18 +503,24 @@ def handle_anulado(queryset, anulado, model):
             logger.info(f"FILTERING FOR MODEL => {model}")
             if model == Verificaciones:
                 start = perf_counter()
-                queryset_b = Certificados.objects.filter(anulado=anulado).filter(
-                    idtaller__in=queryset.values_list("idtaller", flat=True),
-                    idverificacion__in=queryset.values_list(
-                        "idverificacion", flat=True
-                    ),
-                )
 
+                composite_keys = [
+                    Q(idverificacion=item.idverificacion, idtaller_id=item.idtaller_id)
+                    for item in queryset
+                ]
+                c_anulados = Certificados.objects.filter(
+                    reduce(lambda x, y: x | y, composite_keys)
+                ).filter(anulado=anulado)
+
+                composite_keys_verifs = [
+                    Q(
+                        idverificacion=item.idverificacion_id,
+                        idtaller_id=item.idtaller_id,
+                    )
+                    for item in c_anulados
+                ]
                 related_objects_in_a = queryset.filter(
-                    idtaller__in=queryset_b.values_list("idtaller", flat=True),
-                    idverificacion__in=queryset_b.values_list(
-                        "idverificacion", flat=True
-                    ),
+                    reduce(lambda x, y: x | y, composite_keys_verifs)
                 )
 
                 # logger.info("EVALUATING QUERYSET TO DEBUG...")
