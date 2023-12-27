@@ -4,7 +4,9 @@
 {% load render_table from django_tables2 %}
 {% load getattr %}
 <div class="container-fluid py-4 card-body px-0 pt-0 pb-2">
-    <div>{{ context_object_name }} totales: {{ item_count }}</div>
+    {% if item_count %}
+        <div>{{ context_object_name }} totales: {{ item_count }}</div>
+    {% endif %}
     <div class="table-responsive p-0">
         {% render_table table %}
     </div>
