@@ -1,4 +1,7 @@
 import os
+import logging
+
+logging.getLogger("boto3").setLevel(logging.WARNING)
 import boto3
 from dotenv import dotenv_values
 
