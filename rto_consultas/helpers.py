@@ -252,6 +252,8 @@ def handle_query(request, model, fecha_field="fecha"):
     elif not check_for_empty_query(nrocertificado):
         return handle_nrocertificados(nrocertificado, anulado, model)
 
+    queryset = model.objects.all()
+
     if not check_for_empty_query(query):
         queryset = handle_args(query, queryset, fecha_field=fecha_field)
     if sort:
