@@ -762,7 +762,7 @@ class CargaObleas(CustomRTOView_RN):
 
 
 @login_required
-def resumen_obleas(request):
+def resumen_obleas_rn(request):
     if request.htmx:
         logger.info("RENDERING HTMX!")
         data = []

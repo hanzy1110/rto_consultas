@@ -58,5 +58,5 @@ urlpatterns = [
         views_RN.RenderExcepcionesForm_RN.as_view(),
         name="excepciones_rn_form",
     ),
-    path("resumen_obleas_rn", views_RN.resumen_obleas, name="resumen_obleas_rn"),
+    path("resumen_obleas_rn", views_RN.resumen_obleas_rn, name="resumen_obleas_rn"),
 ]
