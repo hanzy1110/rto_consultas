@@ -882,7 +882,12 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         tipo_vehiculo = Tipovehiculo.objects.get(
             idtipovehiculo=self.object.idtipovehiculo
         )
-        tipo_servicio = get_servicios(self.object.codigohabilitacion)
+
+        if self.object.codigohabilitacion:
+            tipo_servicio = get_servicios(self.object.codigohabilitacion)
+        else:
+            tipo_servicio = None
+
         estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
         localidad = Localidades.objects.get(
