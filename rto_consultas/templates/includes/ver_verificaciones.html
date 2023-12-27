@@ -446,6 +446,7 @@
 									</div>
 								</td>
 							</tr>
+							{% if objects.tipocarga %}
 							<tr id="veCarga" class="mostrar2" {% get_ca_style %}>
 								<td>Caja:</td>
 								<td><input type="text" id="txtCaja" style="width: 250px" class="txt"
@@ -453,20 +454,13 @@
 								<td id="tagTCarga" class="mostrar5" {% get_TCa_style %}>Tipo Carga:</td>
 								<td class="mostrar5" {% get_TCa_style %}>
 									<select id="txtTipoCargaM" class="combo" name="txtTipoCargaM" style="width: 250px">
-										<option value="-1">Seleccione...</option>
-										{% if object.tipocarga == "Carga Peligrosa" %}
-										<option value="Carga Peligrosa" selected="selected">Carga Peligrosa</option>
-										{% else %}
-										<option value="Carga Peligrosa">Carga Peligrosa</option>
-										{% endif %}
-										{% if object.tipocarga == "Carga General" %}
-										<option value="Carga General" selected="selected">Carga General</option>
-										{% else %}
-										<option value="Carga General">Carga General</option>
-										{% endif %}
+										<option value="-1" selected="selected">{{ object.tipocarga }}
+										</option>
 									</select>
 								</td>
 							</tr>
+							{% endif %}
+
 							<tr class="mostrar4" {% get_tm_style %}>
 								<!-- TODO combo servicion provincia -->
 								<td>Servicios en prov.:</td>
@@ -474,7 +468,7 @@
 									<span id="divProvTM">
 										<select id="cmbProvTM" class="combo" name="cmbProvTM" style="width: 250px"
 											disabled="disabled">
-											<option value="-1">Provincia...</option>
+											<option value="-1">{{ provincia }}</option>
 										</select></span>
 								</td>
 								<td id="TagServLoc">Servicios en loc.:</td>
@@ -482,7 +476,7 @@
 									<span id="divLocTM">
 										<select id="cmbLocTM" class="combo" name="cmbLocTM" style="width: 250px"
 											disabled="disabled">
-											<option value="-1">Localidad...</option>
+											<option value="-1">{{ localidad }}</option>
 										</select>
 									</span>
 								</td>
