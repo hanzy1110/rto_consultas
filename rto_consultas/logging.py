@@ -5,12 +5,13 @@ import logging.config
 import inspect
 import traceback
 
-LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+
 
 def print_stack():
-   frame = inspect.currentframe()
-   stack_trace = traceback.format_stack(frame)
-   return ''.join(stack_trace)
+    frame = inspect.currentframe()
+    stack_trace = traceback.format_stack(frame)
+    return "".join(stack_trace)
 
 
 def configure_logger(log_filename, filename=__name__):

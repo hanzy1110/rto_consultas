@@ -597,8 +597,8 @@ def handle_nrocertificados(
                             ),
                         ).values()
 
-            logger.debug("CERTIFICADOS QUERYSET ===>")
-            logger.debug(cert)
+            logger.info("CERTIFICADOS QUERYSET ===>")
+            logger.info(cert)
 
             if cert:
                 # cert = cert.first()
