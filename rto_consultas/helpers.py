@@ -489,6 +489,8 @@ def get_certs(queryset):
 
 
 def handle_reverificado(queryset, reverificado, model):
+    logger.info(f"REVERIFICADO {reverificado}")
+    logger.info(f"QUERYSET {queryset}")
     try:
         reverificado = int(reverificado[0])
     except:
