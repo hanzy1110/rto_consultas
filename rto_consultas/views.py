@@ -963,7 +963,11 @@ def resumen_obleas(request):
     }
 
     form = ObleasPorTaller(initial=initial_values)
-    return render(request, "includes/consulta_obleas.html", {"form": form})
+    return render(
+        request,
+        "includes/consulta_obleas.html",
+        {"form": form, "resumen_obleas_url": "resumen_obleas"},
+    )
 
 
 def verificaciones_anuales(request):
