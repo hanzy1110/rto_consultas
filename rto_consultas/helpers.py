@@ -249,7 +249,7 @@ def handle_query(request, model, fecha_field="fecha"):
     if cert_init and cert_end:
         queryset = handle_nrocertificados(cert_init, anulado, model, cert_end)
         return queryset
-    else:
+    elif not check_for_empty_query(nrocertificado):
         return handle_nrocertificados(nrocertificado, anulado, model)
 
     if not check_for_empty_query(query):
