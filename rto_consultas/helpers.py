@@ -608,6 +608,8 @@ def handle_nrocertificados(
                         Verificaciones.objects.none()
                     )  # Initialize an empty queryset
                     for c in cert:
+                        logger.info(queryset)
+
                         new_q = Verificaciones.objects.filter(
                             idverificacion=c["idverificacion_id"],
                             idtaller=c["idtaller_id"],
