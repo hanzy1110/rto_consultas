@@ -2154,6 +2154,9 @@ class Tipovehiculo(models.Model):
         # managed = False
         db_table = "tipovehiculo"
 
+    def __str__(self):
+        return f"{self.descripcion}"
+
 
 class Usuarios(models.Model):
     idusuario = models.AutoField(
