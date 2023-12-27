@@ -378,6 +378,8 @@
 								<td><input type="text" id="txtSusp" style="width: 250px" class="txt"
 										value="{{ object.suspencion|default:" N\A" }}" /></td>
 							</tr>
+
+							{% if tipo_servicio %}
 							<tr class="mostrar3 taxi" {% get_pa_style %}>
 								<td colspan="4">
 									Aire Acondicionado
@@ -506,6 +508,7 @@
 					</div>
 				</td>
 			</tr>
+			{% endif %}
 			<tr>
 				<td colspan="4" id="formDatosVerif">
 					<table width="95%" cellspacing="0">
