@@ -105,6 +105,9 @@ def convert_date(input_date):
 
 
 def check_for_empty_query(query):
+    if not query:
+        return True
+
     def check_for_empty(val):
         match val:
             case "":
