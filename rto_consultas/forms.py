@@ -7,7 +7,7 @@ from .helpers import AuxData, map_fields
 from .models import CccfCertificados, Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
-from ..rto_consultas_rn.models import Talleres as TalleresRN
+from rto_consultas.rto_consultas_rn.models import Talleres as TalleresRN
 
 from dataclasses import asdict
 
