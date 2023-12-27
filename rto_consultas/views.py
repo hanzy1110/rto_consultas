@@ -399,7 +399,7 @@ class RenderVerificacionForm(TemplateView):
             "idtaller": "Planta",
             "anulado": "Anulado",
             "dni": "DNI",
-            "nrodoc": "Nro. Doc.",
+            "nro_dni": "Nro. Doc.",
         },
         ids={
             "dominiovehiculo": "#txtDominio",
