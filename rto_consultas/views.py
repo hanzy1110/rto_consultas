@@ -879,7 +879,9 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         ).descripcion
 
         tipo_uso = Tipousovehiculo.objects.get(idtipouso=self.object.idtipouso)
-        tipo_vehiculo = Tipovehiculo.objects.get(idtipouso=self.object.idtipovehiculo)
+        tipo_vehiculo = Tipovehiculo.objects.get(
+            idtipotipovehiculo=self.object.idtipovehiculo
+        )
         tipo_servicio = get_servicios(self.object.codigohabilitacion)
         estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
