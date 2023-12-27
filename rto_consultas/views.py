@@ -48,6 +48,7 @@ from .models import (
     Provincias,
     Serviciohab,
     Serviciostransportehab,
+    Tipovehiculo,
     Usuarios,
     Verificaciones,
     Certificadosasignadosportaller,
@@ -78,6 +79,7 @@ from .helpers import (
     generate_key_certificado,
     get_queryset_from_user,
     get_resumen_data_mensual,
+    get_servicios,
     get_template_from_user,
     get_tipo_uso_by_user,
     handle_context,
@@ -826,7 +828,6 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             "dominiovehiculo", "idestado", "codigotitular", "idtaller"
         ).get(idverificacion=id_verificacion, idtaller=id_taller)
 
-        print(verificacion)
         self.verificacion = verificacion
         return verificacion
 
@@ -877,6 +878,9 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idcategoria__exact=cert[0]["idcategoria"]
         ).descripcion
 
+        tipo_uso = Tipousovehiculo.objects.get(idtipouso=self.object.idtipouso)
+        tipo_vehiculo = Tipovehiculo.objects.get(idtipouso=self.object.idtipovehiculo)
+        tipo_servicio = get_servicios(self.object.codigohabilitacion)
         estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
         localidad = Localidades.objects.get(
@@ -898,12 +902,13 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
 
-        print(defectos)
-
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
         context["vigenciahasta"] = cert[0]["vigenciahasta"]
         context["estado"] = estado
+        context["tipo_uso"] = tipo_uso
+        context["tipo_vehiculo"] = tipo_vehiculo
+        context["tipo_servicio"] = tipo_servicio
         context["categoria"] = categoria
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion

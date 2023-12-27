@@ -1316,3 +1316,12 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     }
 
     return context
+
+
+def get_servicios(codigo_habilitacion: str):
+    servicios = codigo_habilitacion[12:20]
+    logger.debug(f"CODIGO: {codigo_habilitacion}, SERVICIOS: {servicios}")
+    servs = [servicios[0:2], servicios[2:4], servicios[4:6], servicios[6:-1]]
+    return [
+        Serviciostransportehab.objects.get(idserviciostransportehab=s) for s in servs
+    ]

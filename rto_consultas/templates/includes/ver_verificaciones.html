@@ -335,14 +335,14 @@
 								<td>
 									<div id="divVe"><select id="cmbTipoVe" class="combo" name="cmbTipoVe"
 											style="width: 250px" disabled="disabled">
-											<option value="-1">Seleccione...</option>
+											<option value="-1">{{ tipo_vehiculo }}</option>
 										</select></div>
 								</td>
 								<td>Tipo Uso:</td>
 								<td>
 									<div id="divUso"><select id="cmbTipoUso" class="combo" name="cmbTipoUso"
 											style="width: 250px" disabled="disabled">
-											<option value="-1">Seleccione...</option>
+											<option value="-1">{{ tipo_uso }}</option>
 										</select></div>
 								</td>
 							</tr>
@@ -407,21 +407,28 @@
 								</td>
 							</tr>
 							<tr class="mostrar3" {% get_pa_style %}>
-								{% if object.codigohabilitacion == 0 and object.codigohabilitacion == '' %}
+								{% if object.idhabilitacion == 0 and object.codigohabilitacion == '' %}
 								<td>Tipo Servicio:</td>
 								<td>
 									<div id="divTipoServP" style="display: inline;">
 										<select id="cmbTipoServP" class="combo" name="cmbTipoServP" style="width: 250px"
 											disabled="disabled">
-											<option value="-1">Seleccione...</option>
+											<option value="-1">{{ tipo_servicio }}</option>
 										</select>
 									</div>
 								</td>
 								{% else %}
 
-
 								<td>Tipo Servicio:</td>
-								<td colspan="3" id="listaServicioHab"></td>
+								<td colspan="3" id="listaServicioHab">
+
+									{% for s in tipo_servicio %}
+									<ul>
+										<li>s.descripcion</li>
+									</ul>
+									{% endfor %}
+
+								</td>
 
 								{% endif %}
 							</tr>
