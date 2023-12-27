@@ -7,7 +7,6 @@ from .helpers import AuxData, map_fields
 from .models import CccfCertificados, Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
-from rto_consultas.rto_consultas_rn.models import Talleres as TalleresRN
 
 from dataclasses import asdict
 
@@ -23,10 +22,6 @@ from .name_schemas import *
 def get_choices(sender="NQN"):
     if sender == "NQN":
         vals = Talleres.objects.filter(activo__iexact=1).values_list(
-            "idtaller", "nombre"
-        )
-    elif sender == "RN":
-        vals = TalleresRN.objects.filter(activo__iexact=1).values_list(
             "idtaller", "nombre"
         )
 
