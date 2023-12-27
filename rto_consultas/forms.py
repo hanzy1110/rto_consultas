@@ -7,6 +7,8 @@ from .helpers import AuxData, map_fields
 from .models import CccfCertificados, Estados, Tipovehiculo, Tipousovehiculo, Talleres
 from .logging import configure_logger
 
+from ..rto_consultas_rn.models import Talleres as TalleresRN
+
 from dataclasses import asdict
 
 from crispy_forms.helper import FormHelper
@@ -18,23 +20,16 @@ logger = configure_logger(LOG_FILE)
 from .name_schemas import *
 
 
-def get_choices():
-    # aux_data = AuxData(
-    #     query_fields=[],
-    #     form_fields={
-    #         "idestado": ("descripcion", Estados),
-    #         "idtipouso": ("descripcion", Tipousovehiculo),
-    #         "idtipovehiculo": ("descripcion", Tipovehiculo),
-    #         "idtaller": ("nombre", Talleres),
-    #     },
-    #     parsed_names={"name": "name"},
-    # )
-    # logger.debug(aux_data)
-    # vals = map_fields(aux_data, Talleres)
-    # logger.debug(vals)
+def get_choices(sender="NQN"):
+    if sender == "NQN":
+        vals = Talleres.objects.filter(activo__iexact=1).values_list(
+            "idtaller", "nombre"
+        )
+    elif sender == "RN":
+        vals = TalleresRN.objects.filter(activo__iexact=1).values_list(
+            "idtaller", "nombre"
+        )
 
-    vals = Talleres.objects.filter(activo__iexact=1).values_list("idtaller", "nombre")
-    # choices = list(tuple(vals["idtaller"].items()))
     choices = list(vals)
     a = [("", "")]
     a.extend(choices)
@@ -180,12 +175,23 @@ class CustomRTOForm(forms.Form):
         self.helper.layout = Layout(side_by_side)
 
 
+class ObleasPorTaller_RN(forms.Form):
+    fecha_desde = forms.DateField(required=False, label="Fecha Desde")
+    fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
+    taller_id = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=get_choices(sender="RN"),
+        required=False,
+        label="Planta",
+    )
+
+
 class ObleasPorTaller(forms.Form):
     fecha_desde = forms.DateField(required=False, label="Fecha Desde")
     fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
     taller_id = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        choices=get_choices(),
+        choices=get_choices(sender="NQN"),
         required=False,
         label="Planta",
     )
