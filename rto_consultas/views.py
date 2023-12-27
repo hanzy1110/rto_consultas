@@ -299,7 +299,12 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
 
-        context["item_count"] = self.object_list.count()
+        try:
+            context["item_count"] = self.object_list.count()
+        except TypeError as e:
+            logger.warning(f"Error while parsing count {e}")
+            context["item_count"] = 1
+
         context["context_object_name"] = self.context_object_name
 
         logger.debug("CONTEXT HANDLED...")
