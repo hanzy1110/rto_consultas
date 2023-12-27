@@ -393,6 +393,7 @@ class RenderVerificacionForm(TemplateView):
             "idtipouso": ("descripcion", Tipousovehiculo),
             "idtaller": ("nombre", Talleres),
             "anulado": (None, None),
+            "reverificado": (None, None),
         },
         parsed_names={
             "dominiovehiculo": "Dominio",

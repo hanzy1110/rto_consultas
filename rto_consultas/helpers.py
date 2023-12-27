@@ -219,6 +219,7 @@ def handle_query(request, model, fecha_field="fecha"):
     _export = query.pop("_export", None)
     nrocertificado = query.pop("nrocertificado", None)
     anulado = query.pop("anulado", None)
+    reverificado = query.pop("reverificado", None)
 
     tipo_dni = query.pop("dni", None)
     nro_dni = query.pop("nro_dni", None)
@@ -260,6 +261,7 @@ def handle_query(request, model, fecha_field="fecha"):
         queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
 
     queryset = handle_anulado(queryset, anulado, model)
+    queryset = handle_reverificado(queryset, reverificado, model)
 
     return queryset
 
@@ -484,6 +486,16 @@ def get_certs(queryset):
         yield Certificados.objects.get(
             idtaller_id__iexact=q.idtaller_id, idverificacion_id=q.idverificacion
         )
+
+
+def handle_reverificado(queryset, reverificado, model):
+    try:
+        reverificado = int(reverificado[0])
+    except:
+        reverificado = None
+
+    if reverificado:
+        return queryset.filter(reverificacion=1)
 
 
 def handle_anulado(queryset, anulado, model):
