@@ -114,6 +114,9 @@ def check_for_empty_query(query):
             case _:
                 return False
 
+    if isinstance(query, list):
+        return all([check_for_empty(val) for val in query])
+
     return all([check_for_empty(val) for val in query.values()])
 
 
