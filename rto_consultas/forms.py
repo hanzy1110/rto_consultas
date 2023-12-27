@@ -172,7 +172,7 @@ class ObleasPorTaller(forms.Form):
     fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
     taller_id = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        choices=get_choices(sender="NQN"),
+        choices=get_choices(),
         required=False,
         label="Planta",
     )
