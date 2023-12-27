@@ -656,6 +656,9 @@ class Clasesservicios(models.Model):
         # managed = False
         db_table = "clasesservicios"
 
+    def __str__(self):
+        return f"{self.descripcion}"
+
 
 class Convenios(models.Model):
     idconvenio = models.AutoField(
