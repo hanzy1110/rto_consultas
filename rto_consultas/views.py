@@ -42,6 +42,7 @@ from admin_soft.forms import LoginForm
 
 from .models import (
     Adjuntos,
+    Clasesservicios,
     Habilitacion,
     Localidades,
     Personas,
@@ -879,6 +880,9 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         ).descripcion
 
         tipo_uso = Tipousovehiculo.objects.get(idtipouso=self.object.idtipouso)
+        cat_servicio = Clasesservicios.objects.get(
+            idclaseservicio=self.object.idclaseservicio
+        )
         tipo_vehiculo = Tipovehiculo.objects.get(
             idtipovehiculo=self.object.idtipovehiculo
         )
@@ -916,6 +920,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         context["tipo_uso"] = tipo_uso
         context["tipo_vehiculo"] = tipo_vehiculo
         context["tipo_servicio"] = tipo_servicio
+        context["cat_servicio"] = cat_servicio
         context["categoria"] = categoria
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion

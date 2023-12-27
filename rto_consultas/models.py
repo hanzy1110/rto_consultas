@@ -2123,7 +2123,7 @@ class Tipousovehiculo(models.Model):
     )  # Field name made lowercase.
 
     def __str__(self) -> str:
-        return f"{self.idtipouso}: {tipo_uso_dict[self.idtipouso]}"
+        return f"{self.descripcion}"
 
     class Meta:
         app_label = "rto_consultas"
