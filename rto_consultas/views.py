@@ -892,8 +892,10 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
                 )
             except Exception as e:
                 logger.error(f"Error {e} ")
+
         else:
             tipo_servicio = None
+            cat_servicio = None
 
         estado = Estados.objects.get(idestado__exact=cert[0]["idestado"]).descripcion
 
