@@ -20,7 +20,7 @@ def get_choices():
     return a
 
 
-class ObleasPorTaller_RN(forms.Form):
+class ObleasPorTaller(forms.Form):
     fecha_desde = forms.DateField(required=False, label="Fecha Desde")
     fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
     taller_id = forms.ChoiceField(

@@ -19,11 +19,8 @@ logger = configure_logger(LOG_FILE)
 from .name_schemas import *
 
 
-def get_choices(sender="NQN"):
-    if sender == "NQN":
-        vals = Talleres.objects.filter(activo__iexact=1).values_list(
-            "idtaller", "nombre"
-        )
+def get_choices():
+    vals = Talleres.objects.filter(activo__iexact=1).values_list("idtaller", "nombre")
 
     choices = list(vals)
     a = [("", "")]
@@ -168,17 +165,6 @@ class CustomRTOForm(forms.Form):
         side_by_side = Div(Div(query_div), Div(form_div), css_class="row box")
 
         self.helper.layout = Layout(side_by_side)
-
-
-class ObleasPorTaller_RN(forms.Form):
-    fecha_desde = forms.DateField(required=False, label="Fecha Desde")
-    fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
-    taller_id = forms.ChoiceField(
-        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
-        choices=get_choices(sender="RN"),
-        required=False,
-        label="Planta",
-    )
 
 
 class ObleasPorTaller(forms.Form):
