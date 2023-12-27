@@ -930,10 +930,9 @@ class ExcepcionesTable_RN(tables.Table):
         return self
 
 
-class ObleasPorTallerTable(tables.Table):
+class ObleasPorTallerTable_RN(tables.Table):
     taller = tables.Column(verbose_name="Planta")
-    cant_vup = tables.Column(verbose_name="ANSV")
-    cant_transporte = tables.Column(verbose_name="DPT")
+    cant = tables.Column("Cantidad")
 
     class Meta:
         template_name = "tables/htmx_table.html"

@@ -58,6 +58,7 @@ from rto_consultas_rn.models import Talleres as TalleresRN
 
 from rto_consultas_rn.tables import (
     ExcepcionesTable_RN,
+    ObleasPorTallerTable_RN,
     OitsTable_RN,
     ProrrogasTable_RN,
     ResumenTransporteCargaTable,
@@ -84,6 +85,7 @@ from rto_consultas.helpers import (
 
 from rto_consultas.forms import (
     CustomRTOForm,
+    ObleasPorTaller,
 )  # Import the form you created
 
 from rto_consultas.logging import configure_logger, print_stack
@@ -103,7 +105,7 @@ class DVRView(IndexView):
     urls = {
         "verificaciones_rn": "Verificaciones",
         "carga_obleas_rn": "Carga Obleas",
-        # "obleas_por_taller_rn": "Consulta Disponibilidad Obleas",
+        "resumen_obleas_rn": "Consulta Disponibilidad Obleas",
         "excepciones_rn": "Consulta Excepciones",
         "prorrogas_rn": "Consulta Prorrogas",
     }
@@ -756,3 +758,37 @@ class CargaObleas(CustomRTOView_RN):
         fecha_field="fechacarga",
         render_url="carga_obleas_rn",
     )
+
+
+@login_required
+def resumen_obleas(request):
+    if request.htmx:
+        logger.info("RENDERING HTMX!")
+        data = []
+        talleres = Talleres.objects.filter(activo__iexact=1)
+        idtaller = request.GET.get("taller_id", None)
+        logger.debug(request.GET)
+        if idtaller:
+            talleres = Talleres.objects.filter(idtaller__iexact=idtaller)
+
+        for t in talleres:
+            certs_by_taller = Certificadosasignadosportaller.objects.filter(
+                idtaller=t.idtaller, disponible__iexact=1
+            )
+
+            # cert_data = filter_vup_transporte(certs_by_taller)
+            cert_data = {"cant": len(certs_by_taller), "taller": t.nombre}
+
+            data.append(cert_data)
+
+        table = ObleasPorTallerTable_RN(data)
+        return render(request, "includes/table_view.html", {"table": table})
+
+    initial_values = {
+        "fecha_desde": "",
+        "fecha_hasta": "",
+        "taller_id": "",
+    }
+
+    form = ObleasPorTaller(initial=initial_values)
+    return render(request, "includes/consulta_obleas.html", {"form": form})
