@@ -17,8 +17,8 @@ ESTADO_CERTIFICADO = {
     1: "Aprobado",
     2: "Rechazado",
     3: "Condicional",
-    4: "Reverificado",
-    5: "Vencido",
+    # 4: "Reverificado",
+    # 5: "Vencido",
 }
 
 SIGN_DICT = {

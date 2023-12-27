@@ -211,7 +211,7 @@ class RenderVerificacionForm_RN(TemplateView):
             "fecha_desde",
             "fecha_hasta",
             "dni",
-            "nrodoc",
+            "nro_dni",
         ],
         form_fields={
             "idestado": ("descripcion", Estados),
