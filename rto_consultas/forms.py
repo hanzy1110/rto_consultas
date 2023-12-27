@@ -23,7 +23,7 @@ def get_choices():
     vals = Talleres.objects.filter(activo__iexact=1).values_list("idtaller", "nombre")
 
     choices = list(vals)
-    a = [("", "")]
+    a = [("", "Seleccione...")]
     a.extend(choices)
     return a
 
@@ -115,7 +115,7 @@ class CustomRTOForm(forms.Form):
             attributes = form_data.attributes.get(ff, None)
             ids = form_data.ids.get(ff, None)
 
-            choices = [("", "")]
+            choices = [("", "Seleccione...")]
             choices.extend(cs)
 
             field = forms.ChoiceField(
