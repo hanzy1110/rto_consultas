@@ -880,15 +880,18 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         ).descripcion
 
         tipo_uso = Tipousovehiculo.objects.get(idtipouso=self.object.idtipouso)
-        cat_servicio = Clasesservicios.objects.get(
-            idclaseservicio=self.object.idclaseservicio
-        )
         tipo_vehiculo = Tipovehiculo.objects.get(
             idtipovehiculo=self.object.idtipovehiculo
         )
 
         if self.object.codigohabilitacion:
             tipo_servicio = get_servicios(self.object.codigohabilitacion)
+            try:
+                cat_servicio = Clasesservicios.objects.get(
+                    idclaseservicio=self.object.idclaseservicio
+                )
+            except Exception as e:
+                logger.error(f"Error {e} ")
         else:
             tipo_servicio = None
 
