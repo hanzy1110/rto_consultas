@@ -925,10 +925,13 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         logger.info(
             f"iddirector: {int(self.object.directortecnico)}, taller_id: {self.kwargs['idtaller']}"
         )
-        directortecnico = Direcotrestecnicos.objects.get(
-            iddirector=int(self.object.directortecnico),
-            idtaller_id=self.kwargs["idtaller"],
-        )
+        try:
+            directortecnico = Direcotrestecnicos.objects.get(
+                iddirector=int(self.object.directortecnico),
+                idtaller_id=self.kwargs["idtaller"],
+            )
+        except:
+            directortecnico = "N/A"
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
