@@ -1352,14 +1352,11 @@ def carga_obleas_check(request, *args, **kwargs):
         taller_id = query.get("idtaller", None)
         info = {"cert_init": cert_init, "cert_end": cert_end, "taller_id": taller_id}
         if check_cert_bounds(cert_init, cert_end, user):
-            logger.error(f"CertBound error => {e}")
             res = HttpResponse("")
             res.headers["Hx-Trigger"] = "certBoundConfirm"
-
             cache.set("CERT_INFO", info)
-
         else:
-            logger.error(f"CertBound error => {e}")
+            logger.error(f"CertBound error")
             res = HttpResponse("")
             res.headers["Hx-Trigger"] = "certBoundError"
         return res
