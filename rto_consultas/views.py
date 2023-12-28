@@ -44,6 +44,7 @@ from admin_soft.forms import LoginForm
 from .models import (
     Adjuntos,
     Clasesservicios,
+    Direcotrestecnicos,
     Habilitacion,
     Localidades,
     Personas,
@@ -922,6 +923,9 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
 
+        directortecnico = Direcotrestecnicos.objects.get(iddirector=self.object.directortecnino,
+                                                          idtaller_id=self.kwargs["idtaller_id"])
+
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
         context["vigenciahasta"] = cert[0]["vigenciahasta"]
@@ -930,6 +934,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
         context["tipo_vehiculo"] = tipo_vehiculo
         context["tipo_servicio"] = tipo_servicio
         context["cat_servicio"] = cat_servicio
+        context["directortecnico"] = directortecnico
         context["categoria"] = categoria
         context["provincia"] = localidad.idprovincia.descripcion
         context["localidad"] = localidad.descripcion
