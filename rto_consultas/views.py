@@ -1177,23 +1177,11 @@ class PDFHabilitacion(PDFTemplateView):
 
 def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwargs):
     if request.method == "POST":
-        # if kwargs:
-        #     idhabilitacion = kwargs.pop("idhabilitacion", None)
-        #     dominio = kwargs.pop("dominio", None)
-
-        # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
-        # if idhabilitacion and dominio:
-        #     initial = handle_initial_hab(idhabilitacion, dominio)
-        # else:
-        #     initial = {}
-
-        # logger.debug(f"INITIAL_DATA => {initial}")
         form = InspectionOrderForm(request.POST)
 
         if form.is_valid():
             try:
                 hab = handle_save_hab(form.cleaned_data, request.user)
-
                 logger.info(f"Habilitacion => {hab} SAVED!")
                 success_message = "Form submitted successfully!"
                 success_message_html = render_to_string(
@@ -1208,10 +1196,8 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
                     "includes/error_message.html", {"error_message": error_message}
                 )
                 return HttpResponse(error_message_html)
-            # Process the form data if needed
-            # For example, you can access form.cleaned_data to get the validated data
-            # Then redirect or render a success page
-    else:
+
+    elif request.htmx:
         if kwargs:
             idhabilitacion = kwargs.pop("idhabilitacion", None)
             dominio = kwargs.pop("dominio", None)
@@ -1224,9 +1210,34 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = InspectionOrderForm(initial=initial)
-        # form = InspectionOrderForm()
+        return render(
+            request,
+            "includes/carga_habilitaciones.html",
+            {"form": form, "render_url": "carga_habilitaciones"},
+        )
+    else:
+        aux_data = AuxData(
+            query_fields=[
+                "dominio",
+            ],
+            form_fields={},
+            parsed_names={
+                "dominio": "dominio",
+            },
+            ids={},
+            types={
+                "dominio": "text",
+            },
+            fecha_field="fechacarga",
+            render_url="carga_habilitacion",
+        )
+        form = CustomRTOForm(aux_data, Habilitacion)
 
-    return render(request, "includes/carga_habilitaciones.html", {"form": form})
+        return render(
+            request,
+            "includes/list_table.html",
+            {"form": form, "render_url": "carga_habilitaciones"},
+        )
 
 
 def consulta_habilitaciones(request):
