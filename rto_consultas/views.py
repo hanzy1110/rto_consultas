@@ -1213,7 +1213,7 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
         return render(
             request,
             "includes/carga_habilitaciones.html",
-            {"form": form, "render_url": "carga_habilitaciones"},
+            {"form": form, "render_url": "carga_habilitacion"},
         )
     else:
         aux_data = AuxData(
