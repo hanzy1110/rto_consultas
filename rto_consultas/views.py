@@ -381,7 +381,8 @@ def cert_bound_error(request, *args, **kwargs):
 def cert_bound_confirm(request, *args, **kwargs):
     cert_info = cache.get("CERT_INFO", None)
     assert cert_info
-    taller_name = Talleres.objects.get(idtaller=cert_info["taller_id"]).values("nombre")
+    logger.info(cert_info)
+    taller_name = Talleres.objects.get(idtaller=cert_info["taller_id"]).nombre
     cert_info["taller_name"] = taller_name
     cert_count = int(cert_info["cert_end"]) - int(cert_info["cert_init"])
     cert_info["cert_count"] = cert_count
