@@ -388,6 +388,9 @@ def cert_bound_confirm(request, *args, **kwargs):
 
     cert_init = parse_querydict_arg(cert_info["cert_init"])
     cert_end = parse_querydict_arg(cert_info["cert_end"])
+    cert_info["cert_init"] = cert_init
+    cert_info["cert_end"] = cert_end
+
     cert_count = None
 
     if cert_init and cert_end:
