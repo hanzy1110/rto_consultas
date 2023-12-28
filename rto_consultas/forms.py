@@ -350,11 +350,11 @@ class InspectionOrderForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_class = "col_w900 col_w900_last"
         self.helper.layout = Layout(
-            # Div(
-            #     Field("dominio"),
-            #     Field("ckPatenteMer"),
-            #     css_class="tr",
-            # ),
+            Div(
+                Field("dominio"),
+                # Field("ckPatenteMer"),
+                css_class="tr",
+            ),
             Div(
                 Field("modelo"),
                 css_class="tr",
