@@ -14,12 +14,13 @@
                 <li>Fin: {{ cert_end }}</li>
                 <li>Cantidad de Certificados a ingresar: {{ cert_count }}</li>
             </ul>
-
-        <a style="display:block" hx-get="{% url 'carga_obleas' %}" hx-target="#confirm-body">
-        <button class="btn btn-sm btn-primary">
-            Regresar
-        </button>
-        </a>
+            <a style="display:block" hx-get="{% url 'carga_obleas' %}" hx-target="#confirm-body">
+                <button class="btn btn-sm btn-primary">
+                    Confirmar
+                </button>
+            </a>
+            <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
+                class="btn btn-primary">Cancelar</button>
         </div>
     </div>
 </div>

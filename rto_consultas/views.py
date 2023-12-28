@@ -394,7 +394,7 @@ def cert_bound_confirm(request, *args, **kwargs):
     cert_count = None
 
     if cert_init and cert_end:
-        cert_count = cert_end - cert_init
+        cert_count = cert_end - cert_init + 1
     cert_info["cert_count"] = cert_count
 
     return render(
