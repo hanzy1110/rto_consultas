@@ -1198,6 +1198,7 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
                 return HttpResponse(error_message_html)
 
     elif request.htmx:
+        logger.info(f"PRE => {dominio}-//-{idhabilitacion}")
         if kwargs:
             idhabilitacion = kwargs.pop("idhabilitacion", None)
             dominio = kwargs.pop("dominio", None)
