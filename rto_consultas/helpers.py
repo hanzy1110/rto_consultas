@@ -360,6 +360,7 @@ def handle_cert_insert(taller_id, cert_init, cert_end, user=None):
             except Exception as e:
                 logger.error("ERROR DURING INSERTING CERTS...")
                 logger.error(e.__cause__)
+                raise ValueError("Error en la carga de certificados")
         else:
             raise CertBoundError()
 
