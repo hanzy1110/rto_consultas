@@ -1161,7 +1161,7 @@ def check_cert_bounds(cert_init, cert_end, user):
         )
     except StopIteration as e:
         logger.warn(f"Maybe no group... {user}")
-        return True
+        selected_group = ""
 
     bound = USER_CERTS_BOUNDS.get(selected_group, None)
     if bound:
