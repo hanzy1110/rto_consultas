@@ -364,7 +364,7 @@ class InspectionOrderForm(forms.Form):
                 css_class="tr",
             ),
             HTML("<tr><td>&nbsp;</td></tr>"),
-            HTML("<h3>Datos del Titular</h3>"),
+            HTML("<h3>Datos del Titular/Empresa</h3>"),
             Div(
                 Field("titular"),
                 css_class="tr",
