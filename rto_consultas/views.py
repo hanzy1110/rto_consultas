@@ -890,7 +890,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idtipovehiculo=self.object.idtipovehiculo
         )
 
-        context["anulado"] = cert[0].anulado
+        context["anulado"] = cert[0]["anulado"]
 
         if self.object.codigohabilitacion:
             tipo_servicio = get_servicios(self.object.codigohabilitacion)
