@@ -852,17 +852,17 @@ def handle_save_hab(cleaned_data, user):
 def handle_initial_hab_form(dominio):
     initial = {}
 
-    try:
-        cccf = CccfCertificados.objects.filter(dominio=dominio)
-        cccf = cccf.order_by("-idcertificado").values("nrocertificado", flat=True)[0]
-        vehiculo = Vehiculos.objects.get(dominio=dominio)
+    # try:
+    cccf = CccfCertificados.objects.filter(dominio=dominio)
+    cccf = cccf.order_by("-idcertificado").values("nrocertificado", flat=True)[0]
+    vehiculo = Vehiculos.objects.get(dominio=dominio)
 
-        initial["cccf"] = cccf
-        initial["modelo"] = vehiculo.anio
-        initial["dominio"] = vehiculo.dominio
+    initial["cccf"] = cccf
+    initial["modelo"] = vehiculo.anio
+    initial["dominio"] = vehiculo.dominio
 
-    except Exception as e:
-        logger.error(f"WHILE PARSING ARGS {e.__cause__} {e.__class__}")
+    # except Exception as e:
+    #     logger.error(f"WHILE PARSING ARGS {e.__cause__} {e.__class__}")
 
     return initial
 
