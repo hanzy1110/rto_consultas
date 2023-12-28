@@ -7,11 +7,8 @@
         </div>
         <div class="modal-body">
             <span>Revisar los Valores ingresados</span>
-        <a style="display:block" href="{% url 'carga_obleas' %}">
-        <button class="btn btn-sm btn-primary">
-            Regresar
-        </button>
-        </a>
         </div>
+        <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
+            class="btn btn-primary">Cerrar</button>
     </div>
 </div>
