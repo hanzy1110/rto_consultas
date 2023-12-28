@@ -1170,10 +1170,13 @@ def check_cert_bounds(cert_init, cert_end, user):
 
         bound_flag = init and end
 
-    cert_init = parse_querydict_arg(cert_init)
-    cert_end = parse_querydict_arg(cert_end)
-
-    range_flag = cert_init < cert_end
+    try:
+        cert_init = parse_querydict_arg(cert_init)
+        cert_end = parse_querydict_arg(cert_end)
+        range_flag = cert_init < cert_end
+    except Exception as e:
+        logger.error(f"While comparing {e}")
+        range_flag = False
 
     logger.info(f"range_flag: {range_flag}, bound_flag: {bound_flag}")
 
