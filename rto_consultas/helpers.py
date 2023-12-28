@@ -1172,6 +1172,8 @@ def check_cert_bounds(cert_init, cert_end, user):
 
     range_flag = int(cert_init) < int(cert_end)
 
+    logger.info(f"range_flag: {range_flag}, bound_flag: {bound_flag}")
+
     return range_flag and bound_flag
 
 
