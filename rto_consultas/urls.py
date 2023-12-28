@@ -108,7 +108,9 @@ urlpatterns += [
     ),
     path("certificados/", views.ListCertificadosView.as_view(), name="certificados"),
     path("vehiculos/", views.ListVehiculosView.as_view(), name="vehiculos"),
-    path("cargaobleas/", views.CargaObleas.as_view(), name="carga_obleas"),
+    path("cargaobleas/", views.carga_obleas, name="carga_obleas"),
+    path("cargaobleas_check/", views.carga_obleas_check, name="carga_obleas_check"),
+    path("cert_bound_confirm/", views.cert_bound_confirm, name="cert_bound_confirm"),
     path("resumenobleas/", views.resumen_obleas, name="resumen_obleas"),
     path(
         "cargahabilitacion/",

@@ -239,7 +239,7 @@ class SVView(IndexView):
 class DocumentView(IndexView):
     urls = {
         "certs_asignados": "Certificados Asignados",
-        "carga_obleas": "Carga Obleas",
+        "carga_obleas_check": "Carga Obleas",
         "resumen_obleas": "Consulta Disponibilidad Obleas",
     }
 
