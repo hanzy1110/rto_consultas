@@ -758,6 +758,9 @@ class Direcotrestecnicos(models.Model):
         db_table = "direcotrestecnicos"
         unique_together = (("iddirector", "idtaller"),)
 
+    def __str__(self):
+        return f"{self.apellido} {self.nombre}"
+
 
 class Equipos(models.Model):
     idequipo = models.IntegerField(
