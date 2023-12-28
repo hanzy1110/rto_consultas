@@ -1372,7 +1372,7 @@ def get_verificacion(habcode):
 
     verif = cache.get(cache_key, None)
     if not verif:
-        verif = Verificaciones.objects.get(idhabilitacion=habcode)
+        verif = Verificaciones.objects.filter(idhabilitacion=habcode)
         cache.set(cache_key, verif)
 
-    return verif
+    return bool(verif)
