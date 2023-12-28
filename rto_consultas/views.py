@@ -1,5 +1,6 @@
 from collections.abc import Callable
 import os
+from ssl import cert_time_to_seconds
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db.models import Count, Model, Prefetch
@@ -76,6 +77,7 @@ from .tables import (
 )
 from .helpers import (
     CertBoundError,
+    check_cert_bounds,
     filter_vup_transporte,
     generate_key_certificado,
     get_queryset_from_user,
@@ -83,6 +85,7 @@ from .helpers import (
     get_servicios,
     get_template_from_user,
     get_tipo_uso_by_user,
+    handle_cert_insert,
     handle_context,
     handle_query,
     AuxData,
@@ -375,6 +378,21 @@ def cert_bound_error(request, *args, **kwargs):
     return render(template_name="pages/cert_bound_error.html", request=request)
 
 
+def cert_bound_confirm(request, *args, **kwargs):
+    cert_info = cache.get("CERT_INFO", None)
+    assert cert_info
+    taller_name = Talleres.objects.get(idtaller=cert_info["taller_id"]).values("nombre")
+    cert_info["taller_name"] = taller_name
+    cert_count = int(cert_info["cert_end"]) - int(cert_info["cert_init"])
+    cert_info["cert_count"] = cert_count
+
+    return render(
+        template_name="pages/cert_bound_confirm.html",
+        request=request,
+        context=cert_info,
+    )
+
+
 @method_decorator(login_required, name="dispatch")
 class RenderVerificacionForm(TemplateView):
     template_name = "includes/form_render.html"
@@ -434,40 +452,6 @@ class RenderVerificacionForm(TemplateView):
         context = super().get_context_data(**kwargs)
         context = handle_context(context, self)
         return context
-
-
-@method_decorator(login_required, name="dispatch")
-class CargaObleas(CustomRTOView):
-    # authentication_classes           = [authentication.TokenAuthentication]
-    model = Certificadosasignadosportaller
-    paginate_by = settings.PAGINATION
-    template_name = "includes/list_table.html"
-    context_object_name = "Certificados Asignados por taller"
-    table_class = CertificadosAssignTable
-    partial_template = "includes/table_view.html"
-    form_class = CustomRTOForm
-
-    aux_data = AuxData(
-        query_fields=[
-            "cert_init",
-            "cert_end",
-        ],
-        form_fields={
-            "idtaller": ("nombre", Talleres),
-        },
-        parsed_names={
-            "idtaller": "Planta",
-            "cert_init": "Nro Oblea desde",
-            "cert_end": "Nro Oblea hasta",
-        },
-        ids={},
-        types={
-            "cert_init": "text",
-            "cert_end": "text",
-        },
-        fecha_field="fechacarga",
-        render_url="carga_obleas",
-    )
 
 
 @method_decorator(login_required, name="dispatch")
@@ -1335,3 +1319,72 @@ class PDFResumenMensual(PDFTemplateView):
 def route_navigation(request, *args, **kwargs):
     referer = request.META.get("HTTP_REFERER", None)
     pass
+
+
+def carga_obleas_check(request, *args, **kwargs):
+    aux_data = AuxData(
+        query_fields=[
+            "cert_init",
+            "cert_end",
+        ],
+        form_fields={
+            "idtaller": ("nombre", Talleres),
+        },
+        parsed_names={
+            "idtaller": "Planta",
+            "cert_init": "Nro Oblea desde",
+            "cert_end": "Nro Oblea hasta",
+        },
+        ids={},
+        types={
+            "cert_init": "text",
+            "cert_end": "text",
+        },
+        fecha_field="fechacarga",
+        render_url="carga_obleas",
+    )
+
+    if request.htmx:
+        query = request.GET.copy()
+        user = request.user
+        cert_init = query.pop("cert_init", None)
+        cert_end = query.pop("cert_end", None)
+        taller_id = query.get("idtaller", None)
+        info = {"cert_init": cert_init, "cert_end": cert_end, "taller_id": taller_id}
+        if check_cert_bounds(cert_init, cert_end, user):
+            logger.error(f"CertBound error => {e}")
+            res = HttpResponse("")
+            res.headers["Hx-Trigger"] = "certBoundConfirm"
+
+            cache.set("CERT_INFO", info)
+
+        else:
+            logger.error(f"CertBound error => {e}")
+            res = HttpResponse("")
+            res.headers["Hx-Trigger"] = "certBoundError"
+        return res
+
+    else:
+        form = CustomRTOForm(aux_data, Certificadosasignadosportaller)
+
+        return render(
+            request,
+            "includes/list_table.html",
+            {"form": form, "render_url": "carga_obleas_check"},
+        )
+
+
+def carga_obleas(request, *args, **kwargs):
+    if request.htmx:
+        cert_info = cache.get("CERT_INFO", None)
+        assert cert_info
+        cert_info["user"] = request.user
+
+        try:
+            handle_cert_insert(**cert_info)
+            res = HttpResponse("Obleas Cargadas con exito")
+            return res
+        except Exception as e:
+            logger.error(e)
+            res = HttpResponse("Ocurrio un problema al cargar las Obleas")
+            return res

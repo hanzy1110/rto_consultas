@@ -1152,6 +1152,8 @@ def allow_keys(data: dict, keys: list[str]):
 
 
 def check_cert_bounds(cert_init, cert_end, user):
+    bound_flag = True
+    range_flag = True
     try:
         selected_group = next(
             filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
@@ -1165,9 +1167,11 @@ def check_cert_bounds(cert_init, cert_end, user):
         init = str(cert_init)[:3] == bound
         end = str(cert_end)[:3] == bound
 
-        return init and end
+        bound_flag = init and end
 
-    return True
+    range_flag = int(cert_init) < int(cert_end)
+
+    return range_flag and bound_flag
 
 
 def get_tipo_uso_by_user(request):

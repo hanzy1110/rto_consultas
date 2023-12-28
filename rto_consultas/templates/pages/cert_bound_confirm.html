@@ -1,0 +1,23 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+    <div class="modal-underlay" _="on click trigger closeModal"></div>
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="dialogAddExceso">Confirma Carga Obleas</h4>
+        </div>
+        <div class="modal-body" id="confirm-body">
+            <span>Valores Ingresados</span>
+
+            Planta: {{ taller_name }}
+            Inicio: {{ cert_init }}
+            Fin: {{ cert_end }}
+            Cantidad de Certificados a ingresar: {{ cert_count }}
+
+        <a style="display:block" hx-get="{% url 'carga_obleas' %}" hx-target="#confirm-body">
+        <button class="btn btn-sm btn-primary">
+            Regresar
+        </button>
+        </a>
+        </div>
+    </div>
+</div>
