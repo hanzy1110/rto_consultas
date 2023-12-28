@@ -922,7 +922,9 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idtaller_id__exact=cert[0]["idtaller_id"],
             idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
-
+        logger.info(
+            f"iddirector: {int(self.object.directortecnico)}, taller_id: {self.kwargs['idtaller']}"
+        )
         directortecnico = Direcotrestecnicos.objects.get(
             iddirector=int(self.object.directortecnico),
             idtaller_id=self.kwargs["idtaller"],
