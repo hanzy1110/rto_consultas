@@ -6,15 +6,7 @@
 {% load getattr %}
 {% load static %}
 {% load crispy_forms_tags %}
-<style>
 
-#over img {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
-</style>
 <h1>{{ context_object_name }}</h1>
 <div id="form_div" class="card-body px-0 pt-0 pb-2">
     <div id="message-container">
@@ -53,7 +45,7 @@
     </form>
 </div>
 <div class="container-fluid py-4 card-body px-0 pt-0 pb-2">
-    <div >
+    <div style="display:table-cell; vertical-align:middle; text-align:center" >
         <img id="spinner" class="htmx-indicator" src='{% static "img/loader.gif" %}'>
     </div>
     <div id="table_div" class="table-responsive p-0">
