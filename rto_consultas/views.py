@@ -925,7 +925,7 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
 
         directortecnico = Direcotrestecnicos.objects.get(
             iddirector=int(self.object.directortecnico),
-            idtaller_id=self.kwargs["idtaller_id"],
+            idtaller_id=self.kwargs["idtaller"],
         )
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
