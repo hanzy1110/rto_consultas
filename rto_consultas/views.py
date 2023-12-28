@@ -94,6 +94,7 @@ from .helpers import (
     handle_resumen_context,
     handle_save_hab,
     handle_initial_hab,
+    parse_querydict_arg,
 )
 
 from .forms import (
@@ -384,7 +385,13 @@ def cert_bound_confirm(request, *args, **kwargs):
     logger.info(cert_info)
     taller_name = Talleres.objects.get(idtaller=cert_info["taller_id"]).nombre
     cert_info["taller_name"] = taller_name
-    cert_count = int(cert_info["cert_end"]) - int(cert_info["cert_init"])
+
+    cert_init = parse_querydict_arg(cert_info["cert_init"])
+    cert_end = parse_querydict_arg(cert_info["cert_end"])
+    cert_count = None
+
+    if cert_init and cert_end:
+        cert_count = cert_end - cert_init
     cert_info["cert_count"] = cert_count
 
     return render(
