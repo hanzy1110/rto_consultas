@@ -923,8 +923,10 @@ class VerVerificacion(DetailView, LoginRequiredMixin):
             idverificacion_id__exact=cert[0]["idverificacion_id"],
         )
 
-        directortecnico = Direcotrestecnicos.objects.get(iddirector=self.object.directortecnino,
-                                                          idtaller_id=self.kwargs["idtaller_id"])
+        directortecnico = Direcotrestecnicos.objects.get(
+            iddirector=int(self.object.directortecnico),
+            idtaller_id=self.kwargs["idtaller_id"],
+        )
 
         context["nrocertificado"] = cert[0]["nrocertificado"]
         context["observaciones"] = cert[0]["observaciones"]
