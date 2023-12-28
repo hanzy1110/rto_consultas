@@ -1212,6 +1212,7 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
         else:
             # Tengo que encontrar cccf, dominio y algo mas
             initial = handle_initial_hab_form(dominio)
+        initial["dominio"] = dominio
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = InspectionOrderForm(initial=initial)
