@@ -87,6 +87,7 @@ from .helpers import (
     get_tipo_uso_by_user,
     handle_cert_insert,
     handle_context,
+    handle_initial_hab_form,
     handle_query,
     AuxData,
     generate_key,
@@ -1210,7 +1211,7 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
             initial = handle_initial_hab(idhabilitacion, dominio)
         else:
             # Tengo que encontrar cccf, dominio y algo mas
-            initial = {}
+            initial = handle_initial_hab_form(dominio)
 
         logger.debug(f"INITIAL_DATA => {initial}")
         form = InspectionOrderForm(initial=initial)

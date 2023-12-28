@@ -39,6 +39,7 @@ from rto_consultas.models import (
     Serviciohab,
     Serviciostransportehab,
     Talleres,
+    Vehiculos,
     Verificaciones,
     Verificacionespdf,
     Usuarios,
@@ -846,6 +847,23 @@ def handle_save_hab(cleaned_data, user):
     Serviciohab.objects.bulk_create(servs)
 
     return new_hab
+
+
+def handle_initial_hab_form(dominio):
+    initial = {}
+
+    try:
+        cccf = CccfCertificados.objects.get(dominio=dominio).nrocertificado
+        vehiculo = Vehiculos.objects.get(dominio=dominio)
+
+        initial["cccf"] = cccf
+        initial["modelo"] = vehiculo.anio
+        initial["dominio"] = vehiculo.dominio
+
+    except Exception as e:
+        logger.error(f"WHILE PARSING ARGS {e.__cause__} {e.__class__}")
+
+    return initial
 
 
 def handle_initial_hab(id_habilitacion, dominio):
