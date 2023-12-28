@@ -1236,7 +1236,12 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
         return render(
             request,
             "includes/list_table.html",
-            {"form": form, "render_url": "carga_habilitacion"},
+            {
+                "form": form,
+                "render_url": "carga_habilitacion",
+                "form_target": "#target-form",
+                "swap": "outerHTML",
+            },
         )
 
 

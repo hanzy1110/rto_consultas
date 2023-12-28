@@ -14,13 +14,12 @@
 
     <div hx-get="{% url render_url %}" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="reloadTable from:body">
     </div>
-
     <div hx-get="{% url "cert_bound_error" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundError from:body">
     </div>
     <div hx-get="{% url "cert_bound_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundConfirm from:body">
     </div>
 
-    <form hx-get="{% url render_url %}" hx-indicator="#spinner" hx-swap="innerHTML" hx-target="#table_div" hx-trigger="submit">
+    <form id="target-form" hx-get="{% url render_url %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
         <div class="container-fluid py-4">
 
             <!-- <table width="90%" style="margin-left: 10px;">
