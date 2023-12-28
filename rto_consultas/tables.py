@@ -28,6 +28,7 @@ from .models import Estados, Tipousovehiculo, Talleres
 from .helpers import (
     LOG_FILE,
     AuxData,
+    get_verificacion,
     map_fields,
     generate_key_from_params,
     convert_date,
@@ -388,10 +389,18 @@ class HabilitacionesTable(tables.Table):
         return format_html('<img src="{}" width="25px"/>', image_url)
 
     def render_modificar(self, record):
+        verif = get_verificacion(record.idhabilitacion)
+        if verif:
+            logger.info("Verificacion found not rendering...")
+            return ""
         image_url = static(f"img/small-logos/modificar3.png")
         return format_html('<img src="{}" width="25px" />', image_url)
 
     def render_dar_de_baja(self, record):
+        verif = get_verificacion(record.idhabilitacion)
+        if verif:
+            logger.info("Verificacion found not rendering...")
+            return ""
         image_url = static(f"img/small-logos/delete.png")
         return format_html('<img src="{}" width="25px" />', image_url)
 

@@ -1365,3 +1365,14 @@ def get_servicios(codigo_habilitacion: str):
             logger.warn(f"No existe el servicio: {s}")
 
     return aux
+
+
+def get_verificacion(habcode):
+    cache_key = f"HAB_{habcode}"
+
+    verif = cache.get(cache_key, None)
+    if not verif:
+        verif = Verificaciones.objects.get(idhabilitacion=habcode)
+        cache.set(cache_key, verif)
+
+    return verif
