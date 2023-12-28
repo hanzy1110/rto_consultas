@@ -1230,6 +1230,7 @@ def carga_habilitacion(request, idhabilitacion=None, dominio=None, *args, **kwar
             },
             fecha_field="fechacarga",
             render_url="carga_habilitacion",
+            required={"dominio": True},
         )
         form = CustomRTOForm(aux_data, Habilitacion)
 

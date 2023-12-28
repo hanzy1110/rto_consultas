@@ -76,6 +76,7 @@ class AuxData:
     ids: Dict[str, str] = field(default_factory=dict)
     attributes: Dict[str, str] = field(default_factory=dict)
     types: Dict[str, str] = field(default_factory=dict)
+    required: Dict[str, bool] = field(default_factory=dict)
     fecha_field: str = "fecha"
     aux: Dict[str, str] = field(default_factory=dict)
     render_url: str = ""

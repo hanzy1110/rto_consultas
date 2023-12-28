@@ -84,7 +84,7 @@ class CustomRTOForm(forms.Form):
                 field = None  # Handle other input types as needed
 
             if field:
-                field.required = False
+                field.required = form_data.required.get(qf, False)
                 self.fields[qf] = field
             if additional_field:
                 additional_field.required = False
@@ -125,7 +125,7 @@ class CustomRTOForm(forms.Form):
                 initial="",  # Set the initial value if needed
             )
             if field:
-                field.required = False
+                field.required = form_data.required.get(ff, False)
                 self.fields[ff] = field
 
         # if "dominio" in form_data.query_fields:
