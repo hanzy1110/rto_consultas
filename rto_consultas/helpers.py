@@ -854,7 +854,7 @@ def handle_initial_hab_form(dominio):
 
     # try:
     cccf = CccfCertificados.objects.filter(dominio=dominio)
-    cccf = cccf.order_by("-idcertificado").values("nrocertificado", flat=True)[0]
+    cccf = cccf.order_by("-idcertificado").values_list("nrocertificado", flat=True)[0]
     vehiculo = Vehiculos.objects.get(dominio=dominio)
 
     initial["cccf"] = cccf
