@@ -33,6 +33,7 @@ from rto_consultas.cccf_views import (
     cccf_estado_success,
     consulta_excesos,
     dar_de_baja_taller_cccf,
+    dar_de_baja_taller_cccf_confirm,
     editar_cccf_taller,
     get_cccf_modal,
     get_cccf_modal_excesos,
@@ -237,7 +238,11 @@ cccf_urls = [
     ),
     path("taller_edit_success", taller_edit_success, name="taller_edit_success"),
     path("taller_edit_failure", taller_edit_failure, name="taller_edit_failure"),
-    path("taller_baja_confirm", taller_edit_failure, name="taller_edit_failure"),
+    path(
+        "taller_baja_confirm",
+        dar_de_baja_taller_cccf_confirm,
+        name="taller_edit_failure",
+    ),
 ]
 
 # URLS RIO NEGRO
