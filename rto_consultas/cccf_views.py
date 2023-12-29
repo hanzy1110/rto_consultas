@@ -32,6 +32,7 @@ from .models import (
 from .tables import (
     CCCFExcesosTable,
     CCCFTable,
+    CccfTalleresTable,
     PrecintosAssignTable,
 )
 from .helpers import (
@@ -503,3 +504,27 @@ class PDFCccf(PDFTemplateView):
         context["STATIC_URL"] = settings.STATIC_URL
 
         return context
+
+
+@method_decorator(login_required, name="dispatch")
+class CccfTalleresList(CustomRTOView):
+    # authentication_classes           = [authentication.TokenAuthentication]
+    model = CccfTalleres
+    paginate_by = settings.PAGINATION
+    template_name = "includes/list_table.html"
+    context_object_name = "Certificados Asignados por taller"
+    table_class = CccfTalleresTable
+    partial_template = "includes/table_view.html"
+    form_class = CustomRTOForm
+
+    aux_data = AuxData(
+        query_fields=["nombre"],
+        form_fields={},
+        parsed_names={
+            "nombre": "Nombre Taller",
+        },
+        ids={},
+        types={},
+        fecha_field="fechacarga",
+        render_url="cccf_talleres",
+    )

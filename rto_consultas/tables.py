@@ -12,6 +12,7 @@ from .models import (
     # VWVerificaciones,
     CccfCertificadoexcesos,
     CccfNroscertificadosasignados,
+    CccfTalleres,
     Habilitacion,
     Localidades,
     Usuarios,
@@ -1067,6 +1068,91 @@ class PrecintosAssignTable(tables.Table):
         template_name = "tables/htmx_table.html"
         model = CccfNroscertificadosasignados
         query_fields = {"nrocertificado", "idtaller", "disponible"}
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
+class CccfTalleresTable(tables.Table):
+    editar = tables.Column(
+        verbose_name="Consulta",
+        linkify=(
+            "editar_taller",
+            {
+                "idtaller": tables.A("idhabilitacion"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+        attrs={"th": {"colspan": "3"}},
+    )
+
+    dar_de_baja = tables.Column(
+        verbose_name="",
+        linkify=(
+            "dar_de_baja_taller",
+            {
+                "idtaller": tables.A("idhabilitacion"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+        attrs={"th": {"hidden": True}},
+    )  # (viewname, kwargs)
+
+    ver_usuarios = tables.Column(
+        verbose_name="",
+        linkify=(
+            "usuarios_taller",
+            {
+                "idtaller": tables.A("idhabilitacion"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+        attrs={"th": {"hidden": True}},
+    )  # (viewname, kwargs)
+
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = CccfTalleres
+        # Orden: #Taller Nombre Cuit Localidad Direccion Activo
+        fields = (
+            "nrotaller",
+            "nombre",
+            "cuit",
+            "idlocalidad",
+            "domicilio",
+            "activo",
+            "editar",
+            "dar_de_baja",
+            "ver_usuarios",
+        )
+
+    def render_idlocalidad(self, record):
+        try:
+            loc = Localidades.objects.get(idlocalidad=record.idlocalidad)
+        except:
+            loc = ""
+        return loc
+
+    def render_ver_usuarios(self, record):
+        image_url = static(f"img/small-logos/lupa.png")
+        return format_html('<img src="{}" width="25px"/>', image_url)
+
+    def render_editar(self, record):
+        image_url = static(f"img/small-logos/modificar3.png")
+        return format_html('<img src="{}" width="25px" />', image_url)
+
+    def render_dar_de_baja(self, record):
+        image_url = static(f"img/small-logos/delete.png")
+        return format_html('<img src="{}" width="25px" />', image_url)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
