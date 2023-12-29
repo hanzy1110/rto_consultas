@@ -227,6 +227,11 @@ cccf_urls = [
         name="editar_taller_cccf",
     ),
     path(
+        "editar_taller_cccf_confirm",
+        editar_cccf_taller,
+        name="editar_taller_cccf_confirm",
+    ),
+    path(
         "usuarios_taller_cccf/<int:idtaller>",
         ver_cccf_usuarios,
         name="usuarios_taller_cccf",

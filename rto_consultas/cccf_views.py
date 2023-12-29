@@ -567,7 +567,16 @@ def ver_cccf_usuarios(request, *args, **kwargs):
 
 
 def editar_cccf_taller(request, *args, **kwargs):
-    idtaller = kwargs.get("idtaller", None)
+    res = HttpResponse("")
+    res.headers["Hx-Trigger"] = "tallerEditConfirm"
+    taller_id = kwargs.get("idtaller", None)
+    logger.info(f"SETTING CACHE FOR idtaller : {taller_id}")
+    cache.set("TALLER_ID_EDITAR", taller_id)
+    return res
+
+
+def editar_cccf_taller_confirm(request, *args, **kwargs):
+    idtaller = cache.get("TALLER_ID_EDITAR", None)
     taller = CccfTalleres.objects.get(idtaller=idtaller)
 
     if request.method == "POST":
@@ -588,8 +597,8 @@ def editar_cccf_taller(request, *args, **kwargs):
 
     return render(
         request,
-        "includes/list_table.html",
-        {"form": form, "render_url": f"editar_cccf_taller/?idtaller={idtaller}"},
+        "pages/edit_cccf.html",
+        {"form": form, "render_url": f"editar_cccf_taller"},
     )
 
 

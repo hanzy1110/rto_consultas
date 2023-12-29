@@ -18,6 +18,8 @@
     </div>
     <div hx-get="{% url "cert_bound_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundConfirm from:body">
     </div>
+    <div hx-get="{% url "editar_taller_cccf_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditConfirm from:body">
+    </div>
     <div hx-get="{% url "taller_edit_success" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditSuccess from:body">
     </div>
     <div hx-get="{% url "taller_edit_failure" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditFailure from:body">
