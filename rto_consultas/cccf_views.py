@@ -583,7 +583,7 @@ def editar_cccf_taller(request, *args, **kwargs):
                 res.headers["Hx-Trigger"] = "tallerEditFailure"
             return res
 
-    initial = taller.values()
+    initial = taller.__dict__
     form = CccfTalleresForm(initial=initial)
 
     return render(
