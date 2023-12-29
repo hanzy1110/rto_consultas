@@ -1411,3 +1411,9 @@ def get_verificacion(habcode):
         cache.set(cache_key, verif)
 
     return bool(verif)
+
+
+def edit_taller(taller: CccfTalleres, cleaned_data):
+    for key, val in cleaned_data.items():
+        setattr(taller, key, val)
+    taller.save()

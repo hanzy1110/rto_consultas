@@ -4,7 +4,15 @@ from django import forms
 from django.db.models import Model
 from django.forms import widgets
 from .helpers import AuxData, map_fields
-from .models import CccfCertificados, Estados, Tipovehiculo, Tipousovehiculo, Talleres
+from .models import (
+    CccfCertificados,
+    CccfTalleres,
+    Estados,
+    Localidades,
+    Tipovehiculo,
+    Tipousovehiculo,
+    Talleres,
+)
 from .logging import configure_logger
 
 
@@ -549,3 +557,19 @@ class CCCFForm(forms.ModelForm):
                 ),
             )
         )
+
+
+class CccfTalleresForm(forms.ModelForm):
+    _localidades = forms.ChoiceField(
+        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
+        choices=[
+            (s.idlocalidad, s.descripcion)
+            for s in Localidades.objects.all().values_list("idlocalidad", "descripcion")
+        ],
+        required=True,
+        label="Localidades",
+    )
+
+    class Meta:
+        model = CccfTalleres
+        fields = ("nombre", "cuit", "_localidades", "domicilio")

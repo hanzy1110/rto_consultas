@@ -18,6 +18,12 @@
     </div>
     <div hx-get="{% url "cert_bound_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="certBoundConfirm from:body">
     </div>
+    <div hx-get="{% url "taller_edit_success" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditSuccess from:body">
+    </div>
+    <div hx-get="{% url "taller_edit_failure" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditFailure from:body">
+    </div>
+    <div hx-get="{% url "taller_baja_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerBajaConfirm from:body">
+    </div>
 
     <form id="target-form" hx-get="{% url render_url %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
         <div class="container-fluid py-4">

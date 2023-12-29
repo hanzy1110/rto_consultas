@@ -1276,6 +1276,9 @@ class Localidades(models.Model):
         # managed = False
         db_table = "localidades"
 
+    def __str__(self):
+        return f"{self.descripcion}"
+
 
 class Mantenimientos(models.Model):
     idmantenimiento = models.IntegerField(
@@ -1818,6 +1821,9 @@ class Perfiles(models.Model):
         app_label = "rto_consultas"
         # managed = False
         db_table = "perfiles"
+
+    def __str__(self):
+        return f"{self.descripcion}"
 
 
 class Personas(models.Model):

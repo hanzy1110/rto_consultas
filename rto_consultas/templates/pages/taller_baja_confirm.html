@@ -1,0 +1,16 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+    <div class="modal-underlay" _="on click trigger closeModal"></div>
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="dialogAddExceso">Confirma Baja Taller</h4>
+        </div>
+        <div class="modal-body" id="confirm-body">
+            <button class="btn btn-sm btn-primary" hx-post="{% url 'taller_baja_confirm' %}" hx-target="#confirm-body">
+                Confirmar
+            </button>
+        </div>
+        <button id="modalCloser" hx-get="/empty" hx-target="#modal" hx-swap="outerHTML" hx-trigger="click"
+            class="btn btn-primary">Cerrar</button>
+    </div>
+</div>

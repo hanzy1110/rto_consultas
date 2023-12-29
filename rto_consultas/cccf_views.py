@@ -33,11 +33,13 @@ from .tables import (
     CCCFExcesosTable,
     CCCFTable,
     CccfTalleresTable,
+    CccfUsuariosTable,
     PrecintosAssignTable,
 )
 from .helpers import (
     allow_keys,
     build_barcode,
+    edit_taller,
     generate_cccf_key,
     handle_context,
     AuxData,
@@ -48,6 +50,7 @@ from .helpers import (
 
 from .forms import (
     CCCFForm,
+    CccfTalleresForm,
     CustomRTOForm,
 )  # Import the form you created
 
@@ -508,7 +511,6 @@ class PDFCccf(PDFTemplateView):
 
 @method_decorator(login_required, name="dispatch")
 class CccfTalleresList(CustomRTOView):
-    # authentication_classes           = [authentication.TokenAuthentication]
     model = CccfTalleres
     paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
@@ -528,3 +530,98 @@ class CccfTalleresList(CustomRTOView):
         fecha_field="fechacarga",
         render_url="cccf_talleres",
     )
+
+
+def ver_cccf_usuarios(request, *args, **kwargs):
+    aux_data = AuxData(
+        query_fields=[],
+        form_fields={
+            "idtaller": ("nombre", CccfTalleres),
+        },
+        parsed_names={
+            "idtaller": "Nombre Taller",
+        },
+        ids={},
+        types={},
+        fecha_field="fechacarga",
+        render_url="cccf_carga_precinto",
+    )
+
+    if request.htmx:
+        idtaller = cache.get("TALLER_ID", None)
+        taller = CccfTalleres.objects.get(idtaller=idtaller)
+        usuarios = CccfUsuarios.objects.filter(idtaller=idtaller)
+        table = CccfUsuariosTable(usuarios)
+        return render(request, "includes/table_view.html", {"table": table})
+
+    form = CustomRTOForm(aux_data, CccfTalleres)
+    idtaller = kwargs.get("idtaller", None)
+    cache.set("TALLER_ID", idtaller)
+
+    return render(
+        request,
+        "includes/list_table.html",
+        {"form": form, "render_url": "ver_cccf_usuarios"},
+    )
+
+
+def editar_cccf_taller(request, *args, **kwargs):
+    idtaller = kwargs.get("idtaller", None)
+    taller = CccfTalleres.objects.get(idtaller=idtaller)
+
+    if request.method == "POST":
+        form = CccfTalleresForm(request.POST)
+        if form.is_valid():
+            try:
+                edit_taller(taller, form.cleaned_data)
+                res = HttpResponse("")
+                res.headers["Hx-Trigger"] = "tallerEditSuccess"
+            except Exception as e:
+                logger.error(f"While editing taller {e}")
+                res = HttpResponse("")
+                res.headers["Hx-Trigger"] = "tallerEditFailure"
+            return res
+
+    initial = taller.values()
+    form = CccfTalleresForm(initial=initial)
+
+    return render(
+        request,
+        "includes/list_table.html",
+        {"form": form, "render_url": f"editar_cccf_taller/?idtaller={idtaller}"},
+    )
+
+
+def taller_edit_success(request, *args, **kwargs):
+    return render(request, template_name="pages/taller_edit_success.html")
+
+
+def taller_edit_failure(request, *args, **kwargs):
+    return render(request, template_name="pages/taller_edit_failure.html")
+
+
+def dar_de_baja_taller_cccf(request, *args, **kwargs):
+    res = HttpResponse("")
+    res.headers["Hx-Trigger"] = "tallerBajaConfirm"
+    taller_id = kwargs.get("idtaller", None)
+    logger.info(f"SETTING CACHE FOR idtaller : {taller_id}")
+    cache.set("TALLER_ID_BAJA", taller_id)
+    return res
+
+def dar_de_baja_taller_cccf_confirm(request, *args, **kwargs):
+    logger.info(request.method)
+    if request.method == "POST":
+        try:
+            idtaller = cache.get("TALLER_ID_BAJA", None)
+            taller = CccfTalleres.objects.get(idtaller=idtaller)
+            logger.info(taller)
+            taller.activo = 0
+            taller.fechabaja = datetime.today()
+            taller.save()
+            return HttpResponse("Taller dado de baja")
+        except Exception as e:
+            logger.error(f"While saving taller {e}")
+            return HttpResponse("Ocurrio un error")
+
+
+    return render(request, "pages/taller_baja_confirm", {})

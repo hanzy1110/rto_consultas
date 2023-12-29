@@ -15,6 +15,7 @@ from .models import (
     CccfTalleres,
     Habilitacion,
     Localidades,
+    Perfiles,
     Usuarios,
     Verificacionespdf,
     Tipovehiculo,
@@ -1083,9 +1084,9 @@ class CccfTalleresTable(tables.Table):
     editar = tables.Column(
         verbose_name="Consulta",
         linkify=(
-            "editar_taller",
+            "editar_taller_cccf",
             {
-                "idtaller": tables.A("idhabilitacion"),
+                "idtaller": tables.A("idtaller"),
             },
         ),
         orderable=False,
@@ -1096,9 +1097,9 @@ class CccfTalleresTable(tables.Table):
     dar_de_baja = tables.Column(
         verbose_name="",
         linkify=(
-            "dar_de_baja_taller",
+            "dar_de_baja_taller_cccf",
             {
-                "idtaller": tables.A("idhabilitacion"),
+                "idtaller": tables.A("idtaller"),
             },
         ),
         orderable=False,
@@ -1109,9 +1110,9 @@ class CccfTalleresTable(tables.Table):
     ver_usuarios = tables.Column(
         verbose_name="",
         linkify=(
-            "usuarios_taller",
+            "usuarios_taller_cccf",
             {
-                "idtaller": tables.A("idhabilitacion"),
+                "idtaller": tables.A("idtaller"),
             },
         ),
         orderable=False,
@@ -1153,6 +1154,36 @@ class CccfTalleresTable(tables.Table):
     def render_dar_de_baja(self, record):
         image_url = static(f"img/small-logos/delete.png")
         return format_html('<img src="{}" width="25px" />', image_url)
+
+    def paginate(
+        self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
+    ):
+        per_page = per_page or self._meta.per_page
+        self.paginator = paginator_class(self.rows, per_page, *args, **kwargs)
+        self.page = self.paginator.page(page)
+
+        return self
+
+
+class CccfUsuariosTable(tables.Table):
+    class Meta:
+        template_name = "tables/htmx_table.html"
+        model = CccfTalleres
+        # Orden: #Usuario Nombre Apellido Taller TipoPerfil Activo
+        fields = (
+            "usuario",
+            "nombre",
+            "apellido",
+            "idtaller",
+            "idperfil",
+            "activo",
+        )
+
+    def render_idtaller(self, record):
+        return record.idtaller.nombre
+
+    def render_idperfil(self, record):
+        return Perfiles.objects.get(idperfil=record.idperfil)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs

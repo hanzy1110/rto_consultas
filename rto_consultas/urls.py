@@ -22,6 +22,7 @@ from rto_consultas.cccf_views import (
     AnularCCCF,
     CCCFView,
     CargaPrecinto,
+    CccfTalleresList,
     ListCCCFView,
     CCCFRenderForm,
     VerCCCF,
@@ -31,8 +32,13 @@ from rto_consultas.cccf_views import (
     cccf_estado_error,
     cccf_estado_success,
     consulta_excesos,
+    dar_de_baja_taller_cccf,
+    editar_cccf_taller,
     get_cccf_modal,
     get_cccf_modal_excesos,
+    taller_edit_failure,
+    taller_edit_success,
+    ver_cccf_usuarios,
 )
 
 import rto_consultas.views as views
@@ -213,6 +219,24 @@ cccf_urls = [
         VerCCCF.as_view(),
         name="ver_cccf",
     ),
+    path("talleres_cccf", CccfTalleresList.as_view(), name="talleres_cccf"),
+    path(
+        "editar_taller_cccf/<int:idtaller>",
+        editar_cccf_taller,
+        name="editar_taller_cccf",
+    ),
+    path(
+        "usuarios_taller_cccf/<int:idtaller>",
+        ver_cccf_usuarios,
+        name="usuarios_taller_cccf",
+    ),
+    path(
+        "dar_de_baja_taller_cccf/<int:idtaller>",
+        dar_de_baja_taller_cccf,
+        name="dar_de_baja_taller_cccf",
+    ),
+    path("taller_edit_success", taller_edit_success, name="taller_edit_success"),
+    path("taller_edit_failure", taller_edit_failure, name="taller_edit_failure"),
 ]
 
 # URLS RIO NEGRO
