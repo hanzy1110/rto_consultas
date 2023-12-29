@@ -231,17 +231,17 @@ cccf_urls = [
         ver_cccf_usuarios,
         name="usuarios_taller_cccf",
     ),
+    path("taller_edit_success", taller_edit_success, name="taller_edit_success"),
+    path("taller_edit_failure", taller_edit_failure, name="taller_edit_failure"),
     path(
         "dar_de_baja_taller_cccf/<int:idtaller>",
         dar_de_baja_taller_cccf,
         name="dar_de_baja_taller_cccf",
     ),
-    path("taller_edit_success", taller_edit_success, name="taller_edit_success"),
-    path("taller_edit_failure", taller_edit_failure, name="taller_edit_failure"),
     path(
         "taller_baja_confirm",
         dar_de_baja_taller_cccf_confirm,
-        name="taller_edit_failure",
+        name="taller_baja_confirm",
     ),
 ]
 
