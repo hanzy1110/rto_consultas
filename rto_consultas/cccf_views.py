@@ -68,6 +68,7 @@ class CCCFView(IndexView):
         "cccf_list": "Listar CCCF",
         "cccf_carga": "Cargar CCCF",
         "cccf_carga_precinto": "Cargar Precintos",
+        "cccf_talleres": "Talleres CCCF",
         # "carga_certificados": "Cargar CCCF",
     }
 
@@ -608,6 +609,7 @@ def dar_de_baja_taller_cccf(request, *args, **kwargs):
     cache.set("TALLER_ID_BAJA", taller_id)
     return res
 
+
 def dar_de_baja_taller_cccf_confirm(request, *args, **kwargs):
     logger.info(request.method)
     if request.method == "POST":
@@ -622,6 +624,5 @@ def dar_de_baja_taller_cccf_confirm(request, *args, **kwargs):
         except Exception as e:
             logger.error(f"While saving taller {e}")
             return HttpResponse("Ocurrio un error")
-
 
     return render(request, "pages/taller_baja_confirm", {})

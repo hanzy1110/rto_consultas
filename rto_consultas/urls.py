@@ -219,7 +219,7 @@ cccf_urls = [
         VerCCCF.as_view(),
         name="ver_cccf",
     ),
-    path("talleres_cccf", CccfTalleresList.as_view(), name="talleres_cccf"),
+    path("cccf_talleres", CccfTalleresList.as_view(), name="cccf_talleres"),
     path(
         "editar_taller_cccf/<int:idtaller>",
         editar_cccf_taller,
@@ -237,6 +237,7 @@ cccf_urls = [
     ),
     path("taller_edit_success", taller_edit_success, name="taller_edit_success"),
     path("taller_edit_failure", taller_edit_failure, name="taller_edit_failure"),
+    path("taller_baja_confirm", taller_edit_failure, name="taller_edit_failure"),
 ]
 
 # URLS RIO NEGRO
