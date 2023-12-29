@@ -563,7 +563,7 @@ class CccfTalleresForm(forms.ModelForm):
     _localidades = forms.ChoiceField(
         # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=[
-            (s.idlocalidad, s.descripcion)
+            s
             for s in Localidades.objects.all().values_list("idlocalidad", "descripcion")
         ],
         required=True,
