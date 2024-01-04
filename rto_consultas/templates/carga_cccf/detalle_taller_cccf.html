@@ -107,7 +107,7 @@
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Guardar Datos</button>
-                <button type="button" class="btn btn-primary btn-block" hx-get="{% url 'dar_de_baja_taller_cccf' %}" hx-trigger="click"
+                <button type="button" class="btn btn-primary btn-block" hx-get="{% url 'dar_de_baja_taller_cccf' idtaller=taller.idtaller %}" hx-trigger="click"
                     hx-target="#empty_div" hx-swap="innerHTML">
                     Dar de Baja
                 </button>
