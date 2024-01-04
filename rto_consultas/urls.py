@@ -250,7 +250,7 @@ cccf_urls = [
         name="taller_baja_confirm",
     ),
     path(
-        "detalles_taller_cccf",
+        "detalles_taller_cccf/<int:idtaller>",
         detalles_taller_cccf,
         name="detalles_taller_cccf",
     ),
