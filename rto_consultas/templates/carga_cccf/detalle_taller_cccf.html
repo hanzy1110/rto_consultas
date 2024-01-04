@@ -111,7 +111,7 @@
                     hx-target="#empty_div" hx-swap="innerHTML">
                     Dar de Baja
                 </button>
-                <button type="button" hx-get="{% url "usuarios_taller_cccf" %}" class="btn btn-primary btn-block"
+                <button type="button" hx-get="{% url "usuarios_taller_cccf" idtaller=taller.idtaller %}" class="btn btn-primary btn-block"
                     hx-trigger="click" hx-target="#empty_div" hx-swap="static">
                     Ver Usuarios
                 </button>
