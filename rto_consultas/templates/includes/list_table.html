@@ -30,12 +30,8 @@
     <form id="target-form" hx-get="{% url render_url %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
         <div class="container-fluid py-4">
 
-            <!-- <table width="90%" style="margin-left: 10px;">
-                 <tr> -->
                     {% csrf_token %}
                     {% crispy form %}
-            <!-- </tr>
-                 </table> -->
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Buscar</button>

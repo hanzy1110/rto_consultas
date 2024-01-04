@@ -1,0 +1,127 @@
+{% extends 'layouts/base.html' %} {% load static %} {% block content %}
+
+<style>
+  .box {
+    width: 50%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px dashed #000000; */
+    /* margin: auto; */
+  }
+
+  element-to-hide {
+    display: flex;
+  }
+
+  link-row {
+    margin: mb-8 mt-8 mx-auto;
+  }
+
+  .title-special {
+    width: 50%;
+    height: auto;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid #000000; */
+    margin: 0 auto;
+  }
+
+  /* Media query for screens with a maximum width of 768px (typical for mobile devices) */
+  @media screen and (max-width: 768px) {
+    /* Adjust the styles for mobile screens */
+    .element-to-hide {
+      display: none;
+    }
+
+    .box {
+      /* Define the styles you want for the 'box' class on mobile screens */
+      /* For example, you may want to change the display property to 'block' and remove width and height */
+      display: flex;
+      width: 50%;
+      height: auto;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container-fluid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-body {
+      flex: 1 1 auto;
+      padding: 1rem 1rem;
+      /* Adjust the padding values as needed for size */
+      font-size: 12pt;
+      justify-content: center;
+      align-items: center;
+      /* border: 1px solid #000000; */
+      margin: 0 auto;
+      /* Adjust the font size as needed */
+      /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
+      /* color: var(""); */
+    }
+  }
+
+  .card-body {
+    flex: 1 1 auto;
+    padding: 4rem 4rem;
+    /* Adjust the padding values as needed for size */
+    font-size: 18pt;
+    /* Adjust the font size as needed */
+    /* padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x); */
+    /* color: var(""); */
+  }
+
+  img {
+    width: 30%;
+    min-width: 100px;
+    height: auto;
+    margin: auto;
+  }
+</style>
+
+<div hx-get="{% url "editar_taller_cccf_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditConfirm from:body">
+</div>
+<div hx-get="{% url "taller_edit_success" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditSuccess from:body">
+</div>
+<div hx-get="{% url "taller_edit_failure" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditFailure from:body">
+</div>
+<div hx-get="{% url "taller_baja_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerBajaConfirm from:body">
+</div>
+
+<div id="form_div" class="card-body px-0 pt-0 pb-2">
+
+    <form id="target-form" hx-get="{% url "editar_taller_cccf" %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
+        <div class="container-fluid py-4">
+
+                    {% csrf_token %}
+                    {% crispy form %}
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Guardar Datos</button>
+                <button type="button" class="btn btn-primary btn-block" hx-get="{% url 'dar_de_baja_taller_cccf' %}" hx-trigger="click"
+                    hx-target="#empty_div" hx-swap="innerHTML">
+                    Dar de Baja
+                </button>
+                <button type="button" hx-get="{% url "usuarios_taller_cccf" %}" class="btn btn-primary btn-block"
+                    hx-trigger="click" hx-target="#empty_div" hx-swap="static">
+                    Ver Usuarios
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="empty_div">
+</div>
+<div style="display:block; vertical-align:middle; text-align:center" >
+    <img id="spinner" class="htmx-indicator" src='{% static "img/loader.gif" %}'>
+</div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block scripts %} {% endblock scripts %}

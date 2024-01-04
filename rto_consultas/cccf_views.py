@@ -1,5 +1,10 @@
 import os
-from django.shortcuts import HttpResponse, HttpResponseRedirect, render
+from django.shortcuts import (
+    HttpResponse,
+    HttpResponseRedirect,
+    get_object_or_404,
+    render,
+)
 from django.template.loader import render_to_string
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.detail import DetailView
@@ -533,6 +538,17 @@ class CccfTalleresList(CustomRTOView):
     )
 
 
+def detalles_taller_cccf(request, *args, **kwargs):
+    idtaller = kwargs.get("idtaller", None)
+    taller = get_object_or_404(CccfTalleres, idtaller=idtaller)
+    form = CccfTalleresForm(initial=taller)
+    return render(
+        request,
+        "carga_cccf/detalle_taller_cccf.html",
+        {"form": form},
+    )
+
+
 def ver_cccf_usuarios(request, *args, **kwargs):
     aux_data = AuxData(
         query_fields=[],
@@ -562,7 +578,7 @@ def ver_cccf_usuarios(request, *args, **kwargs):
     return render(
         request,
         "includes/list_table.html",
-        {"form": form, "render_url": "ver_cccf_usuarios"},
+        {"form": form, "render_url": "usuarios_taller_cccf"},
     )
 
 

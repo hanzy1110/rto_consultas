@@ -1081,10 +1081,10 @@ class PrecintosAssignTable(tables.Table):
 
 
 class CccfTalleresTable(tables.Table):
-    editar = tables.Column(
+    detalles = tables.Column(
         verbose_name="Consulta",
         linkify=(
-            "editar_taller_cccf",
+            "detalles_taller_cccf",
             {
                 "idtaller": tables.A("idtaller"),
             },
@@ -1094,31 +1094,31 @@ class CccfTalleresTable(tables.Table):
         attrs={"th": {"colspan": "3"}},
     )
 
-    dar_de_baja = tables.Column(
-        verbose_name="",
-        linkify=(
-            "dar_de_baja_taller_cccf",
-            {
-                "idtaller": tables.A("idtaller"),
-            },
-        ),
-        orderable=False,
-        empty_values=(),
-        attrs={"th": {"hidden": True}},
-    )  # (viewname, kwargs)
+    # dar_de_baja = tables.Column(
+    #     verbose_name="",
+    #     linkify=(
+    #         "dar_de_baja_taller_cccf",
+    #         {
+    #             "idtaller": tables.A("idtaller"),
+    #         },
+    #     ),
+    #     orderable=False,
+    #     empty_values=(),
+    #     attrs={"th": {"hidden": True}},
+    # )  # (viewname, kwargs)
 
-    ver_usuarios = tables.Column(
-        verbose_name="",
-        linkify=(
-            "usuarios_taller_cccf",
-            {
-                "idtaller": tables.A("idtaller"),
-            },
-        ),
-        orderable=False,
-        empty_values=(),
-        attrs={"th": {"hidden": True}},
-    )  # (viewname, kwargs)
+    # ver_usuarios = tables.Column(
+    #     verbose_name="",
+    #     linkify=(
+    #         "usuarios_taller_cccf",
+    #         {
+    #             "idtaller": tables.A("idtaller"),
+    #         },
+    #     ),
+    #     orderable=False,
+    #     empty_values=(),
+    #     attrs={"th": {"hidden": True}},
+    # )  # (viewname, kwargs)
 
     class Meta:
         template_name = "tables/htmx_table.html"
@@ -1131,9 +1131,7 @@ class CccfTalleresTable(tables.Table):
             "idlocalidad",
             "domicilio",
             "activo",
-            "editar",
-            "dar_de_baja",
-            "ver_usuarios",
+            "detalles",
         )
 
     def render_idlocalidad(self, record):
@@ -1143,17 +1141,17 @@ class CccfTalleresTable(tables.Table):
             loc = ""
         return loc
 
-    def render_ver_usuarios(self, record):
+    # def render_ver_usuarios(self, record):
+    #     image_url = static(f"img/small-logos/lupa.png")
+    #     return format_html('<img src="{}" width="25px"/>', image_url)
+
+    def render_detalles(self, record):
         image_url = static(f"img/small-logos/lupa.png")
-        return format_html('<img src="{}" width="25px"/>', image_url)
-
-    def render_editar(self, record):
-        image_url = static(f"img/small-logos/modificar3.png")
         return format_html('<img src="{}" width="25px" />', image_url)
 
-    def render_dar_de_baja(self, record):
-        image_url = static(f"img/small-logos/delete.png")
-        return format_html('<img src="{}" width="25px" />', image_url)
+    # def render_dar_de_baja(self, record):
+    #     image_url = static(f"img/small-logos/delete.png")
+    #     return format_html('<img src="{}" width="25px" />', image_url)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
