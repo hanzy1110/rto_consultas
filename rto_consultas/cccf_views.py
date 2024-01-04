@@ -545,7 +545,7 @@ def detalles_taller_cccf(request, *args, **kwargs):
     return render(
         request,
         "carga_cccf/detalle_taller_cccf.html",
-        {"form": form},
+        {"form": form, "taller": taller},
     )
 
 
