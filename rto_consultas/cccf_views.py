@@ -520,7 +520,7 @@ class CccfTalleresList(CustomRTOView):
     model = CccfTalleres
     paginate_by = settings.PAGINATION
     template_name = "includes/list_table.html"
-    context_object_name = "Certificados Asignados por taller"
+    context_object_name = "Talleres CCCF"
     table_class = CccfTalleresTable
     partial_template = "includes/table_view.html"
     form_class = CustomRTOForm
@@ -540,7 +540,7 @@ class CccfTalleresList(CustomRTOView):
 
 def detalles_taller_cccf(request, *args, **kwargs):
     idtaller = kwargs.get("idtaller", None)
-    taller = get_object_or_404(CccfTalleres, idtaller=idtaller)
+    taller = get_object_or_404(CccfTalleres, idtaller=idtaller).__dict__
     form = CccfTalleresForm(initial=taller)
     return render(
         request,

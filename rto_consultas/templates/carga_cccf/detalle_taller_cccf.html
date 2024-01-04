@@ -96,7 +96,7 @@
 
 <div id="form_div" class="card-body px-0 pt-0 pb-2">
 
-    <form id="target-form" hx-get="{% url "editar_taller_cccf" %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
+    <form id="target-form" hx-post="{% url "editar_taller_cccf" %}" hx-indicator="#spinner" hx-swap={{ swap|default:"innerHTML" }} hx-target={{ form_target|default:"#table_div" }} hx-trigger="submit">
         <div class="container-fluid py-4">
 
                     {% csrf_token %}
