@@ -1312,9 +1312,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
             .order_by("idtipouso")
         )
         if c_reverificados:
-            r_cat = c_reverificados.filter(idcategoria__exact=c).values(
-                "nrocertificado"
-            )
+            r_cat = c_reverificados.filter(
+                idcategoria__exact=c, fecha__lt=fecha_desde
+            ).values("nrocertificado")
             if r_cat:
                 logger.debug(f"CAT {c} -- r_cat => {r_cat}")
                 outside_certs = len(r_cat)
