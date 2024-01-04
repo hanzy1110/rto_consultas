@@ -216,6 +216,7 @@ class VerificacionesTables(tables.Table):
     class Meta:
         model = Verificaciones
         orderable = False
+        attrs = {"style": "table-layout: fixed;", "width": "100%"}
         row_attrs = {"style": lambda record: check_vigencia(record)}
         fields = (
             "dominiovehiculo",
