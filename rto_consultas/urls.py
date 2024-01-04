@@ -40,6 +40,7 @@ from rto_consultas.cccf_views import (
     taller_edit_failure,
     taller_edit_success,
     ver_cccf_usuarios,
+    detalles_taller_cccf,
 )
 
 import rto_consultas.views as views
@@ -247,6 +248,11 @@ cccf_urls = [
         "taller_baja_confirm",
         dar_de_baja_taller_cccf_confirm,
         name="taller_baja_confirm",
+    ),
+    path(
+        "detalles_taller_cccf",
+        detalles_taller_cccf,
+        name="detalles_taller_cccf",
     ),
 ]
 
