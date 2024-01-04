@@ -619,11 +619,11 @@ def editar_cccf_taller_confirm(request, *args, **kwargs):
 
 
 def taller_edit_success(request, *args, **kwargs):
-    return render(request, template_name="pages/taller_edit_success.html")
+    return render(request, template_name="carga_cccf/taller_edit_success.html")
 
 
 def taller_edit_failure(request, *args, **kwargs):
-    return render(request, template_name="pages/taller_edit_failure.html")
+    return render(request, template_name="carga_cccf/taller_edit_failure.html")
 
 
 def dar_de_baja_taller_cccf(request, *args, **kwargs):
@@ -650,4 +650,4 @@ def dar_de_baja_taller_cccf_confirm(request, *args, **kwargs):
             logger.error(f"While saving taller {e}")
             return HttpResponse("Ocurrio un error")
 
-    return render(request, "pages/taller_baja_confirm", {})
+    return render(request, "carga_cccf/taller_baja_confirm.html", {})
