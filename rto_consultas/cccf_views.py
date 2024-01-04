@@ -565,8 +565,8 @@ def ver_cccf_usuarios(request, *args, **kwargs):
     )
 
     if request.htmx:
-        idtaller = cache.get("TALLER_ID", None)
-        taller = CccfTalleres.objects.get(idtaller=idtaller)
+        idtaller = kwargs.get("idtaller", None)
+        # taller = CccfTalleres.objects.get(idtaller=idtaller)
         usuarios = CccfUsuarios.objects.filter(idtaller=idtaller)
         table = CccfUsuariosTable(usuarios)
         return render(request, "includes/table_view.html", {"table": table})
