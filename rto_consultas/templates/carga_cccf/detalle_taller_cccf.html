@@ -84,7 +84,10 @@
     margin: auto;
   }
 </style>
-
+{% load render_table from django_tables2 %}
+{% load getattr %}
+{% load static %}
+{% load crispy_forms_tags %}
 <div hx-get="{% url "editar_taller_cccf_confirm" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditConfirm from:body">
 </div>
 <div hx-get="{% url "taller_edit_success" %}" hx-swap="beforeend" hx-target="body" hx-trigger="tallerEditSuccess from:body">
