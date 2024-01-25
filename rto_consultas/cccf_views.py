@@ -91,17 +91,17 @@ class ListCCCFView(CustomRTOView):
 
     aux_data = AuxData(
         query_fields=[
-            "dominiovehiculo",
+            "dominio",
         ],
         form_fields={},
         parsed_names={
-            "dominiovehiculo": "Dominio",
+            "dominio": "Dominio",
         },
         ids={
-            "dominiovehiculo": "#txtDominio",
+            "dominio": "#txtDominio",
         },
         types={
-            "dominiovehiculo": "text",
+            "dominio": "text",
         },
         render_url="cccf_list",
         render_form="cccf_form",
@@ -138,19 +138,19 @@ class CCCFRenderForm(TemplateView):
             # "anulado": (None, None),
         },
         parsed_names={
-            "dominiovehiculo": "Dominio",
+            "dominio": "Dominio",
             "nrocertificado": "Nro. Certificado",
             "fecha_desde": "Fecha Desde",
             "fecha_hasta": "Fecha Hasta",
         },
         ids={
-            "dominiovehiculo": "#txtDominio",
+            "dominio": "#txtDominio",
             "fecha_desde": "#txtFechaD",
             "fecha_hasta": "#txtFechaH",
             "nrocertificado": "Nro. Certificado",
         },
         types={
-            "dominiovehiculo": "text",
+            "dominio": "text",
             "fecha_desde": "date",
             "fecha_hasta": "date",
             "nrocertificado": "text",
