@@ -495,7 +495,7 @@ class CCCFForm(forms.ModelForm):
                     Div(
                         Field("cuit", wrapper_class="form-group col-4"),
                         Field("razonsocial", wrapper_class="form-group col-4"),
-                        Field("usuario", wrapper_class="form-group col-4"),
+                        Field("propusuario", wrapper_class="form-group col-4"),
                         css_class="form-group row box",
                     ),
                     css_class="card card-plain mt-2 box",
