@@ -584,6 +584,10 @@ def handle_nro_precinto(precinto_init, precinto_end):
 def handle_nrocertificados(
     nrocertificado_init, anulado, model, nrocertificado_end=None
 ):
+    if model == CccfCertificados and not check_for_empty_query(nrocertificado_init):
+        logger.info(f"QUERING FOR CCCF CERTIFICATE: {nrocertificado_init}")
+        queryset = model.objects.get(nrocertificado=nrocertificado_init)
+        return queryset
     queryset = model.objects.all()
 
     match nrocertificado_init:
@@ -651,9 +655,6 @@ def handle_nrocertificados(
                         )
                         queryset = chain(queryset, new_q)
                     return list(queryset)
-                elif model == CccfCertificados:
-                    logger.info(f"QUERING FOR CCCF CERTIFICATE: {nrocertificado_init}")
-                    queryset = model.objects.get(nrocertificado=nrocertificado_init)
 
                 logger.info(queryset)
 
