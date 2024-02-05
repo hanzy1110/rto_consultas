@@ -209,7 +209,7 @@ class DPTView(IndexView):
     urls = {
         "verificaciones": "Verificaciones",
         "consulta_ordenes_insp": "Consulta Órdenes de Inspección",
-        "cccf": "Consulta CCCF",
+        "cccf_auditoria": "Consulta CCCF",
         # "carga_obleas": "Carga Obleas",
         "consulta_resumen_mensual": "Resumen de Inspecciones",
         "consulta_habilitaciones_finales": "Consulta DPT",

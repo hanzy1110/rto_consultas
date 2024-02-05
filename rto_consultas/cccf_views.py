@@ -73,6 +73,16 @@ class CCCFView(IndexView):
         "cccf_list": "Listar CCCF",
         "cccf_carga": "Cargar CCCF",
         "cccf_carga_precinto": "Cargar Precintos",
+        # "cccf_talleres": "Talleres CCCF",
+        # "carga_certificados": "Cargar CCCF",
+    }
+
+
+class CCCFViewAuditoria(IndexView):
+    urls = {
+        "cccf_list": "Listar CCCF",
+        "cccf_carga": "Cargar CCCF",
+        "cccf_carga_precinto": "Cargar Precintos",
         "cccf_talleres": "Talleres CCCF",
         # "carga_certificados": "Cargar CCCF",
     }

@@ -21,6 +21,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from rto_consultas.cccf_views import (
     AnularCCCF,
     CCCFView,
+    CCCFViewAuditoria,
     CargaPrecinto,
     CccfTalleresList,
     ListCCCFView,
@@ -185,6 +186,7 @@ urlpatterns += [
 # URLS CCCF
 cccf_urls = [
     path("cccf", CCCFView.as_view(), name="cccf"),
+    path("cccf_auditoria", CCCFViewAuditoria.as_view(), name="cccf"),
     path("cccf_list/", ListCCCFView.as_view(), name="cccf_list"),
     path(
         "cccf_carga/<int:nrocertificado>/<str:dominio>", carga_cccf, name="cccf_carga"
