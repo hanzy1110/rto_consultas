@@ -652,6 +652,7 @@ def handle_nrocertificados(
                         queryset = chain(queryset, new_q)
                     return list(queryset)
                 elif model == CccfCertificados:
+                    logger.info(f"QUERING FOR CCCF CERTIFICATE: {nrocertificado_init}")
                     queryset = model.objects.get(nrocertificado=nrocertificado_init)
 
                 logger.info(queryset)
