@@ -72,7 +72,7 @@ class CCCFView(IndexView):
     urls = {
         "cccf_list": "Listar CCCF",
         "cccf_carga": "Cargar CCCF",
-        "cccf_carga_precinto": "Cargar Precintos",
+        # "cccf_carga_precinto": "Cargar Precintos",
         # "cccf_talleres": "Talleres CCCF",
         # "carga_certificados": "Cargar CCCF",
     }
@@ -121,6 +121,16 @@ class ListCCCFView(CustomRTOView):
     def get_queryset(self):
         logger.info("CALCULATE QUERYSET...")
         queryset = super().get_queryset()
+        user = self.request.user
+
+        try:
+            taller_cccf = CccfUsuarios.objects.get(
+                nombre=user.name, apellido=user.surname
+            ).idtaller
+            queryset.filter(idtaller=taller_cccf)
+        except Exception as e:
+            logger.warn(f"No cccf taller for user: {user} -> {e}")
+
         if isinstance(queryset, list):
             queryset = list(reversed(queryset))
         else:
