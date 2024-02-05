@@ -586,7 +586,7 @@ def handle_nrocertificados(
 ):
     if model == CccfCertificados and not check_for_empty_query(nrocertificado_init):
         logger.info(f"QUERING FOR CCCF CERTIFICATE: {nrocertificado_init}")
-        queryset = model.objects.get(nrocertificado=nrocertificado_init)
+        queryset = model.objects.get(nrocertificado=int(nrocertificado_init[0]))
         return queryset
     queryset = model.objects.all()
 
