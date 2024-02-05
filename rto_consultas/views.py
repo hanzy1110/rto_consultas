@@ -287,6 +287,7 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
         page = self.request.GET.copy().pop("page", None)
         queryset = handle_query(self.request, self.model, self.aux_data.fecha_field)
         if self.model == Verificaciones:
+            # CCCF queries get handled on their own view accordingly
             queryset = get_queryset_from_user(queryset, self.request)
         # elif self.model == Certificadosasignadosportaller:
         #     queryset = get_queryset_from_user(
