@@ -426,6 +426,13 @@ class CCCFForm(forms.ModelForm):
         required=False, label="Falta Información"
     )  # Example field for 'Falta Inf.'
 
+    propusuario = forms.CharField(
+        label="Usuario",
+        widget=forms.TextInput(
+            attrs={"class": "form-control input-sm", "id": "txtNroInforme"}
+        ),
+        required=True,
+    )
     nroinforme = forms.CharField(
         label="Nro Informe",
         widget=forms.TextInput(
