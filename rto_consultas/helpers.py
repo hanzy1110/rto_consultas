@@ -463,7 +463,7 @@ def handle_context(context, view):
     logger.info("Handling context!")
 
     # Workaround for circular import...
-    context["form"] = view.form_class(view.aux_data, view.model)
+    context["form"] = view.form_class(view.aux_data, view.model, view.user_group)
 
     # val_dict = handle_form(view.aux_data, view.model)
     # context["form_fields"] = val_dict
@@ -990,9 +990,8 @@ def handle_save_cccf(cleaned_data, user, cccf_files):
             new_data["idtaller"] = user.idtaller
         except Exception as e:
             logger.warn("CCCF USER NOT FOUND")
-            username = cleaned_data.get("usuario")
-            user = CccfUsuarios.objects.get(usuario=username)
-            new_data["idtaller"] = user.idtaller
+            taller = CccfTalleres.objects.all().first()
+            new_data["idtaller"] = taller
 
         dominio, mercosur = parse_license_plate_type(cleaned_data.get("dominio", None))
         new_data["dominio"] = dominio

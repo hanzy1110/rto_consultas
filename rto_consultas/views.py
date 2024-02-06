@@ -304,6 +304,15 @@ class CustomRTOView(ExportMixin, SingleTableView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         # logger.debug("HANDLING CONTEXT...")
         context = super().get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            self.user_group = next(
+                filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+            )
+        except Exception as e:
+            logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+            self.user_group = None
+
         context = handle_context(context, self)
 
         try:

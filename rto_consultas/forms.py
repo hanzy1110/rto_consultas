@@ -1,6 +1,7 @@
 import os
 from typing import Union
 from django import forms
+from django.contrib.auth.models import Group
 from django.db.models import Model
 from django.forms import widgets
 from .helpers import AuxData, map_fields
@@ -55,7 +56,14 @@ class MultipleFileField(forms.FileField):
 
 
 class CustomRTOForm(forms.Form):
-    def __init__(self, form_data: AuxData, model: Model, *args, **kwargs):
+    def __init__(
+        self,
+        form_data: AuxData,
+        model: Model,
+        user_group: Union[Group, None],
+        *args,
+        **kwargs,
+    ):
         super(CustomRTOForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout()
@@ -108,7 +116,7 @@ class CustomRTOForm(forms.Form):
                 cs = [
                     (str(i + 1), c) for i, c in enumerate(ESTADO_CERTIFICADO.values())
                 ]
-            elif "uso" in ff:
+            elif "uso" in ff and not user_group:
                 cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
             elif "taller" in ff:
                 desc = descriptions.get(ff, None)
