@@ -128,7 +128,7 @@ class CustomRTOForm(forms.Form):
                     case _:
                         tipo_uso = TIPO_USO_VEHICULO
 
-                cs = [(str(i + 1), c) for i, c in enumerate(tipo_uso.values())]
+                cs = [(str(i), c) for i, c in tipo_uso.items()]
             elif "taller" in ff:
                 desc = descriptions.get(ff, None)
                 logger.debug(f"DESCRIPTIONS ===> {desc}")
