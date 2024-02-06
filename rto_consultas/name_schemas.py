@@ -71,9 +71,9 @@ USER_QUERIES_CERTS_ASIGNADOS = {
 
 USER_QUERIES_VERIFICACIONES = {
     "CCCFGroup": {},
-    "DPTGroup": {"idtipouso__iexact": 3},
+    "DPTGroup": [{"idtipouso__iexact": 3}, {"idtipouso__iexact": 2}],
     "SecTranspRNGroup": {"idtipouso__iexact": 3},
-    "SVGroup": {"idtipouso__iexact": 1},
+    "SVGroup": [{"idtipouso__iexact": 1}, {"idtipouso__iexact": 4}],
     "VialidadRNGroup": {"idtipouso__iexact": 1},
 }
 

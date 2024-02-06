@@ -1167,6 +1167,10 @@ def get_queryset_from_user(queryset, request, model="verificaciones"):
 
         logger.info(f"SELECTED QUERY => {user_query}")
         if user_query:
+            if isinstance(user_query, list):
+                queries = [Q(**uq) for uq in user_query]
+                return queryset.filter(reduce(lambda x, y: x | y, queries))
+
             return queryset.filter(Q(**user_query))
         return queryset
 
