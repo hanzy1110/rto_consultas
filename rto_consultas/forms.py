@@ -120,7 +120,15 @@ class CustomRTOForm(forms.Form):
                 ]
             # elif "uso" in ff and not user_group:
             elif "uso" in ff:
-                cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
+                match user_group:
+                    case "DPTGroup":
+                        tipo_uso = TIPO_USO_VEHICULO_DPT
+                    case "SVGroup":
+                        tipo_uso = TIPO_USO_VEHICULO_SV
+                    case _:
+                        tipo_uso = TIPO_USO_VEHICULO
+
+                cs = [(str(i + 1), c) for i, c in enumerate(tipo_uso.values())]
             elif "taller" in ff:
                 desc = descriptions.get(ff, None)
                 logger.debug(f"DESCRIPTIONS ===> {desc}")

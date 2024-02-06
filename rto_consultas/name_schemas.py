@@ -98,12 +98,23 @@ TIPO_USO_CHOICES = [
     ("dpt", "Carga y Transp. Pasajeros"),
 ]
 
+TIPO_USO_VEHICULO_SV = {
+    1: "Particular",
+    4: "Municipal",
+}
+
+TIPO_USO_VEHICULO_DPT = {
+    2: "Carga",
+    3: "Pasajeros",
+}
+
 TIPO_USO_VEHICULO = {
     1: "Particular",
     2: "Carga",
     3: "Pasajeros",
     4: "Municipal",
 }
+
 TARIFARIO_DPT = {
     "A": "Vehículos utilitarios para transporte de pasajeros, categorias M1 de mas de 8 y hasta 15 asientos y que no supere los 3.500 kg. ",
     "B": "Vehículos utilitarios para transporte de pasajeros, categoria M1 y M2 de mas de 15 y hasta 29 asientos, de 2 ees y que no supere 5.000 kg ",
