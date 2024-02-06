@@ -431,6 +431,7 @@ def map_fields(data: AuxData, model: Model):
                     values_list = dmodel.objects.values_list(
                         "descripcion", flat=True
                     ).distinct()
+
                 if dmodel == Talleres or dmodel == TalleresRN:
                     # Cosas que solo se hacen en python
                     logger.info(f"VALUES_LIST ===> {values_list}")
@@ -1164,7 +1165,7 @@ def get_queryset_from_user(queryset, request, model="verificaciones"):
         elif model == "certs_asignados":
             user_query = USER_QUERIES_CERTS_ASIGNADOS[selected_group]
 
-        logger.debug(f"SELECTED QUERY => {user_query}")
+        logger.info(f"SELECTED QUERY => {user_query}")
         if user_query:
             return queryset.filter(Q(**user_query))
         return queryset

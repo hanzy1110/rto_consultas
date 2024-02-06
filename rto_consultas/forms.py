@@ -111,6 +111,8 @@ class CustomRTOForm(forms.Form):
 
         descriptions = map_fields(form_data, model)
 
+        logger.info(f"DESCRIPTIONS => {descriptions}")
+
         for ff in form_data.form_fields:
             if "estado" in ff:
                 cs = [
