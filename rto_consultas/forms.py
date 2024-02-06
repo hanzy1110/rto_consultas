@@ -118,7 +118,8 @@ class CustomRTOForm(forms.Form):
                 cs = [
                     (str(i + 1), c) for i, c in enumerate(ESTADO_CERTIFICADO.values())
                 ]
-            elif "uso" in ff and not user_group:
+            # elif "uso" in ff and not user_group:
+            elif "uso" in ff:
                 cs = [(str(i + 1), c) for i, c in enumerate(TIPO_USO_VEHICULO.values())]
             elif "taller" in ff:
                 desc = descriptions.get(ff, None)
@@ -145,25 +146,6 @@ class CustomRTOForm(forms.Form):
             if field:
                 field.required = form_data.required.get(ff, False)
                 self.fields[ff] = field
-
-        # if "dominio" in form_data.query_fields:
-        #     form_data.query_fields.pop(form_data.query_fields.index("dominio"))
-        #     dom_div = Div(Field("dominio", css_class="form-control input-sm"))
-
-        #     aux_div = Div(
-        #         *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
-        #         css_class='field-group',
-        #         style='display: none;'
-        #     )
-        #     query_div=Div(
-        #         dom_div,
-        #         aux_div
-        #     )
-        # else:
-
-        #     query_div = Div(
-        #         *[Field(qf, css_class="form-control input-sm") for qf in form_data.query_fields],
-        #     )
 
         query_div = Div(
             *[
