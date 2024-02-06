@@ -257,6 +257,15 @@ class RenderVerificacionForm_RN(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        user = self.request.user
+        try:
+            self.user_group = next(
+                filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+            )
+        except Exception as e:
+            logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+            self.user_group = None
+
         context = handle_context(context, self)
         return context
 
@@ -450,6 +459,15 @@ class RenderOitsForm_RN(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            self.user_group = next(
+                filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+            )
+        except Exception as e:
+            logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+            self.user_group = None
+
         context = handle_context(context, self)
         return context
 
@@ -494,43 +512,52 @@ class ListExcepciones_RN(CustomRTOView_RN):
         return queryset
 
 
-@method_decorator(login_required, name="dispatch")
-class RenderExcepcionesForm_RN(TemplateView):
-    template_name = "includes/form_render.html"
+# @method_decorator(login_required, name="dispatch")
+# class RenderExcepcionesForm_RN(TemplateView):
+#     template_name = "includes/form_render.html"
 
-    aux_data = AuxData(
-        query_fields=[
-            "dominio",
-            "idtipouso",
-            "fecha_desde",
-            "fecha_hasta",
-        ],
-        form_fields={
-            "idtaller": ("nombre", Talleres),
-        },
-        parsed_names={
-            "dominio": "Dominio Vehiculo",
-            "idtaller": "Planta",
-            "fecha_desde": "Fecha Desde",
-            "fecha_hasta": "Fecha Hasta",
-        },
-        ids={"dominiovehiculo": "#txtDominio"},
-        types={
-            "dominio": "text",
-            "fecha_desde": "date",
-            "fecha_hasta": "date",
-        },
-        render_url="excepciones_rn",
-        fecha_field="fecha",
-    )
+#     aux_data = AuxData(
+#         query_fields=[
+#             "dominio",
+#             "idtipouso",
+#             "fecha_desde",
+#             "fecha_hasta",
+#         ],
+#         form_fields={
+#             "idtaller": ("nombre", Talleres),
+#         },
+#         parsed_names={
+#             "dominio": "Dominio Vehiculo",
+#             "idtaller": "Planta",
+#             "fecha_desde": "Fecha Desde",
+#             "fecha_hasta": "Fecha Hasta",
+#         },
+#         ids={"dominiovehiculo": "#txtDominio"},
+#         types={
+#             "dominio": "text",
+#             "fecha_desde": "date",
+#             "fecha_hasta": "date",
+#         },
+#         render_url="excepciones_rn",
+#         fecha_field="fecha",
+#     )
 
-    form_class = CustomRTOForm
-    model = Excepcion
+#     form_class = CustomRTOForm
+#     model = Excepcion
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context = handle_context(context, self)
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user = self.request.user
+#         try:
+#             self.user_group = next(
+#                 filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+#             )
+#         except Exception as e:
+#             logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+#             self.user_group = None
+
+#         context = handle_context(context, self)
+#         return context
 
 
 @method_decorator(login_required, name="dispatch")
@@ -607,6 +634,15 @@ class RenderExcepcionesForm_RN(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            self.user_group = next(
+                filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+            )
+        except Exception as e:
+            logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+            self.user_group = None
+
         context = handle_context(context, self)
         return context
 
