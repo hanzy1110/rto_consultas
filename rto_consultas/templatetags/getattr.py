@@ -1,9 +1,25 @@
+import os
 import re
 import types
 from django import template
+from django.utils.html import escape
+from django.core.exceptions import ImproperlyConfigured
+from django.template import Node
+from django.utils.http import urlencode
 
 import rto_consultas.models as models
 
+from .logging import configure_logger
+
+LOG_FILE = os.environ["LOG_FILE"]
+logger = configure_logger(LOG_FILE)
+
+context_processor_error_msg = (
+    "Tag {%% %s %%} requires django.template.context_processors.request to be "
+    "in the template configuration in "
+    "settings.TEMPLATES[]OPTIONS.context_processors) in order for the included "
+    "template tags to function correctly."
+)
 numeric_test = re.compile("^\d+$")
 register = template.Library()
 
@@ -83,6 +99,67 @@ def get_by_name(context, name):
         for ar in arr:
             object = get_attr(object, ar)
     return object
+
+
+class QuerystringNode(Node):
+    def __init__(self, updates, removals, asvar=None):
+        super().__init__()
+        self.updates = updates
+        self.removals = removals
+        self.asvar = asvar
+
+    def render(self, context):
+        if "request" not in context:
+            raise ImproperlyConfigured(context_processor_error_msg % "querystring")
+
+        params = dict(context["request"].GET)
+        for key, value in self.updates.items():
+            if isinstance(key, str):
+                params[key] = value
+                continue
+            key = key.resolve(context)
+            value = value.resolve(context)
+            if key not in ("", None):
+                params[key] = value
+        for removal in self.removals:
+            params.pop(removal.resolve(context), None)
+
+        value = escape("?" + urlencode(params, doseq=True))
+
+        if self.asvar:
+            context[str(self.asvar)] = value
+            return ""
+        else:
+            return value
+
+
+@register.simple_tag(takes_context=True)
+def export_url_custom(context, export_format, export_trigger_param=None):
+    """
+    Returns an export URL for the given file `export_format`, preserving current
+    query string parameters.
+
+    Example for a page requested with querystring ``?q=blue``::
+
+        {% export_url "csv" %}
+
+    It will return::
+
+        ?q=blue&amp;_export=csv
+    """
+
+    if export_trigger_param is None and "view" in context:
+        export_trigger_param = getattr(context["view"], "export_trigger_param", None)
+
+    export_trigger_param = export_trigger_param or "_export"
+
+    query_string_node = QuerystringNode(
+        updates={export_trigger_param: export_format}, removals=[]
+    ).render(context)
+
+    logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
+    # parse the querystring from the url and use the correct one!!!
+    return query_string_node
 
 
 @register.simple_tag(takes_context=True)
