@@ -82,6 +82,7 @@ class AuxData:
     aux: Dict[str, str] = field(default_factory=dict)
     render_url: str = ""
     render_form: str = ""
+    export_format: str = "csv"
 
 
 class CertBoundError(Exception):
@@ -482,6 +483,7 @@ def handle_context(context, view):
 
     context["render_url"] = view.aux_data.render_url
     context["render_form"] = view.aux_data.render_form
+    context["export_format"] = view.aux_data.export_format
 
     # logger.debug(f"Context: {context}")
     return context

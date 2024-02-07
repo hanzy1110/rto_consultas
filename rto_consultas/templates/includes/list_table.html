@@ -3,6 +3,7 @@
 
 {% block content %}
 {% load render_table from django_tables2 %}
+{% load export_url from django_tables2 %}
 {% load getattr %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -37,6 +38,14 @@
                     Búsqueda Avanzada
                 </button>
                 {% endif %}
+
+                {% if export_format %}
+                    <button type="button" hx-get="{% export_url export_format %}" class="btn btn-primary btn-block"
+                        hx-trigger="click" hx-target="#form_div" hx-swap="static">
+                        Exportar Datos
+                    </button>
+                {% endif %}
+
             </div>
         </div>
     </form>
