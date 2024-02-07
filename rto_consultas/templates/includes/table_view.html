@@ -2,14 +2,11 @@
 {% load export_url from django_tables2 %}
 {% load getattr %}
 {% if export_format %}
-<button
-  type="button"
-  hx-get="{% export_url export_format %}"
-  class="btn btn-primary btn-block"
-  hx-trigger="click"
->
+<a href="{% export_url export_format %}" >
+<button type="button" class="btn btn-primary btn-block">
   Exportar Datos
 </button>
+</a>
 {% endif %}
 <div class="container-fluid py-4 card-body px-0 pt-0 pb-2">
   {% if item_count %}
