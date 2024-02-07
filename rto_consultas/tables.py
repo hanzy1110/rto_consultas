@@ -172,6 +172,7 @@ class VerificacionesTables(tables.Table):
     )
     fecha = tables.DateColumn(orderable=True, verbose_name="Desde", format="d/m/Y")
     ver_verificacion = tables.Column(
+        exclude_from_export=True,
         verbose_name="Consulta",
         linkify=(
             "ver_verificacion",
@@ -184,15 +185,24 @@ class VerificacionesTables(tables.Table):
         attrs={"th": {"colspan": "4"}},
     )  # (viewname, kwargs)
     ver_certificado = CustomFileColumn(
-        verbose_name="", empty_values=(), attrs={"th": {"hidden": True}}
+        exclude_from_export=True,
+        verbose_name="",
+        empty_values=(),
+        attrs={"th": {"hidden": True}},
     )  # (viewname, kwargs)
 
     titular = tables.Column(empty_values=())
     auditado = ImageColumn(
-        empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
+        exclude_from_export=True,
+        empty_values=(),
+        verbose_name="",
+        attrs={"th": {"hidden": True}},
     )
     anulado = ImageColumn(
-        empty_values=(), verbose_name="", attrs={"th": {"hidden": True}}
+        exclude_from_export=True,
+        empty_values=(),
+        verbose_name="",
+        attrs={"th": {"hidden": True}},
     )
     vigencia = tables.Column(
         empty_values=(),
