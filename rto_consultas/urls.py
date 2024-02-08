@@ -162,7 +162,7 @@ urlpatterns += [
         name="imprimir_resumen_mensual",
     ),
     path(
-        "export_verificaciones",
+        "verificaciones/export_verificaciones",
         views.render_verificaciones,
         name="export_verificaciones",
     ),
