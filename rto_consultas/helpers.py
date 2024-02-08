@@ -485,6 +485,7 @@ def handle_context(context, view):
     context["render_url"] = view.aux_data.render_url
     context["render_form"] = view.aux_data.render_form
     context["export_format"] = view.aux_data.export_format
+    context["endpoint"] = view.aux_data.endpoint
 
     # logger.debug(f"Context: {context}")
     return context
