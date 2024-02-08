@@ -7,12 +7,11 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template import Node
 from django.utils.http import urlencode
 
-import rto_consultas.models as models
+# import rto_consultas.models as models
 
-from rto_consultas.logging import configure_logger
-
-LOG_FILE = os.environ["LOG_FILE"]
-logger = configure_logger(LOG_FILE)
+# from rto_consultas.logging import configure_logger
+# LOG_FILE = os.environ["LOG_FILE"]
+# logger = configure_logger(LOG_FILE)
 
 context_processor_error_msg = (
     "Tag {%% %s %%} requires django.template.context_processors.request to be "
@@ -157,49 +156,9 @@ def export_url_custom(context, export_format, export_trigger_param=None):
         updates={export_trigger_param: export_format}, removals=[]
     ).render(context)
 
-    logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
+    # logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
     # parse the querystring from the url and use the correct one!!!
     return query_string_node
-
-
-@register.simple_tag(takes_context=True)
-def get_categorias(context, idcategoria):
-    return models.Categorias.objects.get(idcategoria__exact=idcategoria).descripcion
-
-
-@register.simple_tag(takes_context=True)
-def get_certificado_url(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_tarjeta_verde_url(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_lista_defectos(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_pa_style(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_ca_style(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_TCa_style(context):
-    pass
-
-
-@register.simple_tag(takes_context=True)
-def get_tm_style(context):
-    pass
 
 
 @register.simple_tag(takes_context=True)
