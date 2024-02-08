@@ -161,6 +161,11 @@ urlpatterns += [
         views.PDFResumenMensual.as_view(),
         name="imprimir_resumen_mensual",
     ),
+    path(
+        "export_verificaciones",
+        views.render_verificaciones,
+        name="export_verificaciones",
+    ),
     # path("", include("admin_soft.urls"), name=admin),
 ]
 # urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]

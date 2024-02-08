@@ -134,7 +134,7 @@ class QuerystringNode(Node):
 
 
 @register.simple_tag(takes_context=True)
-def export_url_custom(context, export_format, export_trigger_param=None):
+def export_url_custom(context, export_format, endpoint, export_trigger_param=None):
     """
     Returns an export URL for the given file `export_format`, preserving current
     query string parameters.
@@ -159,7 +159,7 @@ def export_url_custom(context, export_format, export_trigger_param=None):
 
     logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
     # parse the querystring from the url and use the correct one!!!
-    return query_string_node
+    return f"{endpoint}{query_string_node}"
 
 
 @register.simple_tag(takes_context=True)

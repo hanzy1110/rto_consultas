@@ -164,6 +164,11 @@ class CustomFileColumn(tables.FileColumn):
             return atag
 
 
+class VerificacionesRenderTable(tables.Table):
+    class Meta:
+        model = Verificaciones
+
+
 class VerificacionesTables(tables.Table):
     dominiovehiculo = tables.Column(verbose_name="Dominio")
     certificado = tables.Column(

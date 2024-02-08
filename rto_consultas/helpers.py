@@ -83,6 +83,7 @@ class AuxData:
     render_url: str = ""
     render_form: str = ""
     export_format: str = "csv"
+    endpoint: str = ""
 
 
 class CertBoundError(Exception):

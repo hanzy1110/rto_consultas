@@ -69,6 +69,7 @@ from .tables import (
     ObleasPorTallerTable,
     ResumenTransporteCargaTable,
     ResumenTransporteTable,
+    VerificacionesRenderTable,
     VerificacionesTables,
     VehiculosTable,
     CertificadosTable,
@@ -370,6 +371,7 @@ class ListVerificacionesView(CustomRTOView):
         },
         render_url="verificaciones",
         render_form="verificaciones_form",
+        endpoint="export_verificaciones",
     )
 
     def get_queryset(self):
@@ -385,6 +387,18 @@ class ListVerificacionesView(CustomRTOView):
 
         queryset = get_queryset_from_user(queryset, self.request)
         return queryset
+
+
+def render_verificaciones(request, *args, **kwargs):
+    export_format = request.GET.get("_export", None)
+    queryset = handle_query(request, Verificaciones, "fecha")
+    queryset = get_queryset_from_user(queryset, request)
+
+    table = VerificacionesRenderTable(queryset)
+
+    if TableExport.is_valid_format(export_format):
+        exporter = TableExport(export_format, table)
+        return exporter.response(f"table.{export_format}")
 
 
 def cert_bound_error(request, *args, **kwargs):

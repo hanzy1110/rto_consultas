@@ -2,7 +2,7 @@
 {% load export_url_custom from getattr %}
 
 {% if export_format %}
-<a href="{% export_url_custom export_format %}" >
+<a href="{% export_url_custom export_format endpoint %}" >
 <button type="button" class="btn btn-primary btn-block">
   Exportar Datos
 </button>
