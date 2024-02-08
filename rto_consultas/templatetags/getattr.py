@@ -160,7 +160,7 @@ def export_url_custom(context, export_format, endpoint, export_trigger_param=Non
 
     logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
     # parse the querystring from the url and use the correct one!!!
-    return manual_escape(f"{endpoint}{query_string_node}".replace("&amp", "&"))
+    return manual_escape(f"{endpoint}{query_string_node}".replace("&amp;", "&"))
 
 
 @register.simple_tag(takes_context=True)
