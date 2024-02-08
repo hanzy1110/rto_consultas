@@ -9,7 +9,7 @@ from django.utils.http import urlencode
 
 import rto_consultas.models as models
 
-from .logging import configure_logger
+from rto_consultas.logging import configure_logger
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
