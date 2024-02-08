@@ -1,6 +1,7 @@
 {% load render_table from django_tables2 %}
 {% load getattr %}
-{% export_url_custom as export_url %}
+# {% export_url_custom as export_url %}
+{% query_descriptions as q %}
 
 {% if export_format %}
 <a href="{% export_url export_format %}" >
