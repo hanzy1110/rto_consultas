@@ -1876,6 +1876,9 @@ class Personas(models.Model):
         db_table = "personas"
         unique_together = (("tipodoc", "nrodoc"),)
 
+    def __str__(self):
+        return f"{self.codigotitular}"
+
 
 class Prorroga(models.Model):
     idprorroga = models.IntegerField(
