@@ -167,6 +167,12 @@ class CustomFileColumn(tables.FileColumn):
 class VerificacionesRenderTable(tables.Table):
     class Meta:
         model = Verificaciones
+        exclude = [
+            "idverificacion",
+            "idtaller",
+            "idfotovalidacion",
+            "idhabilitacion",
+        ]
 
 
 class VerificacionesTables(tables.Table):
