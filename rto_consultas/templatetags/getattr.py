@@ -133,7 +133,7 @@ class QuerystringNode(Node):
             return value
 
 
-@register.simple_tag(takes_context=True)
+@register.simple_tag(name="export_url_custom", takes_context=True)
 def export_url_custom(context, export_format, export_trigger_param=None):
     """
     Returns an export URL for the given file `export_format`, preserving current
