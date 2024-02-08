@@ -6,6 +6,7 @@ from django.utils.html import escape
 from django.core.exceptions import ImproperlyConfigured
 from django.template import Node
 from django.utils.http import urlencode
+from django.utils.html import escape as manual_escape
 
 # import rto_consultas.models as models
 
@@ -159,7 +160,7 @@ def export_url_custom(context, export_format, endpoint, export_trigger_param=Non
 
     logger.info(f"QUERY STRING RETURNED ===> {query_string_node}")
     # parse the querystring from the url and use the correct one!!!
-    return f"{endpoint}{query_string_node}"
+    return manual_escape(f"{endpoint}{query_string_node}")
 
 
 @register.simple_tag(takes_context=True)
