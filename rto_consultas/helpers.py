@@ -466,6 +466,8 @@ def map_fields(data: AuxData, model: Model):
 def handle_context(context, view):
     logger.info("Handling context!")
 
+    logger.info(f"view => {view} USER_GROUP -> {view.user_group}")
+
     # Workaround for circular import...
     context["form"] = view.form_class(view.aux_data, view.model, view.user_group)
 
