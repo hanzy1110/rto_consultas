@@ -91,6 +91,7 @@ from rto_consultas_rn.forms import ObleasPorTaller
 
 from rto_consultas.logging import configure_logger, print_stack
 from rto_consultas.views import IndexView
+from rto_consultas.name_schemas import USER_GROUPS
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
@@ -145,9 +146,18 @@ class CustomRTOView_RN(ExportMixin, SingleTableView, LoginRequiredMixin):
     def get_context_data(self, **kwargs):
         # logger.debug("HANDLING CONTEXT...")
         context = super().get_context_data(**kwargs)
+        user = self.request.user
+        try:
+            self.user_group = next(
+                filter(lambda x: user.groups.filter(name=x).exists(), USER_GROUPS)
+            )
+        except Exception as e:
+            logger.warn(f"User with no group {self.request.user.username} ===> {e}")
+            self.user_group = None
+
+        logger.info(self.user_group)
 
         context = handle_context(context, self)
-
         logger.debug("CONTEXT HANDLED...")
         return context
 
