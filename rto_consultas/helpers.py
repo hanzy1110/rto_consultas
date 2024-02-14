@@ -268,7 +268,9 @@ def handle_query(request, model, fecha_field="fecha"):
         queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
 
     queryset = handle_anulado(queryset, anulado, model)
+    logger.info(f"QUERYSET AFTER ANULADO => {queryset}")
     queryset = handle_reverificado(queryset, reverificado, model)
+    logger.info(f"QUERYSET AFTER REVERIFICADO => {queryset}")
 
     return queryset
 
