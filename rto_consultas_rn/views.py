@@ -266,6 +266,8 @@ class RenderVerificacionForm_RN(TemplateView):
             logger.warn(f"User with no group {self.request.user.username} ===> {e}")
             self.user_group = None
 
+        logger.info(self.user_group)
+
         context = handle_context(context, self)
         return context
 

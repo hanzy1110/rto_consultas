@@ -286,7 +286,7 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
             logger.info(f"CUIT QUERY => {queryset}")
 
         else:
-            query = Q(ptipodoc=tipo_dni, pnrodoc=nro_dni)
+            query = Q(codigotitular__codigotitular__icontains=str(nro_dni))
 
         return queryset.filter(query)
 
