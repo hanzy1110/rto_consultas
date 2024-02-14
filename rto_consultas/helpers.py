@@ -267,11 +267,8 @@ def handle_query(request, model, fecha_field="fecha"):
     if tipo_dni and nro_dni:
         queryset = handle_dni(queryset, tipo_dni, nro_dni, model)
 
-    logger.info(f"QUERYSET PRE ANULADO => {queryset}")
     queryset = handle_anulado(queryset, anulado, model)
-    logger.info(f"QUERYSET AFTER ANULADO => {queryset}")
     queryset = handle_reverificado(queryset, reverificado, model)
-    logger.info(f"QUERYSET AFTER REVERIFICADO => {queryset}")
 
     return queryset
 
@@ -284,7 +281,7 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     # queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            query = Q(cuitprestserv=str(nro_dni))
+            query = Q(cuitprestserv__icontains=str(nro_dni))
             logger.info(f"CUIT QUERY => {queryset}")
 
         else:
