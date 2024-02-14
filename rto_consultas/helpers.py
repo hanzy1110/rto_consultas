@@ -276,13 +276,13 @@ def handle_query(request, model, fecha_field="fecha"):
 def handle_dni(queryset, tipo_dni, nro_dni, model):
     tipo_dni = next(filter(lambda t: t[0] == tipo_dni, DOCS))[1]
 
-    logger.debug(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
+    logger.info(f"TIPO DNI: {tipo_dni} || NRO DNI: {nro_dni}")
     # ASS PROTECTION
     # queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
             query = Q(cuitprestserv=str(nro_dni))
-            logger.debug(f"CUIT QUERY => {queryset}")
+            logger.info(f"CUIT QUERY => {queryset}")
 
         else:
             query = Q(ptipodoc=tipo_dni, pnrodoc=nro_dni)
