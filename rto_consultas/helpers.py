@@ -281,7 +281,8 @@ def handle_dni(queryset, tipo_dni, nro_dni, model):
     # queryset_copy = queryset.all()
     try:
         if tipo_dni == "CUIT":
-            query = Q(cuitprestserv__icontains=str(nro_dni))
+            cod_titular = f"J{nro_dni}"
+            query = Q(codigotitular__codigotitular__icontains=str(nro_dni))
             logger.info(f"CUIT QUERY => {queryset}")
 
         else:
