@@ -54,9 +54,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
 
-    idtipouso = forms.ModelChoiceField(
+    idtipouso = forms.ChoiceField(
         label="Tipo Uso",
-        queryset=Tipousovehiculo.objects.all(),
+        # queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
             use_ac= TipoUsoAutocomplete
