@@ -8,6 +8,7 @@ from autocomplete import HTMXAutoComplete, widgets as widgets_autocomplete
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Submit
+from .views import TipoUsoAutocomplete
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
