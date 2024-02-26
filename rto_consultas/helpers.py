@@ -21,7 +21,7 @@ from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
 
-from rto_consultas_rn.models import Certificados as CertificadosRN
+from rto_consultas_rn.models import Certificados as CertificadosRN, Excepcion
 
 from rto_consultas.models import (
     Categorias,
@@ -1432,3 +1432,25 @@ def edit_taller(taller: CccfTalleres, cleaned_data):
     for key, val in cleaned_data.items():
         setattr(taller, key, val)
     taller.save()
+
+
+def handle_initial_excepcion(dominio):
+    exc = Excepcion.objects.get(dominio__exact=parse_license_plate(dominio))
+
+    logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc}")
+    return exc
+
+def handle_save_excepcion(cleaned_data, **kwargs):
+    logger.debug(f"CLEANED_DATA => {cleaned_data}")
+
+    new_data = {}
+
+    new_data = cleaned_data
+
+
+    logger.info(f"EXCEPCION DATA => {new_data}")
+
+    new_excepcion = Excepcion(**new_data)
+    new_excepcion.save()
+
+    return new_excepcion

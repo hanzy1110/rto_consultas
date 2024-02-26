@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+
+{% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
+
+{% block content %}
+
+<style>
+    .box {
+        width: 80%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        padding: 0.1
+    }
+
+</style>
+<h2><a href="#">Carga Excepciones</a></h2>
+
+<div id="success-message">
+</div>
+
+<div hx-get="{% url 'excepciones_estado_success' %}" hx-swap="beforeend" hx-target="body"
+    hx-trigger="reloadEstadoSuccess from:body">
+</div>
+<div hx-get="{% url 'excepciones_estado_error' %}" hx-swap="beforeend" hx-target="body"
+    hx-trigger="reloadEstadoError from:body">
+</div>
+<form hx-post="{% url 'excepciones_carga' %}" hx-swap="innerHTML" hx-target="#success-message" hx-trigger="submit"
+    enctype="multipart/form-data">
+    <div class="card-body p-1">
+        {% csrf_token %}
+        {% crispy form %}
+        <input type="submit" class="btn btn-primary btn-block" value="Cargar Excepcion">
+</form>
+
+<script>
+    htmx.on("htmx:response", function (event) {
+        if (event.detail.elt === document.querySelector(".tblForm")) {
+            // Handle the response here if needed
+        }
+    });
+</script>
+{% endblock %}

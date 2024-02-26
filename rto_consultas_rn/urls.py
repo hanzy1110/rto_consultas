@@ -58,5 +58,6 @@ urlpatterns = [
         views_RN.RenderExcepcionesForm_RN.as_view(),
         name="excepciones_rn_form",
     ),
+    path("carga_excepciones_rn", views_RN.carga_excepcion, name="carga_excepciones_rn"),
     path("resumen_obleas_rn", views_RN.resumen_obleas_rn, name="resumen_obleas_rn"),
 ]

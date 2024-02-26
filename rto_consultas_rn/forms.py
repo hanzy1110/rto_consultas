@@ -1,6 +1,6 @@
 import os
 from rto_consultas.helpers import AuxData, map_fields
-from .models import Talleres
+from .models import Excepcion, Talleres, Vehiculos
 from rto_consultas.logging import configure_logger
 
 from django import forms
@@ -29,3 +29,88 @@ class ObleasPorTaller(forms.Form):
         required=False,
         label="Planta",
     )
+
+class ExcepcionesFirstForm(forms.ModelForm):
+    class Meta:
+        model = Excepcion
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        excepcion_fields = [
+            "fecha",
+            "estado",
+            "fechahoradictamen",
+            "usuario",
+            "usuariodictamen",
+        ]
+
+        titular_fields = [
+            "tipopersona",
+            "apellidotitular",
+            "nombretitular",
+            "idlocalidadtitular",
+            "domiciliotitular",
+            "emailtitular",
+            "nrodoctitual",
+            "nombretitular",
+            "telefonotitular",
+        ]
+        conductor_fields = [
+            "apellidoconductor",
+            "nombreconductor",
+            "domicilioconductor",
+            "idlocalidadconductor",
+        ]
+
+        vehicle_fields = [
+            "dominio",
+            "marcavehiculo",
+            "idlocalidadvehiculo",
+            "motormarca",
+            "motoranio",
+            "chasismarca",
+            "chasisanio",
+            "idtipovehiculo",
+            "companiaseguro",
+            "nropoliza",
+            "vanio",
+            "modelovehiculo",
+            "motornumero",
+            "tipocombustible",
+            "chasisnro",
+            "nroejes",
+            "idtipouso",
+            "ultimorecpatente",
+        ]
+
+
+        self.helper.layout = Layout(
+            HTML('<b>Datos de la Excepción</b>'),
+            Div(*[Field(k) for k in excepcion_fields]),
+            HTML('<b>Datos del Vehiculo</b>'),
+            Div(*[Field(k) for k in vehicle_fields]),
+            HTML('<b>Datos del Titular</b>'),
+            Div(*[Field(k) for k in titular_fields]),
+            HTML('<b>Datos del Conductor</b>'),
+            Div(*[Field(k) for k in conductor_fields]),
+            HTML('<b>Observaciones Dictamen</b>'),
+            HTML('<b>Fundamentación Dictamen</b>'),
+            Div(Field("observaciondictamen")),
+            HTML('<b>Resultado</b>'),
+        )
+
+
+
+class ExcepcionesSecondForm(forms.ModelForm):
+    class Meta:
+        model = Excepcion
+        fields = "__all__"
+
+class ExcepcionesVehiculosForm(forms.ModelForm):
+
+    class Meta:
+        model = Vehiculos
+        fields = "__all__"

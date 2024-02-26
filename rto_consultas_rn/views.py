@@ -80,6 +80,8 @@ from rto_consultas.helpers import (
     generate_key,
     build_barcode,
     handle_save_hab,
+    handle_save_excepcion,
+    handle_initial_excepcion,
     get_queryset_from_user,
 )
 
@@ -87,7 +89,7 @@ from rto_consultas.forms import (
     CustomRTOForm,
 )  # Import the form you created
 
-from rto_consultas_rn.forms import ObleasPorTaller
+from rto_consultas_rn.forms import ObleasPorTaller, ExcepcionesFirstForm
 
 from rto_consultas.logging import configure_logger, print_stack
 from rto_consultas.views import IndexView
@@ -845,3 +847,62 @@ def resumen_obleas_rn(request):
         "includes/consulta_obleas.html",
         {"form": form, "resumen_obleas_url": "resumen_obleas_rn"},
     )
+
+def carga_excepcion(request, dominio=None, *args, **kwargs):
+    logger.info(f"request method = {request.method}, htmx? {request.htmx}")
+    if request.method == "POST":
+        form = ExcepcionesFirstForm(request.POST)
+        # form_informes = InformesForm(request.POST)
+
+        if form.is_valid():
+            try:
+
+                cccf = handle_save_excepcion(
+                    form.cleaned_data,
+                    request.user,
+                )
+
+                logger.info(f"CCCF => {cccf} SAVED!")
+
+                success_message = "Form submitted successfully!"
+                success_message_html = render_to_string(
+                    "carga_cccf/estado_success.html",
+                    {"success_message": success_message},
+                )
+
+                res = HttpResponse(success_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoSuccess"
+                return res
+
+            except IndentationError as e:
+                logger.error(e)
+                error_message = "An error occurred: " + str(e)
+                error_message_html = render_to_string(
+                    "carga_cccf/estado_error.html", {"error_message": error_message}
+                )
+                res = HttpResponse(error_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoError"
+                return res
+        else:
+            logger.error(f"Validation Error => {form.errors}")
+            assert False
+
+    else:
+        if kwargs:
+            dominio = kwargs.pop("dominio", None)
+
+        # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+        if dominio:
+            initial = handle_initial_excepcion(dominio)
+        else:
+            initial = {}
+
+        logger.debug(f"INITIAL_DATA => {initial}")
+        form = ExcepcionesFirstForm(initial=initial)
+        # form_informes = InformesForm(initial=initial)
+
+        return render(
+            request,
+            "includes/carga_excepcion.html",
+            {"form": form},
+        )

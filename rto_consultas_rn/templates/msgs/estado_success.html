@@ -1,0 +1,19 @@
+<div id="modal" _="on closeModal add .closing then wait for animationend then remove me">
+    <div class="modal-underlay" _="on click trigger closeModal"></div>
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h4 class="modal-title" id="dialogAddExceso">Resultado Carga</h4>
+        </div>
+        <div class="modal-body">
+            <span>Excepción Creada con Exito!</span>
+            <a style="display:block" href="{% url 'excepciones_rn' %}">
+                <button class="btn btn-sm btn-primary">
+                    Regresar
+                </button>
+            </a>
+        </div>
+
+    </div>
+</div>
+</div>
