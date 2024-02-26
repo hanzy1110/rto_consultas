@@ -57,7 +57,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
-            use_ac= TipoUsoAutocomplete()
+            use_ac= TipoUsoAutocomplete
         ),
     )
 
