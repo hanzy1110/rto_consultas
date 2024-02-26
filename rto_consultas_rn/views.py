@@ -203,14 +203,35 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
 
     def get_queryset(self):
         logger.info("CALCULATE QUERYSET...")
+        page = self.request.GET.copy().get("page", None)
+
         queryset = super().get_queryset()
         if isinstance(queryset, list):
-            pass
             queryset = list(reversed(queryset))
         else:
             queryset = queryset.order_by("-idverificacion")
+            queryset = queryset.order_by("-fecha")
+
         logger.info("QUERYSET DONE...")
+
+        if page:
+            # Handle pagination...
+            self.table_data = queryset
+            self.get_table()
+        queryset = get_queryset_from_user(queryset, self.request)
         return queryset
+
+
+    # def get_queryset(self):
+    #     logger.info("CALCULATE QUERYSET...")
+    #     queryset = super().get_queryset()
+    #     if isinstance(queryset, list):
+    #         pass
+    #         queryset = list(reversed(queryset))
+    #     else:
+    #         queryset = queryset.order_by("-idverificacion")
+    #     logger.info("QUERYSET DONE...")
+    #     return queryset
 
 
 @method_decorator(login_required, name="dispatch")
