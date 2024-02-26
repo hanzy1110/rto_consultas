@@ -1,14 +1,13 @@
 import os
-from rto_consultas.helpers import AuxData, map_fields, get_items_autocomplete
+from rto_consultas.helpers import AuxData, map_fields, TipoUsoAutocomplete
 from .models import Excepcion, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
 
-from autocomplete import HTMXAutoComplete, widgets as widgets_autocomplete
+from autocomplete import widgets as widgets_autocomplete
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Submit
-from .views import TipoUsoAutocomplete
 
 LOG_FILE = os.environ["LOG_FILE"]
 logger = configure_logger(LOG_FILE)
