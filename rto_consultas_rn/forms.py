@@ -49,7 +49,6 @@ class ExcepcionesFirstForm(forms.ModelForm):
             name="idtipouso",
             # use_ac=CustomEventsAC(),
             options={
-                "multiselect":True,
                 "item_label":"idtipouso",
                 "item_value":"descripcion",
                 "model": Tipousovehiculo,
