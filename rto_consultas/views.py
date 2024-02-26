@@ -376,6 +376,8 @@ class ListVerificacionesView(CustomRTOView):
 
     def get_queryset(self):
         logger.info("CALCULATE QUERYSET...")
+        page = self.request.GET.copy().get("page", None)
+
         queryset = super().get_queryset()
         if isinstance(queryset, list):
             queryset = list(reversed(queryset))
@@ -385,6 +387,10 @@ class ListVerificacionesView(CustomRTOView):
 
         logger.info("QUERYSET DONE...")
 
+        if page:
+            # Handle pagination...
+            self.table_data = queryset
+            self.get_table()
         queryset = get_queryset_from_user(queryset, self.request)
         return queryset
 
