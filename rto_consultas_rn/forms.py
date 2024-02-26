@@ -32,6 +32,14 @@ class ObleasPorTaller(forms.Form):
     )
 
 
+class TipoUsoAutocomplete(HTMXAutoComplete):
+    name = "idtipouso"
+    multiselect = True
+    minimum_search_length = 0
+
+    class Meta:
+        model = Tipousovehiculo
+
 class ExcepcionesFirstForm(forms.ModelForm):
     fecha = forms.DateField(
         label="Fecha Creacion",
@@ -47,13 +55,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
-            # use_ac=CustomEventsAC(),
-            options=dict(
-                item_label="idtipouso",
-                item_value="idtipouso",
-                lookup="__exact",
-                model=Tipousovehiculo,
-            )
+            use_ac= TipoUsoAutocomplete()
         ),
     )
 
