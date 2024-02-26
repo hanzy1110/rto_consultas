@@ -45,9 +45,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
     # telefonotitular = forms.CharField(label="Telefono Titular")
 
     # #EXCEPCION FIELDS:
-    # fecha = forms.DateField(label="Fecha Creacion")
+    fecha = forms.DateField(label="Fecha Creacion", widget=forms.DateInput(attrs={"class": "date", "type": "date"}))
     # estado = forms.ChoiceField(label="Dictamen", choices=DICTAMEN_CHOICES)
-    # fechahoradictamen = forms.DateField(label="Fecha Dictamen")
+    fechahoradictamen = forms.DateField(label="Fecha Dictamen", widget=forms.DateInput(attrs={"class": "date", "type": "date"}))
     # usuario = forms.CharField(label="Usuario Creacion")
     # usuariodictamen = forms.CharField(label="Usuario Dictamen")
 
@@ -140,7 +140,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Observaciones Dictamen</b>"),
                 HTML("<b>Fundamentación Dictamen</b>"),
-                Div(Field("observaciondictamen", wrapper_class="form-group col-4")),
+                Div(Field("observaciondictamen", wrapper_class="form-group col-12")),
                 HTML("<b>Resultado</b>"),
                 css_class="card card-plain mt-2 box",
             ),
