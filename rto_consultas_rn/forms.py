@@ -41,7 +41,7 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
 
     def get_items(self, *args, **kwargs):
         logger.info(f"PARAMS {self._item_label}, {self._item_value} {self.route_name}")
-        return super().get_items(*args, **kwargs)
+        return super().get_items(self, *args, **kwargs)
 
     class Meta:
         model = Tipousovehiculo
