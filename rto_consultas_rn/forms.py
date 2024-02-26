@@ -33,16 +33,16 @@ class ObleasPorTaller(forms.Form):
 
 
 class TipoUsoAutocomplete(HTMXAutoComplete):
-    name = "idtipouso"
-    multiselect = True
-    minimum_search_length = 0
-    item_label = "descripcion"
-    item_value = "idtipouso"
+    # name = "idtipouso"
+    # multiselect = True
+    # minimum_search_length = 0
+    # item_label = "descripcion"
+    # item_value = "idtipouso"
 
     class Meta:
         model = Tipousovehiculo
-        item_label = "descripcion"
-        item_value = "idtipouso"
+        # item_label = "descripcion"
+        # item_value = "idtipouso"
 
 class ExcepcionesFirstForm(forms.ModelForm):
     fecha = forms.DateField(
