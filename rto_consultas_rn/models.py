@@ -604,7 +604,8 @@ class Excepcion(models.Model):
     )  # Field name made lowercase.
     aprobado = models.IntegerField(blank=True, null=True)
     fechahoradictamen = models.DateTimeField(
-        db_column="fechaHoraDictamen", blank=True, null=True
+        db_column="fechaHoraDictamen", blank=True, null=True,
+        verbose_name="Fecha Dictamen"
     )  # Field name made lowercase.
     observaciondictamen = models.TextField(
         db_column="observacionDictamen", blank=True, null=True,
