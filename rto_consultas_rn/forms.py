@@ -32,24 +32,6 @@ class ObleasPorTaller(forms.Form):
     )
 
 
-class TipoUsoAutocomplete(HTMXAutoComplete):
-    name = "idtipouso"
-    # multiselect = True
-    # minimum_search_length = 0
-    _item_label = "descripcion"
-    _item_value = "idtipouso"
-
-    def get_items(self, *args, **kwargs):
-        logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}, {self.route_name}")
-        values = super().get_items(self, *args, **kwargs)
-        logger.info(f"RETURNED VALUES ===> {values}")
-        return values.values()
-
-    class Meta:
-        model = Tipousovehiculo
-        # item_label = "descripcion"
-        # item_value = "idtipouso"
-
 class ExcepcionesFirstForm(forms.ModelForm):
     fecha = forms.DateField(
         label="Fecha Creacion",
@@ -65,7 +47,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         # queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             # name="idtipouso",
-            use_ac= TipoUsoAutocomplete
+            use_ac=TipoUsoAutocomplete
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )

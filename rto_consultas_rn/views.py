@@ -35,6 +35,8 @@ from django.contrib import messages
 
 from admin_soft.forms import LoginForm
 
+from autocomplete import HTMXAutoComplete
+
 from .models import (
     Adjuntos,
     Excepcion,
@@ -947,3 +949,21 @@ def excepciones_estado_error(request, *args, **kwargs):
     return render(
         request, template_name="includes/estado_error.html", context=context
     )
+
+class TipoUsoAutocomplete(HTMXAutoComplete):
+    name = "idtipouso"
+    # multiselect = True
+    # minimum_search_length = 0
+    _item_label = "descripcion"
+    _item_value = "idtipouso"
+
+    def get_items(self, *args, **kwargs):
+        logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}, {self.route_name}")
+        values = super().get_items(self, *args, **kwargs)
+        logger.info(f"RETURNED VALUES ===> {values}")
+        return values.values()
+
+    class Meta:
+        model = Tipousovehiculo
+        # item_label = "descripcion"
+        # item_value = "idtipouso"
