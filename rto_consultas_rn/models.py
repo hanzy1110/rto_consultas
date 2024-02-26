@@ -632,7 +632,8 @@ class Excepcion(models.Model):
         db_column="tipoDocConductor", max_length=10
     )  # Field name made lowercase.
     nrodocconductor = models.IntegerField(
-        db_column="nroDocConductor"
+        db_column="nroDocConductor",
+        verbose_name="Nro Doc. Conductor"
     )  # Field name made lowercase.
     codigotitular = models.CharField(
         db_column="codigoTitular", max_length=12
