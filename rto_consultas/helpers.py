@@ -21,7 +21,12 @@ from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
 
-from rto_consultas_rn.models import Certificados as CertificadosRN, Excepcion, Localidades as Localidades_RN, Tipovehiculo as TipoVehiculo_RN
+from rto_consultas_rn.models import (
+    Certificados as CertificadosRN,
+    Excepcion,
+    Localidades as Localidades_RN,
+    Tipovehiculo as TipoVehiculo_RN,
+)
 
 from rto_consultas.models import (
     Categorias,
@@ -1435,15 +1440,26 @@ def edit_taller(taller: CccfTalleres, cleaned_data):
 
 
 def handle_initial_excepcion(dominio):
-    exc_data = Excepcion.objects.get(dominio__exact=parse_license_plate(dominio)).__dict__
+    exc_data = Excepcion.objects.get(
+        dominio__exact=parse_license_plate(dominio)
+    ).__dict__
     logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc_data}")
-    exc_data['idlocalidadconductor'] = Localidades_RN.objects.get(exc_data['idlocalidadconductor']).descripcion
-    exc_data['idlocalidadtitular'] = Localidades_RN.objects.get(exc_data['idlocalidadtitular']).descripcion
-    exc_data['idtipouso'] = TIPO_USO_VEHICULO.get(exc_data['idtipouso'], exc_data['idtipouso'])
+    exc_data["idlocalidadconductor"] = Localidades_RN.objects.get(
+        idlocalidad__exact=exc_data["idlocalidadconductor"]
+    ).descripcion
+    exc_data["idlocalidadtitular"] = Localidades_RN.objects.get(
+        idlocalidad__exact=exc_data["idlocalidadtitular"]
+    ).descripcion
+    exc_data["idtipouso"] = TIPO_USO_VEHICULO.get(
+        exc_data["idtipouso"], exc_data["idtipouso"]
+    )
 
-    exc_data['idtipovehiculo'] = TipoVehiculo_RN.objects.get(idtipovehiculo=exc_data['idtipovehiculo']).descripcion
+    exc_data["idtipovehiculo"] = TipoVehiculo_RN.objects.get(
+        idtipovehiculo=exc_data["idtipovehiculo"]
+    ).descripcion
 
     return exc_data
+
 
 def handle_save_excepcion(cleaned_data, **kwargs):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
@@ -1452,10 +1468,18 @@ def handle_save_excepcion(cleaned_data, **kwargs):
 
     new_data = cleaned_data
 
-    new_data['idlocalidadconductor'] = Localidades_RN.objects.get(new_data['idlocalidadconductor']).descripcion
-    new_data['idlocalidadtitular'] = Localidades_RN.objects.get(new_data['idlocalidadtitular']).descripcion
-    new_data['idtipouso'] = TIPO_USO_VEHICULO.get(new_data['idtipouso'], new_data['idtipouso'])
-    new_data['idtipovehiculo'] = TipoVehiculo_RN.objects.get(idtipovehiculo=new_data['idtipovehiculo']).descripcion
+    new_data["idlocalidadconductor"] = Localidades_RN.objects.get(
+        idlocalidad__exact=new_data["idlocalidadconductor"]
+    ).descripcion
+    new_data["idlocalidadtitular"] = Localidades_RN.objects.get(
+        idlocalidad__exact=new_data["idlocalidadtitular"]
+    ).descripcion
+    new_data["idtipouso"] = TIPO_USO_VEHICULO.get(
+        new_data["idtipouso"], new_data["idtipouso"]
+    )
+    new_data["idtipovehiculo"] = TipoVehiculo_RN.objects.get(
+        idtipovehiculo=new_data["idtipovehiculo"]
+    ).descripcion
 
     logger.info(f"EXCEPCION DATA => {new_data}")
 
