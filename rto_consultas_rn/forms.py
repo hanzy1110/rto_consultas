@@ -51,6 +51,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             options={
                 "item_label":"idtipouso",
                 "item_value":"idtipouso",
+                "lookup":"__exact",
                 "model": Tipousovehiculo,
             }
         ),
