@@ -110,7 +110,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Datos de la Excepción</b>"),
                 Div(
-                    *[Field(k) for k in excepcion_fields],
+                    *[Field(k, wrapper_class="form-group col-4") for k in excepcion_fields],
                     css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
@@ -118,30 +118,29 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Datos del Vehiculo</b>"),
                 Div(
-                    *[Field(k) for k in vehicle_fields], css_class="form-group row box"
+                    *[Field(k, wrapper_class="form-group col-4") for k in vehicle_fields], css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
             ),
             Div(
                 HTML("<b>Datos del Titular</b>"),
                 Div(
-                    *[Field(k) for k in titular_fields], css_class="form-group row box"
+                    *[Field(k, wrapper_class="form-group col-4") for k in titular_fields], css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
             ),
             Div(
                 HTML("<b>Datos del Conductor</b>"),
                 Div(
-                    *[Field(k) for k in conductor_fields],
+                    *[Field(k, wrapper_class="form-group col-4") for k in conductor_fields],
                     css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
             ),
-            # Div(Field(*conductor_fields)),
             Div(
                 HTML("<b>Observaciones Dictamen</b>"),
                 HTML("<b>Fundamentación Dictamen</b>"),
-                Div(Field("observaciondictamen")),
+                Div(Field("observaciondictamen", wrapper_class="form-group col-4")),
                 HTML("<b>Resultado</b>"),
                 css_class="card card-plain mt-2 box",
             ),
