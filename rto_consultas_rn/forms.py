@@ -36,6 +36,8 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
     name = "idtipouso"
     multiselect = True
     minimum_search_length = 0
+    item_label = "descripcion"
+    item_value = "idtipouso"
 
     class Meta:
         model = Tipousovehiculo
