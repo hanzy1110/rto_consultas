@@ -644,7 +644,8 @@ class Excepcion(models.Model):
         verbose_name="Nro. Poliza"
     )  # Field name made lowercase.
     ultimorecpatente = models.CharField(
-        db_column="ultimoRecPatente", max_length=50, blank=True, null=True
+        db_column="ultimoRecPatente", max_length=50, blank=True, null=True,
+        verbose_name="Nro. Rec. Patente"
     )  # Field name made lowercase.
     idtipouso = models.IntegerField(db_column="idTipoUso", verbose_name="Tipo Uso")  # Field name made lowercase.
     idtipovehiculo = models.IntegerField(
@@ -680,7 +681,8 @@ class Excepcion(models.Model):
         verbose_name="Nro Doc. Titular"
     )  # Field name made lowercase.
     telefonotitular = models.CharField(
-        db_column="telefonoTitular", max_length=50
+        db_column="telefonoTitular", max_length=50,
+        verbose_name="Telefono Titular"
     )  # Field name made lowercase.
     tipopersona = models.CharField(
         db_column="tipoPersona", max_length=1,
@@ -698,7 +700,8 @@ class Excepcion(models.Model):
         db_column="codigoPJTitular", max_length=30, blank=True, null=True
     )  # Field name made lowercase.
     emailtitular = models.CharField(
-        db_column="emailTitular", max_length=50, blank=True, null=True
+        db_column="emailTitular", max_length=50, blank=True, null=True,
+        verbose_name="Email Titular"
     )  # Field name made lowercase.
     viedmapatagones = models.IntegerField(
         db_column="viedmaPatagones"
