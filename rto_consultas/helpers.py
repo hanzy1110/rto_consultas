@@ -1488,9 +1488,9 @@ def handle_save_excepcion(cleaned_data, **kwargs):
 
 def get_items_autocomplete(search, values, model):
     if isinstance(values, str):
-        queryset = model.objects.filter(event_name__icontains=values)
+        queryset = model.objects.filter(descripcion__icontains=values)
     else:
-        queryset = model.objects.filter(event_name__in=values)
+        queryset = model.objects.filter(descripcion__in=values)
 
     queryset = queryset.values()
     logger.info(f" // SEARCH ==> {search} // values {values} // QUERYSET => {queryset}")
