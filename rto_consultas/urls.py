@@ -43,7 +43,7 @@ from rto_consultas.cccf_views import (
     ver_cccf_usuarios,
     detalles_taller_cccf,
 )
-
+from autocomplete import HTMXAutoComplete
 import rto_consultas.views as views
 
 urlpatterns = [
@@ -52,6 +52,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="home"),
     path("", views.index, name="index"),
+    *HTMXAutoComplete.url_dispatcher('ac'),
 ]
 
 urlpatterns += [

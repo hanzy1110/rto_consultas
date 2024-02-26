@@ -1,9 +1,10 @@
 import os
-from rto_consultas.helpers import AuxData, map_fields
-from .models import Excepcion, Talleres, Vehiculos
+from rto_consultas.helpers import AuxData, map_fields, get_items_autocomplete
+from .models import Excepcion, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
 
+from autocomplete import HTMXAutoComplete, widgets as widgets_autocomplete
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Div, Field, HTML, ButtonHolder, Submit
@@ -32,29 +33,29 @@ class ObleasPorTaller(forms.Form):
 
 
 class ExcepcionesFirstForm(forms.ModelForm):
-    # # TITULAR FIELDS:
-    # tipopersona = forms.CharField(label="Tipo Persona")
-    # apellidotitular = forms.CharField(label="Apellido Titular")
-    # nombretitular = forms.CharField(label="Nombre Titular")
-    # idlocalidadtitular = forms.CharField(label="Localidad Titular")
-    # domiciliotitular = forms.CharField(label="Domicilio Titular")
-    # emailtitular = forms.CharField(label="Email Titular")
-    # nrodoctitual = forms.CharField(label="Nro Doc Titular")
-    # nombretitular = forms.CharField(label="Apellido Titular")
-    # telefonotitular = forms.CharField(label="Telefono Titular")
-
-    # #EXCEPCION FIELDS:
     fecha = forms.DateField(
         label="Fecha Creacion",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
-    # estado = forms.ChoiceField(label="Dictamen", choices=DICTAMEN_CHOICES)
     fechahoradictamen = forms.DateField(
         label="Fecha Dictamen",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
-    # usuario = forms.CharField(label="Usuario Creacion")
-    # usuariodictamen = forms.CharField(label="Usuario Dictamen")
+    idtipouso = forms.MultipleChoiceField(
+        label="Tipo Uso",
+        widget=widgets_autocomplete.Autocomplete(
+            name="idtipouso",
+            # use_ac=CustomEventsAC(),
+            options={
+                "get_items": lambda s,v: get_items_autocomplete(s,v, Tipousovehiculo),
+                "multiselect":True,
+                "item_label":"descripcion",
+                "item_value":"descripcion",
+                # "model": Event
+            }
+        ),
+    )
+
 
     idtaller = forms.ChoiceField(
         choices=get_choices(),
@@ -175,9 +176,12 @@ class ExcepcionesFirstForm(forms.ModelForm):
                 HTML("<b>Observaciones Dictamen</b>"),
                 HTML("<b>Fundamentación Dictamen</b>"),
                 Div(Field("observaciondictamen", wrapper_class="form-group col-12")),
-                HTML("<b>Resultado</b>"),
+                HTML("<b>Planta Autorizada</b>"),
+                Div(Field('idtaller', wrapper_class="form-group col-12")),
                 css_class="card card-plain mt-2 box",
             ),
+
+            Div(HTML("<b>Resultado</b>"),css_class="card card-plain mt-2 box"),
         )
 
 

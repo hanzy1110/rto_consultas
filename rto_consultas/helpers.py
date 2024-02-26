@@ -1464,22 +1464,20 @@ def handle_initial_excepcion(dominio):
 def handle_save_excepcion(cleaned_data, **kwargs):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
 
-    new_data = {}
-
     new_data = cleaned_data
 
     new_data["idlocalidadconductor"] = Localidades_RN.objects.get(
         idlocalidad__exact=new_data["idlocalidadconductor"]
-    ).descripcion
+    )
     new_data["idlocalidadtitular"] = Localidades_RN.objects.get(
         idlocalidad__exact=new_data["idlocalidadtitular"]
-    ).descripcion
+    )
     new_data["idtipouso"] = TIPO_USO_VEHICULO.get(
         new_data["idtipouso"], new_data["idtipouso"]
     )
     new_data["idtipovehiculo"] = TipoVehiculo_RN.objects.get(
         idtipovehiculo=new_data["idtipovehiculo"]
-    ).descripcion
+    )
 
     logger.info(f"EXCEPCION DATA => {new_data}")
 
@@ -1487,3 +1485,13 @@ def handle_save_excepcion(cleaned_data, **kwargs):
     new_excepcion.save()
 
     return new_excepcion
+
+def get_items_autocomplete(search, values, model):
+    if isinstance(values, str):
+        queryset = model.objects.filter(event_name__icontains=values)
+    else:
+        queryset = model.objects.filter(event_name__in=values)
+
+    queryset = queryset.values()
+    logger.info(f" // SEARCH ==> {search} // values {values} // QUERYSET => {queryset}")
+    return queryset

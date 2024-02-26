@@ -104,6 +104,7 @@ INSTALLED_APPS = [
     "rto_consultas_rn",
     "django_tables2",
     "django_htmx",
+    "autocomplete",
     "wkhtmltopdf",
     "crispy_forms",
     # "crispy_bootstrap5",
