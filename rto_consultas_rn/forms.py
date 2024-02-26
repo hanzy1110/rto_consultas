@@ -37,7 +37,7 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
     # multiselect = True
     # minimum_search_length = 0
     _item_label = "descripcion"
-    # _item_value = "idtipouso"
+    _item_value = "idtipouso"
 
     def get_items(self, *args, **kwargs):
         logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}, {self.route_name}")
