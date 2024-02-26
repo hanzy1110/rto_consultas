@@ -64,7 +64,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
             # use_ac= TipoUsoAutocomplete
-            options=dict(model=Tipousovehiculo, _item_label="descripcion", _item_value="idtipouso")
+            options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )
 
