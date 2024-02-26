@@ -39,6 +39,10 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
     _item_label = "descripcion"
     _item_value = "idtipouso"
 
+    def get_items(self, *args, **kwargs):
+        logger.info(f"PARAMS {self._item_label}, {self._item_value} {self.route_name}")
+        return super().get_items(*args, **kwargs)
+
     class Meta:
         model = Tipousovehiculo
         # item_label = "descripcion"
