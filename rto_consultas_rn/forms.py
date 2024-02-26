@@ -50,9 +50,8 @@ class ExcepcionesFirstForm(forms.ModelForm):
             # use_ac=CustomEventsAC(),
             options={
                 # "get_items": lambda search, values: get_items_autocomplete( search, values, Tipousovehiculo),
-                "multiselect":True,
+                "multiselect":False,
                 "item_label":"descripcion",
-                "item_value":"descripcion",
                 "model": Tipousovehiculo,
             }
         ),
