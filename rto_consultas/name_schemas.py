@@ -13,6 +13,11 @@ DESCRIPTIONS = {
     4: "Transporte Municipal",
 }
 
+DICTAMEN_CHOICES = {
+    1: "Aprobado",
+    2: "Rechazado",
+}
+
 ESTADO_CERTIFICADO = {
     1: "Aprobado",
     2: "Rechazado",

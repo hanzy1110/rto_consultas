@@ -2,6 +2,7 @@ import os
 from rto_consultas.helpers import AuxData, map_fields
 from .models import Excepcion, Talleres, Vehiculos
 from rto_consultas.logging import configure_logger
+from rto_consultas.name_schemas import DICTAMEN_CHOICES
 
 from django import forms
 from crispy_forms.helper import FormHelper
@@ -31,6 +32,25 @@ class ObleasPorTaller(forms.Form):
     )
 
 class ExcepcionesFirstForm(forms.ModelForm):
+
+    # # TITULAR FIELDS:
+    # tipopersona = forms.CharField(label="Tipo Persona")
+    # apellidotitular = forms.CharField(label="Apellido Titular")
+    # nombretitular = forms.CharField(label="Nombre Titular")
+    # idlocalidadtitular = forms.CharField(label="Localidad Titular")
+    # domiciliotitular = forms.CharField(label="Domicilio Titular")
+    # emailtitular = forms.CharField(label="Email Titular")
+    # nrodoctitual = forms.CharField(label="Nro Doc Titular")
+    # nombretitular = forms.CharField(label="Apellido Titular")
+    # telefonotitular = forms.CharField(label="Telefono Titular")
+
+    # #EXCEPCION FIELDS:
+    # fecha = forms.DateField(label="Fecha Creacion")
+    # estado = forms.ChoiceField(label="Dictamen", choices=DICTAMEN_CHOICES)
+    # fechahoradictamen = forms.DateField(label="Fecha Dictamen")
+    # usuario = forms.CharField(label="Usuario Creacion")
+    # usuariodictamen = forms.CharField(label="Usuario Dictamen")
+
     class Meta:
         model = Excepcion
         fields = "__all__"

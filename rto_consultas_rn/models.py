@@ -541,44 +541,57 @@ class Excepcion(models.Model):
     replicado = models.IntegerField(blank=True, null=True)
     modificado = models.IntegerField()
     fechahoramodificacion = models.DateField(
-        db_column="fechaHoraModificacion", blank=True, null=True
+        db_column="fechaHoraModificacion", blank=True, null=True,
+        verbose_name="Fecha Modificacion"
     )  # Field name made lowercase.
     historialmodificacion = models.TextField(
-        db_column="historialModificacion", blank=True, null=True
+        db_column="historialModificacion", blank=True, null=True,
+
     )  # Field name made lowercase.
     dominio = models.CharField(max_length=10)
     marcavehiculo = models.CharField(
-        db_column="marcaVehiculo", max_length=255
+        db_column="marcaVehiculo", max_length=255,
+        verbose_name="Marca Vehiculo"
     )  # Field name made lowercase.
     modelovehiculo = models.CharField(
-        db_column="modeloVehiculo", max_length=255
+        db_column="modeloVehiculo", max_length=255,
+        verbose_name="Modelo Vehiculo"
     )  # Field name made lowercase.
     idlocalidadvehiculo = models.IntegerField(
-        db_column="idLocalidadVehiculo"
+        db_column="idLocalidadVehiculo",
+        verbose_name="Localidad Vehiculo"
     )  # Field name made lowercase.
     nombretitular = models.CharField(
-        db_column="nombreTitular", max_length=255
+        db_column="nombreTitular", max_length=255,
+        verbose_name="Nombre Titular"
     )  # Field name made lowercase.
     apellidotitular = models.CharField(
-        db_column="apellidoTitular", max_length=255
+        db_column="apellidoTitular", max_length=255,
+        verbose_name="Apellido Titular"
     )  # Field name made lowercase.
     domiciliotitular = models.CharField(
-        db_column="domicilioTitular", max_length=255
+        db_column="domicilioTitular", max_length=255,
+        verbose_name="Domicilio Titular"
     )  # Field name made lowercase.
     idlocalidadtitular = models.IntegerField(
-        db_column="idLocalidadTitular"
+        db_column="idLocalidadTitular",
+        verbose_name="Localidad Titular"
     )  # Field name made lowercase.
     nombreconductor = models.CharField(
-        db_column="nombreConductor", max_length=255
+        db_column="nombreConductor", max_length=255,
+        verbose_name="Nombre Conductor"
     )  # Field name made lowercase.
     apellidoconductor = models.CharField(
-        db_column="apellidoConductor", max_length=255
+        db_column="apellidoConductor", max_length=255,
+        verbose_name="Apellido Conductor"
     )  # Field name made lowercase.
     domicilioconductor = models.CharField(
-        db_column="domicilioConductor", max_length=255
+        db_column="domicilioConductor", max_length=255,
+        verbose_name="Domicilio Conductor"
     )  # Field name made lowercase.
     idlocalidadconductor = models.IntegerField(
-        db_column="idLocalidadConductor"
+        db_column="idLocalidadConductor",
+        verbose_name="Localidad Conductor"
     )  # Field name made lowercase.
     fecha = models.DateField()
     observacion = models.TextField()
@@ -586,14 +599,16 @@ class Excepcion(models.Model):
     activo = models.IntegerField()
     usuario = models.CharField(max_length=50)
     usuariodictamen = models.CharField(
-        db_column="usuarioDictamen", max_length=50, blank=True, null=True
+        db_column="usuarioDictamen", max_length=50, blank=True, null=True,
+        verbose_name="Usuario Dictamen"
     )  # Field name made lowercase.
     aprobado = models.IntegerField(blank=True, null=True)
     fechahoradictamen = models.DateTimeField(
         db_column="fechaHoraDictamen", blank=True, null=True
     )  # Field name made lowercase.
     observaciondictamen = models.TextField(
-        db_column="observacionDictamen", blank=True, null=True
+        db_column="observacionDictamen", blank=True, null=True,
+        verbose_name="Observacion Dictamen"
     )  # Field name made lowercase.
     idcategoria = models.IntegerField(
         db_column="idCategoria"
@@ -601,12 +616,15 @@ class Excepcion(models.Model):
     chasisnro = models.CharField(
         db_column="chasisNro", max_length=50
     )  # Field name made lowercase.
-    motoranio = models.IntegerField(db_column="motorAnio")  # Field name made lowercase.
+    motoranio = models.IntegerField(db_column="motorAnio",
+                                    verbose_name="Año Motor")  # Field name made lowercase.
     motormarca = models.CharField(
-        db_column="motorMarca", max_length=50
+        db_column="motorMarca", max_length=50,
+        verbose_name="Marca Motor",
     )  # Field name made lowercase.
     motornumero = models.CharField(
-        db_column="motorNumero", max_length=50
+        db_column="motorNumero", max_length=50,
+        verbose_name="Nro. Motor",
     )  # Field name made lowercase.
     tipodocconductor = models.CharField(
         db_column="tipoDocConductor", max_length=10
@@ -618,10 +636,12 @@ class Excepcion(models.Model):
         db_column="codigoTitular", max_length=12
     )  # Field name made lowercase.
     companiaseguro = models.CharField(
-        db_column="companiaSeguro", max_length=50, blank=True, null=True
+        db_column="companiaSeguro", max_length=50, blank=True, null=True,
+        verbose_name="Compañia Seguro",
     )  # Field name made lowercase.
     nropoliza = models.CharField(
-        db_column="nroPoliza", max_length=50, blank=True, null=True
+        db_column="nroPoliza", max_length=50, blank=True, null=True,
+        verbose_name="Nro. Poliza"
     )  # Field name made lowercase.
     ultimorecpatente = models.CharField(
         db_column="ultimoRecPatente", max_length=50, blank=True, null=True
@@ -634,16 +654,20 @@ class Excepcion(models.Model):
         db_column="vAnio", blank=True, null=True
     )  # Field name made lowercase.
     chasismarca = models.CharField(
-        db_column="chasisMarca", max_length=100, blank=True, null=True
+        db_column="chasisMarca", max_length=100, blank=True, null=True,
+        verbose_name="Marca Chasis"
     )  # Field name made lowercase.
     chasisanio = models.IntegerField(
-        db_column="chasisAnio", blank=True, null=True
+        db_column="chasisAnio", blank=True, null=True,
+        verbose_name="Año Chasis"
     )  # Field name made lowercase.
     tipocombustible = models.CharField(
-        db_column="tipoCombustible", max_length=50, blank=True, null=True
+        db_column="tipoCombustible", max_length=50, blank=True, null=True,
+        verbose_name="Tipo Combustible"
     )  # Field name made lowercase.
     nroejes = models.IntegerField(
-        db_column="nroEjes", blank=True, null=True
+        db_column="nroEjes", blank=True, null=True,
+        verbose_name="Nro. Ejes"
     )  # Field name made lowercase.
     tipodoctitular = models.CharField(
         db_column="tipoDocTitular", max_length=10
