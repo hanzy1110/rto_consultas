@@ -33,7 +33,7 @@ class ObleasPorTaller(forms.Form):
 
 
 class TipoUsoAutocomplete(HTMXAutoComplete):
-    name = "idtipouso"
+    name = "idtipouso_ac"
     # multiselect = True
     # minimum_search_length = 0
     _item_label = "descripcion"
