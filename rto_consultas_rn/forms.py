@@ -25,7 +25,6 @@ class ObleasPorTaller(forms.Form):
     fecha_desde = forms.DateField(required=False, label="Fecha Desde")
     fecha_hasta = forms.DateField(required=False, label="Fecha Hasta")
     taller_id = forms.ChoiceField(
-        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=get_choices(),
         required=False,
         label="Planta",
@@ -56,6 +55,12 @@ class ExcepcionesFirstForm(forms.ModelForm):
     )
     # usuario = forms.CharField(label="Usuario Creacion")
     # usuariodictamen = forms.CharField(label="Usuario Dictamen")
+
+    idtaller = forms.ChoiceField(
+        choices=get_choices(),
+        required=False,
+        label="Planta",
+    )
 
     class Meta:
         model = Excepcion
@@ -88,13 +93,14 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "idlocalidadtitular",
             "domiciliotitular",
             "emailtitular",
-            "nrodoctitual",
+            "nrodoctitular",
             "nombretitular",
             "telefonotitular",
         ]
         conductor_fields = [
             "apellidoconductor",
             "nombreconductor",
+            "nrodocconductor",
             "domicilioconductor",
             "idlocalidadconductor",
         ]
