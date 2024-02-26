@@ -33,7 +33,7 @@ class ObleasPorTaller(forms.Form):
 
 
 class TipoUsoAutocomplete(HTMXAutoComplete):
-    name = "idtipouso_ac"
+    name = "idtipouso"
     # multiselect = True
     # minimum_search_length = 0
     _item_label = "descripcion"
@@ -64,7 +64,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         label="Tipo Uso",
         # queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
-            name="idtipouso",
+            # name="idtipouso",
             use_ac= TipoUsoAutocomplete
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
