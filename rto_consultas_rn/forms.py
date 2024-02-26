@@ -39,6 +39,8 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
 
     class Meta:
         model = Tipousovehiculo
+        item_label = "descripcion"
+        item_value = "idtipouso"
 
 class ExcepcionesFirstForm(forms.ModelForm):
     fecha = forms.DateField(
