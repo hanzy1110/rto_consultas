@@ -21,6 +21,8 @@ from io import BytesIO
 from barcode import EAN13
 from barcode.writer import SVGWriter
 
+from autocomplete import HTMXAutoComplete
+
 from rto_consultas_rn.models import (
     Certificados as CertificadosRN,
     Excepcion,
