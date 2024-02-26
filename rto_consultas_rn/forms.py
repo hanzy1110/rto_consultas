@@ -31,8 +31,8 @@ class ObleasPorTaller(forms.Form):
         label="Planta",
     )
 
-class ExcepcionesFirstForm(forms.ModelForm):
 
+class ExcepcionesFirstForm(forms.ModelForm):
     # # TITULAR FIELDS:
     # tipopersona = forms.CharField(label="Tipo Persona")
     # apellidotitular = forms.CharField(label="Apellido Titular")
@@ -106,23 +106,46 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "ultimorecpatente",
         ]
 
-
         self.helper.layout = Layout(
-            HTML('<b>Datos de la Excepción</b>'),
-            Div(*[Field(k) for k in excepcion_fields]),
-            HTML('<b>Datos del Vehiculo</b>'),
-            Div(*[Field(k) for k in vehicle_fields]),
-            HTML('<b>Datos del Titular</b>'),
-            Div(*[Field(k) for k in titular_fields]),
-            HTML('<b>Datos del Conductor</b>'),
-            Div(*[Field(k) for k in conductor_fields]),
+            Div(
+                HTML("<b>Datos de la Excepción</b>"),
+                Div(
+                    *[Field(k) for k in excepcion_fields],
+                    css_class="form-group row box"
+                ),
+                css_class="card card-plain mt-2 box",
+            ),
+            Div(
+                HTML("<b>Datos del Vehiculo</b>"),
+                Div(
+                    *[Field(k) for k in vehicle_fields], css_class="form-group row box"
+                ),
+                css_class="card card-plain mt-2 box",
+            ),
+            Div(
+                HTML("<b>Datos del Titular</b>"),
+                Div(
+                    *[Field(k) for k in titular_fields], css_class="form-group row box"
+                ),
+                css_class="card card-plain mt-2 box",
+            ),
+            Div(
+                HTML("<b>Datos del Conductor</b>"),
+                Div(
+                    *[Field(k) for k in conductor_fields],
+                    css_class="form-group row box"
+                ),
+                css_class="card card-plain mt-2 box",
+            ),
             # Div(Field(*conductor_fields)),
-            HTML('<b>Observaciones Dictamen</b>'),
-            HTML('<b>Fundamentación Dictamen</b>'),
-            Div(Field("observaciondictamen")),
-            HTML('<b>Resultado</b>'),
+            Div(
+                HTML("<b>Observaciones Dictamen</b>"),
+                HTML("<b>Fundamentación Dictamen</b>"),
+                Div(Field("observaciondictamen")),
+                HTML("<b>Resultado</b>"),
+                css_class="card card-plain mt-2 box",
+            ),
         )
-
 
 
 class ExcepcionesSecondForm(forms.ModelForm):
@@ -130,8 +153,8 @@ class ExcepcionesSecondForm(forms.ModelForm):
         model = Excepcion
         fields = "__all__"
 
-class ExcepcionesVehiculosForm(forms.ModelForm):
 
+class ExcepcionesVehiculosForm(forms.ModelForm):
     class Meta:
         model = Vehiculos
         fields = "__all__"
