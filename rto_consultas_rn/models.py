@@ -614,7 +614,8 @@ class Excepcion(models.Model):
         db_column="idCategoria"
     )  # Field name made lowercase.
     chasisnro = models.CharField(
-        db_column="chasisNro", max_length=50
+        db_column="chasisNro", max_length=50,
+        verbose_name="Nro. Chásis"
     )  # Field name made lowercase.
     motoranio = models.IntegerField(db_column="motorAnio",
                                     verbose_name="Año Motor")  # Field name made lowercase.
