@@ -44,7 +44,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
 
     idtipouso = forms.ModelChoiceField(
         label="Tipo Uso",
-        # queryset=Tipousovehiculo.objects.all(),
+        queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             # name="idtipouso",
             use_ac=TipoUsoAutocomplete
