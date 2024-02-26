@@ -47,7 +47,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             name="idtipouso",
             # use_ac=CustomEventsAC(),
             options={
-                "get_items": lambda s,v: get_items_autocomplete(s,v, Tipousovehiculo),
+                "get_items": lambda search, values: get_items_autocomplete( search, values, Tipousovehiculo),
                 "multiselect":True,
                 "item_label":"descripcion",
                 "item_value":"descripcion",
