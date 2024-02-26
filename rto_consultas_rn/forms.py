@@ -42,7 +42,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
 
-    idtipouso = forms.ChoiceField(
+    idtipouso = forms.ModelChoiceField(
         label="Tipo Uso",
         # queryset=Tipousovehiculo.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
@@ -110,7 +110,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "motoranio",
             "chasismarca",
             "chasisanio",
-            "idtipovehiculo",
+            "idtipouso",
             "companiaseguro",
             "nropoliza",
             "vanio",
