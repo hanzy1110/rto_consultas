@@ -898,6 +898,10 @@ def carga_excepcion(request, dominio=None, *args, **kwargs):
         else:
             initial = {}
 
+        if settings.DEBUG:
+            logger.warn("USING DEBUG DATA!!!")
+            initial = handle_initial_excepcion("AE-512-IN")
+
         logger.debug(f"INITIAL_DATA => {initial}")
         form = ExcepcionesFirstForm(initial=initial)
         # form_informes = InformesForm(initial=initial)
