@@ -50,7 +50,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             # use_ac=CustomEventsAC(),
             options={
                 "item_label":"idtipouso",
-                "item_value":"descripcion",
+                "item_value":"idtipouso",
                 "model": Tipousovehiculo,
             }
         ),
