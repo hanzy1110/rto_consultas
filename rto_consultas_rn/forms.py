@@ -48,12 +48,12 @@ class ExcepcionesFirstForm(forms.ModelForm):
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
             # use_ac=CustomEventsAC(),
-            options={
-                "item_label":"idtipouso",
-                "item_value":"idtipouso",
-                "lookup":"__exact",
-                "model": Tipousovehiculo,
-            }
+            options=dict(
+                item_label="idtipouso",
+                item_value="idtipouso",
+                lookup="__exact",
+                model=Tipousovehiculo,
+            )
         ),
     )
 
