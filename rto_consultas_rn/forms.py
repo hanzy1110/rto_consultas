@@ -41,17 +41,18 @@ class ExcepcionesFirstForm(forms.ModelForm):
         label="Fecha Dictamen",
         widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
     )
-    idtipouso = forms.MultipleChoiceField(
+
+    idtipouso = forms.ModelChoiceField(
         label="Tipo Uso",
         widget=widgets_autocomplete.Autocomplete(
             name="idtipouso",
             # use_ac=CustomEventsAC(),
             options={
-                "get_items": lambda search, values: get_items_autocomplete( search, values, Tipousovehiculo),
+                # "get_items": lambda search, values: get_items_autocomplete( search, values, Tipousovehiculo),
                 "multiselect":True,
                 "item_label":"descripcion",
                 "item_value":"descripcion",
-                # "model": Event
+                "model": Tipousovehiculo,
             }
         ),
     )
