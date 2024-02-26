@@ -1435,7 +1435,7 @@ def edit_taller(taller: CccfTalleres, cleaned_data):
 
 
 def handle_initial_excepcion(dominio):
-    exc = Excepcion.objects.get(dominio__exact=parse_license_plate(dominio)).values()
+    exc = Excepcion.objects.get(dominio__exact=parse_license_plate(dominio)).__dict__
     logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc}")
     return exc
 
