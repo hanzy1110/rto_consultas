@@ -28,6 +28,7 @@ from rto_consultas_rn.models import (
     Excepcion,
     Localidades as Localidades_RN,
     Tipovehiculo as TipoVehiculo_RN,
+    Tipousovehiculo as Tipousovehiculo_RN,
 )
 
 from rto_consultas.models import (
@@ -1509,9 +1510,9 @@ class TipoUsoAutocomplete(HTMXAutoComplete):
         logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}, {self.route_name}")
         values = super().get_items(self, *args, **kwargs)
         logger.info(f"RETURNED VALUES ===> {values}")
-        return values.values()
+        return values
 
     class Meta:
-        model = Tipousovehiculo
+        model = Tipousovehiculo_RN
         # item_label = "descripcion"
         # item_value = "idtipouso"
