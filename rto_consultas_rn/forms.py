@@ -45,15 +45,29 @@ class ExcepcionesFirstForm(forms.ModelForm):
     # telefonotitular = forms.CharField(label="Telefono Titular")
 
     # #EXCEPCION FIELDS:
-    fecha = forms.DateField(label="Fecha Creacion", widget=forms.DateInput(attrs={"class": "date", "type": "date"}))
+    fecha = forms.DateField(
+        label="Fecha Creacion",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
     # estado = forms.ChoiceField(label="Dictamen", choices=DICTAMEN_CHOICES)
-    fechahoradictamen = forms.DateField(label="Fecha Dictamen", widget=forms.DateInput(attrs={"class": "date", "type": "date"}))
+    fechahoradictamen = forms.DateField(
+        label="Fecha Dictamen",
+        widget=forms.DateInput(attrs={"class": "date", "type": "date"}),
+    )
     # usuario = forms.CharField(label="Usuario Creacion")
     # usuariodictamen = forms.CharField(label="Usuario Dictamen")
 
     class Meta:
         model = Excepcion
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = [
+            "idexcepcion",
+            "modificado",
+            "viedmapatagones",
+            "codigotitular",
+            "notifyactive",
+            "idcategoria",
+        ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,7 +124,10 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Datos de la Excepción</b>"),
                 Div(
-                    *[Field(k, wrapper_class="form-group col-4") for k in excepcion_fields],
+                    *[
+                        Field(k, wrapper_class="form-group col-4")
+                        for k in excepcion_fields
+                    ],
                     css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
@@ -118,21 +135,32 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Datos del Vehiculo</b>"),
                 Div(
-                    *[Field(k, wrapper_class="form-group col-4") for k in vehicle_fields], css_class="form-group row box"
+                    *[
+                        Field(k, wrapper_class="form-group col-4")
+                        for k in vehicle_fields
+                    ],
+                    css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
             ),
             Div(
                 HTML("<b>Datos del Titular</b>"),
                 Div(
-                    *[Field(k, wrapper_class="form-group col-4") for k in titular_fields], css_class="form-group row box"
+                    *[
+                        Field(k, wrapper_class="form-group col-4")
+                        for k in titular_fields
+                    ],
+                    css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
             ),
             Div(
                 HTML("<b>Datos del Conductor</b>"),
                 Div(
-                    *[Field(k, wrapper_class="form-group col-4") for k in conductor_fields],
+                    *[
+                        Field(k, wrapper_class="form-group col-4")
+                        for k in conductor_fields
+                    ],
                     css_class="form-group row box"
                 ),
                 css_class="card card-plain mt-2 box",
