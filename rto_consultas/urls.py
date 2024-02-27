@@ -52,7 +52,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="home"),
     path("", views.index, name="index"),
-    # *HTMXAutoComplete.url_dispatcher('ac'),
+    *HTMXAutoComplete.url_dispatcher('ac'),
 ]
 
 urlpatterns += [
