@@ -110,7 +110,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "idcategoria",
         ]
 
-    def __init__(self, editable, *args, **kwargs):
+    def __init__(self, editable=True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
