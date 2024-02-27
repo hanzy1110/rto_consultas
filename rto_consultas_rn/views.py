@@ -225,7 +225,6 @@ class ListVerificacionesView_RN(CustomRTOView_RN):
         queryset = get_queryset_from_user(queryset, self.request)
         return queryset
 
-
     # def get_queryset(self):
     #     logger.info("CALCULATE QUERYSET...")
     #     queryset = super().get_queryset()
@@ -874,6 +873,7 @@ def resumen_obleas_rn(request):
         {"form": form, "resumen_obleas_url": "resumen_obleas_rn"},
     )
 
+
 def carga_excepcion(request, dominio=None, *args, **kwargs):
     logger.info(f"request method = {request.method}, htmx? {request.htmx}")
     if request.method == "POST":
@@ -882,7 +882,6 @@ def carga_excepcion(request, dominio=None, *args, **kwargs):
 
         if form.is_valid():
             try:
-
                 cccf = handle_save_excepcion(
                     form.cleaned_data,
                     request.user,
@@ -936,9 +935,11 @@ def carga_excepcion(request, dominio=None, *args, **kwargs):
             "includes/carga_excepcion.html",
             {
                 "form": form,
+                "dominio": "avb",
                 "post_link": "dictaminar_excepcion",
-             },
+            },
         )
+
 
 def excepciones_estado_success(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
@@ -951,9 +952,8 @@ def excepciones_estado_success(request, *args, **kwargs):
 def excepciones_estado_error(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
     context = {"messages": stored_messages}
-    return render(
-        request, template_name="includes/estado_error.html", context=context
-    )
+    return render(request, template_name="includes/estado_error.html", context=context)
+
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
     if request.method == "POST":
@@ -962,7 +962,6 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
 
         if True:
             try:
-
                 exc = handle_update_excepcion(
                     # form.cleaned_data,
                     request.POST,
@@ -1016,7 +1015,5 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
         return render(
             request,
             "includes/carga_excepcion.html",
-            {"form": form,
-             "post_link": "dictaminar_excepcion"
-             },
+            {"form": form, "dominio": dominio, "post_link": "dictaminar_excepcion"},
         )
