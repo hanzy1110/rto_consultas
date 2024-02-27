@@ -30,7 +30,7 @@
 <div hx-get="{% url 'excepciones_estado_error' %}" hx-swap="beforeend" hx-target="body"
     hx-trigger="reloadEstadoError from:body">
 </div>
-<form hx-post="{% url 'carga_excepciones_rn' %}" hx-swap="innerHTML" hx-target="#success-message" hx-trigger="submit"
+<form hx-post="{% url post_link %}" hx-swap="innerHTML" hx-target="#success-message" hx-trigger="submit"
     enctype="multipart/form-data">
     <div class="card-body p-1">
         {% csrf_token %}

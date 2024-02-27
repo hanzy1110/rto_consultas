@@ -934,7 +934,10 @@ def carga_excepcion(request, dominio=None, *args, **kwargs):
         return render(
             request,
             "includes/carga_excepcion.html",
-            {"form": form},
+            {
+                "form": form,
+                "post_link": "dictaminar_excepcion",
+             },
         )
 
 def excepciones_estado_success(request, *args, **kwargs):
@@ -1013,5 +1016,7 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
         return render(
             request,
             "includes/carga_excepcion.html",
-            {"form": form},
+            {"form": form,
+             "post_link": "dictaminar_excepcion"
+             },
         )
