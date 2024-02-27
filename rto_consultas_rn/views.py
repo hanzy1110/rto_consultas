@@ -85,6 +85,7 @@ from rto_consultas.helpers import (
     handle_save_hab,
     handle_save_excepcion,
     handle_initial_excepcion,
+    handle_update_excepcion,
     get_queryset_from_user,
 )
 
@@ -959,8 +960,9 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
         if form.is_valid():
             try:
 
-                exc = handle_save_excepcion(
+                exc = handle_update_excepcion(
                     form.cleaned_data,
+                    dominio,
                     request.user,
                 )
 

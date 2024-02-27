@@ -1443,9 +1443,12 @@ def edit_taller(taller: CccfTalleres, cleaned_data):
 
 
 def handle_initial_excepcion(dominio):
-    exc_data = Excepcion.objects.filter(
-        dominio__exact=parse_license_plate(dominio)
-    ).order_by("-fecha").first().__dict__
+    exc_data = (
+        Excepcion.objects.filter(dominio__exact=parse_license_plate(dominio))
+        .order_by("-fecha")
+        .first()
+        .__dict__
+    )
     logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc_data}")
     # exc_data["idlocalidadconductor"] = Localidades_RN.objects.get(
     #     idlocalidad__exact=exc_data["idlocalidadconductor"]
@@ -1464,7 +1467,7 @@ def handle_initial_excepcion(dominio):
     return exc_data
 
 
-def handle_save_excepcion(cleaned_data, **kwargs):
+def handle_save_excepcion(cleaned_data, user, **kwargs):
     logger.debug(f"CLEANED_DATA => {cleaned_data}")
 
     new_data = cleaned_data
@@ -1491,6 +1494,22 @@ def handle_save_excepcion(cleaned_data, **kwargs):
 
     return new_excepcion
 
+
+def handle_update_excepcion(cleaned_data, dominio, user, **kwargs):
+    logger.debug(f"CLEANED_DATA => {cleaned_data}")
+    exc = (
+        Excepcion.objects.filter(dominio__exact=parse_license_plate(dominio))
+        .order_by("-fecha")
+        .first()
+    )
+    logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc}")
+
+    for k, v in cleaned_data.items():
+        setattr(exc, k, v)
+
+    exc.save()
+
+
 def get_items_autocomplete(search, values, model):
     if isinstance(values, str):
         queryset = model.objects.filter(descripcion__icontains=values)
@@ -1501,17 +1520,23 @@ def get_items_autocomplete(search, values, model):
     logger.info(f" // SEARCH ==> {search} // values {values} // QUERYSET => {queryset}")
     return queryset
 
+
 class TipoUsoAutocomplete(HTMXAutoComplete):
     name = "idtipouso"
+
     class Meta:
         model = Tipousovehiculo_RN
 
+
 class TallerAutocomplete_RN(HTMXAutoComplete):
     name = "talleres_rn"
+
     class Meta:
         model = TalleresRN
 
+
 class LocalidadesAutocomplete_RN(HTMXAutoComplete):
     name = "localidades_rn"
+
     class Meta:
         model = Localidades_RN
