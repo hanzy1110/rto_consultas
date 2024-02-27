@@ -60,7 +60,7 @@ urlpatterns = [
         name="excepciones_rn_form",
     ),
 
-    path("dictaminar_excepcion", views_RN.carga_excepcion, name="dictaminar_excepcion"),
+    path("dictaminar_excepcion/<str:dominio>", views_RN.carga_excepcion, name="dictaminar_excepcion"),
     path("carga_excepciones_rn", views_RN.dictaminar_excepcion, name="carga_excepciones_rn"),
     path("excepciones_estado_success", views_RN.excepciones_estado_success, name="excepciones_estado_success"),
     path("excepciones_estado_error", views_RN.excepciones_estado_error, name="excepciones_estado_error"),
