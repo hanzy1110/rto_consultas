@@ -1447,12 +1447,12 @@ def handle_initial_excepcion(dominio):
         dominio__exact=parse_license_plate(dominio)
     ).__dict__
     logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc_data}")
-    exc_data["idlocalidadconductor"] = Localidades_RN.objects.get(
-        idlocalidad__exact=exc_data["idlocalidadconductor"]
-    ).descripcion
-    exc_data["idlocalidadtitular"] = Localidades_RN.objects.get(
-        idlocalidad__exact=exc_data["idlocalidadtitular"]
-    ).descripcion
+    # exc_data["idlocalidadconductor"] = Localidades_RN.objects.get(
+    #     idlocalidad__exact=exc_data["idlocalidadconductor"]
+    # ).descripcion
+    # exc_data["idlocalidadtitular"] = Localidades_RN.objects.get(
+    #     idlocalidad__exact=exc_data["idlocalidadtitular"]
+    # ).descripcion
     # exc_data["idtipouso"] = TIPO_USO_VEHICULO.get(
     #     exc_data["idtipouso"], exc_data["idtipouso"]
     # )
