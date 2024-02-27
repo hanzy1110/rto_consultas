@@ -885,6 +885,7 @@ class ExcepcionesTable_RN(tables.Table):
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
 
+
     dictaminar = tables.Column(
         verbose_name="Dictaminar",
         linkify=(
@@ -897,6 +898,7 @@ class ExcepcionesTable_RN(tables.Table):
         empty_values=(),
         # attrs={"th": {"colspan": "4"}},
     )
+    dictamen = tables.Column(verbose_name="Dictamen", orderable=False, empty_values=())
     # aprobado = ImageColumnAprobado(
     #     empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
     # )
@@ -912,6 +914,7 @@ class ExcepcionesTable_RN(tables.Table):
             "titular",
             "idtaller",
             "dictaminar",
+            "dictamen",
         ]
 
     # def render_vista_previa(self, record):
@@ -933,6 +936,16 @@ class ExcepcionesTable_RN(tables.Table):
 
     def render_dictaminar(self, record):
         image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
+
+    def render_dictamen(self, record):
+        dictamen = record.observaciondictamen
+        logger.info(f"DICTAMEN {record} {record.observaciondictamen} {record.estado}")
+        if dictamen:
+            image_url = static(f"img/small-logos/ver.png")
+        else:
+            image_url = static(f"img/small-logos/anulado.png")
+
         return format_html('<img src="{}" />', image_url)
 
     def paginate(
