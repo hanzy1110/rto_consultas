@@ -954,14 +954,15 @@ def excepciones_estado_error(request, *args, **kwargs):
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
     if request.method == "POST":
-        form = ExcepcionesFirstForm(request.POST, disable_edition=False)
+        # form = ExcepcionesFirstForm(request.POST, disable_edition=False)
         # form_informes = InformesForm(request.POST)
 
-        if form.is_valid():
+        if True:
             try:
 
                 exc = handle_update_excepcion(
-                    form.cleaned_data,
+                    # form.cleaned_data,
+                    request.POST,
                     dominio,
                     request.user,
                 )
