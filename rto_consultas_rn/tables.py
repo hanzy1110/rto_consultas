@@ -940,7 +940,7 @@ class ExcepcionesTable_RN(tables.Table):
 
     def render_dictamen(self, record):
         dictamen = record.observaciondictamen
-        logger.info(f"DICTAMEN {record} {record.observaciondictamen} {record.estado}")
+        logger.info(f"DICTAMEN {record} {record.observaciondictamen}")
         if dictamen:
             image_url = static(f"img/small-logos/ver.png")
         else:
