@@ -881,7 +881,7 @@ class ExcepcionesTable_RN(tables.Table):
     dominio = tables.Column(verbose_name="Dominio")
     titular = tables.Column(orderable=False, empty_values=())
     fecha = tables.Column(verbose_name="Fecha Desde")
-    modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
+    # modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
 
