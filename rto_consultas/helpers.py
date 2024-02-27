@@ -1457,9 +1457,9 @@ def handle_initial_excepcion(dominio):
     #     exc_data["idtipouso"], exc_data["idtipouso"]
     # )
 
-    exc_data["idtipovehiculo"] = TipoVehiculo_RN.objects.get(
-        idtipovehiculo=exc_data["idtipovehiculo"]
-    ).descripcion
+    # exc_data["idtipovehiculo"] = TipoVehiculo_RN.objects.get(
+    #     idtipovehiculo=exc_data["idtipovehiculo"]
+    # ).descripcion
 
     return exc_data
 
