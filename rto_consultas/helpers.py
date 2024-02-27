@@ -1501,23 +1501,10 @@ def get_items_autocomplete(search, values, model):
 
 class TipoUsoAutocomplete(HTMXAutoComplete):
     name = "idtipouso"
-    # multiselect = True
-    # minimum_search_length = 0
-    # _item_label = "descripcion"
-    # _item_value = "descripcion"
-
-    # @classmethod
-    # def get_items(cls, search, values):
-    #     logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}")
-    #     logger.info(f"PARAMS SEARCH => {search},VALUE => {values}")
-    #     rtr = None
-    #     # if search:
-    #     #     rtr = self.Meta.model.objects.filter(descripcion__contains=search).values('idtipouso', 'descripcion')
-    #     if values:
-    #         rtr = self.Meta.model.objects.filter(descripcion__in=values).values('idtipouso', 'descripcion')
-    #     return rtr
-
     class Meta:
         model = Tipousovehiculo_RN
-        # item_label = "descripcion"
-        # item_value = "descripcion"
+
+class TallerAutocomplete_RN(HTMXAutoComplete):
+    name = "talleres_rn"
+    class Meta:
+        model = TalleresRN

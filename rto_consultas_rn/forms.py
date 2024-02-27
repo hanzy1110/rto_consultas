@@ -1,5 +1,5 @@
 import os
-from rto_consultas.helpers import AuxData, map_fields, TipoUsoAutocomplete
+from rto_consultas.helpers import AuxData, map_fields, TipoUsoAutocomplete, TalleresAutocomplete_RN
 from .models import Excepcion, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
@@ -52,12 +52,21 @@ class ExcepcionesFirstForm(forms.ModelForm):
         ),
     )
 
-
-    idtaller = forms.ChoiceField(
-        choices=get_choices(),
-        required=False,
+    idtaller = forms.ModelChoiceField(
         label="Planta",
+        queryset=Talleres.objects.all(),
+        widget=widgets_autocomplete.Autocomplete(
+            # name="idtipouso",
+            use_ac=TalleresAutocomplete_RN,
+            # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
+        ),
     )
+
+    # idtaller = forms.ChoiceField(
+    #     choices=get_choices(),
+    #     required=False,
+    #     label="Planta",
+    # )
 
     class Meta:
         model = Excepcion
@@ -119,7 +128,6 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "tipocombustible",
             "chasisnro",
             "nroejes",
-            "idtipouso",
             "ultimorecpatente",
         ]
 
