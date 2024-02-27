@@ -118,8 +118,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
 
         logger.info(f"EDITABLE ==> {editable}")
         for f in self.fields.keys():
-            self.fields[f].widget.attrs['readonly'] = False # text input
-            self.fields[f].widget.attrs['disabled'] = False # radio / checkbox
+            # self.fields[f].widget.attrs['readonly'] = False # text input
+            # self.fields[f].widget.attrs['disabled'] = False # radio / checkbox
+            self.fields[f].disabled = True # radio / checkbox
 
         excepcion_fields = [
             "fecha",
