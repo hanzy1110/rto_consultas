@@ -1443,9 +1443,9 @@ def edit_taller(taller: CccfTalleres, cleaned_data):
 
 
 def handle_initial_excepcion(dominio):
-    exc_data = Excepcion.objects.get(
+    exc_data = Excepcion.objects.filter(
         dominio__exact=parse_license_plate(dominio)
-    ).__dict__
+    ).order_by("-fechahoracreacion").first().__dict__
     logger.info(f"DOMINIO => {dominio} EXCEPCION => {exc_data}")
     # exc_data["idlocalidadconductor"] = Localidades_RN.objects.get(
     #     idlocalidad__exact=exc_data["idlocalidadconductor"]
