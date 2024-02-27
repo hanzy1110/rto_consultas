@@ -62,6 +62,16 @@ class ExcepcionesFirstForm(forms.ModelForm):
         ),
     )
 
+    idlocalidadvehiculo = forms.ModelChoiceField(
+        label="Localidad Vehiculo",
+        queryset=Localidades.objects.all(),
+        widget=widgets_autocomplete.Autocomplete(
+            # name="idtipouso",
+            use_ac=LocalidadesAutocomplete_RN,
+            # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
+        ),
+    )
+
     idlocalidadtitular = forms.ModelChoiceField(
         label="Localidad Titular",
         queryset=Localidades.objects.all(),
@@ -71,6 +81,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )
+
     idlocalidadconductor = forms.ModelChoiceField(
         label="Localidad Conductor",
         queryset=Localidades.objects.all(),
@@ -80,6 +91,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )
+
     resultado = forms.ChoiceField(
         choices=[(0,"Seleccione..."), (1,"Aprobado"), (2, "Desaprobado")],
         required=True,
@@ -101,6 +113,8 @@ class ExcepcionesFirstForm(forms.ModelForm):
     def __init__(self,editable=True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
+
+        logger.info(f"EDITABLE ==> {editable}")
 
         for f in self.fields.keys():
             self.fields[f].editable=editable
