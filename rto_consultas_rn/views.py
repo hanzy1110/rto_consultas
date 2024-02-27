@@ -950,20 +950,27 @@ def excepciones_estado_error(request, *args, **kwargs):
         request, template_name="includes/estado_error.html", context=context
     )
 
-class TipoUsoAutocomplete(HTMXAutoComplete):
-    name = "idtipouso"
-    # multiselect = True
-    # minimum_search_length = 0
-    _item_label = "descripcion"
-    _item_value = "idtipouso"
+def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
+    logger.info(f"request method = {request.method}, htmx? {request.htmx}")
+    if kwargs:
+        dominio = kwargs.pop("dominio", None)
 
-    def get_items(self, *args, **kwargs):
-        logger.info(f"PARAMS LABEL => {self._item_label},VALUE => {self._item_value}, {self.route_name}")
-        values = super().get_items(self, *args, **kwargs)
-        logger.info(f"RETURNED VALUES ===> {values}")
-        return values.values()
+    # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+    if dominio:
+        initial = handle_initial_excepcion(dominio)
+    else:
+        initial = {}
 
-    class Meta:
-        model = Tipousovehiculo
-        # item_label = "descripcion"
-        # item_value = "idtipouso"
+    if settings.DEBUG:
+        logger.warn("USING DEBUG DATA!!!")
+        initial = handle_initial_excepcion("AE-512-IN")
+
+    logger.debug(f"INITIAL_DATA => {initial}")
+    form = ExcepcionesFirstForm(editable=False, initial=initial)
+    # form_informes = InformesForm(initial=initial)
+
+    return render(
+        request,
+        "includes/carga_excepcion.html",
+        {"form": form},
+    )

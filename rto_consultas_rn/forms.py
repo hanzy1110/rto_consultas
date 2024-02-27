@@ -98,9 +98,12 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "idcategoria",
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,editable=True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
+
+        for f in self.fields.keys():
+            self.fields[f].editable=editable
 
         excepcion_fields = [
             "fecha",

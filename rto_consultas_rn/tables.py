@@ -884,6 +884,19 @@ class ExcepcionesTable_RN(tables.Table):
     modelovehiculo = tables.Column(verbose_name="Modelo Vehiculo")
     marcavehiculo = tables.Column(verbose_name="Marca Vehiculo")
     idtaller = tables.Column(verbose_name="Planta", orderable=False, empty_values=())
+
+    dictaminar = tables.Column(
+        verbose_name="Dictaminar",
+        linkify=(
+            "dictaminar_excepcion",
+            {
+                "dominio": tables.A("dominio"),
+            },
+        ),
+        orderable=False,
+        empty_values=(),
+        # attrs={"th": {"colspan": "4"}},
+    )
     # aprobado = ImageColumnAprobado(
     #     empty_values=(), verbose_name="Estado", attrs={"th": {"hidden": True}}
     # )
@@ -898,9 +911,7 @@ class ExcepcionesTable_RN(tables.Table):
             "modelovehiculo",
             "titular",
             "idtaller",
-            # "aprobado"
-            # HYPERLINKS:
-            # "vista_previa",
+            "dictaminar",
         ]
 
     # def render_vista_previa(self, record):
@@ -919,6 +930,10 @@ class ExcepcionesTable_RN(tables.Table):
         if record.tipopersona in "Jj":
             return f"{record.razonsocialtitular}"
         return f"{record.nombretitular} {record.apellidotitular}"
+
+    def render_dictaminar(self, record):
+        image_url = static(f"img/small-logos/ver.png")
+        return format_html('<img src="{}" />', image_url)
 
     def paginate(
         self, paginator_class=Paginator, per_page=None, page=1, *args, **kwargs
