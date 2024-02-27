@@ -114,13 +114,11 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "idcategoria",
         ]
 
-    def __init__(self, editable=True, *args, **kwargs):
+    def __init__(self, disable_edition=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
-        # edit = kwargs.get("editable", "TU MAMI")
-
-        logger.info(f"EDITABLE ==> {editable}")
+        logger.info(f"disable_edition ==> {disable_edition}")
         disallowed_keys = list(
             filter(
                 lambda x: x not in {"resultado", "observaciondictamen"},
@@ -130,7 +128,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         for f in disallowed_keys:
             # self.fields[f].widget.attrs['readonly'] = False # text input
             # self.fields[f].widget.attrs['disabled'] = False # radio / checkbox
-            self.fields[f].disabled = True  # radio / checkbox
+            self.fields[f].disabled = disable_edition  # radio / checkbox
 
         excepcion_fields = [
             "fecha",
