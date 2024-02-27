@@ -951,26 +951,63 @@ def excepciones_estado_error(request, *args, **kwargs):
     )
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
-    logger.info(f"request method = {request.method}, htmx? {request.htmx}")
-    if kwargs:
-        dominio = kwargs.pop("dominio", None)
+    if request.method == "POST":
+        form = ExcepcionesFirstForm(request.POST)
+        # form_informes = InformesForm(request.POST)
 
-    # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
-    if dominio:
-        initial = handle_initial_excepcion(dominio)
+        if form.is_valid():
+            try:
+
+                exc = handle_save_excepcion(
+                    form.cleaned_data,
+                    request.user,
+                )
+
+                logger.info(f"exc => {exc} SAVED!")
+
+                success_message = "Form submitted successfully!"
+                success_message_html = render_to_string(
+                    "msgs/estado_success.html",
+                    {"success_message": success_message},
+                )
+
+                res = HttpResponse(success_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoSuccess"
+                return res
+
+            except IndentationError as e:
+                logger.error(e)
+                error_message = "An error occurred: " + str(e)
+                error_message_html = render_to_string(
+                    "msgs/estado_error.html", {"error_message": error_message}
+                )
+                res = HttpResponse(error_message_html)
+                res.headers["HX-Trigger"] = "reloadEstadoError"
+                return res
+        else:
+            logger.error(f"Validation Error => {form.errors}")
+            assert False
     else:
-        initial = {}
+        logger.info(f"request method = {request.method}, htmx? {request.htmx}")
+        if kwargs:
+            dominio = kwargs.pop("dominio", None)
 
-    if settings.DEBUG:
-        logger.warn("USING DEBUG DATA!!!")
-        initial = handle_initial_excepcion("AE-512-IN")
+        # logger.debug(f"KWARGS => {dominio}-//-{idhabilitacion}")
+        if dominio:
+            initial = handle_initial_excepcion(dominio)
+        else:
+            initial = {}
 
-    logger.debug(f"INITIAL_DATA => {initial}")
-    form = ExcepcionesFirstForm(disable_edition=True, initial=initial)
-    # form_informes = InformesForm(initial=initial)
+        if settings.DEBUG:
+            logger.warn("USING DEBUG DATA!!!")
+            initial = handle_initial_excepcion("AE-512-IN")
 
-    return render(
-        request,
-        "includes/carga_excepcion.html",
-        {"form": form},
-    )
+        logger.debug(f"INITIAL_DATA => {initial}")
+        form = ExcepcionesFirstForm(disable_edition=True, initial=initial)
+        # form_informes = InformesForm(initial=initial)
+
+        return render(
+            request,
+            "includes/carga_excepcion.html",
+            {"form": form},
+        )

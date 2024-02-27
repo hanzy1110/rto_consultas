@@ -112,6 +112,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             "codigotitular",
             "notifyactive",
             "idcategoria",
+            "estado",
         ]
 
     def __init__(self, disable_edition=False, *args, **kwargs):
@@ -126,9 +127,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
             )
         )
         for f in disallowed_keys:
-            # self.fields[f].widget.attrs['readonly'] = False # text input
-            # self.fields[f].widget.attrs['disabled'] = False # radio / checkbox
-            self.fields[f].disabled = disable_edition  # radio / checkbox
+            self.fields[f].disabled = disable_edition
 
         excepcion_fields = [
             "fecha",

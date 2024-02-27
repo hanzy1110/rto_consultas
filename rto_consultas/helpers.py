@@ -1482,6 +1482,8 @@ def handle_save_excepcion(cleaned_data, **kwargs):
         idtipovehiculo=new_data["idtipovehiculo"]
     )
 
+    # new_data["resultado"]
+
     logger.info(f"EXCEPCION DATA => {new_data}")
 
     new_excepcion = Excepcion(**new_data)
