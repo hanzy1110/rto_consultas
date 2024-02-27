@@ -945,14 +945,14 @@ def excepciones_estado_success(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
     context = {"messages": stored_messages}
     return render(
-        request, template_name="includes/estado_success.html", context=context
+        request, template_name="msgs/estado_success.html", context=context
     )
 
 
 def excepciones_estado_error(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
     context = {"messages": stored_messages}
-    return render(request, template_name="includes/estado_error.html", context=context)
+    return render(request, template_name="msgs/estado_error.html", context=context)
 
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
