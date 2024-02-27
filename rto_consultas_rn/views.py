@@ -952,7 +952,7 @@ def excepciones_estado_error(request, *args, **kwargs):
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
     if request.method == "POST":
-        form = ExcepcionesFirstForm(request.POST)
+        form = ExcepcionesFirstForm(False, request.POST)
         # form_informes = InformesForm(request.POST)
 
         if form.is_valid():
