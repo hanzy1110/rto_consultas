@@ -197,9 +197,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
             Div(
                 HTML("<b>Observaciones Dictamen</b>"),
                 HTML("<b>Fundamentación Dictamen</b>"),
-                Div(Field("observaciondictamen", wrapper_class="form-group col-12"), css_class="col-12"),
+                Div(Field("observaciondictamen", wrapper_class="form-group col-12"), css_class="mx-2 col-12"),
                 HTML("<b>Planta Autorizada</b>"),
-                Div(Field('idtaller', wrapper_class="form-group col-12"), css_class="col-12"),
+                Div(Field('idtaller', wrapper_class="form-group col-12"), css_class="mx-2 col-12"),
                 css_class="card card-plain mt-2 box",
             ),
 
