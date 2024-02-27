@@ -1,5 +1,9 @@
 import os
-from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, LocalidadesAutocomplete_RN
+from rto_consultas.helpers import (
+    TipoUsoAutocomplete,
+    TallerAutocomplete_RN,
+    LocalidadesAutocomplete_RN,
+)
 from .models import Excepcion, Localidades, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
@@ -93,7 +97,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
     )
 
     resultado = forms.ChoiceField(
-        choices=[(0,"Seleccione..."), (1,"Aprobado"), (2, "Desaprobado")],
+        choices=[(0, "Seleccione..."), (1, "Aprobado"), (2, "Desaprobado")],
         required=True,
         label="Resultado",
     )
@@ -117,10 +121,16 @@ class ExcepcionesFirstForm(forms.ModelForm):
         # edit = kwargs.get("editable", "TU MAMI")
 
         logger.info(f"EDITABLE ==> {editable}")
-        for f in self.fields.keys():
+        disallowed_keys = list(
+            filter(
+                lambda x: x not in {"resultado", "observaciondictamen"},
+                set(self.fields.keys()),
+            )
+        )
+        for f in disallowed_keys:
             # self.fields[f].widget.attrs['readonly'] = False # text input
             # self.fields[f].widget.attrs['disabled'] = False # radio / checkbox
-            self.fields[f].disabled = True # radio / checkbox
+            self.fields[f].disabled = True  # radio / checkbox
 
         excepcion_fields = [
             "fecha",
@@ -177,7 +187,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
                         Field(k, wrapper_class="form-group col-4")
                         for k in excepcion_fields
                     ],
-                    css_class="form-group row box"
+                    css_class="form-group row box",
                 ),
                 css_class="card card-plain mt-2 box",
             ),
@@ -188,7 +198,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
                         Field(k, wrapper_class="form-group col-4")
                         for k in vehicle_fields
                     ],
-                    css_class="form-group row box"
+                    css_class="form-group row box",
                 ),
                 css_class="card card-plain mt-2 box",
             ),
@@ -199,7 +209,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
                         Field(k, wrapper_class="form-group col-4")
                         for k in titular_fields
                     ],
-                    css_class="form-group row box"
+                    css_class="form-group row box",
                 ),
                 css_class="card card-plain mt-2 box",
             ),
@@ -210,20 +220,27 @@ class ExcepcionesFirstForm(forms.ModelForm):
                         Field(k, wrapper_class="form-group col-4")
                         for k in conductor_fields
                     ],
-                    css_class="form-group row box"
+                    css_class="form-group row box",
                 ),
                 css_class="card card-plain mt-2 box",
             ),
             Div(
                 HTML("<b>Observaciones Dictamen</b>"),
                 HTML("<b>Fundamentación Dictamen</b>"),
-                Div(Field("observaciondictamen", wrapper_class="form-group col-10"), css_class="mx-2 col-12"),
+                Div(
+                    Field("observaciondictamen", wrapper_class="form-group col-10"),
+                    css_class="mx-2 col-12",
+                ),
                 HTML("<b>Planta Autorizada</b>"),
-                Div(Field('idtaller', wrapper_class="form-group col-10"), css_class="mx-2 col-12"),
+                Div(
+                    Field("idtaller", wrapper_class="form-group col-10"),
+                    css_class="mx-2 col-12",
+                ),
                 css_class="card card-plain mt-2 box",
             ),
-
-            Div(HTML("<b>Resultado</b>"),
-                Field('resultado', wrapper_class="form-group col-10") ,css_class="card card-plain mt-2 box"),
-
+            Div(
+                HTML("<b>Resultado</b>"),
+                Field("resultado", wrapper_class="form-group col-10"),
+                css_class="card card-plain mt-2 box",
+            ),
         )
