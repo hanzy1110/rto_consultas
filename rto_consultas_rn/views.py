@@ -1,3 +1,4 @@
+from logging import disable
 import os
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
@@ -952,7 +953,7 @@ def excepciones_estado_error(request, *args, **kwargs):
 
 def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
     if request.method == "POST":
-        form = ExcepcionesFirstForm(False, request.POST)
+        form = ExcepcionesFirstForm(request.POST, disable_edition=False)
         # form_informes = InformesForm(request.POST)
 
         if form.is_valid():
