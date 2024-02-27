@@ -65,5 +65,6 @@ urlpatterns = [
     path("resumen_obleas_rn", views_RN.resumen_obleas_rn, name="resumen_obleas_rn"),
     path("idtipouso", TipoUsoAutocomplete.as_view(), name="idtipouso"),
     path("talleres_rn", TallerAutocomplete_RN.as_view(), name="talleres_rn"),
+    path("localidades_rn", LocalidadesRN.as_view(), name="localidades_rn"),
 
 ]

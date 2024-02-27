@@ -1,6 +1,6 @@
 import os
-from rto_consultas.helpers import AuxData, map_fields, TipoUsoAutocomplete, TallerAutocomplete_RN
-from .models import Excepcion, Talleres, Tipousovehiculo, Vehiculos
+from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, Localidades_RN
+from .models import Excepcion, Localidades, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
 
@@ -62,6 +62,24 @@ class ExcepcionesFirstForm(forms.ModelForm):
         ),
     )
 
+    idlocalidadtitular = forms.ModelChoiceField(
+        label="Localidad Titular",
+        queryset=Localidades.objects.all(),
+        widget=widgets_autocomplete.Autocomplete(
+            # name="idtipouso",
+            use_ac=Localidades_RN,
+            # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
+        ),
+    )
+    idlocalidadconductor = forms.ModelChoiceField(
+        label="Localidad Conductor",
+        queryset=Localidades.objects.all(),
+        widget=widgets_autocomplete.Autocomplete(
+            # name="idtipouso",
+            use_ac=Localidades_RN,
+            # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
+        ),
+    )
     # idtaller = forms.ChoiceField(
     #     choices=get_choices(),
     #     required=False,
@@ -187,15 +205,3 @@ class ExcepcionesFirstForm(forms.ModelForm):
 
             Div(HTML("<b>Resultado</b>"),css_class="card card-plain mt-2 box"),
         )
-
-
-class ExcepcionesSecondForm(forms.ModelForm):
-    class Meta:
-        model = Excepcion
-        fields = "__all__"
-
-
-class ExcepcionesVehiculosForm(forms.ModelForm):
-    class Meta:
-        model = Vehiculos
-        fields = "__all__"
