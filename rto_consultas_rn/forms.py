@@ -114,9 +114,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
-        edit = kwargs.get("editable", "TU MAMI")
+        # edit = kwargs.get("editable", "TU MAMI")
 
-        logger.info(f"EDITABLE ==> {editable} edit {edit}")
+        logger.info(f"EDITABLE ==> {editable}")
 
         for f in self.fields.keys():
             self.fields[f].editable=editable

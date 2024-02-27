@@ -966,7 +966,7 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
         initial = handle_initial_excepcion("AE-512-IN")
 
     logger.debug(f"INITIAL_DATA => {initial}")
-    form = ExcepcionesFirstForm(editable=False, initial=initial)
+    form = ExcepcionesFirstForm(False, initial=initial)
     # form_informes = InformesForm(initial=initial)
 
     return render(
