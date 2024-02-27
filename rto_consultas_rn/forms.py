@@ -117,9 +117,9 @@ class ExcepcionesFirstForm(forms.ModelForm):
         # edit = kwargs.get("editable", "TU MAMI")
 
         logger.info(f"EDITABLE ==> {editable}")
-
         for f in self.fields.keys():
-            self.fields[f].editable=editable
+            self.fields[f].widget.attrs['readonly'] = editable # text input
+            self.fields[f].widget.attrs['disabled'] = editable # radio / checkbox
 
         excepcion_fields = [
             "fecha",
