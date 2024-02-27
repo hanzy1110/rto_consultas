@@ -1,5 +1,5 @@
 import os
-from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, Localidades_RN
+from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, LocalidadesAutocomplete_RN
 from .models import Excepcion, Localidades, Talleres, Tipousovehiculo, Vehiculos
 from rto_consultas.logging import configure_logger
 from rto_consultas.name_schemas import DICTAMEN_CHOICES
@@ -67,7 +67,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         queryset=Localidades.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             # name="idtipouso",
-            use_ac=Localidades_RN,
+            use_ac=LocalidadesAutocomplete_RN,
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )
@@ -76,7 +76,7 @@ class ExcepcionesFirstForm(forms.ModelForm):
         queryset=Localidades.objects.all(),
         widget=widgets_autocomplete.Autocomplete(
             # name="idtipouso",
-            use_ac=Localidades_RN,
+            use_ac=LocalidadesAutocomplete_RN,
             # options=dict(model=Tipousovehiculo, item_label="descripcion", item_value="idtipouso")
         ),
     )

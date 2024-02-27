@@ -3,7 +3,7 @@ from django.urls import path, include
 
 # TODO Check this kind of errors
 import rto_consultas_rn.views as views_RN
-from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, Localidades_RN
+from rto_consultas.helpers import TipoUsoAutocomplete, TallerAutocomplete_RN, LocalidadesAutocomplete_RN
 
 urlpatterns = [
     path("dvr", views_RN.DVRView.as_view(), name="dvr"),
@@ -65,6 +65,6 @@ urlpatterns = [
     path("resumen_obleas_rn", views_RN.resumen_obleas_rn, name="resumen_obleas_rn"),
     path("idtipouso", TipoUsoAutocomplete.as_view(), name="idtipouso"),
     path("talleres_rn", TallerAutocomplete_RN.as_view(), name="talleres_rn"),
-    path("localidades_rn", Localidades_RN.as_view(), name="localidades_rn"),
+    path("localidades_rn", LocalidadesAutocomplete_RN.as_view(), name="localidades_rn"),
 
 ]

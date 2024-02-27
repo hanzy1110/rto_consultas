@@ -1509,7 +1509,7 @@ class TallerAutocomplete_RN(HTMXAutoComplete):
     class Meta:
         model = TalleresRN
 
-class Localidades_RN(HTMXAutoComplete):
+class LocalidadesAutocomplete_RN(HTMXAutoComplete):
     name = "localidades_rn"
     class Meta:
         model = Localidades_RN
