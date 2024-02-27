@@ -910,7 +910,7 @@ class ExcepcionesTable_RN(tables.Table):
             "dominio",
             "fecha",
             "marcavehiculo",
-            "modelovehiculo",
+            # "modelovehiculo",
             "titular",
             "idtaller",
             "dictaminar",
