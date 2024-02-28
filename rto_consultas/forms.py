@@ -274,7 +274,6 @@ class ConsultaDPTForm(forms.Form):
     )
 
     consulta = forms.ChoiceField(
-        # choices=[("option1", "Option 1"), ("option2", "Option 2")],
         choices=[("", ""), (1, "Dominio"), (2, "Habilitación")],
         required=True,
         label="Tipo de Consulta",
@@ -283,16 +282,11 @@ class ConsultaDPTForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ConsultaDPTForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_class = "col_w900 col_w900_last"
         self.helper.layout = Layout(
             Div(
-                Field("dominio"),
-                Field("dominio"),
-                css_class="tr",
-            ),
-            Div(
-                Field("consulta"),
-                css_class="tr",
+                Field("dominio", wrapper_class="form-group col-6"),
+                Field("consulta", wrapper_class="form-group col-6"),
+                css_class="card card-plain mt-2 box",
             ),
         )
 
