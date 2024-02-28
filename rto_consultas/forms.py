@@ -289,7 +289,7 @@ class ConsultaDPTForm(forms.Form):
                     HTML("<b>Consulta Dominio/Habilitación Final</b>"),
                     Field("dominio", wrapper_class="form-group col-6"),
                     Field("consulta", wrapper_class="form-group col-6"),
-                    css_class="card card-plain mt-2",
+                    css_class="form-group row box",
                 ),
                     css_class="card card-plain mt-2",
             ),
