@@ -285,9 +285,13 @@ class ConsultaDPTForm(forms.Form):
         self.helper = FormHelper()
         self.helper.layout = Layout(
             Div(
-                Field("dominio", wrapper_class="form-group col-4"),
-                Field("consulta", wrapper_class="form-group col-4"),
-                css_class="card card-plain mt-2 box",
+                Div(
+                    HTML("<b>Consulta Dominio/Habilitación Final"),
+                    Field("dominio", wrapper_class="form-group col-4"),
+                    Field("consulta", wrapper_class="form-group col-4"),
+                    # css_class="card card-plain mt-2 box",
+                ),
+                    css_class="card card-plain mt-2 box",
             ),
         )
 
