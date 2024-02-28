@@ -270,7 +270,8 @@ def route_form(tipo_uso, referer):
 class ConsultaDPTForm(forms.Form):
     dominio = forms.CharField(
         label="Dominio",
-        widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
+        # widget=forms.TextInput(attrs={"class": "txt", "style": "width: 150px"}),
+        widget=forms.TextInput(),
     )
 
     consulta = forms.ChoiceField(
