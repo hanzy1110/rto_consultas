@@ -1344,6 +1344,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         composite_keys = [
             Q(idverificacion=item[0], idtaller_id=item[1]) for item in cat_verifs
         ]
+
+        logger.info(f"COMPOSITES KEYS BY CAT {len(composite_keys)} == {composite_keys}")
+
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
             .filter(reduce(lambda x, y: x | y, composite_keys))
@@ -1355,7 +1358,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
                 idcategoria__exact=c,
             ).values("nrocertificado")
             if r_cat:
-                logger.info(f"CAT {c} -- r_cat => {r_cat}")
+                logger.info(f"CAT {c} -- r_cat => {len(r_cat)}")
                 outside_certs = len(r_cat)
                 reverificados[c] = [c["nrocertificado"] for c in r_cat]
                 reverificados_cant[c] = outside_certs
