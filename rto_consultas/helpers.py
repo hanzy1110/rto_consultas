@@ -1344,12 +1344,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         )
         if c_reverificados:
             r_cat = c_reverificados.filter(
-                idcategoria__exact=c, fecha__lt=fecha_desde
+                idcategoria__exact=c,
+                # fecha__lt=fecha_desde
             ).values("nrocertificado")
             if r_cat:
                 logger.debug(f"CAT {c} -- r_cat => {r_cat}")
                 outside_certs = len(r_cat)
-                # reverificados[c] = {"values": r_cat, "cantidad": outside_certs}
                 reverificados[c] = [c["nrocertificado"] for c in r_cat]
                 reverificados_cant[c] = outside_certs
             else:
