@@ -1277,6 +1277,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .values("idcategoria", "idverificacion_id", "idtaller_id")
         .order_by()
     )
+
     certs_count_categoria = (
         Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
@@ -1306,7 +1307,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     v_reverif_totales = (
         v_reverificados.filter(idverificacionoriginal__in=v_anteriores)
-        .filter(handle_date_range(fecha_desde, fecha_hasta))
+        # .filter(handle_date_range(fecha_desde, fecha_hasta))
         .values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
     )
 
