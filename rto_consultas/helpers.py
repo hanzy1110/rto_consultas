@@ -1288,17 +1288,17 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
-    v_anteriores = (Verificaciones.objects
-                    .filter(fecha__lt=fecha_desde)
-                    # .values_list("idverificacionoriginal", flat=True)
-                    .values_list("idverificacion", flat=True)
-                    )
+    v_anteriores = (
+        Verificaciones.objects.filter(fecha__lt=fecha_desde)
+        # .values_list("idverificacionoriginal", flat=True)
+        .values_list("idverificacion", flat=True)
+    )
 
-
-
-    v_reverif_totales = v_reverificados.filter(
-        idverificacionoriginal__in=v_anteriores
-    ).filter(fecha__lt=fecha_desde).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
+    v_reverif_totales = (
+        v_reverificados.filter(idverificacionoriginal__in=v_anteriores)
+        .exclude(handle_date_range(fecha_desde, fecha_hasta))
+        .values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
+    )
 
     logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
     composite_keys = [
@@ -1524,6 +1524,7 @@ def handle_update_excepcion(cleaned_data, dominio, user, **kwargs):
     exc.save()
 
     return exc
+
 
 def get_items_autocomplete(search, values, model):
     if isinstance(values, str):
