@@ -1288,7 +1288,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
     v_anteriores = (Verificaciones.objects
-                    .filter(fecha__lt=fecha_desde)
+                    .filter(fecha__gt=fecha_desde)
                     # .values_list("idverificacionoriginal", flat=True)
                     .values_list("idverificacion", flat=True)
                     )
@@ -1349,10 +1349,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         if c_reverificados:
             r_cat = c_reverificados.filter(
                 idcategoria__exact=c,
-                fecha__lt=fecha_desde
             ).values("nrocertificado")
             if r_cat:
-                logger.debug(f"CAT {c} -- r_cat => {r_cat}")
+                logger.info(f"CAT {c} -- r_cat => {r_cat}")
                 outside_certs = len(r_cat)
                 reverificados[c] = [c["nrocertificado"] for c in r_cat]
                 reverificados_cant[c] = outside_certs
