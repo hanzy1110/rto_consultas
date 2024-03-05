@@ -1260,7 +1260,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     total_query = [fecha_query, taller_query, exclude_reverificado_query]
 
-    verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values(
+    verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
         "idverificacion", "idtaller_id", "idverificacionoriginal"
     )
 
