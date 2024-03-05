@@ -1298,7 +1298,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     v_reverif_totales = v_reverificados.filter(
         idverificacionoriginal__in=v_anteriores
-    ).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
+    ).filter(fecha__lt=fecha_desde).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
 
     logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
     composite_keys = [
