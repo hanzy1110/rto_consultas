@@ -1301,9 +1301,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     )
 
     logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
-    logger.info(f"V_REVERIFICADOS TOTALES LEN {v_reverif_totales}")
+
     composite_keys = [
-        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
+        Q(idverificacion=item[2], idtaller_id=item[1]) for item in v_reverif_totales
     ]
 
     if composite_keys:
@@ -1345,7 +1345,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
             Q(idverificacion=item[0], idtaller_id=item[1]) for item in cat_verifs
         ]
 
-        logger.info(f"COMPOSITES KEYS BY CAT {len(composite_keys)} == {composite_keys}")
+        logger.info(f"COMPOSITES KEYS BY CAT {len(composite_keys)}")
 
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
@@ -1353,6 +1353,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
+
         if c_reverificados:
             r_cat = c_reverificados.filter(
                 idcategoria__exact=c,
