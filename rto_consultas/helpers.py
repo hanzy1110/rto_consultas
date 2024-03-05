@@ -1293,7 +1293,6 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
                     .values_list("idverificacion", flat=True)
                     )
 
-
     v_reverif_totales = v_reverificados.filter(
         idverificacionoriginal__in=v_anteriores
     ).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
@@ -1350,7 +1349,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         if c_reverificados:
             r_cat = c_reverificados.filter(
                 idcategoria__exact=c,
-                # fecha__lt=fecha_desde
+                fecha__lt=fecha_desde
             ).values("nrocertificado")
             if r_cat:
                 logger.debug(f"CAT {c} -- r_cat => {r_cat}")
