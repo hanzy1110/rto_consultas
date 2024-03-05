@@ -1288,7 +1288,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
     v_anteriores = (Verificaciones.objects
-                    .filter(fecha__gt=fecha_desde)
+                    # .filter(fecha__gt=fecha_desde)
                     # .values_list("idverificacionoriginal", flat=True)
                     .values_list("idverificacion", flat=True)
                     )
