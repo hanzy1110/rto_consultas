@@ -1284,7 +1284,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
     v_anteriores = (Verificaciones.objects
-                    # .filter(fecha__lt=fecha_desde)
+                    .filter(fecha__lt=fecha_desde)
                     .values_list("idverificacionoriginal", flat=True)
                     )
 
@@ -1297,9 +1297,11 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     composite_keys = [
         Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
     ]
+    logger.info(f"COMPOSITE KEYS TOTALES LEN {len(composite_keys)}")
+
     if composite_keys:
         c_reverificados = Certificados.objects.filter(
-            reduce(lambda x, y: x | y, composite_keys)
+            *[k for k in reduce(lambda x, y: x | y, composite_keys)]
         ).values("idcategoria", "idverificacion_id", "nrocertificado")
     else:
         c_reverificados = None
