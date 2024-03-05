@@ -1276,6 +1276,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     # Todos los reverificados de este periodo
     query_reverif = [
         Q(reverificacion=1),
+        Q(idverificacionoriginal__isnull=False),
         handle_date_range(fecha_desde, fecha_hasta),
         Q(idtaller_id=id_taller),
     ]
@@ -1295,7 +1296,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
 
 
-    v_reverif_totales = v_reverificados.exclude(
+    v_reverif_totales = v_reverificados.filter(
         idverificacionoriginal__in=v_anteriores
     ).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
 
