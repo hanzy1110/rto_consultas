@@ -1297,13 +1297,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     composite_keys = [
         Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
     ]
-    logger.info(f"COMPOSITE KEYS TOTALES LEN {len(composite_keys)}")
 
     if composite_keys:
         c_reverificados = Certificados.objects.filter(
             reduce(lambda x, y: x | y, composite_keys)
         ).values("idcategoria", "idverificacion_id", "nrocertificado")
-
+        logger.info(f"C_REVERIFICADOS LEN {len(c_reverificados)}")
     else:
         c_reverificados = None
 
