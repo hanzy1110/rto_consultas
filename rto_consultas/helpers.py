@@ -1249,8 +1249,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
-    # exclude_reverificado_query = Q(reverificado=0)
-    exclude_reverificado_query = Q()
+    exclude_reverificado_query = Q(reverificado=0)
+    # exclude_reverificado_query = Q()
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
