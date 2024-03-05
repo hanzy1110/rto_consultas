@@ -286,7 +286,7 @@ class ConsultaDPTForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Div(
-                    HTML("<h2 style='text-align: center;'>Consulta Dominio/Hah2ilitación Final</h2>"),
+                    HTML("<h2 style='text-align: center;'>Consulta Dominio/Habilitación Final</h2>"),
                     Field("dominio", wrapper_class="form-group col-6"),
                     Field("consulta", wrapper_class="form-group col-6"),
                     css_class="form-group row box",

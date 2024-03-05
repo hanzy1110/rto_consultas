@@ -1509,6 +1509,7 @@ def handle_update_excepcion(cleaned_data, dominio, user, **kwargs):
 
     exc.save()
 
+    return exc
 
 def get_items_autocomplete(search, values, model):
     if isinstance(values, str):

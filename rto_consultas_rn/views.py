@@ -664,7 +664,7 @@ class RenderExcepcionesForm_RN(TemplateView):
             "fecha_desde": "date",
             "fecha_hasta": "date",
         },
-        render_url="prorrogas_rn",
+        render_url="excepciones_rn",
         fecha_field="fechahoracreacion",
     )
 
