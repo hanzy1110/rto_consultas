@@ -1004,7 +1004,7 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
         else:
             initial = {}
 
-        if settings.DEBUG:
+        if settings.DEBUG and not dominio:
             logger.warn("USING DEBUG DATA!!!")
             initial = handle_initial_excepcion("AE-512-IN")
 
