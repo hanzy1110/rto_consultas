@@ -1249,7 +1249,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
 
-    exclude_reverificado_query = Q(reverificado=0)
+    # exclude_reverificado_query = Q(reverificado=0)
+    exclude_reverificado_query = Q()
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
@@ -1279,12 +1280,15 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         Q(idtaller_id=id_taller),
     ]
 
+    # Tengo que agarrar las verificaciones originales que aparecen en
+    # cada reverificado!
+
     v_reverificados = Verificaciones.objects.filter(*query_reverif)
 
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
     v_anteriores = (Verificaciones.objects
-                    .filter(fecha__lt=fecha_desde)
+                    # .filter(fecha__lt=fecha_desde)
                     .values_list("idverificacionoriginal", flat=True)
                     )
 
