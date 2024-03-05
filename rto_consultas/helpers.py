@@ -1280,15 +1280,20 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     ]
 
     v_reverificados = Verificaciones.objects.filter(*query_reverif)
+
+    logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
+
     v_anteriores = (Verificaciones.objects
                     .filter(fecha__lt=fecha_desde)
                     .values_list("idverificacionoriginal", flat=True)
                     )
 
+
     v_reverif_totales = v_reverificados.filter(
         idverificacionoriginal__in=v_anteriores
     ).values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
 
+    logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
     composite_keys = [
         Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
     ]
