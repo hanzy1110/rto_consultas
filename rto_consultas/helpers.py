@@ -1268,7 +1268,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     # cada reverificado!
 
     cobrados_queries = [
-        Q(idverificacion_id=k.idverificacion, idtaller_id=k.idtaller_id)
+        Q(idverificacion_id=k[0], idtaller_id=k[1])
         for k in verificaciones_a_cobrar
     ]
 
