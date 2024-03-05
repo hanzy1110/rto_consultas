@@ -1247,10 +1247,11 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     if not tipo_uso:
         tipo_uso = cleaned_data.get("tipo_uso", None)
 
-    fecha_query = handle_date_range(fecha_desde, fecha_hasta)
+    # Tengo que solo fijarme en las verificaciones!!
 
-    exclude_reverificado_query = Q(reverificado=0)
-    # exclude_reverificado_query = Q()
+    fecha_query = handle_date_range(fecha_desde, fecha_hasta)
+    # exclude_reverificado_query = Q(reverificado=0)
+    exclude_reverificado_query = Q(reverificacion=0)
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
@@ -1259,13 +1260,25 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     total_query = [fecha_query, taller_query, exclude_reverificado_query]
 
+    verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values(
+        "idverificacion", "idtaller_id", "idverificacionoriginal"
+    )
+
+    # Tengo que agarrar las verificaciones originales que aparecen en
+    # cada reverificado!
+
+    cobrados_queries = [
+        Q(idverificacion_id=k.idverificacion, idtaller_id=k.idtaller_id)
+        for k in verificaciones_a_cobrar
+    ]
+
     certs = (
-        Certificados.objects.filter(*total_query)
+        Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values("idcategoria", "idverificacion_id", "idtaller_id")
         .order_by()
     )
     certs_count_categoria = (
-        Certificados.objects.filter(*total_query)
+        Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
             "idcategoria",
         )
@@ -1273,7 +1286,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .order_by()
         .values_list("idcategoria", "cant_por_categoria")
     )
-    # Todos los reverificados de este periodo
+
+    # ^^^^^ Hasta aca los certificados y las cuentas deberian estar correctas
+    # vvvvv Todos los reverificados de este periodo
     query_reverif = [
         Q(reverificacion=1),
         Q(idverificacionoriginal__isnull=False),
@@ -1281,13 +1296,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         Q(idtaller_id=id_taller),
     ]
 
-    # Tengo que agarrar las verificaciones originales que aparecen en
-    # cada reverificado!
-
     v_reverificados = Verificaciones.objects.filter(*query_reverif)
-
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
-
     v_anteriores = (
         Verificaciones.objects.filter(fecha__lt=fecha_desde)
         # .values_list("idverificacionoriginal", flat=True)
@@ -1303,7 +1313,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
 
     composite_keys = [
-        Q(idverificacion=item[2], idtaller_id=item[1]) for item in v_reverif_totales
+        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
     ]
 
     if composite_keys:
@@ -1314,26 +1324,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     else:
         c_reverificados = None
 
-    categorias_descripciones = dict(
-        Categorias.objects.all().values_list("idcategoria", "descripcion")
-    )
-    categorias = certs.values_list("idcategoria", flat=True).distinct()
-    match tipo_uso:
-        case "vup":
-            categorias = list(
-                filter(lambda x: categorias_descripciones[x] == "Z", categorias)
-            )
-        case "dpt":
-            categorias = list(
-                filter(lambda x: categorias_descripciones[x] != "Z", categorias)
-            )
-        case _:
-            categorias = categorias
+    categorias = get_categorias_certs(certs, tipo_uso)
 
     verifs = {}
     reverificados = {}
     reverificados_cant = {}
-    for c in sorted(categorias):
+    for c in categorias:
         query_cat = [
             Q(idcategoria__exact=c),
         ]
@@ -1425,6 +1421,26 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     }
 
     return context
+
+
+def get_categorias_certs(certs, tipo_uso: str):
+    categorias_descripciones = dict(
+        Categorias.objects.all().values_list("idcategoria", "descripcion")
+    )
+    categorias = certs.values_list("idcategoria", flat=True).distinct()
+    match tipo_uso:
+        case "vup":
+            categorias = list(
+                filter(lambda x: categorias_descripciones[x] == "Z", categorias)
+            )
+        case "dpt":
+            categorias = list(
+                filter(lambda x: categorias_descripciones[x] != "Z", categorias)
+            )
+        case _:
+            categorias = categorias
+
+    return sorted(categorias)
 
 
 def get_servicios(codigo_habilitacion: str):
