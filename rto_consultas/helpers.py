@@ -1330,8 +1330,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     qs = reduce(lambda x, y: x | y, qs)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
 
-    aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
-    verificaciones_a_cobrar = aux.union(v_reverificado_este_mes)
+    verificaciones_a_cobrar = verificaciones_a_cobrar.difference(rev_mismo_mes)
+    # verificaciones_a_cobrar = aux.union(v_reverificado_este_mes)
 
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
