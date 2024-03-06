@@ -1334,7 +1334,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
         for k in rev_mismo_mes.values("idverificacionoriginal", "idtaller")
     ]
-    qs_vuelta = reduce(lambda x, y: x | y, qs)
+    qs_vuelta = reduce(lambda x, y: x | y, qs_vuelta)
     simetrico = v_reverificado_este_mes.filter(qs)
 
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
