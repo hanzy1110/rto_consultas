@@ -1330,18 +1330,15 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller_id")
     ]
     qs = reduce(lambda x, y: x | y, qs)
+    qs_estado = Q(idestado=2) | Q(idestado=3)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
-    aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
+    aux = verificaciones_a_cobrar.filter(qs_estado).difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
-    verificaciones_a_cobrar = verificaciones_a_cobrar.filter(
-        idestado__in=[2,3]
-    )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     logger.info("=========XXXX=========")
 
-    logger.info(f"qs ==> {qs}")
-    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)} -- {rev_mismo_mes}")
+    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)}")
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
