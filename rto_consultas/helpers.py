@@ -1347,19 +1347,19 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
-    logger.info(pformat((
+    logger.info(
         f"VERIFICACIONES a COBRAR RECH => {pformat(verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
-    ))
-    logger.info(pformat((
+    )
+    logger.info(
         f"VERIFICACIONES a COBRAR COND => {pformat(verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
-    ))
-    logger.info(pformat((
+    )
+    logger.info(
         f"REVERIFICACIONES a COBRAR RECH => {pformat(conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
-    ))
-    logger.info(pformat((
+    )
+    logger.info(
         f"REVERIFICACIONES a COBRAR COND => {pformat(conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
-    ))
-    logger.info(pformat(("=========XXXX=========")
+    )
+    logger.info("=========XXXX=========")
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     cobrados_queries = [
