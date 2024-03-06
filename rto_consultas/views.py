@@ -1368,8 +1368,10 @@ def consulta_resumen_mensual(request, *args, **kwargs):
             raise ValidationError("Error while validating resumen FORM")
     else:
         tipo_uso = get_tipo_uso_by_user(request)
-        today = datetime.today()
-        prev = today - timedelta(weeks=8)
+        # today = datetime.today()
+        today = datetime.strptime('02/29/2024', '%m/%d/%Y')
+        prev = datetime.strptime('02/01/2024', '%m/%d/%Y')
+        # prev = today - timedelta(weeks=8)
 
         tipo_uso_user = get_tipo_uso_by_user(request)
         initial_data = {
