@@ -1292,6 +1292,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
+        "dominiovehiculo"
     )
 
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
@@ -1324,7 +1325,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     qs = [
-        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
+        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller_id"])
         for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller_id")
     ]
     qs = reduce(lambda x, y: x | y, qs)
