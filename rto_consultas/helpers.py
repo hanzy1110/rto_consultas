@@ -1366,6 +1366,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(vals)
     logger.info("=========XXXX=========")
 
+    verificaciones_a_cobrar = filter_verificaciones(verificaciones_a_cobrar)
+
     cobrados_queries = [
         Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
     ]
@@ -1641,6 +1643,18 @@ def get_items_autocomplete(search, values, model):
     logger.info(f" // SEARCH ==> {search} // values {values} // QUERYSET => {queryset}")
     return queryset
 
+def filter_verificaciones(verifs):
+
+    dominios = {k[5] for k in verifs}
+
+    a = []
+    for d in dominios:
+        v = list(filter(lambda x: x[5] == d, verifs))
+        if len(v) > 1:
+            logger.info(f"DUPLICATE FOUND! {d} {v}")
+        a.append(v[0])
+
+    return a
 
 class TipoUsoAutocomplete(HTMXAutoComplete):
     name = "idtipouso"
