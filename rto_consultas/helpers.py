@@ -1347,9 +1347,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     # intersection_debug = simetrico.intersection(aux)
+    # logger.info(f"INTERSECTION DEBUG len => {len(intersection_debug)}")
 
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
-    logger.info(f"INTERSECTION DEBUG len => {len(intersection_debug)}")
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
