@@ -1272,6 +1272,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
+        "dominiovehiculo"
     )
     # Ahora tengo que sacar las de otro periodo
     # vvvvv Todos los reverificados de este periodo
