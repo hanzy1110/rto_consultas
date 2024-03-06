@@ -1272,7 +1272,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
-        "dominiovehiculo"
+        "dominiovehiculo",
+        "reverificacion",
     )
     # Ahora tengo que sacar las de otro periodo
     # vvvvv Todos los reverificados de este periodo
@@ -1293,7 +1294,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
-        "dominiovehiculo"
+        "dominiovehiculo",
+        "reverificacion",
     )
 
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
@@ -1317,13 +1319,14 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
-        "dominiovehiculo"
+        "dominiovehiculo",
+        "reverificacion",
     )
 
     qs_estado = Q(idestado=2) | Q(idestado=3)
     logger.info(f"REVERIFICADOS_ANTERIORES LEN {len(v_rev_anteriores)}")
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
-    v_reverificado_este_mes = v_reverificados.exclude(qs_estado).difference(v_rev_anteriores)
+    v_reverificado_este_mes = v_reverificados.difference(v_rev_anteriores)
     conds_rech = v_reverificados.filter(qs_estado)
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
@@ -1344,24 +1347,22 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     logger.info(
-        f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2)}"
+        f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
     )
     logger.info(
-        f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3)}"
+        f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
     )
     logger.info(
-        f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2)}"
+        f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
     )
     logger.info(
-        f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3)}"
+        f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
     )
     logger.info("=========XXXX=========")
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
-
     cobrados_queries = [
-        Q(idverificacion_id=k[0], idtaller_id=k[1])
-        for k in verificaciones_a_cobrar
+        Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
     ]
 
     certs = (
