@@ -1324,7 +1324,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
     qs = [
-        Q(idverificacion=k[0], idtaller_id=k[1])
+        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
         for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller")
     ]
     qs = reduce(lambda x, y: x | y, qs)
