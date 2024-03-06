@@ -1323,7 +1323,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     qs_estado = Q(idestado=2) | Q(idestado=3)
     logger.info(f"REVERIFICADOS_ANTERIORES LEN {len(v_rev_anteriores)}")
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
-    v_reverificado_este_mes = v_reverificados.difference(v_rev_anteriores)
+    v_reverificado_este_mes = v_reverificados.exclude(qs_estado).difference(v_rev_anteriores)
     conds_rech = v_reverificados.filter(qs_estado)
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
