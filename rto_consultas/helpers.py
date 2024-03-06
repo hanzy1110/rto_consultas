@@ -1254,12 +1254,17 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     exclude_reverificado_query = Q(reverificacion=0)
     # exclude_reverificado_query = Q()
 
+    if tipo_uso:
+        query_tipo_uso = Q(idtipouso=tipo_uso)
+    else:
+        query_tipo_uso = Q()
+
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
     else:
         taller_query = Q()
 
-    total_query = [fecha_query, taller_query, exclude_reverificado_query]
+    total_query = [fecha_query, taller_query, exclude_reverificado_query, query_tipo_uso]
     # total_query = [fecha_query, taller_query]
 
     verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
