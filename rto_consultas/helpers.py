@@ -1324,16 +1324,28 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
     qs = [
-        Q(idverificacion=k['idverificacionoriginal'], idtaller_id=k["idtaller"])
+        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
         for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller")
     ]
     qs = reduce(lambda x, y: x | y, qs)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
 
+    qs_vuelta = [
+        Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
+        for k in rev_mismo_mes.values("idverificacionoriginal", "idtaller")
+    ]
+    qs_vuelta = reduce(lambda x, y: x | y, qs)
+    simetrico = v_reverificado_este_mes.filter(qs)
+
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
-    verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
+
+    # Esto esta mal V
+    verificaciones_a_cobrar = simetrico.union(aux)
+
+    intersection_debug = simetrico.intersection(aux)
 
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
+    logger.info(f"INTERSECTION DEBUG len => {len(intersection_debug)}")
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
