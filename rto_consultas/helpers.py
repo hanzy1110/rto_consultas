@@ -1,3 +1,4 @@
+from pprint import pformat
 from functools import reduce
 from uuid import uuid1
 from django.db.models import Q, Count, QuerySet, Subquery
@@ -1347,16 +1348,24 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     logger.info(
-        f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
+        pformat(
+            f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
+        )
     )
     logger.info(
-        f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
+        pformat(
+            f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
+        )
     )
     logger.info(
-        f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
+        pformat(
+            f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
+        )
     )
     logger.info(
-        f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
+        pformat(
+            f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
+        )
     )
     logger.info("=========XXXX=========")
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
@@ -1376,12 +1385,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     # La info de la categoria esta en el certificado!!
     certs_count_categoria = (
-        Certificados.objects
-        # .filter(
-        #     idverificacion_id__in=[k[0] for k in verificaciones_a_cobrar],
-        #     idtaller_id__in=[k[1] for k in verificaciones_a_cobrar],
-        # )
-        .filter(reduce(lambda x, y: x | y, cobrados_queries))
+        Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
             "idcategoria",
         )
@@ -1403,7 +1407,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         c_reverificados = None
 
     categorias = get_categorias_certs(certs, tipo_uso)
-    logger.info("CATEGORIAS => {categorias}")
+    logger.info(f"CATEGORIAS => {categorias}")
 
     verifs = {}
     reverificados = {}
