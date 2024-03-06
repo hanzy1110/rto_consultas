@@ -1341,7 +1341,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_reverificadas_anteriores)}")
     v_reverificado_a_cobrar = v_reverificados.difference(v_rev_anteriores)
-    verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
+    # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
 
     cobrados_queries = [
@@ -1367,7 +1367,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     composite_keys = [
         Q(idverificacion=item[0], idtaller_id=item[1])
-        for item in v_reverificadas_anteriores
+        for item in v_rev_anteriores
     ]
 
     if composite_keys:
