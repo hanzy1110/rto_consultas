@@ -1304,22 +1304,17 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     v_reverificadas_anteriores = (
         Verificaciones.objects.filter(reduce(lambda x, y: x | y, queries_reverificados))
         .filter(fecha__lt=fecha_desde)
-        .values_list(
-            "idverificacion",
-            flat=True
-        )
+        .values_list("idverificacion", flat=True)
     )
 
-    v_rev_anteriores = (
-        v_reverificados
-        .filter(idverificacionoriginal__in=v_reverificadas_anteriores)
-        .values_list(
-            "idverificacion",
-            "idtaller_id",
-            "idverificacionoriginal",
-            "idestado",
-            "idtipouso",
-        )
+    v_rev_anteriores = v_reverificados.filter(
+        idverificacionoriginal__in=v_reverificadas_anteriores
+    ).values_list(
+        "idverificacion",
+        "idtaller_id",
+        "idverificacionoriginal",
+        "idestado",
+        "idtipouso",
     )
 
     logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_reverificadas_anteriores)}")
@@ -1327,14 +1322,17 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
 
-    cobrados_queries = [
-        Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
-    ]
+    # cobrados_queries = [
+    #     Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
+    # ]
 
     certs = (
-        Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
-        .values("idcategoria", "idverificacion_id", "idtaller_id")
-        .order_by()
+        Certificados.objects.filter(
+            idverificacion_id__in=[k[0] for k in verificaciones_a_cobrar],
+            idtaller_id__in=[k[1] for k in verificaciones_a_cobrar],
+        )
+        # .filter(reduce(lambda x, y: x | y, cobrados_queries))
+        .values("idcategoria", "idverificacion_id", "idtaller_id").order_by()
     )
 
     # La info de la categoria esta en el certificado!!
@@ -1349,8 +1347,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     )
 
     composite_keys = [
-        Q(idverificacion=item[0], idtaller_id=item[1])
-        for item in v_rev_anteriores
+        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_rev_anteriores
     ]
 
     if composite_keys:
