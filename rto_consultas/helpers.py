@@ -1320,9 +1320,11 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "dominiovehiculo"
     )
 
+    qs_estado = Q(idestado=2) | Q(idestado=3)
     logger.info(f"REVERIFICADOS_ANTERIORES LEN {len(v_rev_anteriores)}")
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
     v_reverificado_este_mes = v_reverificados.difference(v_rev_anteriores)
+    conds_rech = v_reverificados.filter(qs_estado)
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     qs = [
@@ -1330,11 +1332,10 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller_id")
     ]
     qs = reduce(lambda x, y: x | y, qs)
-    qs_estado = Q(idestado=2) | Q(idestado=3)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
-    verificaciones_a_cobrar = v_reverificado_este_mes.exclude(qs_estado).union(aux)
+    verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     logger.info("=========XXXX=========")
 
