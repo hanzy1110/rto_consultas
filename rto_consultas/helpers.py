@@ -1333,9 +1333,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
-    # verificaciones_a_cobrar = verificaciones_a_cobrar.filter(
-    #     idestado__in=[2,3]
-    # )
+    verificaciones_a_cobrar = verificaciones_a_cobrar.filter(
+        idestado__in=[2,3]
+    )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     logger.info("=========XXXX=========")
