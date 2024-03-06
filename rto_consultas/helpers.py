@@ -1395,6 +1395,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
             .order_by("idtipouso")
         )
 
+        logger.info(f"VERIFICACIONES EN {c} => {verifs[c]}")
+
         if c_reverificados:
             r_cat = c_reverificados.filter(
                 idcategoria__exact=c,
