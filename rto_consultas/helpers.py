@@ -1348,24 +1348,16 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     logger.info(
-        pformat(
-            f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
-        )
+        f"VERIFICACIONES a COBRAR RECH => {pformat(verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion'))}"
     )
     logger.info(
-        pformat(
-            f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
-        )
+        f"VERIFICACIONES a COBRAR COND => {pformat(verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion'))}"
     )
     logger.info(
-        pformat(
-            f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion')}"
-        )
+        f"REVERIFICACIONES a COBRAR RECH => {pformat(conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion'))}"
     )
     logger.info(
-        pformat(
-            f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion')}"
-        )
+        f"REVERIFICACIONES a COBRAR COND => {pformat(conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion'))}"
     )
     logger.info("=========XXXX=========")
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
@@ -1385,7 +1377,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     # La info de la categoria esta en el certificado!!
     certs_count_categoria = (
-        Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
+        Certificados.objects
+        .filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
             "idcategoria",
         )
