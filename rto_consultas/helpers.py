@@ -1321,13 +1321,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
     v_reverificado_a_cobrar = v_reverificados.difference(v_rev_anteriores)
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_a_cobrar)
-    len_v_a_cobrar = len(verificaciones_a_cobrar)
     verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
 
 
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
     logger.info(f"REVERIFICACIONES_A_COBRAR len => {len(v_reverificado_a_cobrar)}")
-    logger.info(f"VERIFICACIONES AGREGADAS len => {len_v_a_cobrar - len(v_reverificado_a_cobrar)}")
+    logger.info(f"VERIFICACIONES AGREGADAS len => {len(verificaciones_a_cobrar) - len(v_reverificado_a_cobrar)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     # cobrados_queries = [
