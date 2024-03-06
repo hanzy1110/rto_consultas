@@ -1337,12 +1337,16 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     qs_vuelta = reduce(lambda x, y: x | y, qs_vuelta)
     simetrico = v_reverificado_este_mes.filter(qs)
 
+    logger.info(f"REV_MISMO_MES => {rev_mismo_mes}")
+    logger.info(f"SIMETRICO => {simetrico}")
+
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
 
     # Esto esta mal V
-    verificaciones_a_cobrar = simetrico.union(aux)
+    # verificaciones_a_cobrar = simetrico.union(aux)
+    verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
-    intersection_debug = simetrico.intersection(aux)
+    # intersection_debug = simetrico.intersection(aux)
 
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
     logger.info(f"INTERSECTION DEBUG len => {len(intersection_debug)}")
