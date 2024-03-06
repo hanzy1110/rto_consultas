@@ -1255,14 +1255,6 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     exclude_reverificado_query = Q(reverificacion=0)
     # exclude_reverificado_query = Q()
 
-    # if tipo_uso:
-    #     tipo_uso = Tipousovehiculo.objects.get(descripcion=tipo_uso).values(
-    #         "idtipouso", flat=True
-    #     )
-    #     query_tipo_uso = Q(idtipouso=tipo_uso)
-    # else:
-    #     query_tipo_uso = Q()
-
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
     else:
@@ -1271,10 +1263,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     total_query = [
         fecha_query,
         taller_query,
-        # exclude_reverificado_query,
-        # query_tipo_uso,
+        exclude_reverificado_query,
     ]
-    # total_query = [fecha_query, taller_query]
 
     verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
         "idverificacion",
@@ -1343,7 +1333,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_reverificadas_anteriores)}")
     v_reverificado_a_cobrar = v_reverificados.difference(v_rev_anteriores)
-    # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
+    verificaciones_a_cobrar = verificaciones_a_cobrar.difference(v_reverificado_a_cobrar)
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
 
     cobrados_queries = [
