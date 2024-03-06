@@ -1388,9 +1388,10 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
         # Por que las agarro de nuevo!
         verifs[c] = (
-            Verificaciones.objects.values("idestado", "idtipouso")
+            Verificaciones.objects
             # verificaciones_a_cobrar.values("idestado", "idtipouso")
             .filter(reduce(lambda x, y: x | y, composite_keys))
+            .values("idestado", "idtipouso")
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
