@@ -1271,7 +1271,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     total_query = [
         fecha_query,
         taller_query,
-        exclude_reverificado_query,
+        # exclude_reverificado_query,
         # query_tipo_uso,
     ]
     # total_query = [fecha_query, taller_query]
