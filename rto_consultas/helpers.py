@@ -1652,7 +1652,10 @@ def filter_verificaciones(verifs):
         v = list(filter(lambda x: x[5] == d, verifs))
         if len(v) > 1:
             logger.info(f"DUPLICATE FOUND! {d} {v}")
-        a.append(v[0])
+            b = list(filter(lambda x: x[-1] != 0, v))[0]
+            a.append(b)
+        else:
+            a.append(v[0])
 
     return a
 
