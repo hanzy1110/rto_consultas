@@ -1306,21 +1306,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .filter(fecha__lt=fecha_desde)
         .values_list(
             "idverificacion",
-            # "idtaller_id",
-            # "idverificacionoriginal",
-            # "idestado",
-            # "idtipouso",
             flat=True
         )
     )
-    # queries_reverificados_vuelta = [
-    #     Q(idverificacionoriginal=k[2], idtaller=k[1])
-    #     for k in v_reverificadas_anteriores
-    # ]
 
     v_rev_anteriores = (
         v_reverificados
-        # .filter(reduce(lambda x, y: x | y, queries_reverificados_vuelta))
         .filter(idverificacionoriginal__in=v_reverificadas_anteriores)
         .values_list(
             "idverificacion",
@@ -1333,7 +1324,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_reverificadas_anteriores)}")
     v_reverificado_a_cobrar = v_reverificados.difference(v_rev_anteriores)
-    verificaciones_a_cobrar = verificaciones_a_cobrar.difference(v_reverificado_a_cobrar)
+    verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
 
     cobrados_queries = [
