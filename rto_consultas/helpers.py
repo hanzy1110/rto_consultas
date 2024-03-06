@@ -1356,7 +1356,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     if composite_keys:
         c_reverificados = Certificados.objects.filter(
             reduce(lambda x, y: x | y, composite_keys)
-        ).values("idcategoria", "idverificacion_id", "nrocertificado")
+        ).values("idcategoria", "idverificacion_id", "nroc
+ertificado")
         logger.info(f"C_REVERIFICADOS LEN {len(c_reverificados)}")
     else:
         c_reverificados = None
