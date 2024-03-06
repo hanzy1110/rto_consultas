@@ -1315,49 +1315,36 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         "idverificacionoriginal",
         "idestado",
         "idtipouso",
+        "dominiovehiculo"
     )
 
-    logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_rev_anteriores)}")
+    logger.info(f"REVERIFICADOS_ANTERIORES LEN {len(v_rev_anteriores)}")
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
     v_reverificado_este_mes = v_reverificados.difference(v_rev_anteriores)
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
-    # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
-    # qs = [
-    #     Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
-    #     for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller")
-    # ]
     qs = [
         Q(dominiovehiculo=k["dominiovehiculo"])
         for k in v_reverificado_este_mes.values("dominiovehiculo")
     ]
     qs = reduce(lambda x, y: x | y, qs)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
-
-
-    # qs_vuelta = [
-    #     Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
-    #     for k in rev_mismo_mes.values("idverificacionoriginal", "idtaller")
-    # ]
-    # qs_vuelta = reduce(lambda x, y: x | y, qs_vuelta)
-    # simetrico = v_reverificado_este_mes.filter(qs)
-
-    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)} -- {rev_mismo_mes}")
-    # logger.info(f"SIMETRICO => {simetrico}")
-
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
-
-    # Esto esta mal V
-    # verificaciones_a_cobrar = simetrico.union(aux)
+    # Ya conte los condicionales en la otra
+    verificaciones_a_cobrar = verificaciones_a_cobrar.filter(
+        idestado__in=[2,3]
+    )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
-    # intersection_debug = simetrico.intersection(aux)
-    # logger.info(f"INTERSECTION DEBUG len => {len(intersection_debug)}")
+    logger.info("=========XXXX=========")
 
+    logger.info(f"qs ==> {qs}")
+    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)} -- {rev_mismo_mes}")
     logger.info(f"INTERSECTION len => {len(rev_intersection)}")
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
+    logger.info("=========XXXX=========")
     cobrados_queries = [
         Q(idverificacion_id=k[0], idtaller_id=k[1])
         for k in verificaciones_a_cobrar
