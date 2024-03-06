@@ -1324,7 +1324,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     qs = [
-        Q(dominiovehiculo=k["dominiovehiculo"])
+        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
         for k in v_reverificado_este_mes.values("dominiovehiculo")
     ]
     qs = reduce(lambda x, y: x | y, qs)
@@ -1345,6 +1345,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     logger.info("=========XXXX=========")
+
     cobrados_queries = [
         Q(idverificacion_id=k[0], idtaller_id=k[1])
         for k in verificaciones_a_cobrar
