@@ -1252,6 +1252,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     fecha_query = handle_date_range(fecha_desde, fecha_hasta)
     # exclude_reverificado_query = Q(reverificado=0)
     exclude_reverificado_query = Q(reverificacion=0)
+    # exclude_reverificado_query = Q()
 
     if id_taller:
         taller_query = Q(idtaller_id=id_taller)
@@ -1259,13 +1260,41 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         taller_query = Q()
 
     total_query = [fecha_query, taller_query, exclude_reverificado_query]
+    # total_query = [fecha_query, taller_query]
 
     verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
-        "idverificacion", "idtaller_id", "idverificacionoriginal"
+        "idverificacion", "idtaller_id", "idverificacionoriginal", "idestado", "idtipouso"
+    )
+    # Ahora tengo que sacar las de otro periodo
+    # vvvvv Todos los reverificados de este periodo
+    query_reverif = [
+        Q(reverificacion=1),
+        Q(idverificacionoriginal__isnull=False),
+        handle_date_range(fecha_desde, fecha_hasta),
+        Q(idtaller_id=id_taller),
+    ]
+
+    v_reverificados = Verificaciones.objects.filter(*query_reverif).values_list(
+        "idverificacion", "idtaller_id", "idverificacionoriginal", "idestado", "idtipouso"
     )
 
-    # Tengo que agarrar las verificaciones originales que aparecen en
-    # cada reverificado!
+    logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
+    v_anteriores = (
+        Verificaciones.objects.filter(fecha__lt=fecha_desde)
+        # .values_list("idverificacionoriginal", flat=True)
+        .values_list("idverificacion", flat=True)
+    )
+
+    queries_reverificados = [Q(idverificacionoriginal=k) for k in v_anteriores]
+
+    v_reverif_totales = (
+        v_reverificados.filter(reduce(lambda x,y: x|y, queries_reverificados))
+        .values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
+    )
+    logger.info(f"V_REVERIFICADOS_TOTALES LEN {len(v_reverif_totales)}")
+
+    v_reverificado_a_cobrar = v_reverificados.difference(v_reverif_totales)
+    verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
 
     cobrados_queries = [
         Q(idverificacion_id=k[0], idtaller_id=k[1])
@@ -1278,6 +1307,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .order_by()
     )
 
+    # La info de la categoria esta en el certificado!!
     certs_count_categoria = (
         Certificados.objects.filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
@@ -1289,27 +1319,6 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     )
 
     # ^^^^^ Hasta aca los certificados y las cuentas deberian estar correctas
-    # vvvvv Todos los reverificados de este periodo
-    query_reverif = [
-        Q(reverificacion=1),
-        Q(idverificacionoriginal__isnull=False),
-        handle_date_range(fecha_desde, fecha_hasta),
-        Q(idtaller_id=id_taller),
-    ]
-
-    v_reverificados = Verificaciones.objects.filter(*query_reverif)
-    logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
-    v_anteriores = (
-        Verificaciones.objects.filter(fecha__lt=fecha_desde)
-        # .values_list("idverificacionoriginal", flat=True)
-        .values_list("idverificacion", flat=True)
-    )
-
-    v_reverif_totales = (
-        v_reverificados.filter(idverificacionoriginal__in=v_anteriores)
-        # .filter(handle_date_range(fecha_desde, fecha_hasta))
-        .values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
-    )
 
     logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
 
@@ -1344,12 +1353,14 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
         logger.info(f"COMPOSITES KEYS BY CAT {len(composite_keys)}")
 
+        # Por que las agarro de nuevo!
         verifs[c] = (
             Verificaciones.objects.values("idestado", "idtipouso")
             .filter(reduce(lambda x, y: x | y, composite_keys))
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
         )
+        # verifs[c] = ()
 
         if c_reverificados:
             r_cat = c_reverificados.filter(
