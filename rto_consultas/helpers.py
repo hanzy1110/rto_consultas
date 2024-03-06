@@ -1361,7 +1361,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
-    vals = pformat(list(verificaciones_a_cobrar), depth=2, indent=4)
+    vals = pformat(list(sorted(verificaciones_a_cobrar, key = lambda x: x[-2])), depth=2, indent=4)
     logger.info("VERIFICACIONES TOTALES")
     logger.info(vals)
     logger.info("=========XXXX=========")
