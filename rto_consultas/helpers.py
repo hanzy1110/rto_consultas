@@ -1307,7 +1307,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
 
     # queries_reverificados = [Q(idverificacionoriginal=k) for k in v_anteriores]
-    queries_reverificados = [Q(idverificacion=k[2]) for k in v_reverificados]
+    queries_reverificados = [Q(idverificacion=k[2], idtaller=k[1]) for k in v_reverificados]
 
     v_reverificadas_anteriores = (
         Verificaciones.objects.filter(reduce(lambda x, y: x | y, queries_reverificados))
