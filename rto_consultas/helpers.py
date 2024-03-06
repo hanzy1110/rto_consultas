@@ -1330,15 +1330,15 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     qs = reduce(lambda x, y: x | y, qs)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
 
-    qs_vuelta = [
-        Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
-        for k in rev_mismo_mes.values("idverificacionoriginal", "idtaller")
-    ]
-    qs_vuelta = reduce(lambda x, y: x | y, qs_vuelta)
-    simetrico = v_reverificado_este_mes.filter(qs)
+    # qs_vuelta = [
+    #     Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
+    #     for k in rev_mismo_mes.values("idverificacionoriginal", "idtaller")
+    # ]
+    # qs_vuelta = reduce(lambda x, y: x | y, qs_vuelta)
+    # simetrico = v_reverificado_este_mes.filter(qs)
 
-    logger.info(f"REV_MISMO_MES => {rev_mismo_mes}")
-    logger.info(f"SIMETRICO => {simetrico}")
+    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)} -- {rev_mismo_mes}")
+    # logger.info(f"SIMETRICO => {simetrico}")
 
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
 
