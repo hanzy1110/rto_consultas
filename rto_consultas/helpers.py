@@ -1335,7 +1335,6 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
-    verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     logger.info("=========XXXX=========")
 
@@ -1357,6 +1356,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3)}"
     )
     logger.info("=========XXXX=========")
+    verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
+
 
     cobrados_queries = [
         Q(idverificacion_id=k[0], idtaller_id=k[1])
