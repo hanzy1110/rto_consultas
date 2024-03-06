@@ -1344,6 +1344,18 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
+    logger.info(
+        f"VERIFICACIONES a COBRAR RECH => {verificaciones_a_cobrar.filter(idestado=2)}"
+    )
+    logger.info(
+        f"VERIFICACIONES a COBRAR COND => {verificaciones_a_cobrar.filter(idestado=3)}"
+    )
+    logger.info(
+        f"REVERIFICACIONES a COBRAR RECH => {conds_rech.filter(idestado=2)}"
+    )
+    logger.info(
+        f"REVERIFICACIONES a COBRAR COND => {conds_rech.filter(idestado=3)}"
+    )
     logger.info("=========XXXX=========")
 
     cobrados_queries = [
