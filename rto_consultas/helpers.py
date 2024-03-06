@@ -1263,10 +1263,18 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     # total_query = [fecha_query, taller_query]
 
     verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
-        "idverificacion", "idtaller_id", "idverificacionoriginal", "idestado", "idtipouso"
+        "idverificacion",
+        "idtaller_id",
+        "idverificacionoriginal",
+        "idestado",
+        "idtipouso",
     )
     # Ahora tengo que sacar las de otro periodo
     # vvvvv Todos los reverificados de este periodo
+    #
+    # Obtengo los reverificados y me fijo todas las tecnicas originales
+    # despues de eso filtro las que tengan fecha fuera del periodo de interes
+
     query_reverif = [
         Q(reverificacion=1),
         Q(idverificacionoriginal__isnull=False),
@@ -1275,30 +1283,36 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     ]
 
     v_reverificados = Verificaciones.objects.filter(*query_reverif).values_list(
-        "idverificacion", "idtaller_id", "idverificacionoriginal", "idestado", "idtipouso"
+        "idverificacion",
+        "idtaller_id",
+        "idverificacionoriginal",
+        "idestado",
+        "idtipouso",
     )
 
     logger.info(f"V_REVERIFICADOS LEN {len(v_reverificados)}")
-    v_anteriores = (
-        Verificaciones.objects.filter(fecha__lt=fecha_desde)
-        # .values_list("idverificacionoriginal", flat=True)
-        .values_list("idverificacion", flat=True)
+
+    # queries_reverificados = [Q(idverificacionoriginal=k) for k in v_anteriores]
+    queries_reverificados = [Q(idverificacion=k[2]) for k in v_reverificados]
+
+    v_reverificadas_anteriores = (
+        Verificaciones.objects.filter(reduce(lambda x, y: x | y, queries_reverificados))
+        .filter(fecha__lt=fecha_desde)
+        .values_list(
+            "idverificacion",
+            "idtaller_id",
+            "idverificacionoriginal",
+            "idestado",
+            "idtipouso",
+        )
     )
-
-    queries_reverificados = [Q(idverificacionoriginal=k) for k in v_anteriores]
-
-    v_reverif_totales = (
-        v_reverificados.filter(reduce(lambda x,y: x|y, queries_reverificados))
-        .values_list("idverificacion", "idtaller_id", "idverificacionoriginal")
-    )
-    logger.info(f"V_REVERIFICADOS_TOTALES LEN {len(v_reverif_totales)}")
-
-    v_reverificado_a_cobrar = v_reverificados.difference(v_reverif_totales)
+    logger.info(f"V_REVERIFICADOS_ANTERIORES LEN {len(v_reverificadas_anteriores)}")
+    v_reverificado_a_cobrar = v_reverificados.difference(v_reverificadas_anteriores)
     verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
+    logger.info(f"VERIFICACIONES_A_COBRAR len => {verificaciones_a_cobrar}")
 
     cobrados_queries = [
-        Q(idverificacion_id=k[0], idtaller_id=k[1])
-        for k in verificaciones_a_cobrar
+        Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
     ]
 
     certs = (
@@ -1318,12 +1332,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .values_list("idcategoria", "cant_por_categoria")
     )
 
-    # ^^^^^ Hasta aca los certificados y las cuentas deberian estar correctas
-
-    logger.info(f"V_REVERIFICADOS TOTALES LEN {len(v_reverif_totales)}")
-
     composite_keys = [
-        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverif_totales
+        Q(idverificacion=item[0], idtaller_id=item[1]) for item in v_reverificadas_anteriores
     ]
 
     if composite_keys:
@@ -1355,7 +1365,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
         # Por que las agarro de nuevo!
         verifs[c] = (
-            Verificaciones.objects.values("idestado", "idtipouso")
+            # Verificaciones.objects.values("idestado", "idtipouso")
+            verificaciones_a_cobrar.values("idestado", "idtipouso")
             .filter(reduce(lambda x, y: x | y, composite_keys))
             .annotate(cant_verifs=Count("idtipouso"))
             .order_by("idtipouso")
