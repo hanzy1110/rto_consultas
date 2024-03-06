@@ -1316,20 +1316,22 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         .filter(fecha__lt=fecha_desde)
         .values_list(
             "idverificacion",
-            "idtaller_id",
-            "idverificacionoriginal",
-            "idestado",
-            "idtipouso",
+            # "idtaller_id",
+            # "idverificacionoriginal",
+            # "idestado",
+            # "idtipouso",
+            flat=True
         )
     )
-    queries_reverificados_vuelta = [
-        Q(idverificacionoriginal=k[2], idtaller=k[1])
-        for k in v_reverificadas_anteriores
-    ]
+    # queries_reverificados_vuelta = [
+    #     Q(idverificacionoriginal=k[2], idtaller=k[1])
+    #     for k in v_reverificadas_anteriores
+    # ]
 
     v_rev_anteriores = (
-        Verificaciones.objects.filter(reduce(lambda x, y: x | y, queries_reverificados_vuelta))
-        .filter(fecha__lt=fecha_desde)
+        v_reverificados
+        # .filter(reduce(lambda x, y: x | y, queries_reverificados_vuelta))
+        .filter(idverificacionoriginal__in=v_reverificadas_anteriores)
         .values_list(
             "idverificacion",
             "idtaller_id",
