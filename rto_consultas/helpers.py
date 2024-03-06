@@ -1338,7 +1338,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     cobrados_queries = [
-        Q(idverificacion_id=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
+        Q(idverificacion_id=k[0], idtaller_id=k[1])
         for k in verificaciones_a_cobrar
     ]
 
