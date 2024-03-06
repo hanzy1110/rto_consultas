@@ -1342,11 +1342,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     # La info de la categoria esta en el certificado!!
     certs_count_categoria = (
-        Certificados.objects.filter(
-            idverificacion_id__in=[k[0] for k in verificaciones_a_cobrar],
-            idtaller_id__in=[k[1] for k in verificaciones_a_cobrar],
-        )
-        # .filter(reduce(lambda x, y: x | y, cobrados_queries))
+        Certificados.objects
+        # .filter(
+        #     idverificacion_id__in=[k[0] for k in verificaciones_a_cobrar],
+        #     idtaller_id__in=[k[1] for k in verificaciones_a_cobrar],
+        # )
+        .filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
             "idcategoria",
         )
