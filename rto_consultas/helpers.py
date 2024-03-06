@@ -1323,12 +1323,17 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     rev_intersection = verificaciones_a_cobrar.intersection(v_reverificado_este_mes)
     # verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
+    # qs = [
+    #     Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
+    #     for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller")
+    # ]
     qs = [
-        Q(idverificacion=k["idverificacionoriginal"], idtaller_id=k["idtaller"])
-        for k in v_reverificado_este_mes.values("idverificacionoriginal", "idtaller")
+        Q(dominiovehiculo=k["dominiovehiculo"])
+        for k in v_reverificado_este_mes.values("dominiovehiculo")
     ]
     qs = reduce(lambda x, y: x | y, qs)
     rev_mismo_mes = verificaciones_a_cobrar.filter(qs)
+
 
     # qs_vuelta = [
     #     Q(idverificacionoriginal=k["idverificacion"], idtaller_id=k["idtaller"])
