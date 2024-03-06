@@ -1321,7 +1321,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
     v_reverificado_a_cobrar = v_reverificados.difference(v_rev_anteriores)
     verificaciones_a_cobrar = verificaciones_a_cobrar.union(v_reverificado_a_cobrar)
-    logger.info(f"VERIFICACIONES_A_COBRAR len => {len(verificaciones_a_cobrar)}")
+    logger.info(f"REVERIFICACIONES_A_COBRAR len => {len(v_reverificado_a_cobrar)}")
+    logger.info(f"VERIFICACIONES AGREGADAS len => {len(verificaciones_a_cobrar) - len(v_reverificado_a_cobrar)}")
+    logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
     # cobrados_queries = [
     #     Q(idverificacion_id=k[0], idtaller_id=k[1]) for k in verificaciones_a_cobrar
