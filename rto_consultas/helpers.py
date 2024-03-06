@@ -1361,9 +1361,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
-    logger.info(
-        f"VERIFICACIONES TOTALES {verificaciones_a_cobrar.values('dominiovehiculo', 'reverificacion')}"
-    )
+    vals = pformat(verificaciones_a_cobrar, depth=2, indent=4)
+    logger.info("VERIFICACIONES TOTALES")
+    logger.info(vals)
     logger.info("=========XXXX=========")
 
     cobrados_queries = [
