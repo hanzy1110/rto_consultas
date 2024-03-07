@@ -1485,9 +1485,9 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
 
 def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, prov="NQN", **kwargs):
     if prov == "NQN":
-        certs_model = Certificados
+        cats_model = Categorias
     elif prov == "RN":
-        certs_model = CertificadosRN
+        cats_model = CategoriasRN
 
     context = {}
     cache_key_certs = f"certs__{uuid}"
@@ -1498,7 +1498,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, prov="NQN"
 
     context["TIPO_USO"] = TIPO_USO_VEHICULO
     categorias = dict(
-        certs_model.objects.all().values_list("idcategoria", "descripcion")
+        cats_model.objects.all().values_list("idcategoria", "descripcion")
     )
 
     context["CATEGORIAS_DPT"] = {
