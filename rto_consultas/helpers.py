@@ -1351,7 +1351,8 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
 
-    logger.debug("=========XXXX=========")
+    logger.info("=========XXXX=========")
+    logger.info(f"PARAMS ==> {prov} == {certs_model} == {verifs_model}")
 
     logger.debug(f"REV_MISMO_MES => {len(rev_mismo_mes)}")
     logger.debug(f"INTERSECTION len => {len(rev_intersection)}")
@@ -1375,7 +1376,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
     # vals = pformat(list(sorted(verificaciones_a_cobrar, key = lambda x: x[-2])), depth=2, indent=4)
     # logger.debug("VERIFICACIONES TOTALES")
     # logger.debug(vals)
-    logger.debug("=========XXXX=========")
+    logger.info("=========XXXX=========")
 
     verificaciones_a_cobrar = filter_verificaciones(verificaciones_a_cobrar)
 

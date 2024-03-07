@@ -92,7 +92,7 @@ from rto_consultas.helpers import (
     get_queryset_from_user,
     get_tipo_uso_by_user,
     get_resumen_data_mensual,
-    handle_resumen_context
+    handle_resumen_context,
 )
 
 from rto_consultas.forms import (
@@ -951,9 +951,7 @@ def carga_excepcion(request, dominio=None, *args, **kwargs):
 def excepciones_estado_success(request, *args, **kwargs):
     stored_messages = messages.get_messages(request)
     context = {"messages": stored_messages}
-    return render(
-        request, template_name="msgs/estado_success.html", context=context
-    )
+    return render(request, template_name="msgs/estado_success.html", context=context)
 
 
 def excepciones_estado_error(request, *args, **kwargs):
@@ -1025,6 +1023,7 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
             {"form": form, "dominio": dominio, "post_link": "dictaminar_excepcion"},
         )
 
+
 def consulta_resumen_mensual_RN(request, *args, **kwargs):
     if request.htmx:
         tipo_uso_user = get_tipo_uso_by_user(request)
@@ -1035,9 +1034,11 @@ def consulta_resumen_mensual_RN(request, *args, **kwargs):
         if form.is_valid():
             logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
             # Get the data, render HTML and cache the result
-            uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso_user, prov="RN")
+            uuid = get_resumen_data_mensual(
+                form.cleaned_data, tipo_uso=tipo_uso_user, prov="RN"
+            )
             context = handle_resumen_context(uuid, **form.cleaned_data)
-            context['imprimir_url'] = "imprimir_resumen_mensual_rn"
+            context["imprimir_url"] = "imprimir_resumen_mensual_rn"
             cache_key_params = f"params__{uuid}"
             cache.set(cache_key_params, form.cleaned_data)
 
@@ -1048,9 +1049,9 @@ def consulta_resumen_mensual_RN(request, *args, **kwargs):
     else:
         tipo_uso = get_tipo_uso_by_user(request)
         # today = datetime.today()
-        today = datetime.strptime('02/29/2024', '%m/%d/%Y')
-        prev = datetime.strptime('02/01/2024', '%m/%d/%Y')
         # prev = today - timedelta(weeks=8)
+        today = datetime.strptime("02/29/2024", "%m/%d/%Y")
+        prev = datetime.strptime("02/01/2024", "%m/%d/%Y")
 
         tipo_uso_user = get_tipo_uso_by_user(request)
         initial_data = {
@@ -1070,6 +1071,7 @@ def consulta_resumen_mensual_RN(request, *args, **kwargs):
         "includes/list_table.html",
         {"form": form, "render_url": "consulta_resumen_mensual"},
     )
+
 
 class PDFResumenMensual_RN(PDFTemplateView):
     filename = "resumen_mensual.pdf"
