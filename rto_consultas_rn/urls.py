@@ -73,7 +73,7 @@ urlpatterns = [
     path("resumen_mensual_rn", views_RN.consulta_resumen_mensual_RN, name="resumen_mensual_rn"),
     path(
         "imprimir_resumen_mensual_rn/<str:uuid>",
-        views_RN.PDFResumenMensual.as_view(),
+        views_RN.PDFResumenMensual_RN.as_view(),
         name="imprimir_resumen_mensual_rn",
     ),
 ]
