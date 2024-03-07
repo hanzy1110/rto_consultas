@@ -70,7 +70,7 @@ urlpatterns = [
     path("idtipouso", TipoUsoAutocomplete.as_view(), name="idtipouso"),
     path("talleres_rn", TallerAutocomplete_RN.as_view(), name="talleres_rn"),
     path("localidades_rn", LocalidadesAutocomplete_RN.as_view(), name="localidades_rn"),
-    path("resumen_mensual_rn", views_RN.consulta_resumen_mensual_RN, name="resumen_mensual_rn"),
+    path("consulta_resumen_mensual_rn", views_RN.consulta_resumen_mensual_RN, name="consulta_resumen_mensual_rn"),
     path(
         "imprimir_resumen_mensual_rn/<str:uuid>",
         views_RN.PDFResumenMensual_RN.as_view(),
