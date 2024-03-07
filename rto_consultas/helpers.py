@@ -30,7 +30,8 @@ from rto_consultas_rn.models import (
     Localidades as Localidades_RN,
     Tipovehiculo as TipoVehiculo_RN,
     Tipousovehiculo as Tipousovehiculo_RN,
-    Verificaciones as VerificacionesRN
+    Verificaciones as VerificacionesRN,
+    Categorias as CategoriasRN
 )
 
 from rto_consultas.models import (
@@ -1247,9 +1248,11 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
     if prov == "NQN":
         verifs_model = Verificaciones
         certs_model = Certificados
+        cats_model = Categorias
     elif prov == "RN":
         verifs_model = VerificacionesRN
         certs_model = CertificadosRN
+        cats_model = CategoriasRN
 
     fecha_desde = cleaned_data["fecha_desde"]
     fecha_hasta = cleaned_data["fecha_hasta"]
@@ -1413,7 +1416,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
     else:
         c_reverificados = None
 
-    categorias = get_categorias_certs(certs, certs_model, tipo_uso)
+    categorias = get_categorias_certs(certs, cats_model, tipo_uso)
     logger.info(f"CATEGORIAS => {categorias}")
 
     verifs = {}
