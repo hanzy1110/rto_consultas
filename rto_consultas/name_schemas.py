@@ -123,7 +123,7 @@ TIPO_USO_VEHICULO = {
 TARIFARIO_DPT = {
     "A": "Vehículos utilitarios para transporte de pasajeros, categorias M1 de mas de 8 y hasta 15 asientos y que no supere los 3.500 kg. ",
     "B": "Vehículos utilitarios para transporte de pasajeros, categoria M1 y M2 de mas de 15 y hasta 29 asientos, de 2 ees y que no supere 5.000 kg ",
-    "C": "Vehículos utilitarios para transporte de pasajeros, categoria M3 superan los} 5.000 kg., con 2 ejes.",
+    "C": "Vehículos utilitarios para transporte de pasajeros, categoria M3 superan los 5.000 kg., con 2 ejes.",
     "D": "Vehículos utilitarios para transporte de pasajeros, categoria M3 superan los 15.000 kg., con 3 ejes.",
     "E": "Vehículos utilizados para el transporte de carga, categorias N y N1. La primera hace referencia los vehículos de hasta 1.000 kg, y la segunda se refiere a vehículos que no superen los 3.500 kg.",
     "F": "Vehículos utilizados para el transporte de carga, categorias N2 que carguen mas de 3.500 kg., que no superen los 12.000 kg.",

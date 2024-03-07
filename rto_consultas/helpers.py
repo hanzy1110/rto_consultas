@@ -30,6 +30,7 @@ from rto_consultas_rn.models import (
     Localidades as Localidades_RN,
     Tipovehiculo as TipoVehiculo_RN,
     Tipousovehiculo as Tipousovehiculo_RN,
+    Verificaciones as VerificacionesRN
 )
 
 from rto_consultas.models import (
@@ -1242,7 +1243,14 @@ def get_tipo_uso_by_user(request):
     return USER_TIPO_USO.get(selected_group, None)
 
 
-def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
+def get_resumen_data_mensual(cleaned_data, tipo_uso=None, prov="NQN"):
+    if prov == "NQN":
+        verifs_model = Verificaciones
+        certs_model = Certificados
+    elif prov == "RN":
+        verifs_model = VerificacionesRN
+        certs_model = CertificadosRN
+
     fecha_desde = cleaned_data["fecha_desde"]
     fecha_hasta = cleaned_data["fecha_hasta"]
     id_taller = cleaned_data["id_taller"]
@@ -1267,7 +1275,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         exclude_reverificado_query,
     ]
 
-    verificaciones_a_cobrar = Verificaciones.objects.filter(*total_query).values_list(
+    verificaciones_a_cobrar = verifs_model.objects.filter(*total_query).values_list(
         "idverificacion",
         "idtaller_id",
         "idverificacionoriginal",
@@ -1289,7 +1297,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
         Q(idtaller_id=id_taller),
     ]
 
-    v_reverificados = Verificaciones.objects.filter(*query_reverif).values_list(
+    v_reverificados = verifs_model.objects.filter(*query_reverif).values_list(
         "idverificacion",
         "idtaller_id",
         "idverificacionoriginal",
@@ -1307,7 +1315,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     ]
 
     v_reverificadas_anteriores = (
-        Verificaciones.objects.filter(reduce(lambda x, y: x | y, queries_reverificados))
+        verifs_model.objects.filter(reduce(lambda x, y: x | y, queries_reverificados))
         .filter(fecha__lt=fecha_desde)
         .values_list("idverificacion", flat=True)
     )
@@ -1340,31 +1348,31 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     aux = verificaciones_a_cobrar.difference(rev_mismo_mes)
     # Ya conte los condicionales en la otra
 
-    logger.info("=========XXXX=========")
+    logger.debug("=========XXXX=========")
 
-    logger.info(f"REV_MISMO_MES => {len(rev_mismo_mes)}")
-    logger.info(f"INTERSECTION len => {len(rev_intersection)}")
-    logger.info(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
-    logger.info(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
+    logger.debug(f"REV_MISMO_MES => {len(rev_mismo_mes)}")
+    logger.debug(f"INTERSECTION len => {len(rev_intersection)}")
+    logger.debug(f"REVERIFICACIONES_A_ESTE_MES len => {len(v_reverificado_este_mes)}")
+    logger.debug(f"VERIFICACIONES_A_COBRAR FINAL len => {len(verificaciones_a_cobrar)}")
 
-    logger.info(
+    logger.debug(
         f"VERIFICACIONES a COBRAR RECH => {pformat(verificaciones_a_cobrar.filter(idestado=2).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
     )
-    logger.info(
+    logger.debug(
         f"VERIFICACIONES a COBRAR COND => {pformat(verificaciones_a_cobrar.filter(idestado=3).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
     )
-    logger.info(
+    logger.debug(
         f"REVERIFICACIONES a COBRAR RECH => {pformat(conds_rech.filter(idestado=2).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
     )
-    logger.info(
+    logger.debug(
         f"REVERIFICACIONES a COBRAR COND => {pformat(conds_rech.filter(idestado=3).values('dominiovehiculo', 'reverificacion'), indent=4, depth=2)}"
     )
     verificaciones_a_cobrar = v_reverificado_este_mes.union(aux)
 
     # vals = pformat(list(sorted(verificaciones_a_cobrar, key = lambda x: x[-2])), depth=2, indent=4)
-    # logger.info("VERIFICACIONES TOTALES")
-    # logger.info(vals)
-    logger.info("=========XXXX=========")
+    # logger.debug("VERIFICACIONES TOTALES")
+    # logger.debug(vals)
+    logger.debug("=========XXXX=========")
 
     verificaciones_a_cobrar = filter_verificaciones(verificaciones_a_cobrar)
 
@@ -1373,7 +1381,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     ]
 
     certs = (
-        Certificados.objects.filter(
+        certs_model.objects.filter(
             idverificacion_id__in=[k[0] for k in verificaciones_a_cobrar],
             idtaller_id__in=[k[1] for k in verificaciones_a_cobrar],
         )
@@ -1383,7 +1391,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
     # La info de la categoria esta en el certificado!!
     certs_count_categoria = (
-        Certificados.objects
+        certs_model.objects
         .filter(reduce(lambda x, y: x | y, cobrados_queries))
         .values(
             "idcategoria",
@@ -1398,14 +1406,14 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     ]
 
     if composite_keys:
-        c_reverificados = Certificados.objects.filter(
+        c_reverificados = certs_model.objects.filter(
             reduce(lambda x, y: x | y, composite_keys)
         ).values("idcategoria", "idverificacion_id", "nrocertificado")
         logger.info(f"C_REVERIFICADOS LEN {len(c_reverificados)}")
     else:
         c_reverificados = None
 
-    categorias = get_categorias_certs(certs, tipo_uso)
+    categorias = get_categorias_certs(certs, certs_model, tipo_uso)
     logger.info(f"CATEGORIAS => {categorias}")
 
     verifs = {}
@@ -1426,7 +1434,7 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
 
         # Por que las agarro de nuevo!
         verifs[c] = (
-            Verificaciones.objects
+            verifs_model.objects
             # verificaciones_a_cobrar.values("idestado", "idtipouso")
             .filter(reduce(lambda x, y: x | y, composite_keys))
             .values("idestado", "idtipouso")
@@ -1472,7 +1480,12 @@ def get_resumen_data_mensual(cleaned_data, tipo_uso=None):
     return uuid
 
 
-def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
+def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, prov="NQN", **kwargs):
+    if prov == "NQN":
+        certs_model = Certificados
+    elif prov == "RN":
+        certs_model = CertificadosRN
+
     context = {}
     cache_key_certs = f"certs__{uuid}"
     cache_key_verifs = f"verifs__{uuid}"
@@ -1482,7 +1495,7 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
 
     context["TIPO_USO"] = TIPO_USO_VEHICULO
     categorias = dict(
-        Categorias.objects.all().values_list("idcategoria", "descripcion")
+        certs_model.objects.all().values_list("idcategoria", "descripcion")
     )
 
     context["CATEGORIAS_DPT"] = {
@@ -1509,9 +1522,9 @@ def handle_resumen_context(uuid, id_taller, fecha_desde, fecha_hasta, **kwargs):
     return context
 
 
-def get_categorias_certs(certs, tipo_uso: str):
+def get_categorias_certs(certs, certs_model, tipo_uso: str):
     categorias_descripciones = dict(
-        Categorias.objects.all().values_list("idcategoria", "descripcion")
+        certs_model.objects.all().values_list("idcategoria", "descripcion")
     )
     categorias = certs.values_list("idcategoria", flat=True).distinct()
     match tipo_uso:
@@ -1645,6 +1658,7 @@ def get_items_autocomplete(search, values, model):
 
 def filter_verificaciones(verifs):
 
+    # Los conjuntos me dan los valores unicos!
     dominios = {k[5] for k in verifs}
 
     a = []

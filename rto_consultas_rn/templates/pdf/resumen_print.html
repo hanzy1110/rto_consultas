@@ -1,0 +1,127 @@
+<!-- TODO maybe this into a div? -->
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Other head content -->
+</head>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
+    @media print {
+        .new-page {
+            page-break-before: always;
+        }
+    }
+
+</style>
+
+{% load getattr %}
+{% load i18n static %}
+
+{% for cat, verifs in verificaciones.items %}
+{% if cat != 1 %}
+<p class="new-page">
+    {% else %}
+<p>
+    {% endif %}
+<table cellspacing='1' border='1' id='tbCab'>
+    <tr>
+        <td>
+            <img src="/home/code/staticfiles/img/logos/LOGO_UNCOMA.png" alt='Logo Unco' align='left'
+                style='margin:10px;' width="500px" />
+            <br />
+        </td>
+        <td>
+            <p style='margin-left:10px;'>
+                <b>Planta</b>: {{ taller.nrotaller }} - {{ taller.nombre }} <br /><b>CUIT</b>: {{ taller.cuit }} <br />
+                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.idlocalidad.descripcion }}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan='2' align='center'><b>RESUMEN PERIODO: {{ fecha_desde }} - {{ fecha_hasta }}</b></td>
+</table>
+<br />
+
+
+<div class="card col">
+    <div class="card-header col" style="margin: auto; align-items: center;">
+        <h3>Categoría {% query_dict CATEGORIAS cat %}</h3>
+        <h5>{% query_dict CATEGORIAS_DPT cat %}</h5>
+        <h3><b>Cantidad: {% query_dict certs_count_categoria cat %}</b></h3>
+    </div>
+    <div class="card-body" style="margin: auto; align-items: center;">
+        <table cellspacing='0' class='table'>
+            <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
+            <tr>
+                <th>Estado</th>
+                <!-- <th width='200px'>Tipo Uso Vehiculo</th> -->
+                <th>Cantidad</th>
+            </tr>
+
+            <tr>
+                <td align='center' style="padding:0.5rem"><span>Aprobados</span></td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 1 %}
+                </td>
+            </tr>
+            <td>
+                <tr>
+                    <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                    <td align='center'>{{ v.cant_verifs }}</td>
+                </tr>
+            </td>
+            {% endif %}
+            {% endfor %}
+            <tr>
+                <td align='center' style="padding:0.5rem"><span>Aprobado Condicional</span></td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 3 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td align='center' style="padding:0.5rem"><span>Rechazado</span></td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 2 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        <div class="card col">
+            <div class="card-body">
+                <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:
+                    {% query_dict reverificados_cant cat %}
+                </p>
+            </div>
+            <div class="card-body col-6">
+                Certificados: {% query_dict reverificados cat %}
+            </div>
+        </div>
+    </div>
+</div>
+</p>
+<footer align="right">
+    Página {% query_dict PAGE_INDEX cat %} de {{ TOTAL_PAGES }}
+</footer>
+{% endfor %}
+
+</html>

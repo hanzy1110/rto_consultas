@@ -1,0 +1,103 @@
+{% load getattr %}
+{% load i18n static %}
+
+<a href="{% url 'imprimir_resumen_mensual' uuid=uuid %}">
+    <button type="button" class="btn btn-primary btn-block">
+        Imprimir
+    </button>
+</a>
+<table cellspacing='1' border='1' id='tbCab'>
+    <tr>
+        <td>
+            <img src="{% static 'img/logos/LOGO_UNCOMA.png' %}" alt='Logo Unco' align='left' style='margin:10px;'
+                width="500px" />
+            <br />
+            <h3 style='display:inline;'>UNIVERSIDAD NACIONAL DEL COMAHUE</h3> <br />
+            <h4 style='display:inline;'>FACULTAD DE INGENIERIA</h4>
+        </td>
+        <td>
+            <p style='margin-left:10px;'>
+                <b>Planta</b>: {{ taller.nrotaller }} - {{ taller.nombre }} <br /><b>CUIT</b>: {{ taller.cuit }} <br />
+                <b>Direcci&oacute;n</b>: {{ taller.direccion }} / {{ taller.idlocalidad.descripcion }}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan='2' align='center'><b>RESUMEN PERIODO: {{ fecha_desde }} - {{ fecha_hasta }}</b></td>
+</table>
+<br />
+
+
+{% for cat, verifs in verificaciones.items %}
+<div class="card col">
+    <div class="card-header col" style="margin: auto; align-items: center;">
+        <h3>Categoría: {% query_dict CATEGORIAS cat %}</h3>
+        <h5>{% query_dict CATEGORIAS_DPT cat %}</h5>
+        <h4><b>Cantidad: {% query_dict certs_count_categoria cat %}</b></h4>
+    </div>
+    <div class="card-body" style="margin: auto; align-items: center;">
+        <table cellspacing='0' class='table'>
+            <!-- <table width='100%' cellspacing='0' class='tblDatos'> -->
+            <tr>
+                <th>Estado</th>
+                <!-- <th width='200px'>Tipo Uso Vehiculo</th> -->
+                <th>Cantidad</th>
+            </tr>
+
+            <tr>
+                <td align='center' style="padding:0.5rem">Aprobados</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 1 %}
+                </td>
+            </tr>
+            <td>
+                <tr>
+                    <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                    <td align='center'>{{ v.cant_verifs }}</td>
+                </tr>
+            </td>
+            {% endif %}
+            {% endfor %}
+            <tr>
+                <td align='center' style="padding:0.5rem">Aprobado Condicional</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 3 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td align='center' style="padding:0.5rem">Rechazado</td>
+                <td>
+                    {% for v in verifs %}
+                    {% if v.idestado == 2 %}
+                </td>
+            </tr>
+            <tr>
+                <td align='left'>{% query_dict TIPO_USO v.idtipouso %}</td>
+                <td align='center'>{{ v.cant_verifs }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+
+        <div class="card col">
+            <div class="card-body">
+                <p>Certificados Reverificados correspondientes a Otro Per&iacute;odo:
+                    {% query_dict reverificados_cant cat %}
+                </p>
+            </div>
+            <div class="card-body col-6">
+                Certificados: {% query_dict reverificados cat %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

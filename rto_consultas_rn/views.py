@@ -1,7 +1,10 @@
-from logging import disable
 import os
+from datetime import datetime
 from django.db.models import Model, Prefetch
 from django.shortcuts import render
+from django.core.cache import cache
+
+from django.core.exceptions import ValidationError
 from django.views.generic.detail import DetailView
 from django.views.generic.base import RedirectView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -87,6 +90,10 @@ from rto_consultas.helpers import (
     handle_initial_excepcion,
     handle_update_excepcion,
     get_queryset_from_user,
+    get_tipo_uso_by_user,
+    route_form,
+    get_resumen_data_mensual,
+    handle_resumen_context
 )
 
 from rto_consultas.forms import (
@@ -1017,3 +1024,68 @@ def dictaminar_excepcion(request, dominio=None, *args, **kwargs):
             "includes/carga_excepcion.html",
             {"form": form, "dominio": dominio, "post_link": "dictaminar_excepcion"},
         )
+
+def consulta_resumen_mensual_RN(request, *args, **kwargs):
+    if request.htmx:
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        referer = request.META.get("HTTP_REFERER", None)
+        logger.debug(f"ARGS PASSED TO ROUTING =>{tipo_uso_user}, {referer}")
+        form = route_form(tipo_uso=tipo_uso_user, referer=referer)(request.GET)
+
+        if form.is_valid():
+            logger.debug(f"CLEANED DATA FROM FORM => {form.cleaned_data}")
+            # Get the data, render HTML and cache the result
+            uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso_user, prov="RN")
+            context = handle_resumen_context(uuid, **form.cleaned_data)
+            cache_key_params = f"params__{uuid}"
+            cache.set(cache_key_params, form.cleaned_data)
+
+            return render(request, "pdf/resumen.html", context)
+        else:
+            logger.error(f"ERROR WHILE PARSING FORM => {form.errors}")
+            raise ValidationError("Error while validating resumen FORM")
+    else:
+        tipo_uso = get_tipo_uso_by_user(request)
+        # today = datetime.today()
+        today = datetime.strptime('02/29/2024', '%m/%d/%Y')
+        prev = datetime.strptime('02/01/2024', '%m/%d/%Y')
+        # prev = today - timedelta(weeks=8)
+
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        initial_data = {
+            "tipo_uso": tipo_uso,
+            "fecha_desde": prev,
+            "fecha_hasta": today,
+            "id_taller": "",
+        }
+
+        tipo_uso_user = get_tipo_uso_by_user(request)
+        referer = request.META.get("HTTP_REFERER", None)
+        logger.debug(f"ARGS PASSED TO ROUTING =>{tipo_uso_user}, {referer}")
+        form = route_form(tipo_uso=tipo_uso_user, referer=referer)(initial_data)
+
+    return render(
+        request,
+        "includes/list_table.html",
+        {"form": form, "render_url": "consulta_resumen_mensual"},
+    )
+
+class PDFResumenMensual_RN(PDFTemplateView):
+    filename = "resumen_mensual.pdf"
+    template_name = "pdf/resumen_print.html"
+    cmd_options = {
+        "log-level": "info",
+        "quiet": False,
+        "enable-local-file-access": "",
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # categorias = Verificaciones.values_list("id_categoria", flat=True).distinct()
+        uuid = self.kwargs.get("uuid")
+        logger.debug(f"UUID ===> {uuid}")
+
+        params = cache.get(f"params__{uuid}")
+        context = handle_resumen_context(uuid, **params)
+
+        return context
