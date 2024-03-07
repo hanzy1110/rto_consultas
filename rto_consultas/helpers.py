@@ -1666,10 +1666,12 @@ def filter_verificaciones(verifs):
     dominios = {k[5] for k in verifs}
 
     a = []
+    dup_count = 0
     for d in dominios:
         v = list(filter(lambda x: x[5] == d, verifs))
         if len(v) > 1:
-            logger.info(f"DUPLICATE FOUND! {d} {v}")
+            logger.debug(f"DUPLICATE FOUND! {d} {v}")
+            dup_count += 1
             try:
                 b = list(filter(lambda x: x[-1] != 0, v))[0]
             except IndexError:
@@ -1677,6 +1679,8 @@ def filter_verificaciones(verifs):
             a.append(b)
         else:
             a.append(v[0])
+
+    logger.info(f"DUPLICATE_COUNT ==> {dup_count}")
 
     return a
 
