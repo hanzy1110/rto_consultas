@@ -1069,7 +1069,7 @@ def consulta_resumen_mensual_RN(request, *args, **kwargs):
     return render(
         request,
         "includes/list_table.html",
-        {"form": form, "render_url": "consulta_resumen_mensual"},
+        {"form": form, "render_url": "consulta_resumen_mensual_rn"},
     )
 
 
