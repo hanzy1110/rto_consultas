@@ -124,6 +124,7 @@ class DVRView(IndexView):
         "excepciones_rn": "Consulta Excepciones",
         "carga_excepciones_rn": "Carga Excepciones",
         "prorrogas_rn": "Consulta Prorrogas",
+        "resumen_obleas_rn": "Consulta Disponibilidad Obleas",
     }
 
 
@@ -1037,6 +1038,7 @@ def consulta_resumen_mensual_RN(request, *args, **kwargs):
             # Get the data, render HTML and cache the result
             uuid = get_resumen_data_mensual(form.cleaned_data, tipo_uso=tipo_uso_user, prov="RN")
             context = handle_resumen_context(uuid, **form.cleaned_data)
+            context['imprimir_url'] = "imprimir_resumen_mensual_rn"
             cache_key_params = f"params__{uuid}"
             cache.set(cache_key_params, form.cleaned_data)
 

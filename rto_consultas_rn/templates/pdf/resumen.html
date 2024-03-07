@@ -1,7 +1,7 @@
 {% load getattr %}
 {% load i18n static %}
 
-<a href="{% url 'imprimir_resumen_mensual' uuid=uuid %}">
+<a href="{% url imprimir_url uuid=uuid %}">
     <button type="button" class="btn btn-primary btn-block">
         Imprimir
     </button>
