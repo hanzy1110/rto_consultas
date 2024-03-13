@@ -10,8 +10,6 @@ logger = configure_logger(LOG_FILE)
 
 # client.headers.update({"Authorization": TOKEN_AUTH})
 
-
-# COMO HAGO PARA LLAMAR A LA API?
 @dataclass
 class DPTResponse:
     Dominio: str

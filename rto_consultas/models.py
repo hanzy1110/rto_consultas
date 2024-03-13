@@ -2845,7 +2845,7 @@ class Verificaciones(models.Model):
 
     class Meta:
         app_label = "rto_consultas"
-        ordering = ("idverificacion",)
+        get_latest_by = ["-idverificacion", "-fecha"]
 
         db_table = "verificaciones"
         unique_together = (("idverificacion", "idtaller"),)
